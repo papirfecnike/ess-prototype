@@ -1,0 +1,1 @@
+import{w as e,p as s}from"./chunk-WWGJGFF6-DNatREV9.js";const n=e(function(){return s.jsxs("div",{className:"page",children:[s.jsx("h1",{children:"System logs"}),s.jsx("p",{children:"Placeholder content"})]})});export{n as default};

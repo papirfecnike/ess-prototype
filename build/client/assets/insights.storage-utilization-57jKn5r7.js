@@ -1,0 +1,1 @@
+import{w as s,p as t}from"./chunk-WWGJGFF6-DNatREV9.js";const e=s(function(){return t.jsxs("div",{className:"page",children:[t.jsx("h1",{children:"Storage utilization"}),t.jsx("p",{children:"Storage insights and trends."})]})});export{e as default};
