@@ -128,15 +128,17 @@ body {
 .search-result {
   display: block;
   width: 100%;
-  padding: 8px;
+  padding: 8px 12px;
   text-align: left;
+  background: transparent;
+  border: none;
+  cursor: pointer;
 }
 
+.search-result.active,
 .search-result:hover {
-  background: #f5f5f5;
+  background: #eef2ff;
 }
-
-
 
 /* =========================================================
    TYPOGRAPHY
