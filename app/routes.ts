@@ -32,7 +32,7 @@ export default [
   ]),
 
   route("control-center", "routes/control-center.tsx", [
-    route("warehouse-layout", "routes/control-center.warehouse-layout.tsx"),
+    index("routes/control-center.warehouse-layout.tsx"),
     route("alert-monitoring", "routes/control-center.alert-monitoring.tsx"),
     route("orders-tracking", "routes/control-center.orders-tracking.tsx"),
     route("eoperator-console", "routes/control-center.eoperator-console.tsx"),
@@ -43,7 +43,7 @@ export default [
   ]),
 
   route("configuration", "routes/configuration.tsx", [
-    route("user-management", "routes/configuration.user-management.tsx"),
+    index("routes/configuration.user-management.tsx"),
     route("language-settings", "routes/configuration.language-settings.tsx"),
     route("system-settings", "routes/configuration.system-settings.tsx"),
     route("inbound", "routes/configuration.inbound.tsx"),
@@ -56,8 +56,7 @@ export default [
     route("version-history", "routes/configuration.version-history.tsx"),
   ]),
 
-  route("profile", "routes/profile.tsx", [
-    route("personal-information", "routes/profile.personal-information.tsx"),
+  route("profile", "routes/profile.personal-information.tsx", [
     route("system-preferences", "routes/profile.system-preferences.tsx"),
     route("security", "routes/profile.security.tsx"),
   ]),

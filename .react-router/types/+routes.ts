@@ -68,9 +68,6 @@ type Pages = {
   "/control-center": {
     params: {};
   };
-  "/control-center/warehouse-layout": {
-    params: {};
-  };
   "/control-center/alert-monitoring": {
     params: {};
   };
@@ -93,9 +90,6 @@ type Pages = {
     params: {};
   };
   "/configuration": {
-    params: {};
-  };
-  "/configuration/user-management": {
     params: {};
   };
   "/configuration/language-settings": {
@@ -131,9 +125,6 @@ type Pages = {
   "/profile": {
     params: {};
   };
-  "/profile/personal-information": {
-    params: {};
-  };
   "/profile/system-preferences": {
     params: {};
   };
@@ -145,7 +136,7 @@ type Pages = {
 type RouteFiles = {
   "root.tsx": {
     id: "root";
-    page: "/" | "/dashboard" | "/insights" | "/insights/productivity" | "/insights/port-performance" | "/insights/staff-performance" | "/insights/storage-utilization" | "/insights/replenishment" | "/insights/system-health" | "/inbound" | "/inbound/putaway" | "/outbound" | "/outbound/picking" | "/outbound/order-batching" | "/outbound/picking-strategies" | "/outbound/printing" | "/inventory" | "/inventory/inspection" | "/control-center" | "/control-center/warehouse-layout" | "/control-center/alert-monitoring" | "/control-center/orders-tracking" | "/control-center/eoperator-console" | "/control-center/maintenance" | "/control-center/integration-logs" | "/control-center/system-logs" | "/control-center/material-handling-logs" | "/configuration" | "/configuration/user-management" | "/configuration/language-settings" | "/configuration/system-settings" | "/configuration/inbound" | "/configuration/outbound" | "/configuration/inventory" | "/configuration/autostore" | "/configuration/general-setup" | "/configuration/modules" | "/configuration/orchestration" | "/configuration/version-history" | "/profile" | "/profile/personal-information" | "/profile/system-preferences" | "/profile/security";
+    page: "/" | "/dashboard" | "/insights" | "/insights/productivity" | "/insights/port-performance" | "/insights/staff-performance" | "/insights/storage-utilization" | "/insights/replenishment" | "/insights/system-health" | "/inbound" | "/inbound/putaway" | "/outbound" | "/outbound/picking" | "/outbound/order-batching" | "/outbound/picking-strategies" | "/outbound/printing" | "/inventory" | "/inventory/inspection" | "/control-center" | "/control-center/alert-monitoring" | "/control-center/orders-tracking" | "/control-center/eoperator-console" | "/control-center/maintenance" | "/control-center/integration-logs" | "/control-center/system-logs" | "/control-center/material-handling-logs" | "/configuration" | "/configuration/language-settings" | "/configuration/system-settings" | "/configuration/inbound" | "/configuration/outbound" | "/configuration/inventory" | "/configuration/autostore" | "/configuration/general-setup" | "/configuration/modules" | "/configuration/orchestration" | "/configuration/version-history" | "/profile" | "/profile/system-preferences" | "/profile/security";
   };
   "routes/dashboard.tsx": {
     id: "routes/dashboard";
@@ -233,11 +224,11 @@ type RouteFiles = {
   };
   "routes/control-center.tsx": {
     id: "routes/control-center";
-    page: "/control-center" | "/control-center/warehouse-layout" | "/control-center/alert-monitoring" | "/control-center/orders-tracking" | "/control-center/eoperator-console" | "/control-center/maintenance" | "/control-center/integration-logs" | "/control-center/system-logs" | "/control-center/material-handling-logs";
+    page: "/control-center" | "/control-center/alert-monitoring" | "/control-center/orders-tracking" | "/control-center/eoperator-console" | "/control-center/maintenance" | "/control-center/integration-logs" | "/control-center/system-logs" | "/control-center/material-handling-logs";
   };
   "routes/control-center.warehouse-layout.tsx": {
     id: "routes/control-center.warehouse-layout";
-    page: "/control-center/warehouse-layout";
+    page: "/control-center";
   };
   "routes/control-center.alert-monitoring.tsx": {
     id: "routes/control-center.alert-monitoring";
@@ -269,11 +260,11 @@ type RouteFiles = {
   };
   "routes/configuration.tsx": {
     id: "routes/configuration";
-    page: "/configuration" | "/configuration/user-management" | "/configuration/language-settings" | "/configuration/system-settings" | "/configuration/inbound" | "/configuration/outbound" | "/configuration/inventory" | "/configuration/autostore" | "/configuration/general-setup" | "/configuration/modules" | "/configuration/orchestration" | "/configuration/version-history";
+    page: "/configuration" | "/configuration/language-settings" | "/configuration/system-settings" | "/configuration/inbound" | "/configuration/outbound" | "/configuration/inventory" | "/configuration/autostore" | "/configuration/general-setup" | "/configuration/modules" | "/configuration/orchestration" | "/configuration/version-history";
   };
   "routes/configuration.user-management.tsx": {
     id: "routes/configuration.user-management";
-    page: "/configuration/user-management";
+    page: "/configuration";
   };
   "routes/configuration.language-settings.tsx": {
     id: "routes/configuration.language-settings";
@@ -315,13 +306,9 @@ type RouteFiles = {
     id: "routes/configuration.version-history";
     page: "/configuration/version-history";
   };
-  "routes/profile.tsx": {
-    id: "routes/profile";
-    page: "/profile" | "/profile/personal-information" | "/profile/system-preferences" | "/profile/security";
-  };
   "routes/profile.personal-information.tsx": {
     id: "routes/profile.personal-information";
-    page: "/profile/personal-information";
+    page: "/profile" | "/profile/system-preferences" | "/profile/security";
   };
   "routes/profile.system-preferences.tsx": {
     id: "routes/profile.system-preferences";
@@ -377,7 +364,6 @@ type RouteModules = {
   "routes/configuration.modules": typeof import("./app/routes/configuration.modules.tsx");
   "routes/configuration.orchestration": typeof import("./app/routes/configuration.orchestration.tsx");
   "routes/configuration.version-history": typeof import("./app/routes/configuration.version-history.tsx");
-  "routes/profile": typeof import("./app/routes/profile.tsx");
   "routes/profile.personal-information": typeof import("./app/routes/profile.personal-information.tsx");
   "routes/profile.system-preferences": typeof import("./app/routes/profile.system-preferences.tsx");
   "routes/profile.security": typeof import("./app/routes/profile.security.tsx");
