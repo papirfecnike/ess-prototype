@@ -1,3 +1,4 @@
+import { Outlet } from "react-router";
 import type { LoaderFunction } from "react-router";
 
 export const loader: LoaderFunction = async () => {
@@ -5,5 +6,5 @@ export const loader: LoaderFunction = async () => {
 };
 
 export default function Inbound() {
-  return <h1>Inbound</h1>;
+  return <Outlet />;
 }

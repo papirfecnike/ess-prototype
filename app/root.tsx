@@ -1,50 +1,39 @@
+import appStyles from "./styles/app.css?url";
+
 import {
   isRouteErrorResponse,
-  Links,
   Meta,
+  Links,
   Outlet,
   Scripts,
   ScrollRestoration,
 } from "react-router";
-
 import type { Route } from "./+types/root";
-import { useEffect, useState } from "react";
-import "./styles.css";
+
 import ClientHeader from "./components/ClientHeader";
-import Footer from "./components/Footer";
 import Sidebar from "./components/Sidebar";
+import Footer from "./components/Footer";
 import { SearchProvider } from "./search/SearchContext";
 
-export function Layout({ children }: { children: React.ReactNode }) {
+export function links() {
+  return [{ rel: "stylesheet", href: appStyles }];
+}
 
-  const [isDark, setIsDark] = useState(false);
-
-  useEffect(() => {
-    const storedTheme = localStorage.getItem("theme");
-    if (storedTheme === "dark") {
-      document.body.classList.add("dark");
-      setIsDark(true);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (isDark) {
-      document.body.classList.add("dark");
-      localStorage.setItem("theme", "dark");
-    } else {
-      document.body.classList.remove("dark");
-      localStorage.setItem("theme", "light");
-    }
-  }, [isDark]);
-
+export default function App() {
   return (
     <html lang="en">
+      <head>
+        <Meta />
+        <Links />
+      </head>
       <body>
         <SearchProvider>
           <ClientHeader />
-          <div className="content-area">
+          <div className="app-layout">
             <Sidebar />
-            <main className="main-content">{children}</main>
+            <main className="app-main">
+              <Outlet />
+            </main>
           </div>
           <Footer />
         </SearchProvider>
@@ -56,35 +45,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
   );
 }
 
-export default function App() {
-  return <Outlet />;
-}
-
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
-  let message = "Oops!";
-  let details = "This is not the expected user journey...";
-  let stack: string | undefined;
-
-  if (isRouteErrorResponse(error)) {
-    message = error.status === 404 ? "404" : "Error";
-    details =
-      error.status === 404
-        ? "The requested page could not be found."
-        : error.statusText || details;
-  } else if (import.meta.env.DEV && error && error instanceof Error) {
-    details = error.message;
-    stack = error.stack;
-  }
-
   return (
-    <main className="pt-16 p-4 container mx-auto">
-      <h1>{message}</h1>
-      <p>{details}</p>
-      {stack && (
-        <pre className="w-full p-4 overflow-x-auto">
-          <code>{stack}</code>
-        </pre>
-      )}
+    <main style={{ padding: 24 }}>
+      <h1>Error</h1>
+      <pre>{String(error)}</pre>
     </main>
   );
 }

@@ -4,14 +4,12 @@ import { sidebarConfig } from "../navigation/sidebar.config";
 export default function Sidebar() {
   const location = useLocation();
 
-  // /insights/productivity → ["", "insights", "productivity"]
   const mainSection = location.pathname.split("/")[1];
 
   const section = sidebarConfig.find(
     (s) => s.basePath === mainSection
   );
 
-  // Dashboard vagy ismeretlen route → nincs sidebar
   if (!section) {
     return null;
   }
