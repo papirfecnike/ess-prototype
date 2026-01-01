@@ -1,35 +1,58 @@
 :root {
   /* =========================
-     COLORS
+     BACKGROUNDS
      ========================= */
 
-  --color-bg: #f8fafc;
-  --color-bg-muted: #f1f5f9;
-  --color-bg-elevated: #ffffff;
+  --color-bg: #F0F2F3;              /* main content */
+  --color-bg-muted: #ECF0F2;
+  --color-bg-elevated: #FFFFFF;
 
-  --color-text: #0f172a;
-  --color-text-muted: #64748b;
-  --color-text-inverse: #ffffff;
+  --color-sidebar-bg: #D8E0E2;
+  --color-header-bg: #E0E8EA;
 
-  --color-border: #e2e8f0;
-  --color-border-strong: #cbd5e1;
+  /* =========================
+     TEXT
+     ========================= */
 
-  --color-primary: #2563eb;
-  --color-primary-hover: #1d4ed8;
-  --color-primary-soft: #dbeafe;
+  --color-text: #2D4E58;            /* default text */
+  --color-text-muted: #919597;
+  --color-text-strong: #14282F;
+  --color-text-inverse: #FFFFFF;
 
-  --color-success: #16a34a;
-  --color-warning: #f59e0b;
-  --color-danger: #dc2626;
+  --color-link: #137897;
+  --color-link-hover: #137897;
 
-  --color-disabled: #cbd5e1;
+  /* =========================
+     BORDERS
+     ========================= */
+
+  --color-border: #7E9094;
+  --color-border-soft: #E0E8EA;
+
+  /* =========================
+     INTERACTION / BRAND
+     ========================= */
+
+  --color-primary: #137897;
+  --color-primary-hover: #137897;
+  --color-primary-soft: #ECF0F2;
+
+  /* =========================
+     STATES
+     ========================= */
+
+  --color-success: #07930A;
+  --color-warning: #B15E05;
+  --color-danger: #CA1520;
+  --color-info: #137897;
+
+  --color-disabled: #B7C0C2;
 
   /* =========================
      TYPOGRAPHY
      ========================= */
 
   --font-sans: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
 
   --text-xs: 0.75rem;
   --text-sm: 0.85rem;
@@ -43,35 +66,15 @@
   --font-weight-semibold: 600;
 
   /* =========================
-     SPACING
-     ========================= */
-
-  --space-1: 4px;
-  --space-2: 8px;
-  --space-3: 12px;
-  --space-4: 16px;
-  --space-5: 20px;
-  --space-6: 24px;
-
-  /* =========================
-     RADIUS
+     SPACING / RADIUS / SHADOW
      ========================= */
 
   --radius-sm: 4px;
   --radius-md: 6px;
   --radius-lg: 10px;
-  --radius-full: 999px;
-
-  /* =========================
-     SHADOW
-     ========================= */
 
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 10px rgba(0, 0, 0, 0.08);
-
-  /* =========================
-     Z-INDEX
-     ========================= */
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
 
   --z-dropdown: 100;
   --z-overlay: 200;
@@ -79,21 +82,15 @@
 }
 
 /* =========================
-   DARK MODE
+   DARK MODE (későbbre kész)
    ========================= */
 
 .dark {
-  --color-bg: #020617;
-  --color-bg-muted: #020617;
-  --color-bg-elevated: #020617;
+  --color-bg: #1C2A30;
+  --color-bg-muted: #22343B;
+  --color-bg-elevated: #2A3E45;
 
-  --color-text: #e5e7eb;
-  --color-text-muted: #94a3b8;
-
-  --color-border: #1e293b;
-  --color-border-strong: #334155;
-
-  --color-primary: #3b82f6;
-  --color-primary-hover: #2563eb;
-  --color-primary-soft: #1e3a8a;
+  --color-text: #E6ECEE;
+  --color-text-muted: #9FB2B8;
+  --color-border: #3A4F56;
 }
