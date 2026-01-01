@@ -1,0 +1,43 @@
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+
+  padding-inline: var(--space-4);
+  border-radius: var(--radius-md);
+  border: none;
+
+  font: inherit;
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+}
+
+/* =========================
+   SIZES
+   ========================= */
+.btn--sm { height: 32px; font-size: var(--text-sm); }
+.btn--md { height: 40px; font-size: var(--text-base); }
+.btn--lg { height: 48px; font-size: var(--text-md); }
+
+/* =========================
+   VARIANTS
+   ========================= */
+.btn--primary {
+  background: var(--color-primary);
+  color: var(--color-text-inverse);
+}
+
+.btn--ghost {
+  background: transparent;
+  color: var(--color-text);
+}
+
+.btn--danger {
+  background: var(--color-danger);
+  color: var(--color-text-inverse);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
