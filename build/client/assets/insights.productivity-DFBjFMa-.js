@@ -1,0 +1,1 @@
+import{w as i,p as t}from"./chunk-WWGJGFF6-DNatREV9.js";const r=i(function(){return t.jsxs("div",{className:"page",children:[t.jsx("h1",{children:"Productivity"}),t.jsx("p",{children:"Productivity insights and trends."})]})});export{r as default};
