@@ -15,9 +15,9 @@
 /* =========================
    SIZES
    ========================= */
-.btn--sm { height: 32px; font-size: var(--text-sm); }
-.btn--md { height: 40px; font-size: var(--text-base); }
-.btn--lg { height: 48px; font-size: var(--text-md); }
+.btn--sm { height: 32px; font-size: var(--font-default); }
+.btn--md { height: 40px; font-size: var(--font-default); }
+.btn--lg { height: 48px; font-size: var(--font-default); }
 
 /* =========================
    VARIANTS

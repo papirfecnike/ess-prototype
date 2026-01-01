@@ -16,7 +16,7 @@ body {
 body {
   margin: 0;
   font-family: var(--font-sans);
-  font-size: var(--text-base);
+  font-size: var(--font-default);
   font-weight: var(--font-weight-regular);
 
   background: var(--color-bg);
@@ -36,15 +36,15 @@ h3,
 h4,
 h5 {
   margin: 0;
-  font-weight: var(--font-weight-semibold);
+  font-weight: var(--font-weight-bold);
 }
 
 h1 {
-  font-size: var(--text-xl);
+  font-size: var(--font-h2);
 }
 
 h2 {
-  font-size: var(--text-lg);
+  font-size: var(--font-h2);
 }
 
 p {

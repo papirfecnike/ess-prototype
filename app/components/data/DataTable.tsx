@@ -21,40 +21,36 @@ type Props = {
   pagination?: Pagination;
 };
 
-export function DataTable({
-  columns,
-  rows,
-  pagination,
-}: Props) {
+export function DataTable({ columns, rows, pagination }: Props) {
   return (
-    <div className="data-table">
-      <DataTableHeader />
+    <div className="data-table-shell">
+      <div className="data-table">
+        <DataTableHeader />
 
-      <table>
-        <thead>
-          <tr>
-            {columns.map((col) => (
-              <th key={col.key}>{col.label}</th>
-            ))}
-          </tr>
-        </thead>
+        <div className="data-table__content">
+          <table>
+            <thead>
+              <tr>
+                {columns.map((col) => (
+                  <th key={col.key}>{col.label}</th>
+                ))}
+              </tr>
+            </thead>
 
-        <tbody>
-          {rows.map((row, idx) => (
-            <tr key={idx}>
-              {columns.map((col) => (
-                <td key={col.key}>
-                  {row[col.key]}
-                </td>
+            <tbody>
+              {rows.map((row, idx) => (
+                <tr key={idx}>
+                  {columns.map((col) => (
+                    <td key={col.key}>{row[col.key]}</td>
+                  ))}
+                </tr>
               ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
+            </tbody>
+          </table>
+        </div>
 
-      {pagination && (
-        <DataTableFooter pagination={pagination} />
-      )}
+        {pagination && <DataTableFooter pagination={pagination} />}
+      </div>
     </div>
   );
 }

@@ -1,24 +1,40 @@
+/* ===== SHELL ===== */
+
+.data-table-shell {
+  padding: 1rem;
+  overflow: visible;
+}
+
+/* ===== ROOT CARD ===== */
+
 .data-table {
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  background: var(--color-surface);
+  background: var(--color-table);
+  border-radius: var(--radius-m);
+  border: 1px solid var(--color-table-border);
+  box-shadow: var(--shadow-m);
+
+  display: flex;
+  flex-direction: column;
+
   overflow: hidden;
 }
 
-/* HEADER */
+/* ===== HEADER ===== */
+
 .data-table__header {
-  display: flex;
-  justify-content: space-between;
+  background-color: var(--color-table-header);
   padding: var(--space-3);
-  border-bottom: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-table-border);
 }
 
-.data-table__search {
-  padding: var(--space-2);
-  font-size: var(--font-size-sm);
+/* ===== CONTENT ===== */
+
+.data-table__content {
+  overflow-x: auto;
 }
 
-/* TABLE */
+/* ===== TABLE ===== */
+
 .data-table table {
   width: 100%;
   border-collapse: collapse;
@@ -27,20 +43,27 @@
 .data-table th,
 .data-table td {
   padding: var(--space-3);
-  border-bottom: 1px solid var(--color-border);
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-s);
   text-align: left;
+  border-bottom: 1px solid var(--color-table-border);
+  background-color: var(--color-table);
 }
 
 .data-table th {
-  background: var(--color-bg);
   font-weight: 500;
+  background-color: var(--color-table-header, #f5f6f7);
 }
 
-/* FOOTER */
+.data-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* ===== FOOTER ===== */
+
 .data-table__footer {
   display: flex;
   justify-content: space-between;
   padding: var(--space-3);
-  border-top: 1px solid var(--color-border);
+  background-color: var(--color-table);
+  border-top: 1px solid var(--color-table-border);
 }

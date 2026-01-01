@@ -14,4 +14,5 @@
   height: 40px;
   padding-left: calc(var(--space-5) + 16px);
   padding-right: var(--space-3);
+  background-color: var(--color-input);
 }

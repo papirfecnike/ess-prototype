@@ -2,8 +2,8 @@ import { NavLink } from "react-router";
 
 export default function ClientHeader() {
   return (
-    <header>
-      <nav>
+    <header className="app-header">
+      <nav className="app-header__nav">
         <NavLink to="/dashboard">Dashboard</NavLink>
         <NavLink to="/insights">Insights</NavLink>
         <NavLink to="/inbound">Inbound</NavLink>
@@ -13,16 +13,15 @@ export default function ClientHeader() {
         <NavLink to="/configuration">Configuration</NavLink>
       </nav>
 
-      <div style={{ display: "flex", gap: 12 }}>
-        <input
-          type="search"
-          placeholder="Search"
-          style={{
-            padding: "6px 10px",
-            borderRadius: 6,
-            border: "1px solid var(--color-border)",
-          }}
-        />
+      <div className="app-header__actions">
+        <div className="text-field">
+          <input
+            type="search"
+            placeholder="Search"
+            className="text-field__input"
+          />
+        </div>
+
         <button>Profile</button>
       </div>
     </header>
