@@ -7,12 +7,14 @@
 .select__icon {
   position: absolute;
   left: var(--space-3);
-  color: var(--color-text-muted);
+  color: var(--color-input-text-default);
 }
 
 .select__trigger {
-  height: 40px;
+  height: var(--input-height);
   padding-left: calc(var(--space-5) + 16px);
   padding-right: var(--space-3);
-  background-color: var(--color-input);
+  border: 1px solid var(--color-input-border);
+  background: var(--color-input-bg);
+  border-radius: var(--radius-s);
 }
