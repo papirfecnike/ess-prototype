@@ -10,22 +10,18 @@ type Props = {
 
 export function DataTableFooter({ pagination }: Props) {
   const { page, pageSize, total } = pagination;
-  const totalPages = Math.ceil(total / pageSize);
+  const from = (page - 1) * pageSize + 1;
+  const to = Math.min(page * pageSize, total);
 
   return (
     <div className="data-table__footer">
-      <div className="data-table__footer-left">
-        <button>Export</button>
-      </div>
+      <span>
+        {from}–{to} of {total}
+      </span>
 
-      <div className="data-table__footer-right">
-        <button disabled={page === 1}>Prev</button>
-        <span>
-          Page {page} of {totalPages}
-        </span>
-        <button disabled={page === totalPages}>
-          Next
-        </button>
+      <div>
+        <button disabled={page === 1}>Previous</button>
+        <button disabled={to >= total}>Next</button>
       </div>
     </div>
   );

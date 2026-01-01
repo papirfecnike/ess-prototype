@@ -1,69 +1,187 @@
-/* ===== SHELL ===== */
+/* =========================================================
+   DATA TABLE – CARD WRAPPER
+   ========================================================= */
 
-.data-table-shell {
-  padding: 1rem;
-  overflow: visible;
-}
-
-/* ===== ROOT CARD ===== */
-
-.data-table {
+.data-table-card {
   background: var(--color-table);
   border-radius: var(--radius-m);
-  border: 1px solid var(--color-table-border);
   box-shadow: var(--shadow-m);
+  overflow: visible;
 
+  margin: 0;
+}
+
+/* =========================================================
+   DATA TABLE ROOT
+   ========================================================= */
+
+.data-table {
   display: flex;
   flex-direction: column;
+
+  background: var(--color-table);
+  border-radius: inherit;
+  border: 1px solid var(--color-table-border);
 
   overflow: hidden;
 }
 
-/* ===== HEADER ===== */
+/* =========================================================
+   HEADER (Search + Filters)
+   ========================================================= */
 
 .data-table__header {
-  background-color: var(--color-table-header);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+
   padding: var(--space-3);
+  background: var(--color-table);
   border-bottom: 1px solid var(--color-table-border);
 }
 
-/* ===== CONTENT ===== */
+
+/* TOP ROW */
+
+.data-table__header-main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.data-table__header-left {
+  flex: 1;
+}
+
+.data-table__header-right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+/* TOGGLE */
+
+.data-table__toggle {
+  display: flex;
+  align-items: center;
+}
+
+/* EXPANDABLE DETAILS */
+
+.data-table__header-details {
+  padding-top: var(--space-3);
+  border-top: 1px dashed var(--color-border);
+
+  display: flex;
+  gap: var(--space-4);
+}
+
+.data-table__header-details {
+  animation: expand 150ms ease-out;
+}
+
+@keyframes expand {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* =========================
+   COLUMN HEADER ROW
+   ========================= */
+
+.data-table__header-row {
+  margin: 8px;
+  border-radius: var(--radius-xs);
+  overflow: hidden;
+}
+
+.data-table__header-row table {
+  width: 100%;
+  border-collapse: collapse;
+  border: none;
+}
+
+.data-table__header-row th {
+  padding: 12px 16px;
+  font-size: var(--font-size-s);
+  font-weight: var(--font-weight-medium);
+  text-align: left;
+  color: var(--color-text);
+
+  background: transparent;
+  border: none;
+}
+
+
+/* =========================================================
+   TABLE CONTENT
+   ========================================================= */
 
 .data-table__content {
   overflow-x: auto;
 }
 
-/* ===== TABLE ===== */
+/* TABLE */
 
 .data-table table {
   width: 100%;
   border-collapse: collapse;
 }
 
-.data-table th,
-.data-table td {
-  padding: var(--space-3);
+/* HEADER ROW */
+
+.data-table thead th {
+  background: var(--color-table-column-header);
+  font-weight: var(--font-weight-medium);
   font-size: var(--font-size-s);
+  color: var(--color-text);
+
+  padding: var(--space-3);
   text-align: left;
-  border-bottom: 1px solid var(--color-table-border);
-  background-color: var(--color-table);
 }
 
-.data-table th {
-  font-weight: 500;
-  background-color: var(--color-table-header, #f5f6f7);
+/* BODY ROWS */
+
+.data-table tbody td {
+  padding: var(--space-3);
+  font-size: var(--font-size-s);
+  color: var(--color-text);
+
+  border-bottom: 1px solid var(--color-table-border);
+  background: var(--color-table);
 }
+
+/* HOVER */
+
+.data-table tbody tr:hover td {
+  background: var(--color-table-hover);
+}
+
+/* LAST ROW */
 
 .data-table tbody tr:last-child td {
   border-bottom: none;
 }
 
-/* ===== FOOTER ===== */
+/* =========================================================
+   FOOTER
+   ========================================================= */
 
 .data-table__footer {
   display: flex;
+  align-items: center;
   justify-content: space-between;
+
   padding: var(--space-3);
-  background-color: var(--color-table);
+  background: var(--color-table);
   border-top: 1px solid var(--color-table-border);
+
+  font-size: var(--font-size-s);
 }

@@ -2,29 +2,24 @@ import type { InputHTMLAttributes } from "react";
 import "./toggle.css";
 
 type Props = {
+  checked: boolean;
+  onChange: (checked: boolean) => void;
   label?: string;
-} & Omit<InputHTMLAttributes<HTMLInputElement>, "type">;
+} & Omit<InputHTMLAttributes<HTMLInputElement>, "type" | "onChange">;
 
 export function Toggle({
-  label,
   checked,
-  disabled,
   onChange,
+  label,
   ...rest
 }: Props) {
   return (
-    <label
-      className={[
-        "ui-toggle",
-        checked ? "is-checked" : "",
-        disabled ? "is-disabled" : "",
-      ].join(" ")}
-    >
+    <label className="ui-toggle">
       <input
         type="checkbox"
+        className="ui-toggle__input"
         checked={checked}
-        disabled={disabled}
-        onChange={onChange}
+        onChange={(e) => onChange(e.target.checked)}
         {...rest}
       />
 

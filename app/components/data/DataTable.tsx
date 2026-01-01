@@ -2,6 +2,10 @@ import "./data-table.css";
 import { DataTableHeader } from "./DataTableHeader";
 import { DataTableFooter } from "./DataTableFooter";
 
+/* =========================
+   TYPES
+   ========================= */
+
 export type DataTableColumn = {
   key: string;
   label: string;
@@ -15,19 +19,27 @@ type Pagination = {
   total: number;
 };
 
-type Props = {
+type DataTableProps = {
   columns: DataTableColumn[];
   rows: DataTableRow[];
   pagination?: Pagination;
 };
 
-export function DataTable({ columns, rows, pagination }: Props) {
+/* =========================
+   COMPONENT
+   ========================= */
+
+export function DataTable({
+  columns,
+  rows,
+  pagination,
+}: DataTableProps) {
   return (
-    <div className="data-table-shell">
+    <div className="data-table-card">
       <div className="data-table">
         <DataTableHeader />
 
-        <div className="data-table__content">
+        <div className="data-table__header-row">
           <table>
             <thead>
               <tr>
@@ -38,10 +50,12 @@ export function DataTable({ columns, rows, pagination }: Props) {
             </thead>
 
             <tbody>
-              {rows.map((row, idx) => (
-                <tr key={idx}>
+              {rows.map((row, rowIndex) => (
+                <tr key={rowIndex}>
                   {columns.map((col) => (
-                    <td key={col.key}>{row[col.key]}</td>
+                    <td key={col.key}>
+                      {row[col.key]}
+                    </td>
                   ))}
                 </tr>
               ))}
@@ -49,7 +63,9 @@ export function DataTable({ columns, rows, pagination }: Props) {
           </table>
         </div>
 
-        {pagination && <DataTableFooter pagination={pagination} />}
+        {pagination && (
+          <DataTableFooter pagination={pagination} />
+        )}
       </div>
     </div>
   );

@@ -14,7 +14,9 @@
   --color-text-inverse: #FFFFFF;
 
   --color-table: #FFFFFF;
+  --color-table-hover: #ECF0F2;
   --color-table-border: #E0E8EA;
+  --color-table-column-header: #F5F6F7;
 
   --color-toggle-track: #2D4E58;
 
@@ -24,17 +26,37 @@
   --color-primary-hover: #16a8d5;
   --color-primary-soft: #16a8d5;
 
+  --color-secondary: #ffffff;
+  --color-secondary-hover: #137897;
+  --color-secondary-soft: #16a8d5;
+
+  --color-input-bg: #ffffff;
+  --color-input-border: #7E9094;
+  --color-input-text-default: #7E9094;
+  --color-input-text-focus: #14282F;
+  --color-input-text-disabled: #919597;
+
   --color-success: #14282F;
   --color-warning: #B15E05;
   --color-danger: #CA1520;
 
-  --color-disabled: #919597;
+  --color-disabled: #bfc2c4;
+
+  --color-toggle-bg: #E0E8EA;
+  --color-toggle-bg-on: #137897;
 
   --shadow-s: 0 1px 4px rgba(0,0,0,0.06);
   --shadow-m: 0 24px 42px rgba(0,0,0,0.1);
 
+
+    /* =========================
+     SIZES
+     ========================= */
+
   --header-height: 64px;
   --sidebar-width: 280px;
+  --input-height: 42px;
+
 
   /* =========================
      TYPOGRAPHY
@@ -68,6 +90,7 @@
      RADIUS
      ========================= */
 
+  --radius-xs: 4px;
   --radius-s: 8px;
   --radius-m: 16px;
   --radius-l: 24px;

@@ -15,9 +15,9 @@
 /* =========================
    SIZES
    ========================= */
-.btn--s { height: 24px; font-size: var(--font-default); }
-.btn--m { height: 42px; font-size: var(--font-default); }
-.btn--l { height: 56px; font-size: var(--font-default); }
+.btn--s { height: 32px; font-size: var(--font-default); }
+.btn--m { height: 40px; font-size: var(--font-default); }
+.btn--l { height: 48px; font-size: var(--font-default); }
 
 /* =========================
    VARIANTS
@@ -25,6 +25,11 @@
 .btn--primary {
   background: var(--color-primary);
   color: var(--color-text-inverse);
+}
+
+.btn--secondary {
+  background: var(--color-secondary);
+  color: var(--color-text);
 }
 
 .btn--ghost {
