@@ -1,7 +1,8 @@
-import appStyles from "./styles/app.css?url";
+import tokens from "./styles/tokens.css?url";
+import base from "./styles/base.css?url";
+import app from "./styles/app.css?url";
 
 import {
-  isRouteErrorResponse,
   Meta,
   Links,
   Outlet,
@@ -15,9 +16,21 @@ import Sidebar from "./components/Sidebar";
 import Footer from "./components/Footer";
 import { SearchProvider } from "./search/SearchContext";
 
+/* =========================
+   STYLES
+   ========================= */
+
 export function links() {
-  return [{ rel: "stylesheet", href: appStyles }];
+  return [
+    { rel: "stylesheet", href: tokens },
+    { rel: "stylesheet", href: base },
+    { rel: "stylesheet", href: app },
+  ];
 }
+
+/* =========================
+   APP ROOT
+   ========================= */
 
 export default function App() {
   return (
@@ -29,12 +42,14 @@ export default function App() {
       <body>
         <SearchProvider>
           <ClientHeader />
+
           <div className="app-layout">
             <Sidebar />
             <main className="app-main">
               <Outlet />
             </main>
           </div>
+
           <Footer />
         </SearchProvider>
 
@@ -44,6 +59,10 @@ export default function App() {
     </html>
   );
 }
+
+/* =========================
+   ERROR BOUNDARY
+   ========================= */
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
   return (

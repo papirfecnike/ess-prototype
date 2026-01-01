@@ -1,0 +1,18 @@
+.selectable-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.list-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2);
+  cursor: pointer;
+}
+
+.list-item.is-disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

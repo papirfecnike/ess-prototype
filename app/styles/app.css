@@ -1,3 +1,10 @@
+@import "../components/ui/menu/dropdown-menu.css";
+@import "../components/ui/list/selectable-list.css";
+@import "../components/ui/button/button.css";
+@import "../components/ui/icon/icon.css";
+@import "../components/ui/input/text-field.css";
+@import "../components/ui/select/select.css";
+
 /* =========================================================
    DESIGN TOKENS
    ========================================================= */
@@ -138,6 +145,59 @@ aside {
   border-radius: var(--radius-md);
   padding: 16px;
 }
+
+/* PAGE LAYOUT */
+
+.page-layout {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.page-layout__content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+/* PAGE HEADER */
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--space-4);
+}
+
+.page-header__title {
+  font-size: var(--font-size-lg);
+  margin: 0;
+}
+
+.page-header__subtitle {
+  font-size: var(--font-size-sm);
+  color: var(--color-muted);
+  margin: var(--space-1) 0 0;
+}
+
+.page-header__actions {
+  display: flex;
+  gap: var(--space-2);
+}
+
+/* PAGE SECTION */
+
+.page-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.page-section__title {
+  font-size: var(--font-size-md);
+  margin: 0;
+}
+
 
 /* =========================================================
    GENERIC UI

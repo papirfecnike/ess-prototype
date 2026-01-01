@@ -1,0 +1,17 @@
+.select {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.select__icon {
+  position: absolute;
+  left: var(--space-3);
+  color: var(--color-text-muted);
+}
+
+.select__trigger {
+  height: 40px;
+  padding-left: calc(var(--space-5) + 16px);
+  padding-right: var(--space-3);
+}
