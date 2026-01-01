@@ -1,1 +1,0 @@
-import{w as e,p as r}from"./chunk-WWGJGFF6-DNatREV9.js";const t=e(function(){return r.jsxs("div",{className:"page",children:[r.jsx("h1",{children:"Order tracking"}),r.jsx("p",{children:"Placeholder content"})]})});export{t as default};
