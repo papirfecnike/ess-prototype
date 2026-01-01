@@ -42,7 +42,7 @@ export default function ClientHeader() {
           />
         </div>
 
-        <button className="ui-button ui-button--secondary ui-button--sm">
+        <button className="btn--primary btn--m">
           Profile
         </button>
       </div>
