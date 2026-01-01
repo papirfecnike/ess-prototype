@@ -1,3 +1,7 @@
+/* =========================
+   RESET
+   ========================= */
+
 *,
 *::before,
 *::after {
@@ -22,6 +26,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* =========================
+   TEXT ELEMENTS
+   ========================= */
+
 h1,
 h2,
 h3,
@@ -29,7 +37,6 @@ h4,
 h5 {
   margin: 0;
   font-weight: var(--font-weight-semibold);
-  color: var(--color-text-strong);
 }
 
 h1 {
@@ -42,18 +49,25 @@ h2 {
 
 p {
   margin: 0;
-  color: var(--color-text);
+  color: var(--color-text-muted);
 }
 
+/* =========================
+   LINKS
+   ========================= */
+
 a {
-  color: var(--color-link);
+  color: inherit;
   text-decoration: none;
 }
 
 a:hover {
-  color: var(--color-link-hover);
   text-decoration: underline;
 }
+
+/* =========================
+   BUTTON RESET
+   ========================= */
 
 button {
   font-family: inherit;
@@ -63,12 +77,20 @@ button {
   cursor: pointer;
 }
 
+/* =========================
+   FORM ELEMENTS
+   ========================= */
+
 input,
 select,
 textarea {
   font-family: inherit;
   font-size: inherit;
 }
+
+/* =========================
+   UTILITIES
+   ========================= */
 
 .hidden {
   display: none;
