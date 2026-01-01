@@ -34,9 +34,12 @@ export default function ClientHeader() {
 
       {/* RIGHT: ACTIONS */}
       <div className="app-header__actions">
-        <div className="search-container">
-          <SearchInput />
-          <SearchResultsPanel />
+        <div className="text-field">
+          <input
+            type="search"
+            placeholder="Search"
+            className="text-field__input"
+          />
         </div>
 
         <button className="ui-button ui-button--secondary ui-button--sm">
