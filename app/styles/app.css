@@ -31,8 +31,6 @@ body {
    ========================================================= */
 
 header {
-  height: var(--header-height);
-  background: transparent;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -145,15 +143,18 @@ aside {
   display: flex;
   align-items: flex-start;
   margin: 1rem;
+  background: transparent;
 }
 
 .page-header__left {
   margin: 0;
+  background: transparent;
 }
 .page-header__title {
   font-size: var(--font-h1);
   font-weight: var(--font-weight-bold);
   margin: 0;
+  background: transparent;
 }
 
 .page-header__subtitle {
@@ -161,6 +162,7 @@ aside {
   font-weight: var(--font-weight-regular);
   color: var(--color-muted);
   margin: var(--space-1) 0 0;
+  background: transparent;
 }
 
 .page-header__actions {
@@ -173,12 +175,14 @@ aside {
   display: flex;
   flex-direction: column;
   overflow: visible;
+  background: transparent;
 }
 
 .page-section__title {
   font-size: var(--font-section-title);
   font-weight: var(--font-weight-bold);
   margin-left: 1rem;
+  background: transparent;
 }
 
 
