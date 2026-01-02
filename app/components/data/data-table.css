@@ -275,3 +275,24 @@
   color: var(--color-table-chevron);
   fill: currentColor;
 }
+
+/* =========================
+   DETAILS BAR
+   ========================= */
+
+.data-table__details-bar {
+  padding: var(--space-3);
+  background: var(--color-table-hover);
+  border-bottom: 1px dashed var(--color-border);
+  font-size: var(--font-size-s);
+}
+
+/* =========================
+   FILTER PLACEHOLDER
+   ========================= */
+
+.data-table__filter-placeholder {
+  padding: var(--space-4);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-s);
+}

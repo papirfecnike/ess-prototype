@@ -3,7 +3,6 @@ import { useState } from "react";
 
 import { PageLayout } from "@/components/layout/PageLayout";
 import { PageSection } from "@/components/layout/PageSection";
-import { DataTable } from "@/components/data/DataTable";
 
 export const loader: LoaderFunction = async () => {
   return null;

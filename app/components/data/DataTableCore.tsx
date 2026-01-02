@@ -25,6 +25,12 @@ type SortState = {
   direction: "asc" | "desc";
 } | null;
 
+type Pagination = {
+  page: number;
+  pageSize: number;
+  total: number;
+};
+
 type Props = {
   columns: DataTableColumn[];
   rows: DataTableRow[];
@@ -37,6 +43,8 @@ type Props = {
   onSelectionChange?: (ids: string[]) => void;
 
   renderExpandedRow?: (row: DataTableRow) => React.ReactNode;
+
+  pagination?: Pagination;
 };
 
 /* =========================
@@ -52,10 +60,18 @@ export function DataTableCore({
   selectedRows = [],
   onSelectionChange,
   renderExpandedRow,
+  pagination,
 }: Props) {
+  /* =========================
+     STATE
+     ========================= */
+
+  const [search, setSearch] = useState("");
+  const [showDetails, setShowDetails] = useState(false);
+  const [showFilters, setShowFilters] = useState(false);
+
   const [sort, setSort] = useState<SortState>(null);
   const [expandedRows, setExpandedRows] = useState<string[]>([]);
-  const [search, setSearch] = useState("");
 
   const visibleColumns = columns.filter((c) => !c.hidden);
 
@@ -65,7 +81,6 @@ export function DataTableCore({
 
   const filteredRows = rows.filter((row) => {
     if (!search) return true;
-
     const q = search.toLowerCase();
 
     return visibleColumns.some((col) => {
@@ -143,7 +158,26 @@ export function DataTableCore({
         <DataTableHeader
           searchValue={search}
           onSearchChange={setSearch}
+          showDetails={showDetails}
+          onToggleDetails={setShowDetails}
+          showFilters={showFilters}
+          onToggleFilters={() => setShowFilters((v) => !v)}
         />
+
+        {showDetails && (
+          <div className="data-table__details-bar">
+            <strong>Details enabled</strong>
+            <span> – extra row metadata is visible</span>
+          </div>
+        )}
+
+        {showFilters && (
+          <div className="data-table__filter-panel">
+            <div className="data-table__filter-placeholder">
+              Filters panel is open
+            </div>
+          </div>
+        )}
 
         <div className="data-table__header-row">
           <table>
@@ -187,16 +221,11 @@ export function DataTableCore({
             </thead>
 
             <tbody>
-              {/* EMPTY STATE */}
               {sortedRows.length === 0 && (
                 <tr className="data-table__empty">
                   <td colSpan={colSpan}>
                     <div className="data-table__empty-content">
-                      <Icon
-                        name="search"
-                        size="lg"
-                        color="muted"
-                      />
+                      <Icon name="search" size="lg" color="muted" />
                       <div className="data-table__empty-title">
                         No results found
                       </div>
@@ -266,6 +295,10 @@ export function DataTableCore({
             </tbody>
           </table>
         </div>
+
+        {pagination && (
+          <DataTableFooter pagination={pagination} />
+        )}
       </div>
     </div>
   );
