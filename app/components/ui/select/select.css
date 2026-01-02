@@ -1,20 +1,148 @@
 .select {
   position: relative;
-  display: inline-flex;
-  align-items: center;
+  width: 100%;
+  font-size: 14px;
 }
 
-.select__icon {
-  position: absolute;
-  left: var(--space-3);
-  color: var(--color-input-text-default);
-}
+/* =========================
+   TRIGGER
+   ========================= */
 
 .select__trigger {
+  width: 100%;
   height: var(--input-height);
-  padding-left: calc(var(--space-5) + 16px);
-  padding-right: var(--space-3);
+  padding: 6px 36px 6px 12px;
+
+  background: var(--color-input);
   border: 1px solid var(--color-input-border);
-  background: var(--color-input-bg);
   border-radius: var(--radius-s);
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  cursor: pointer;
+  position: relative;
+}
+
+.select__label {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #7E9094;
+  transition: all 0.15s ease;
+  pointer-events: none;
+}
+
+.select__label.is-floating {
+  top: 8px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.select__value {
+  margin-top: 8px;
+  color: #14282F;
+}
+
+.select__chevron {
+  position: absolute;
+  right: 10px;
+  color: #7E9094;
+  transition: transform 0.15s ease;
+}
+
+.select__chevron.is-open {
+  transform: rotate(180deg);
+}
+
+/* =========================
+   DROPDOWN
+   ========================= */
+
+.select__dropdown {
+  position: absolute;
+  z-index: 100;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+
+  background: white;
+  border: 1px solid var(--color-input-border);
+  border-radius: var(--radius-s);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+
+  max-height: 240px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* SEARCH */
+
+.select__search {
+  margin: 4px;
+  padding: 8px;
+  border: none;
+  border-bottom: 1px solid #E0E8EA;
+  outline: none;
+}
+
+/* LIST */
+
+.select__list {
+  list-style: none;
+  padding: 4px;
+  margin: 0;
+  overflow-y: auto;
+}
+
+.select__option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 6px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.select__option:hover {
+  background: #F5F6F7;
+}
+
+.select__option input {
+  pointer-events: none;
+}
+
+/* EMPTY STATE */
+
+.select__empty {
+  padding: 16px 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+
+  color: #7E9094;
+  font-size: 13px;
+}
+
+/* =========================
+   SIZE – SMALL
+   ========================= */
+
+.select--sm .select__trigger {
+  height: 32px;
+  padding: 0 32px 0 10px;
+}
+
+.select--sm .select__label {
+  font-size: 10px;
+  top: 6px;
+}
+
+.select--sm .select__value {
+  margin-top: 6px;
+  font-size: 12px;
 }

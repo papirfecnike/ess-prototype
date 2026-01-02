@@ -17,10 +17,9 @@
   --color-table-hover: #ECF0F2;
   --color-table-border: #E0E8EA;
   --color-table-column-header: #F5F6F7;
+  --color-table-chevron: #137897;
 
   --color-toggle-track: #2D4E58;
-
-  --color-input: #FFFFFF;
 
   --color-primary: #137897;
   --color-primary-hover: #16a8d5;
@@ -31,7 +30,7 @@
   --color-secondary-soft: #16a8d5;
 
   --color-input-bg: #ffffff;
-  --color-input-border: #7E9094;
+  --color-input-border: #b1c3c7;
   --color-input-text-default: #7E9094;
   --color-input-text-focus: #14282F;
   --color-input-text-disabled: #919597;

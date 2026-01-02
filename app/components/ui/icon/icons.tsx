@@ -6,6 +6,20 @@ export const icons: Record<string, ReactNode> = {
   chevronDown: <path d="M6 9l6 6 6-6" />,
   check: <path d="M5 13l4 4L19 7" />,
   close: <path d="M6 6l12 12M6 18L18 6" />,
+
+  firstPage: (
+  <>
+    <path d="M11 12l5-5M11 12l5 5" />
+    <path d="M6 6v12" />
+  </>
+),
+
+lastPage: (
+  <>
+    <path d="M13 12l-5-5M13 12l-5 5" />
+    <path d="M18 6v12" />
+  </>
+),
 };
 
 export type IconName = keyof typeof icons;

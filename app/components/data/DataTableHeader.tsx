@@ -1,42 +1,65 @@
-import { useState } from "react";
 import { Toggle } from "../ui/toggle/Toggle";
+import { Icon } from "../ui/icon/Icon";
 import { SelectableList } from "../ui/list/SelectableList";
+import { Select } from "@/components/ui/select/Select";
 
-export function DataTableHeader() {
-  const [showDetails, setShowDetails] = useState(false);
-  const [statuses, setStatuses] = useState<string[]>([]);
+type Props = {
+  searchValue: string;
+  onSearchChange: (value: string) => void;
 
+  showDetails: boolean;
+  onToggleDetails: (value: boolean) => void;
+
+  showFilters: boolean;
+  onToggleFilters: () => void;
+};
+
+export function DataTableHeader({
+  searchValue,
+  onSearchChange,
+  showDetails,
+  onToggleDetails,
+  showFilters,
+  onToggleFilters,
+}: Props) {
   return (
-    <div
-      className={[
-        "data-table__header",
-        showDetails ? "is-expanded" : "",
-      ].join(" ")}
-    >
-      {/* TOP ROW */}
+    <div className="data-table__header">
       <div className="data-table__header-main">
         <div className="data-table__header-left">
           <input
             type="search"
             placeholder="Search"
             className="text-field__input"
+            value={searchValue}
+            onChange={(e) => onSearchChange(e.target.value)}
           />
         </div>
 
         <div className="data-table__header-right">
-          <div className="data-table__toggle">
-            <Toggle
-              checked={showDetails}
-              onChange={setShowDetails}
-              label="Show details"
-            />
-          </div>
+          <Toggle
+            checked={showDetails}
+            onChange={onToggleDetails}
+            label="Show details"
+          />
 
-          <button className="btn--secondary">Columns</button>
+          <button
+            type="button"
+            className="btn--secondary data-table__filter-button"
+            onClick={onToggleFilters}
+          >
+            Filter
+            <Icon
+              name="chevronDown"
+              className={[
+                "data-table__chevron",
+                showFilters ? "is-open" : "",
+              ].join(" ")}
+            />
+          </button>
         </div>
       </div>
 
-      {/* EXPANDABLE DETAILS */}
+      {/* DETAILS PANEL */}
       {showDetails && (
         <div className="data-table__header-details">
           <SelectableList
@@ -45,9 +68,50 @@ export function DataTableHeader() {
               { id: "completed", label: "Completed" },
               { id: "blocked", label: "Blocked", disabled: true },
             ]}
-            value={statuses}
-            onChange={setStatuses}
+            value={["in-progress", "completed"]}
+            onChange={() => {}}
           />
+        </div>
+      )}
+
+      {/* FILTER PANEL */}
+      {showFilters && (
+        <div className="data-table__filter-panel">
+          <div className="data-table__filter-selects">
+            <Select
+              label="Warehouse"
+              multiple
+              value={["all"]}
+              onChange={() => {}}
+              options={[
+                { value: "all", label: "All" },
+                { value: "a", label: "Warehouse A" },
+                { value: "b", label: "Warehouse B" },
+              ]}
+            />
+
+            <Select
+              label="Priority"
+              multiple
+              value={["all"]}
+              onChange={() => {}}
+              options={[
+                { value: "all", label: "All" },
+                { value: "high", label: "High" },
+                { value: "low", label: "Low" },
+              ]}
+            />
+          </div>
+
+          <div className="data-table__filter-actions">
+            <button type="button" className="btn--secondary" disabled>
+              Customize columns
+            </button>
+
+            <button type="button" className="btn--ghost" disabled>
+              Delete filters
+            </button>
+          </div>
         </div>
       )}
     </div>
