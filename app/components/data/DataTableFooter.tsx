@@ -36,8 +36,10 @@ export function DataTableFooter({
     })
   );
 
+  const canGoFirst = !disabled && page > 1;
   const canGoPrev = !disabled && page > 1;
   const canGoNext = !disabled && page < totalPages;
+  const canGoLast = !disabled && page < totalPages;
 
   return (
     <div className="data-table__footer">
@@ -55,6 +57,21 @@ export function DataTableFooter({
 
       {/* RIGHT */}
       <div className="data-table__footer-center">
+        {/* FIRST */}
+        <button
+          type="button"
+          className="btn--ghost"
+          disabled={!canGoFirst}
+          onClick={() => onPageChange?.(1)}
+          aria-label="First page"
+        >
+          <Icon
+            name="firstPage"
+            size="sm"
+            className="data-table__chevron data-table__chevron-first"
+          />
+        </button>
+
         {/* PREVIOUS */}
         <button
           type="button"
@@ -69,16 +86,6 @@ export function DataTableFooter({
             className="data-table__chevron data-table__chevron-left"
           />
         </button>
-
-        {/* PAGE SELECT */}
-        <Select
-          value={[String(page)]}
-          onChange={(v) =>
-            onPageChange?.(Number(v[0]))
-          }
-          options={pageOptions}
-          label=""
-        />
 
         {/* RANGE */}
         <span className="data-table__footer-range">
@@ -99,6 +106,32 @@ export function DataTableFooter({
             className="data-table__chevron data-table__chevron-right"
           />
         </button>
+
+        <button
+          type="button"
+          className="btn--ghost"
+          disabled={!canGoLast}
+          onClick={() => onPageChange?.(totalPages)}
+          aria-label="Last page"
+        >
+          <Icon
+            name="lastPage"
+            size="sm"
+            className="data-table__chevron data-table__chevron-last"
+          />
+        </button>
+
+        <div className="data-table__footer-page-select">
+          <Select
+            size="sm"
+            value={[String(page)]}
+            onChange={(v) =>
+              onPageChange?.(Number(v[0]))
+            }
+            options={pageOptions}
+            label=""
+          />
+        </div>
       </div>
     </div>
   );

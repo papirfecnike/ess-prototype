@@ -114,3 +114,34 @@
 .select__option input {
   pointer-events: none;
 }
+
+
+/* SIZE */
+
+.select--sm {
+  height: 32px;
+}
+
+.select--sm .select__trigger {
+  height: 32px;
+  padding: 0 var(--space-2);
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: var(--space-1);
+}
+
+.select--sm .select__value {
+  font-size: var(--font-size-xs);
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* ICON */
+.select--sm svg {
+  width: 14px;
+  height: 14px;
+}

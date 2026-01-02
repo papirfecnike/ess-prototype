@@ -7,8 +7,12 @@ export type SelectOption = {
   label: string;
 };
 
+type SelectSize = "md" | "sm";
+
+
 type Props = {
   label: string;
+  size: SelectSize;
   options: SelectOption[];
   value: string[];
   multiple?: boolean;
@@ -20,6 +24,7 @@ export function Select({
   options,
   value,
   multiple = false,
+  size = "md",
   onChange,
 }: Props) {
   const [open, setOpen] = useState(false);
@@ -85,10 +90,12 @@ export function Select({
      ========================= */
 
   return (
-    <div
-      className={`select ${open ? "is-open" : ""}`}
-      ref={containerRef}
-    >
+      <div
+        className={[
+          "select",
+          size === "sm" ? "select--sm" : "",
+        ].join(" ")}
+      >
       {/* TRIGGER */}
       <button
         type="button"

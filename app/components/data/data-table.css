@@ -380,3 +380,55 @@
 .data-table__footer .btn--ghost {
   color: var(--color-text);
 }
+
+
+/* =========================
+   FOOTER – PAGINATION
+   ========================= */
+
+.data-table__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: var(--space-3);
+  border-top: 1px solid var(--color-table-border);
+  background: var(--color-table);
+}
+
+.data-table__footer-center {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.data-table__footer-range {
+  font-size: var(--font-size-s);
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
+
+/* SELECT OFFSET */
+.data-table__footer-page-select {
+  margin-left: var(--space-2);
+}
+
+/* CHEVRONS */
+
+.data-table__chevron {
+  color: var(--color-text);
+}
+
+/* prev / next */
+.data-table__chevron-left {
+  transform: rotate(90deg);
+}
+.data-table__chevron-right {
+  transform: rotate(-90deg);
+}
+
+/* disabled ghost buttons */
+.data-table__footer .btn--ghost:disabled {
+  color: var(--color-text-muted);
+  cursor: not-allowed;
+}
