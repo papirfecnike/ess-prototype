@@ -185,3 +185,57 @@
 
   font-size: var(--font-size-s);
 }
+
+
+/* =========================
+   FILTER BUTTON
+   ========================= */
+
+.data-table__filter-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* CHEVRON */
+
+.data-table__chevron {
+  transition: transform 150ms ease;
+}
+
+.data-table__chevron.is-open {
+  transform: rotate(180deg);
+}
+
+/* =========================
+   FILTER PANEL
+   ========================= */
+
+.data-table__filter-panel {
+  margin-top: var(--space-3);
+  padding-top: var(--space-3);
+
+  border-top: 1px dashed var(--color-border);
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+
+  animation: expand 150ms ease-out;
+}
+
+/* SELECTS ROW */
+
+.data-table__filter-selects {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-4);
+}
+
+/* ACTIONS */
+
+.data-table__filter-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
