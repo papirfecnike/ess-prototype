@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import type { KeyboardEvent, MouseEvent } from "react";
+import type { MouseEvent } from "react";
 import { Icon } from "../icon/Icon";
 
 export type SelectOption = {
@@ -8,7 +8,6 @@ export type SelectOption = {
 };
 
 type SelectSize = "md" | "sm";
-
 
 type Props = {
   label: string;
@@ -46,28 +45,33 @@ export function Select({
     }
 
     document.addEventListener("mousedown", handleClick as any);
-    return () => document.removeEventListener("mousedown", handleClick as any);
+    return () =>
+      document.removeEventListener("mousedown", handleClick as any);
   }, []);
 
   /* =========================
-     HELPERS
+     HELPERS – ALL LOGIC
      ========================= */
 
+  const hasAllOption = options.some(o => o.value === "all");
+  const selectableOptions = options.filter(o => o.value !== "all");
+
   const isAllSelected =
-    value.length === options.length - 1 &&
-    options.some((o) => o.value === "all");
+    hasAllOption &&
+    value.length === selectableOptions.length &&
+    selectableOptions.length > 0;
 
   const isIndeterminate =
+    hasAllOption &&
     value.length > 0 &&
-    value.length < options.length - 1 &&
-    options.some((o) => o.value === "all");
+    value.length < selectableOptions.length;
 
   function toggleOption(option: SelectOption) {
     if (option.value === "all") {
       if (isAllSelected || value.length > 0) {
         onChange([]);
       } else {
-        onChange(options.filter(o => o.value !== "all").map(o => o.value));
+        onChange(selectableOptions.map(o => o.value));
       }
       return;
     }
@@ -79,23 +83,45 @@ export function Select({
     }
   }
 
+  /* =========================
+     SEARCH
+     ========================= */
+
   const visibleOptions = options.filter(o =>
     o.label.toLowerCase().includes(search.toLowerCase())
   );
 
+  const hasResults = visibleOptions.length > 0;
   const hasValue = value.length > 0;
+
+  /* =========================
+     VALUE LABEL
+     ========================= */
+
+  function getValueLabel() {
+    if (!hasValue) return "";
+
+    if (isAllSelected) return "All";
+
+    if (value.length === 1) {
+      return options.find(o => o.value === value[0])?.label;
+    }
+
+    return `${value.length} selected`;
+  }
 
   /* =========================
      RENDER
      ========================= */
 
   return (
-      <div
-        className={[
-          "select",
-          size === "sm" ? "select--sm" : "",
-        ].join(" ")}
-      >
+    <div
+      ref={containerRef}
+      className={[
+        "select",
+        size === "sm" ? "select--sm" : "",
+      ].join(" ")}
+    >
       {/* TRIGGER */}
       <button
         type="button"
@@ -112,17 +138,12 @@ export function Select({
         </span>
 
         <span className="select__value">
-          {hasValue
-            ? isAllSelected
-              ? "All"
-              : value.length === 1
-              ? options.find(o => o.value === value[0])?.label
-              : `${value.length} selected`
-            : ""}
+          {getValueLabel()}
         </span>
 
         <Icon
-          name="chevron"
+          name="chevronDown"
+          size="xs"
           className={[
             "select__chevron",
             open ? "is-open" : "",
@@ -144,6 +165,14 @@ export function Select({
 
           {/* OPTIONS */}
           <ul className="select__list">
+            {/* EMPTY STATE */}
+            {!hasResults && (
+              <li className="select__empty">
+                <Icon name="search" size="sm" color="muted" />
+                <span>No results found</span>
+              </li>
+            )}
+
             {visibleOptions.map((option) => {
               const checked =
                 option.value === "all"
@@ -170,7 +199,6 @@ export function Select({
                       }
                     }}
                   />
-
                   <span>{option.label}</span>
                 </li>
               );
