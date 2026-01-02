@@ -1,16 +1,6 @@
-import {
-  useEffect,
-  useRef,
-  useState,
-} from "react";
-import type { KeyboardEvent } from "react";
-
+import { useEffect, useRef, useState } from "react";
+import type { KeyboardEvent, MouseEvent } from "react";
 import { Icon } from "../icon/Icon";
-import "./select.css";
-
-/* =========================
-   TYPES
-   ========================= */
 
 export type SelectOption = {
   value: string;
@@ -20,186 +10,166 @@ export type SelectOption = {
 type Props = {
   label: string;
   options: SelectOption[];
-
+  value: string[];
   multiple?: boolean;
-
-  value: string[];                 // ⬅️ KÖTELEZŐ
-  onChange: (values: string[]) => void;
-
-  helperText?: string;
-  error?: string;
+  onChange: (value: string[]) => void;
 };
-
-/* =========================
-   COMPONENT
-   ========================= */
 
 export function Select({
   label,
   options,
-  multiple = false,
   value,
+  multiple = false,
   onChange,
-  helperText,
-  error,
 }: Props) {
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState("");
-
-  const rootRef = useRef<HTMLDivElement>(null);
-
-  const selectedOptions = options.filter(o =>
-    value.includes(o.value)
-  );
+  const containerRef = useRef<HTMLDivElement>(null);
 
   /* =========================
-     OUTSIDE CLICK
+     CLICK OUTSIDE
      ========================= */
 
   useEffect(() => {
-    function handleClickOutside(e: MouseEvent) {
+    function handleClick(e: MouseEvent) {
       if (
-        rootRef.current &&
-        !rootRef.current.contains(e.target as Node)
+        containerRef.current &&
+        !containerRef.current.contains(e.target as Node)
       ) {
         setOpen(false);
-        setSearch("");
       }
     }
 
-    document.addEventListener("mousedown", handleClickOutside);
-    return () =>
-      document.removeEventListener("mousedown", handleClickOutside);
+    document.addEventListener("mousedown", handleClick as any);
+    return () => document.removeEventListener("mousedown", handleClick as any);
   }, []);
 
-  function toggleValue(val: string) {
-    if (multiple) {
-      onChange(
-        value.includes(val)
-          ? value.filter(v => v !== val)
-          : [...value, val]
-      );
+  /* =========================
+     HELPERS
+     ========================= */
+
+  const isAllSelected =
+    value.length === options.length - 1 &&
+    options.some((o) => o.value === "all");
+
+  const isIndeterminate =
+    value.length > 0 &&
+    value.length < options.length - 1 &&
+    options.some((o) => o.value === "all");
+
+  function toggleOption(option: SelectOption) {
+    if (option.value === "all") {
+      if (isAllSelected || value.length > 0) {
+        onChange([]);
+      } else {
+        onChange(options.filter(o => o.value !== "all").map(o => o.value));
+      }
+      return;
+    }
+
+    if (value.includes(option.value)) {
+      onChange(value.filter(v => v !== option.value));
     } else {
-      onChange([val]);
-      setOpen(false);
+      onChange([...value, option.value]);
     }
   }
 
-  function handleKeyDown(e: KeyboardEvent<HTMLDivElement>) {
-    if (e.key === "Escape") {
-      setOpen(false);
-      setSearch("");
-    }
-  }
-
-  const filteredOptions = options.filter(o =>
+  const visibleOptions = options.filter(o =>
     o.label.toLowerCase().includes(search.toLowerCase())
   );
 
+  const hasValue = value.length > 0;
+
+  /* =========================
+     RENDER
+     ========================= */
+
   return (
     <div
-      ref={rootRef}
-      className={[
-        "select",
-        open ? "is-open" : "",
-        value.length ? "has-value" : "",
-        error ? "has-error" : "",
-      ].join(" ")}
-      onKeyDown={handleKeyDown}
-      tabIndex={0}
+      className={`select ${open ? "is-open" : ""}`}
+      ref={containerRef}
     >
       {/* TRIGGER */}
-      <div
+      <button
+        type="button"
         className="select__trigger"
-        role="button"
-        onClick={() => setOpen(o => !o)}
+        onClick={() => setOpen(v => !v)}
       >
-        <span className="select__label">{label}</span>
-
-        {/* MULTI CHIPS */}
-        {multiple && selectedOptions.length > 0 && (
-          <div className="select__chips">
-            {selectedOptions.map(opt => (
-              <span
-                key={opt.value}
-                className="select__chip"
-                onClick={e => e.stopPropagation()}
-              >
-                {opt.label}
-                <button
-                  type="button"
-                  onClick={e => {
-                    e.stopPropagation();
-                    toggleValue(opt.value);
-                  }}
-                >
-                  <Icon name="close" size="xs" />
-                </button>
-              </span>
-            ))}
-          </div>
-        )}
-
-        {/* SINGLE VALUE */}
-        {!multiple && selectedOptions[0] && (
-          <span className="select__value">
-            {selectedOptions[0].label}
-          </span>
-        )}
-
-        <span className="select__chevron">
-          <Icon name="chevronDown" size="sm" />
+        <span
+          className={[
+            "select__label",
+            hasValue ? "is-floating" : "",
+          ].join(" ")}
+        >
+          {label}
         </span>
-      </div>
+
+        <span className="select__value">
+          {hasValue
+            ? isAllSelected
+              ? "All"
+              : value.length === 1
+              ? options.find(o => o.value === value[0])?.label
+              : `${value.length} selected`
+            : ""}
+        </span>
+
+        <Icon
+          name="chevron"
+          className={[
+            "select__chevron",
+            open ? "is-open" : "",
+          ].join(" ")}
+        />
+      </button>
 
       {/* DROPDOWN */}
       {open && (
-        <div
-          className="select__menu"
-          onClick={e => e.stopPropagation()}
-        >
-          <div className="select__search">
-            <input
-              type="text"
-              value={search}
-              onChange={e => setSearch(e.target.value)}
-              placeholder="Search…"
-            />
-          </div>
+        <div className="select__dropdown">
+          {/* SEARCH */}
+          <input
+            type="search"
+            className="select__search"
+            placeholder="Search…"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
 
-          <ul className="select__options">
-            {filteredOptions.map(opt => {
-              const checked = value.includes(opt.value);
+          {/* OPTIONS */}
+          <ul className="select__list">
+            {visibleOptions.map((option) => {
+              const checked =
+                option.value === "all"
+                  ? isAllSelected
+                  : value.includes(option.value);
+
               return (
                 <li
-                  key={opt.value}
-                  className={[
-                    "select__option",
-                    checked ? "is-selected" : "",
-                  ].join(" ")}
-                  onClick={() => toggleValue(opt.value)}
+                  key={option.value}
+                  className="select__option"
+                  onClick={() => toggleOption(option)}
                 >
-                  {multiple && (
-                    <input
-                      type="checkbox"
-                      checked={checked}
-                      readOnly
-                    />
-                  )}
-                  <span>{opt.label}</span>
+                  <input
+                    type="checkbox"
+                    checked={checked}
+                    readOnly
+                    ref={(el) => {
+                      if (
+                        el &&
+                        option.value === "all" &&
+                        isIndeterminate
+                      ) {
+                        el.indeterminate = true;
+                      }
+                    }}
+                  />
+
+                  <span>{option.label}</span>
                 </li>
               );
             })}
           </ul>
         </div>
-      )}
-
-      {error ? (
-        <div className="select__error">{error}</div>
-      ) : (
-        helperText && (
-          <div className="select__helper">{helperText}</div>
-        )
       )}
     </div>
   );
