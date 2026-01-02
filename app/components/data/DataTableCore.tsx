@@ -1,4 +1,3 @@
-// DataTableCore.tsx
 import "./data-table.css";
 import { useState } from "react";
 import { DataTableHeader } from "./DataTableHeader";
@@ -12,7 +11,6 @@ import { Icon } from "../ui/icon/Icon";
 export type DataTableColumn = {
   key: string;
   label?: string;
-  type?: "default" | "selection" | "expander";
   sortable?: boolean;
   align?: "left" | "center" | "right";
   width?: number | string;
@@ -21,12 +19,6 @@ export type DataTableColumn = {
 };
 
 export type DataTableRow = Record<string, string | number>;
-
-type Pagination = {
-  page: number;
-  pageSize: number;
-  total: number;
-};
 
 type SortState = {
   key: string;
@@ -45,8 +37,6 @@ type Props = {
   onSelectionChange?: (ids: string[]) => void;
 
   renderExpandedRow?: (row: DataTableRow) => React.ReactNode;
-
-  pagination?: Pagination;
 };
 
 /* =========================
@@ -62,35 +52,59 @@ export function DataTableCore({
   selectedRows = [],
   onSelectionChange,
   renderExpandedRow,
-  pagination,
 }: Props) {
   const [sort, setSort] = useState<SortState>(null);
   const [expandedRows, setExpandedRows] = useState<string[]>([]);
+  const [search, setSearch] = useState("");
 
   const visibleColumns = columns.filter((c) => !c.hidden);
+
+  /* =========================
+     SEARCH FILTER
+     ========================= */
+
+  const filteredRows = rows.filter((row) => {
+    if (!search) return true;
+
+    const q = search.toLowerCase();
+
+    return visibleColumns.some((col) => {
+      const value = row[col.key];
+      return (
+        value !== undefined &&
+        String(value).toLowerCase().includes(q)
+      );
+    });
+  });
 
   /* =========================
      SORTING
      ========================= */
 
   const sortedRows = sort
-    ? [...rows].sort((a, b) => {
+    ? [...filteredRows].sort((a, b) => {
         const av = a[sort.key];
         const bv = b[sort.key];
         if (av === bv) return 0;
         if (sort.direction === "asc") return av > bv ? 1 : -1;
         return av < bv ? 1 : -1;
       })
-    : rows;
+    : filteredRows;
 
   /* =========================
      SELECTION
      ========================= */
 
-  const allRowIds = rows.map((r) => String(r[rowIdKey]));
-  const allSelected = selectedRows.length === allRowIds.length;
+  const allRowIds = sortedRows.map((r) => String(r[rowIdKey]));
+  const allSelected =
+    selectable &&
+    selectedRows.length > 0 &&
+    selectedRows.length === allRowIds.length;
+
   const partiallySelected =
-    selectedRows.length > 0 && !allSelected;
+    selectable &&
+    selectedRows.length > 0 &&
+    !allSelected;
 
   function toggleAll() {
     if (!onSelectionChange) return;
@@ -114,6 +128,11 @@ export function DataTableCore({
     );
   }
 
+  const colSpan =
+    visibleColumns.length +
+    (selectable ? 1 : 0) +
+    (expandable ? 1 : 0);
+
   /* =========================
      RENDER
      ========================= */
@@ -121,7 +140,10 @@ export function DataTableCore({
   return (
     <div className="data-table-card">
       <div className="data-table">
-        <DataTableHeader />
+        <DataTableHeader
+          searchValue={search}
+          onSearchChange={setSearch}
+        />
 
         <div className="data-table__header-row">
           <table>
@@ -146,7 +168,7 @@ export function DataTableCore({
                 {visibleColumns.map((col) => (
                   <th
                     key={col.key}
-                    style={{ textAlign: col.align, width: col.width }}
+                    style={{ textAlign: col.align }}
                     onClick={() => {
                       if (!col.sortable) return;
                       setSort((prev) =>
@@ -165,6 +187,27 @@ export function DataTableCore({
             </thead>
 
             <tbody>
+              {/* EMPTY STATE */}
+              {sortedRows.length === 0 && (
+                <tr className="data-table__empty">
+                  <td colSpan={colSpan}>
+                    <div className="data-table__empty-content">
+                      <Icon
+                        name="search"
+                        size="lg"
+                        color="muted"
+                      />
+                      <div className="data-table__empty-title">
+                        No results found
+                      </div>
+                      <div className="data-table__empty-description">
+                        Try adjusting your search or filters.
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              )}
+
               {sortedRows.map((row) => {
                 const id = String(row[rowIdKey]);
                 const isExpanded = expandedRows.includes(id);
@@ -202,10 +245,7 @@ export function DataTableCore({
                       )}
 
                       {visibleColumns.map((col) => (
-                        <td
-                          key={col.key}
-                          style={{ textAlign: col.align }}
-                        >
+                        <td key={col.key}>
                           {col.renderCell
                             ? col.renderCell(row[col.key], row)
                             : row[col.key]}
@@ -215,13 +255,7 @@ export function DataTableCore({
 
                     {expandable && isExpanded && renderExpandedRow && (
                       <tr className="data-table__expanded-row">
-                        <td
-                          colSpan={
-                            visibleColumns.length +
-                            (selectable ? 1 : 0) +
-                            1
-                          }
-                        >
+                        <td colSpan={colSpan}>
                           {renderExpandedRow(row)}
                         </td>
                       </tr>
@@ -232,10 +266,6 @@ export function DataTableCore({
             </tbody>
           </table>
         </div>
-
-        {pagination && (
-          <DataTableFooter pagination={pagination} />
-        )}
       </div>
     </div>
   );
