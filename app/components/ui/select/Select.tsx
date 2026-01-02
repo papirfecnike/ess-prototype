@@ -23,8 +23,8 @@ type Props = {
 
   multiple?: boolean;
 
-  value?: string[];
-  onChange?: (values: string[]) => void;
+  value: string[];                 // ⬅️ KÖTELEZŐ
+  onChange: (values: string[]) => void;
 
   helperText?: string;
   error?: string;
@@ -38,7 +38,7 @@ export function Select({
   label,
   options,
   multiple = false,
-  value = [],
+  value,
   onChange,
   helperText,
   error,
@@ -73,8 +73,6 @@ export function Select({
   }, []);
 
   function toggleValue(val: string) {
-    if (!onChange) return;
-
     if (multiple) {
       onChange(
         value.includes(val)
@@ -118,7 +116,7 @@ export function Select({
       >
         <span className="select__label">{label}</span>
 
-        {/* VALUES */}
+        {/* MULTI CHIPS */}
         {multiple && selectedOptions.length > 0 && (
           <div className="select__chips">
             {selectedOptions.map(opt => (
@@ -142,14 +140,11 @@ export function Select({
           </div>
         )}
 
+        {/* SINGLE VALUE */}
         {!multiple && selectedOptions[0] && (
           <span className="select__value">
             {selectedOptions[0].label}
           </span>
-        )}
-
-        {!selectedOptions.length && (
-          <span className="select__placeholder" />
         )}
 
         <span className="select__chevron">
@@ -163,7 +158,6 @@ export function Select({
           className="select__menu"
           onClick={e => e.stopPropagation()}
         >
-          {/* SEARCH */}
           <div className="select__search">
             <input
               type="text"
@@ -173,7 +167,6 @@ export function Select({
             />
           </div>
 
-          {/* OPTIONS */}
           <ul className="select__options">
             {filteredOptions.map(opt => {
               const checked = value.includes(opt.value);
@@ -201,7 +194,6 @@ export function Select({
         </div>
       )}
 
-      {/* HELPER / ERROR */}
       {error ? (
         <div className="select__error">{error}</div>
       ) : (

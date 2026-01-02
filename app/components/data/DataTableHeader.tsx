@@ -8,11 +8,23 @@ export function DataTableHeader() {
   const [showDetails, setShowDetails] = useState(false);
   const [showFilters, setShowFilters] = useState(false);
 
+  /* =========================
+     STATE – STATUS FILTER
+     ========================= */
+
   const [statuses, setStatuses] = useState<string[]>([
     "in-progress",
     "completed",
     "blocked",
   ]);
+
+  /* =========================
+     STATE – FILTER PANEL SELECTS
+     ========================= */
+
+  const [warehouses, setWarehouses] = useState<string[]>(["all"]);
+  const [priorities, setPriorities] = useState<string[]>(["all"]);
+  const [assignees, setAssignees] = useState<string[]>(["all"]);
 
   return (
     <div className="data-table__header">
@@ -77,6 +89,9 @@ export function DataTableHeader() {
           <div className="data-table__filter-selects">
             <Select
               label="Warehouse"
+              multiple
+              value={warehouses}
+              onChange={setWarehouses}
               options={[
                 { value: "all", label: "All" },
                 { value: "a", label: "Warehouse A" },
@@ -90,6 +105,9 @@ export function DataTableHeader() {
 
             <Select
               label="Priority"
+              multiple
+              value={priorities}
+              onChange={setPriorities}
               options={[
                 { value: "all", label: "All" },
                 { value: "critical", label: "Critical" },
@@ -102,7 +120,10 @@ export function DataTableHeader() {
             />
 
             <Select
-              label="Operator"
+              label="Assignee"
+              multiple
+              value={assignees}
+              onChange={setAssignees}
               options={[
                 { value: "all", label: "All" },
                 { value: "john", label: "John" },
@@ -114,7 +135,7 @@ export function DataTableHeader() {
                 { value: "thomas", label: "Thomas" },
                 { value: "sindre", label: "Sindre" },
                 { value: "jonathan", label: "Jonathan" },
-                { value: "brigitte", label: "Brigitte" },
+                { value: "brigitte", label: "Anna" },
               ]}
             />
           </div>
