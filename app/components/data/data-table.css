@@ -139,7 +139,7 @@
 
 .data-table thead th {
   background: var(--color-table-column-header);
-  font-weight: var(--font-weight-medium);
+  font-weight: var(--font-weight-bold);
   font-size: var(--font-size-s);
   color: var(--color-text);
 
@@ -295,4 +295,88 @@
   padding: var(--space-4);
   color: var(--color-text-muted);
   font-size: var(--font-size-s);
+}
+
+
+/* =========================
+   EMPTY STATE
+   ========================= */
+
+.data-table__empty td {
+  padding: var(--space-6) 0;
+  border-bottom: none;
+}
+
+.data-table__empty-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  gap: var(--space-3);
+  text-align: center;
+
+  color: var(--color-text-muted);
+}
+
+.data-table__empty-content svg {
+  opacity: 0.6;
+}
+
+.data-table__empty-title {
+  font-size: var(--font-size-m);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text);
+}
+
+.data-table__empty-description {
+  font-size: var(--font-size-s);
+  max-width: 320px;
+}
+
+/* =========================
+   DATA TABLE FOOTER
+   ========================= */
+
+.data-table__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: var(--space-3);
+  border-top: 1px solid var(--color-table-border);
+  background: var(--color-table);
+}
+
+.data-table__footer-center {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+/* RANGE TEXT */
+
+.data-table__footer-range {
+  font-size: var(--font-size-s);
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
+
+/* CHEVRONS */
+
+.data-table__chevron {
+  color: var(--color-text);
+}
+
+.data-table__chevron-left {
+  transform: rotate(90deg);
+}
+
+.data-table__chevron-right {
+  transform: rotate(-90deg);
+}
+
+/* ghost buttons should not kill icon contrast */
+.data-table__footer .btn--ghost {
+  color: var(--color-text);
 }

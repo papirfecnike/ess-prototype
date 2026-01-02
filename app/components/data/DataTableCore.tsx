@@ -1,5 +1,5 @@
 import "./data-table.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { DataTableHeader } from "./DataTableHeader";
 import { DataTableFooter } from "./DataTableFooter";
 import { Icon } from "../ui/icon/Icon";
@@ -43,8 +43,6 @@ type Props = {
   onSelectionChange?: (ids: string[]) => void;
 
   renderExpandedRow?: (row: DataTableRow) => React.ReactNode;
-
-  pagination?: Pagination;
 };
 
 /* =========================
@@ -60,7 +58,6 @@ export function DataTableCore({
   selectedRows = [],
   onSelectionChange,
   renderExpandedRow,
-  pagination,
 }: Props) {
   /* =========================
      STATE
@@ -72,6 +69,9 @@ export function DataTableCore({
 
   const [sort, setSort] = useState<SortState>(null);
   const [expandedRows, setExpandedRows] = useState<string[]>([]);
+
+  const [page, setPage] = useState(1);
+  const pageSize = 10;
 
   const visibleColumns = columns.filter((c) => !c.hidden);
 
@@ -93,6 +93,14 @@ export function DataTableCore({
   });
 
   /* =========================
+     RESET PAGE ON FILTER / SORT
+     ========================= */
+
+  useEffect(() => {
+    setPage(1);
+  }, [search, sort]);
+
+  /* =========================
      SORTING
      ========================= */
 
@@ -107,10 +115,23 @@ export function DataTableCore({
     : filteredRows;
 
   /* =========================
+     PAGINATION
+     ========================= */
+
+  const total = sortedRows.length;
+
+  const pagedRows = sortedRows.slice(
+    (page - 1) * pageSize,
+    page * pageSize
+  );
+
+  const isPaginationDisabled = total <= pageSize;
+
+  /* =========================
      SELECTION
      ========================= */
 
-  const allRowIds = sortedRows.map((r) => String(r[rowIdKey]));
+  const allRowIds = pagedRows.map((r) => String(r[rowIdKey]));
   const allSelected =
     selectable &&
     selectedRows.length > 0 &&
@@ -164,21 +185,6 @@ export function DataTableCore({
           onToggleFilters={() => setShowFilters((v) => !v)}
         />
 
-        {showDetails && (
-          <div className="data-table__details-bar">
-            <strong>Details enabled</strong>
-            <span> – extra row metadata is visible</span>
-          </div>
-        )}
-
-        {showFilters && (
-          <div className="data-table__filter-panel">
-            <div className="data-table__filter-placeholder">
-              Filters panel is open
-            </div>
-          </div>
-        )}
-
         <div className="data-table__header-row">
           <table>
             <thead>
@@ -202,7 +208,6 @@ export function DataTableCore({
                 {visibleColumns.map((col) => (
                   <th
                     key={col.key}
-                    style={{ textAlign: col.align }}
                     onClick={() => {
                       if (!col.sortable) return;
                       setSort((prev) =>
@@ -221,23 +226,18 @@ export function DataTableCore({
             </thead>
 
             <tbody>
-              {sortedRows.length === 0 && (
+              {pagedRows.length === 0 && (
                 <tr className="data-table__empty">
                   <td colSpan={colSpan}>
                     <div className="data-table__empty-content">
                       <Icon name="search" size="lg" color="muted" />
-                      <div className="data-table__empty-title">
-                        No results found
-                      </div>
-                      <div className="data-table__empty-description">
-                        Try adjusting your search or filters.
-                      </div>
+                      <div>No results found</div>
                     </div>
                   </td>
                 </tr>
               )}
 
-              {sortedRows.map((row) => {
+              {pagedRows.map((row) => {
                 const id = String(row[rowIdKey]);
                 const isExpanded = expandedRows.includes(id);
 
@@ -275,9 +275,7 @@ export function DataTableCore({
 
                       {visibleColumns.map((col) => (
                         <td key={col.key}>
-                          {col.renderCell
-                            ? col.renderCell(row[col.key], row)
-                            : row[col.key]}
+                          {row[col.key]}
                         </td>
                       ))}
                     </tr>
@@ -296,9 +294,16 @@ export function DataTableCore({
           </table>
         </div>
 
-        {pagination && (
-          <DataTableFooter pagination={pagination} />
-        )}
+        <DataTableFooter
+          pagination={{
+            page,
+            pageSize,
+            total,
+          }}
+          disabled={isPaginationDisabled}
+          onPageChange={setPage}
+          onExport={() => console.log("export")}
+        />
       </div>
     </div>
   );
