@@ -34,7 +34,7 @@
 
 .btn--ghost {
   background: transparent;
-  color: var(--color-text);
+  color: var(--color-primary);
 }
 
 .btn--danger {
