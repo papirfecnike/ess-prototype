@@ -121,8 +121,7 @@ export function DataTableCore({
   const colSpan =
     visibleColumns.length +
     (selectable ? 1 : 0) +
-    (expandable ? 1 : 0) +
-    1;
+    (expandable ? 1 : 0);
 
   /* =========================
      RENDER
@@ -145,8 +144,8 @@ export function DataTableCore({
           <table>
             <thead>
               <tr>
-                {selectable && <th />}
-                {expandable && <th />}
+                {selectable}
+                {expandable}
                 {visibleColumns.map((c) => (
                   <th key={c.key}>{c.label}</th>
                 ))}
@@ -166,7 +165,7 @@ export function DataTableCore({
                       key={id}
                       className={isExpanded ? "data-table__row--expanded" : undefined}
                     >
-                      {selectable && <td>...</td>}
+                      {selectable}
 
                       {expandable && (
                         <td>
@@ -199,8 +198,6 @@ export function DataTableCore({
                             : row[col.key]}
                         </td>
                       ))}
-
-                      <td>...</td>
                     </tr>
 
                     {/* EXPANDED ROW */}

@@ -158,24 +158,27 @@ export default function InboundPutaway() {
             <table>
               <thead>
                 <tr>
-                  <th>Event</th>
-                  <th>User</th>
-                  <th>Date</th>
-                  <th>Details</th>
+                  <th>Production ID</th>
+                  <th>Location type</th>
+                  <th>Location ID</th>
+                  <th>Location capacity</th>
+                  <th>Status</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td>Putaway started</td>
-                  <td>{row.operator}</td>
-                  <td>{row.date}</td>
-                  <td>Initial scan</td>
+                  <td>WD750-01</td>
+                  <td>1/4 bin</td>
+                  <td>AS-326437-04-01</td>
+                  <td>12/80</td>
+                  <td>In progress</td>
                 </tr>
                 <tr>
-                  <td>Item processed</td>
-                  <td>{row.operator}</td>
-                  <td>{row.date}</td>
-                  <td>Progress update</td>
+                  <td>WD750-01</td>
+                  <td>1/4 bin</td>
+                  <td>AS-322439-04-04</td>
+                  <td>30/80</td>
+                  <td>Prepared</td>
                 </tr>
               </tbody>
             </table>
