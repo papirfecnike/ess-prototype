@@ -157,79 +157,67 @@ export function DataTableCore({
             <tbody>
               {pagedRows.map((row) => {
                 const id = String(row[rowIdKey]);
-                const isMenuOpen = openMenuRow === id;
+                const isExpanded = expandedRows.includes(id);
 
                 return (
-                  <tr key={id}>
-                    {selectable && (
-                      <td>
-                        <input
-                          type="checkbox"
-                          checked={selectedRows.includes(id)}
-                          onChange={() =>
-                            onSelectionChange?.(
-                              selectedRows.includes(id)
-                                ? selectedRows.filter((x) => x !== id)
-                                : [...selectedRows, id]
-                            )
-                          }
-                        />
-                      </td>
+                  <>
+                    {/* MAIN ROW */}
+                    <tr
+                      key={id}
+                      className={isExpanded ? "data-table__row--expanded" : undefined}
+                    >
+                      {selectable && <td>...</td>}
+
+                      {expandable && (
+                        <td>
+                          <button
+                            type="button"
+                            className="btn--ghost"
+                            onClick={() =>
+                              setExpandedRows((prev) =>
+                                prev.includes(id)
+                                  ? prev.filter((x) => x !== id)
+                                  : [...prev, id]
+                              )
+                            }
+                          >
+                            <Icon
+                              name="chevronDownStroke"
+                              size="sm"
+                              className={`data-table__chevron ${
+                                isExpanded ? "is-open" : ""
+                              }`}
+                            />
+                          </button>
+                        </td>
+                      )}
+
+                      {visibleColumns.map((col) => (
+                        <td key={col.key}>
+                          {col.renderCell
+                            ? col.renderCell(row[col.key], row)
+                            : row[col.key]}
+                        </td>
+                      ))}
+
+                      <td>...</td>
+                    </tr>
+
+                    {/* EXPANDED ROW */}
+                    {expandable && isExpanded && renderExpandedRow && (
+                      <tr className="data-table__expanded-row">
+                        <td colSpan={colSpan}>
+                          <div className="data-table__expanded-inner">
+                            {renderExpandedRow(row)}
+                          </div>
+                        </td>
+                      </tr>
                     )}
-
-                    {expandable && (
-                      <td>
-                        <button
-                          type="button"
-                          className="btn--ghost"
-                          onClick={() =>
-                            setExpandedRows((prev) =>
-                              prev.includes(id)
-                                ? prev.filter((x) => x !== id)
-                                : [...prev, id]
-                            )
-                          }
-                        >
-                          <Icon name="chevronDown" size="sm" />
-                        </button>
-                      </td>
-                    )}
-
-                    {visibleColumns.map((col) => (
-                      <td key={col.key}>
-                        {col.renderCell
-                          ? col.renderCell(row[col.key], row)
-                          : row[col.key]}
-                      </td>
-                    ))}
-
-                    {/* CONTEXT MENU BUTTON */}
-                    <td>
-                      <button
-                        type="button"
-                        className="btn--ghost"
-                        aria-label="More actions"
-                        onClick={(e) => {
-                          if (isMenuOpen) {
-                            setOpenMenuRow(null);
-                            menuAnchorRef.current = null;
-                          } else {
-                            setOpenMenuRow(id);
-                            menuAnchorRef.current =
-                              e.currentTarget;
-                          }
-                        }}
-                      >
-                        <Icon
-                          name={isMenuOpen ? "closeStroke" : "moreVert"}
-                          size="sm"
-                        />
-                      </button>
-                    </td>
-                  </tr>
+                  </>
                 );
               })}
             </tbody>
+
           </table>
         </div>
 
