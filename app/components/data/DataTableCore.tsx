@@ -1,8 +1,10 @@
 import "./data-table.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { DataTableHeader } from "./DataTableHeader";
 import { DataTableFooter } from "./DataTableFooter";
 import { Icon } from "../ui/icon/Icon";
+import { DropdownMenu } from "../ui/menu/DropdownMenu";
+import type { SelectableListItem } from "../ui/list/SelectableList";
 
 /* =========================
    TYPES
@@ -24,12 +26,6 @@ type SortState = {
   key: string;
   direction: "asc" | "desc";
 } | null;
-
-type Pagination = {
-  page: number;
-  pageSize: number;
-  total: number;
-};
 
 type Props = {
   columns: DataTableColumn[];
@@ -59,10 +55,6 @@ export function DataTableCore({
   onSelectionChange,
   renderExpandedRow,
 }: Props) {
-  /* =========================
-     STATE
-     ========================= */
-
   const [search, setSearch] = useState("");
   const [showDetails, setShowDetails] = useState(false);
   const [showFilters, setShowFilters] = useState(false);
@@ -73,10 +65,15 @@ export function DataTableCore({
   const [page, setPage] = useState(1);
   const pageSize = 10;
 
+  /* ===== CONTEXT MENU STATE ===== */
+
+  const [openMenuRow, setOpenMenuRow] = useState<string | null>(null);
+  const menuAnchorRef = useRef<HTMLElement | null>(null);
+
   const visibleColumns = columns.filter((c) => !c.hidden);
 
   /* =========================
-     SEARCH FILTER
+     FILTER + SORT
      ========================= */
 
   const filteredRows = rows.filter((row) => {
@@ -92,17 +89,9 @@ export function DataTableCore({
     });
   });
 
-  /* =========================
-     RESET PAGE ON FILTER / SORT
-     ========================= */
-
   useEffect(() => {
     setPage(1);
   }, [search, sort]);
-
-  /* =========================
-     SORTING
-     ========================= */
 
   const sortedRows = sort
     ? [...filteredRows].sort((a, b) => {
@@ -114,60 +103,26 @@ export function DataTableCore({
       })
     : filteredRows;
 
-  /* =========================
-     PAGINATION
-     ========================= */
-
-  const total = sortedRows.length;
-
   const pagedRows = sortedRows.slice(
     (page - 1) * pageSize,
     page * pageSize
   );
 
-  const isPaginationDisabled = total <= pageSize;
-
   /* =========================
-     SELECTION
+     MENU ITEMS
      ========================= */
 
-  const allRowIds = pagedRows.map((r) => String(r[rowIdKey]));
-  const allSelected =
-    selectable &&
-    selectedRows.length > 0 &&
-    selectedRows.length === allRowIds.length;
-
-  const partiallySelected =
-    selectable &&
-    selectedRows.length > 0 &&
-    !allSelected;
-
-  function toggleAll() {
-    if (!onSelectionChange) return;
-    onSelectionChange(allSelected ? [] : allRowIds);
-  }
-
-  function toggleRow(id: string) {
-    if (!onSelectionChange) return;
-    onSelectionChange(
-      selectedRows.includes(id)
-        ? selectedRows.filter((x) => x !== id)
-        : [...selectedRows, id]
-    );
-  }
-
-  function toggleExpand(id: string) {
-    setExpandedRows((prev) =>
-      prev.includes(id)
-        ? prev.filter((x) => x !== id)
-        : [...prev, id]
-    );
-  }
+  const rowMenuItems: SelectableListItem[] = [
+    { id: "edit", label: "Edit", checkboxState: "unchecked" },
+    { id: "duplicate", label: "Duplicate", checkboxState: "unchecked" },
+    { id: "delete", label: "Delete", checkboxState: "unchecked" },
+  ];
 
   const colSpan =
     visibleColumns.length +
     (selectable ? 1 : 0) +
-    (expandable ? 1 : 0);
+    (expandable ? 1 : 0) +
+    1;
 
   /* =========================
      RENDER
@@ -185,132 +140,120 @@ export function DataTableCore({
           onToggleFilters={() => setShowFilters((v) => !v)}
         />
 
+        {/* 🔹 HEADER WRAPPER VISSZAÁLLÍTVA */}
         <div className="data-table__header-row">
           <table>
             <thead>
               <tr>
-                {selectable && (
-                  <th style={{ width: 48 }}>
-                    <input
-                      type="checkbox"
-                      checked={allSelected}
-                      ref={(el) => {
-                        if (el)
-                          el.indeterminate = partiallySelected;
-                      }}
-                      onChange={toggleAll}
-                    />
-                  </th>
-                )}
-
-                {expandable && <th style={{ width: 48 }} />}
-
-                {visibleColumns.map((col) => (
-                  <th
-                    key={col.key}
-                    onClick={() => {
-                      if (!col.sortable) return;
-                      setSort((prev) =>
-                        !prev || prev.key !== col.key
-                          ? { key: col.key, direction: "asc" }
-                          : prev.direction === "asc"
-                          ? { key: col.key, direction: "desc" }
-                          : null
-                      );
-                    }}
-                  >
-                    {col.label}
-                  </th>
+                {selectable && <th />}
+                {expandable && <th />}
+                {visibleColumns.map((c) => (
+                  <th key={c.key}>{c.label}</th>
                 ))}
+                <th />
               </tr>
             </thead>
 
             <tbody>
-              {pagedRows.length === 0 && (
-                <tr className="data-table__empty">
-                  <td colSpan={colSpan}>
-                    <div className="data-table__empty-content">
-                      <Icon name="search" size="lg" color="default" />
-                      <div>No results found</div>
-                    </div>
-                  </td>
-                </tr>
-              )}
-
               {pagedRows.map((row) => {
                 const id = String(row[rowIdKey]);
-                const isExpanded = expandedRows.includes(id);
+                const isMenuOpen = openMenuRow === id;
 
                 return (
-                  <>
-                    <tr
-                      key={id}
-                      className={isExpanded ? "data-table__row--expanded" : undefined}
-                    >
-                      {selectable && (
-                        <td>
-                          <input
-                            type="checkbox"
-                            checked={selectedRows.includes(id)}
-                            onChange={() => toggleRow(id)}
-                          />
-                        </td>
-                      )}
-
-                      {expandable && (
-                        <td>
-                          <button
-                            type="button"
-                            className="btn--ghost"
-                            onClick={() => toggleExpand(id)}
-                          >
-                            <Icon
-                              name="chevronDown"
-                              size="sm"
-                              fill="none"
-                              stroke="currentColor"
-                              strokeWidth={1.25}
-                              className={[
-                                "data-table__chevron",
-                                isExpanded ? "is-open" : "",
-                              ].join(" ")}
-                            />
-                          </button>
-                        </td>
-                      )}
-
-                      {visibleColumns.map((col) => (
-                        <td key={col.key}>
-                          {col.renderCell
-                            ? col.renderCell(row[col.key], row)
-                            : row[col.key]}
-                        </td>
-                      ))}
-                    </tr>
-                    {expandable && isExpanded && renderExpandedRow && (
-                      <tr className="data-table__expanded-row">
-                        <td colSpan={colSpan}>
-                          <div className="data-table__expanded-inner">
-                            {renderExpandedRow(row)}
-                          </div>
-                        </td>
-                      </tr>
+                  <tr key={id}>
+                    {selectable && (
+                      <td>
+                        <input
+                          type="checkbox"
+                          checked={selectedRows.includes(id)}
+                          onChange={() =>
+                            onSelectionChange?.(
+                              selectedRows.includes(id)
+                                ? selectedRows.filter((x) => x !== id)
+                                : [...selectedRows, id]
+                            )
+                          }
+                        />
+                      </td>
                     )}
-                  </>
+
+                    {expandable && (
+                      <td>
+                        <button
+                          type="button"
+                          className="btn--ghost"
+                          onClick={() =>
+                            setExpandedRows((prev) =>
+                              prev.includes(id)
+                                ? prev.filter((x) => x !== id)
+                                : [...prev, id]
+                            )
+                          }
+                        >
+                          <Icon name="chevronDown" size="sm" />
+                        </button>
+                      </td>
+                    )}
+
+                    {visibleColumns.map((col) => (
+                      <td key={col.key}>
+                        {col.renderCell
+                          ? col.renderCell(row[col.key], row)
+                          : row[col.key]}
+                      </td>
+                    ))}
+
+                    {/* CONTEXT MENU BUTTON */}
+                    <td>
+                      <button
+                        type="button"
+                        className="btn--ghost"
+                        aria-label="More actions"
+                        onClick={(e) => {
+                          if (isMenuOpen) {
+                            setOpenMenuRow(null);
+                            menuAnchorRef.current = null;
+                          } else {
+                            setOpenMenuRow(id);
+                            menuAnchorRef.current =
+                              e.currentTarget;
+                          }
+                        }}
+                      >
+                        <Icon
+                          name={isMenuOpen ? "closeStroke" : "moreVert"}
+                          size="sm"
+                        />
+                      </button>
+                    </td>
+                  </tr>
                 );
               })}
-
             </tbody>
           </table>
         </div>
 
-        <DataTableFooter
-          pagination={{
-            page,
-            pageSize,
-            total,
+        <DropdownMenu
+          open={!!openMenuRow}
+          anchorRef={menuAnchorRef}
+          items={rowMenuItems}
+          onClose={() => {
+            setOpenMenuRow(null);
+            menuAnchorRef.current = null;
           }}
-          disabled={isPaginationDisabled}
+          onSelect={(actionId) => {
+            console.log(
+              "row:",
+              openMenuRow,
+              "action:",
+              actionId
+            );
+          }}
+        />
+
+        <DataTableFooter
+          pagination={{ page, pageSize, total: sortedRows.length }}
+          disabled={sortedRows.length <= pageSize}
           onPageChange={setPage}
           onExport={() => console.log("export")}
         />
