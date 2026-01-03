@@ -118,7 +118,12 @@ export function DataTableHeader({
 
           {/* ACTIONS */}
           <div className="data-table__filter-actions">
-            <Button variant="secondary" intent="default" size="sm" disabled>
+            <Button
+              variant="secondary"
+              intent="default"
+              size="sm"
+              leadingIcon="widthNormal"
+            >
               Customize columns
             </Button>
 

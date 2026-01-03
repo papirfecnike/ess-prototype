@@ -70,6 +70,36 @@ export const icons: Record<string, ReactNode> = {
       <path d="M18 6v12" />
     </>
   ),
+
+  widthNormal: (
+    <g transform="translate(12 12) scale(0.75) translate(-12 -12)">
+      {/* top */}
+      <path
+        d="M5 6h14"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+      />
+      {/* bottom */}
+      <path
+        d="M5 18h14"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+      />
+      {/* columns */}
+      <path
+        d="M9 6v12M15 6v12"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+      />
+    </g>
+  ),
+
 };
 
 export type IconName = keyof typeof icons;
