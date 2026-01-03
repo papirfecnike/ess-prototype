@@ -1,48 +1,161 @@
+/* =========================================================
+   BASE
+   ========================================================= */
+
 .btn {
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
 
   padding-inline: var(--space-4);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-s);
   border: none;
 
   font: inherit;
   font-weight: var(--font-weight-medium);
   cursor: pointer;
+
+  background: transparent;
+  color: var(--btn-fg, var(--color-text));
+
+  transition:
+    background-color 120ms ease,
+    color 120ms ease,
+    border-color 120ms ease;
 }
 
-/* =========================
+/* =========================================================
+   ICONS – FILL ONLY
+   ========================================================= */
+
+.btn svg {
+  fill: currentColor;
+  stroke: none;
+}
+
+/* =========================================================
    SIZES
-   ========================= */
-.btn--s { height: 32px; font-size: var(--font-default); }
-.btn--m { height: 40px; font-size: var(--font-default); }
-.btn--l { height: 48px; font-size: var(--font-default); }
+   ========================================================= */
 
-/* =========================
-   VARIANTS
-   ========================= */
-.btn--primary {
-  background: var(--color-primary);
-  color: var(--color-text-inverse);
+.btn--sm {
+  height: 32px;
+  font-size: var(--font-default);
 }
+
+.btn--md {
+  height: 40px;
+  font-size: var(--font-default);
+}
+
+/* =========================================================
+   ICON POSITIONING
+   ========================================================= */
+
+.btn--leading-icon svg {
+  margin-right: 6px;
+}
+
+.btn--trailing-icon svg {
+  margin-left: 6px;
+}
+
+/* =========================================================
+   VARIANTS
+   ========================================================= */
+
+/* ---------- PRIMARY ---------- */
+
+.btn--primary {
+  background: var(--btn-bg);
+  color: var(--btn-fg);
+}
+
+.btn--primary:hover {
+  background: var(--btn-bg-hover);
+}
+
+.btn--primary:active {
+  background: var(--btn-bg-active);
+}
+
+/* ---------- SECONDARY ---------- */
 
 .btn--secondary {
-  background: var(--color-secondary);
-  color: var(--color-text);
+  background: transparent;
+  border: 1px solid var(--btn-border);
+  color: var(--btn-fg);
 }
+
+.btn--secondary:hover {
+  border-color: var(--btn-border);
+  background: rgba(0, 0, 0, 0.02);
+}
+
+/* ---------- GHOST ---------- */
 
 .btn--ghost {
   background: transparent;
-  color: var(--color-primary);
+  color: var(--btn-fg);
 }
 
-.btn--danger {
-  background: var(--color-danger);
-  color: var(--color-text-inverse);
+.btn--ghost:hover {
+  background: var(--btn-bg-hover);
 }
+
+.btn--ghost:active {
+  background: var(--btn-bg-active);
+}
+
+/* =========================================================
+   TONES (INTENTS)
+   ========================================================= */
+
+/* ---------- DEFAULT ---------- */
+
+.btn--default {
+  --btn-fg: var(--color-primary);
+  --btn-bg: var(--color-primary);
+  --btn-bg-hover: rgba(19, 120, 151, 0.08);
+  --btn-bg-active: rgba(19, 120, 151, 0.16);
+  --btn-border: var(--color-primary);
+}
+
+/* ---------- DANGER ---------- */
+
+.btn--danger {
+  --btn-fg: var(--color-danger);
+  --btn-bg: var(--color-danger);
+  --btn-bg-hover: rgba(202, 21, 32, 0.08);
+  --btn-bg-active: rgba(202, 21, 32, 0.16);
+  --btn-border: var(--color-danger);
+}
+
+/* ---------- WARNING ---------- */
+
+.btn--warning {
+  --btn-fg: var(--color-warning);
+  --btn-bg: var(--color-warning);
+  --btn-bg-hover: rgba(240, 147, 0, 0.08);
+  --btn-bg-active: rgba(240, 147, 0, 0.16);
+  --btn-border: var(--color-warning);
+}
+
+/* ---------- SUCCESS ---------- */
+
+.btn--success {
+  --btn-fg: var(--color-success);
+  --btn-bg: var(--color-success);
+  --btn-bg-hover: rgba(7, 147, 10, 0.08);
+  --btn-bg-active: rgba(7, 147, 10, 0.16);
+  --btn-border: var(--color-success);
+}
+
+/* =========================================================
+   DISABLED
+   ========================================================= */
 
 .btn:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+  pointer-events: none;
 }

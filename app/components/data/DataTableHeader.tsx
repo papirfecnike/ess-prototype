@@ -113,7 +113,10 @@ export function DataTableHeader({
               Customize columns
             </button>
 
-            <button type="button" className="btn--ghost" disabled>
+            <button
+              className="btn btn--ghost btn--danger btn--sm"
+            >
+              <Icon name="delete" size="sm" />
               Delete filters
             </button>
           </div>

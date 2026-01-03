@@ -11,6 +11,10 @@ export const icons: Record<string, ReactNode> = {
   <path d="M13 3a9 9 0 00-9 9H1l4 4 4-4H6a7 7 0 117 7 7.01 7.01 0 01-6.93-6H4.02A9 9 0 1013 3zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z" />
 ),
 
+  delete: (
+    <path d="M6 7h12M9 7V5h6v2M10 11v6M14 11v6M5 7l1 14h12l1-14" />
+  ),
+
   firstPage: (
   <>
     <path d="M11 12l5-5M11 12l5 5" />
