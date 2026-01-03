@@ -68,6 +68,9 @@ export function DataTableFooter({
           <Icon
             name="firstPage"
             size="sm"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth={1.25}
             className="data-table__chevron data-table__chevron-first"
           />
         </button>
@@ -83,6 +86,9 @@ export function DataTableFooter({
           <Icon
             name="chevronDown"
             size="sm"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth={1.25}
             className="data-table__chevron data-table__chevron-left"
           />
         </button>
@@ -103,6 +109,9 @@ export function DataTableFooter({
           <Icon
             name="chevronDown"
             size="sm"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth={1.25}
             className="data-table__chevron data-table__chevron-right"
           />
         </button>
@@ -117,6 +126,9 @@ export function DataTableFooter({
           <Icon
             name="lastPage"
             size="sm"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth={1.25}
             className="data-table__chevron data-table__chevron-last"
           />
         </button>
