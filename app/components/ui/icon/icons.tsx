@@ -122,29 +122,62 @@ export const icons: Record<string, ReactNode> = {
   ),
 
     qrScanner: (
+      <>
+        {/* corners */}
+        <path
+          d="M4 8V6a2 2 0 012-2h2M16 4h2a2 2 0 012 2v2M20 16v2a2 2 0 01-2 2h-2M8 20H6a2 2 0 01-2-2v-2"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+        />
+
+        {/* center scan line */}
+        <path
+          d="M6 12h12"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.25"
+          strokeLinecap="round"
+        />
+      </>
+    ),
+
+  forklift: (
     <>
-      {/* corners */}
+      {/* mast */}
       <path
-        d="M4 8V6a2 2 0 012-2h2
-           M16 4h2a2 2 0 012 2v2
-           M20 16v2a2 2 0 01-2 2h-2
-           M8 20H6a2 2 0 01-2-2v-2"
+        d="M6 4v16"
         fill="none"
         stroke="currentColor"
         strokeWidth="1.5"
         strokeLinecap="round"
       />
 
-      {/* center scan line */}
+      {/* body */}
       <path
-        d="M6 12h12"
+        d="M6 14h8l3 4h3"
         fill="none"
         stroke="currentColor"
-        strokeWidth="1.25"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+
+      {/* forks */}
+      <path
+        d="M17 18h4M17 16h4"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.5"
         strokeLinecap="round"
       />
+
+      {/* wheels */}
+      <circle cx="9" cy="19" r="1.5" fill="currentColor" />
+      <circle cx="15" cy="19" r="1.5" fill="currentColor" />
     </>
-  ),
+    ),
 
 };
 

@@ -1,14 +1,23 @@
 import type { LoaderFunction } from "react-router";
+import { PageLayout } from "@/components/layout/PageLayout";
+import { PageSection } from "@/components/layout/PageSection";
+import { EmptyState } from "@/components/ui/empty-state/EmptyState";
+import { useNavigate } from "react-router";
 
 export const loader: LoaderFunction = async () => {
   return null;
 };
 
 export default function InsightsReplenishment() {
+  const navigate = useNavigate();
+
   return (
-    <div className="page">
-      <h1>Replenishment</h1>
-      <p>Replenishment insights and trends.</p>
-    </div>
+    <PageLayout>
+      <PageSection>
+        <EmptyState
+          onAction={() => navigate("/")}
+        />
+      </PageSection>
+    </PageLayout>
   );
 }

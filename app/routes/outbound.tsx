@@ -1,10 +1,13 @@
 import { Outlet } from "react-router";
-import type { LoaderFunction } from "react-router";
-
-export const loader: LoaderFunction = async () => {
-  return null;
-};
+import { PageLayout } from "@/components/layout/PageLayout";
 
 export default function Outbound() {
-  return <Outlet />;
+  return (
+    <PageLayout
+      title="Outbound"
+      subtitle="Outbound operations and fulfillment"
+    >
+      <Outlet />
+    </PageLayout>
+  );
 }

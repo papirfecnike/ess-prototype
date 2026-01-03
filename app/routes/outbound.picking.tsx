@@ -197,46 +197,41 @@ export default function OutboundPicking() {
      ========================= */
 
   return (
-    <PageLayout
-      title="Picking"
-      subtitle="Overview of all outbound operations and customer orders"
-    >
-      <PageSection>
-        <ExpandableDataTable
-          rowIdKey="picklist"
-          columns={columns}
-          rows={rows}
-          renderExpandedRow={(row) => (
-            <table>
-              <thead>
-                <tr>
-                  <th>Production ID</th>
-                  <th>Location type</th>
-                  <th>Location ID</th>
-                  <th>Location capacity</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>WD750-01</td>
-                  <td>1/4 bin</td>
-                  <td>AS-326437-04-01</td>
-                  <td>12/80</td>
-                  <td>In progress</td>
-                </tr>
-                <tr>
-                  <td>WD750-01</td>
-                  <td>1/4 bin</td>
-                  <td>AS-322439-04-04</td>
-                  <td>30/80</td>
-                  <td>Prepared</td>
-                </tr>
-              </tbody>
-            </table>
-          )}
-        />
-      </PageSection>
-    </PageLayout>
+  <PageSection>
+    <ExpandableDataTable
+      rowIdKey="picklist"
+      columns={columns}
+      rows={rows}
+      renderExpandedRow={(row) => (
+        <table>
+          <thead>
+            <tr>
+              <th>Production ID</th>
+              <th>Location type</th>
+              <th>Location ID</th>
+              <th>Location capacity</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>WD750-01</td>
+              <td>1/4 bin</td>
+              <td>AS-326437-04-01</td>
+              <td>12/80</td>
+              <td>In progress</td>
+            </tr>
+            <tr>
+              <td>WD750-01</td>
+              <td>1/4 bin</td>
+              <td>AS-322439-04-04</td>
+              <td>30/80</td>
+              <td>Prepared</td>
+            </tr>
+          </tbody>
+        </table>
+      )}
+    />
+  </PageSection>
   );
 }
