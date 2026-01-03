@@ -1,18 +1,68 @@
 .selectable-list {
   list-style: none;
-  padding: 0;
-  margin: 0;
+  padding: 4px;
+  margin: 4px;
 }
 
 .list-item {
   display: flex;
   align-items: center;
   gap: var(--space-2);
-  padding: var(--space-2);
+  padding: 6px 8px;
+  border-radius: 4px;
+  height: var(--listitem-height);
   cursor: pointer;
+  user-select: none;
 }
+
+/* =========================
+   HOVER
+   ========================= */
+
+.list-item:hover {
+  background-color: #f5f6f7;
+}
+
+/* =========================
+   ACTIVE (mouse down)
+   ========================= */
+
+.list-item:active {
+  background-color: #e9ecef;
+}
+
+/* =========================
+   SELECTED
+   ========================= */
+
+.list-item[aria-selected="true"] {
+  background-color: #f5f6f7;
+  font-weight: 500;
+}
+
+/* =========================
+   DISABLED
+   ========================= */
 
 .list-item.is-disabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+.list-item.is-disabled:hover {
+  background-color: transparent;
+}
+
+/* =========================
+   ICON + LABEL
+   ========================= */
+
+.list-item__icon {
+  width: 16px;
+  display: flex;
+  justify-content: center;
+}
+
+.list-item__label {
+  flex: 1;
 }

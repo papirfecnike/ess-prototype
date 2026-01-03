@@ -30,7 +30,7 @@
   left: 12px;
   top: 50%;
   transform: translateY(-50%);
-  color: #7E9094;
+  color: #7e9094;
   transition: all 0.15s ease;
   pointer-events: none;
 }
@@ -43,13 +43,13 @@
 
 .select__value {
   margin-top: 8px;
-  color: #14282F;
+  color: #14282f;
 }
 
 .select__chevron {
   position: absolute;
   right: 10px;
-  color: #7E9094;
+  color: #7e9094;
   transition: transform 0.15s ease;
 }
 
@@ -71,11 +71,18 @@
   background: var(--color-input-bg);
   border: 1px solid var(--color-input-border);
   border-radius: var(--radius-s);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 
   max-height: 240px;
   display: flex;
   flex-direction: column;
+}
+
+/* 🔑 SCROLL CONTAINER */
+.select__list-wrapper {
+  flex: 1;
+  min-height: 0; /* flexbox scroll fix */
+  overflow-y: auto;
 }
 
 /* SEARCH */
@@ -84,48 +91,20 @@
   margin: 4px;
   padding: 8px;
   border: none;
-  border-bottom: 1px solid #E0E8EA;
+  border-bottom: 1px solid #e0e8ea;
   outline: none;
 }
 
-/* LIST */
+/* =========================
+   CHIPS IN TRIGGER
+   ========================= */
 
-.select__list {
-  list-style: none;
-  padding: 4px;
-  margin: 0;
-  overflow-y: auto;
-}
-
-.select__option {
+.select__chips {
   display: flex;
-  align-items: center;
   gap: 8px;
-
-  padding: 6px 8px;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.select__option:hover {
-  background: #F5F6F7;
-}
-
-.select__option input {
-  pointer-events: none;
-}
-
-/* EMPTY STATE */
-
-.select__empty {
-  padding: 16px 8px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-
-  color: #7E9094;
-  font-size: 13px;
+  flex-wrap: wrap;
+  max-height: 48px;
+  overflow: hidden;
 }
 
 /* =========================
