@@ -1,0 +1,29 @@
+.radio {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+
+  border: 2px solid var(--color-border);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+}
+
+.radio::after {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  opacity: 0;
+}
+
+.radio.is-checked::after {
+  opacity: 1;
+}
+
+.radio.is-disabled {
+  opacity: 0.5;
+}

@@ -19,7 +19,7 @@ export const icons: Record<string, ReactNode> = {
   ),
 
   /* =========================
-     CHECKBOX ICONS (NEW)
+     CHECKBOX ICONS
      ========================= */
 
   checkStroke: (
@@ -44,10 +44,34 @@ export const icons: Record<string, ReactNode> = {
   ),
 
   /* =========================
+     ACTION / MENU ICONS
+     ========================= */
+
+  moreVert: (
+    <path
+      d="M12 5.5a1.5 1.5 0 110-3 1.5 1.5 0 010 3zm0 8a1.5 1.5 0 110-3 1.5 1.5 0 010 3zm0 8a1.5 1.5 0 110-3 1.5 1.5 0 010 3z"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+    />
+  ),
+
+  /* =========================
      OTHER ICONS
      ========================= */
 
   close: <path d="M6 6l12 12M6 18L18 6" />,
+
+  closeStroke: (
+  <path
+    d="M6 6l12 12M6 18L18 6"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.75"
+    strokeLinecap="round"
+  />
+),
 
   history: (
     <path d="M13 3a9 9 0 00-9 9H1l4 4 4-4H6a7 7 0 117 7 7.01 7.01 0 01-6.93-6H4.02A9 9 0 1013 3zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z" />
@@ -69,6 +93,32 @@ export const icons: Record<string, ReactNode> = {
       <path d="M13 12l-5-5M13 12l-5 5" />
       <path d="M18 6v12" />
     </>
+  ),
+
+  widthNormal: (
+    <g transform="translate(12 12) scale(0.75) translate(-12 -12)">
+      <path
+        d="M5 6h14"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+      />
+      <path
+        d="M5 18h14"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+      />
+      <path
+        d="M9 6v12M15 6v12"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+      />
+    </g>
   ),
 };
 
