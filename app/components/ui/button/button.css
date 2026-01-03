@@ -43,7 +43,7 @@
 }
 
 .btn--md {
-  height: 40px;
+  height: 42px;
   font-size: var(--font-default);
 }
 
@@ -52,10 +52,14 @@
    ========================================================= */
 
 .btn--leading-icon svg {
+  fill: currentColor;
+  stroke: none;
   margin-right: 6px;
 }
 
 .btn--trailing-icon svg {
+  fill: currentColor;
+  stroke: none;
   margin-left: 6px;
 }
 

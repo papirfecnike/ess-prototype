@@ -2,6 +2,7 @@ import { Toggle } from "../ui/toggle/Toggle";
 import { Icon } from "../ui/icon/Icon";
 import { SelectableList } from "../ui/list/SelectableList";
 import { Select } from "@/components/ui/select/Select";
+import { Button } from "@/components/ui/button/Button";
 
 type Props = {
   searchValue: string;
@@ -113,12 +114,14 @@ export function DataTableHeader({
               Customize columns
             </button>
 
-            <button
-              className="btn btn--ghost btn--danger btn--sm"
+            <Button
+              variant="ghost"
+              intent="danger"
+              size="sm"
+              leadingIcon="delete"
             >
-              <Icon name="delete" size="sm" />
               Delete filters
-            </button>
+            </Button>
           </div>
         </div>
       )}
