@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from "react";
-import type { MouseEvent } from "react";
 import { Icon } from "../icon/Icon";
+import { Chip } from "../chip/Chip";
+import { SelectableList } from "../list/SelectableList";
+import type { CheckboxState } from "../list/SelectableList";
 
 export type SelectOption = {
   value: string;
@@ -11,7 +13,7 @@ type SelectSize = "md" | "sm";
 
 type Props = {
   label: string;
-  size: SelectSize;
+  size?: SelectSize;
   options: SelectOption[];
   value: string[];
   multiple?: boolean;
@@ -35,7 +37,7 @@ export function Select({
      ========================= */
 
   useEffect(() => {
-    function handleClick(e: MouseEvent) {
+    function handleClickOutside(e: MouseEvent) {
       if (
         containerRef.current &&
         !containerRef.current.contains(e.target as Node)
@@ -44,71 +46,76 @@ export function Select({
       }
     }
 
-    document.addEventListener("mousedown", handleClick as any);
+    document.addEventListener("click", handleClickOutside);
     return () =>
-      document.removeEventListener("mousedown", handleClick as any);
+      document.removeEventListener("click", handleClickOutside);
   }, []);
 
   /* =========================
-     HELPERS – ALL LOGIC
+     ALL / STATE LOGIC
      ========================= */
 
-  const hasAllOption = options.some(o => o.value === "all");
   const selectableOptions = options.filter(o => o.value !== "all");
+  const selectedValues = value.filter(v => v !== "all");
 
-  const isAllSelected =
-    hasAllOption &&
-    value.length === selectableOptions.length &&
-    selectableOptions.length > 0;
+  const allCount = selectableOptions.length;
+  const selectedCount = selectedValues.length;
 
-  const isIndeterminate =
-    hasAllOption &&
-    value.length > 0 &&
-    value.length < selectableOptions.length;
+  const allState: CheckboxState =
+    selectedCount === 0
+      ? "unchecked"
+      : selectedCount === allCount
+      ? "checked"
+      : "indeterminate";
 
-  function toggleOption(option: SelectOption) {
-    if (option.value === "all") {
-      if (isAllSelected || value.length > 0) {
-        onChange([]);
-      } else {
-        onChange(selectableOptions.map(o => o.value));
-      }
+  function handleItemClick(id: string) {
+    if (id === "all") {
+      onChange(
+        selectedCount === allCount
+          ? []
+          : selectableOptions.map(o => o.value)
+      );
       return;
     }
 
-    if (value.includes(option.value)) {
-      onChange(value.filter(v => v !== option.value));
-    } else {
-      onChange([...value, option.value]);
-    }
+    onChange(
+      selectedValues.includes(id)
+        ? selectedValues.filter(v => v !== id)
+        : [...selectedValues, id]
+    );
   }
 
   /* =========================
-     SEARCH
+     SEARCH + LIST ITEMS
      ========================= */
 
   const visibleOptions = options.filter(o =>
     o.label.toLowerCase().includes(search.toLowerCase())
   );
 
-  const hasResults = visibleOptions.length > 0;
-  const hasValue = value.length > 0;
+  const listItems = visibleOptions.map(option => {
+    const isAll = option.value === "all";
+
+    const checkboxState: CheckboxState = isAll
+      ? allState
+      : selectedValues.includes(option.value)
+      ? "checked"
+      : "unchecked";
+
+    return {
+      id: option.value,
+      label: option.label,
+      checkboxState,
+    };
+  });
 
   /* =========================
-     VALUE LABEL
+     TRIGGER VALUE
      ========================= */
 
-  function getValueLabel() {
-    if (!hasValue) return "";
-
-    if (isAllSelected) return "All";
-
-    if (value.length === 1) {
-      return options.find(o => o.value === value[0])?.label;
-    }
-
-    return `${value.length} selected`;
-  }
+  const firstSelected = options.find(
+    o => o.value === selectedValues[0]
+  );
 
   /* =========================
      RENDER
@@ -117,10 +124,7 @@ export function Select({
   return (
     <div
       ref={containerRef}
-      className={[
-        "select",
-        size === "sm" ? "select--sm" : "",
-      ].join(" ")}
+      className={["select", size === "sm" ? "select--sm" : ""].join(" ")}
     >
       {/* TRIGGER */}
       <button
@@ -131,14 +135,38 @@ export function Select({
         <span
           className={[
             "select__label",
-            hasValue ? "is-floating" : "",
+            selectedCount > 0 ? "is-floating" : "",
           ].join(" ")}
         >
           {label}
         </span>
 
         <span className="select__value">
-          {getValueLabel()}
+          {multiple && selectedCount > 0 ? (
+            <div className="select__chips">
+              {firstSelected && (
+                <Chip
+                  onRemove={() =>
+                    onChange(
+                      selectedValues.filter(
+                        v => v !== firstSelected.value
+                      )
+                    )
+                  }
+                >
+                  {firstSelected.label}
+                </Chip>
+              )}
+
+              {selectedCount > 1 && (
+                <span className="select__more">
+                  +{selectedCount - 1} more
+                </span>
+              )}
+            </div>
+          ) : (
+            firstSelected?.label ?? ""
+          )}
         </span>
 
         <Icon
@@ -154,7 +182,6 @@ export function Select({
       {/* DROPDOWN */}
       {open && (
         <div className="select__dropdown">
-          {/* SEARCH */}
           <input
             type="search"
             className="select__search"
@@ -163,47 +190,12 @@ export function Select({
             onChange={(e) => setSearch(e.target.value)}
           />
 
-          {/* OPTIONS */}
-          <ul className="select__list">
-            {/* EMPTY STATE */}
-            {!hasResults && (
-              <li className="select__empty">
-                <Icon name="search" size="sm" color="muted" />
-                <span>No results found</span>
-              </li>
-            )}
-
-            {visibleOptions.map((option) => {
-              const checked =
-                option.value === "all"
-                  ? isAllSelected
-                  : value.includes(option.value);
-
-              return (
-                <li
-                  key={option.value}
-                  className="select__option"
-                  onClick={() => toggleOption(option)}
-                >
-                  <input
-                    type="checkbox"
-                    checked={checked}
-                    readOnly
-                    ref={(el) => {
-                      if (
-                        el &&
-                        option.value === "all" &&
-                        isIndeterminate
-                      ) {
-                        el.indeterminate = true;
-                      }
-                    }}
-                  />
-                  <span>{option.label}</span>
-                </li>
-              );
-            })}
-          </ul>
+          <div className="select__list-wrapper">
+            <SelectableList
+              items={listItems}
+              onItemClick={handleItemClick}
+            />
+          </div>
         </div>
       )}
     </div>

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Toggle } from "../ui/toggle/Toggle";
 import { Icon } from "../ui/icon/Icon";
 import { Select } from "@/components/ui/select/Select";
@@ -23,6 +24,13 @@ export function DataTableHeader({
   showFilters,
   onToggleFilters,
 }: Props) {
+  /* =========================
+     FILTER STATE (FIX)
+     ========================= */
+
+  const [warehouseFilter, setWarehouseFilter] = useState<string[]>([]);
+  const [priorityFilter, setPriorityFilter] = useState<string[]>([]);
+
   return (
     <div className="data-table__header">
       {/* =========================
@@ -65,6 +73,7 @@ export function DataTableHeader({
         <div className="data-table__header-details">
           <div className="data-table__chips">
             <Chip onRemove={() => {}}>In progress</Chip>
+            <Chip onRemove={() => {}}>Prepared</Chip>
             <Chip onRemove={() => {}}>Completed</Chip>
           </div>
         </div>
@@ -80,12 +89,16 @@ export function DataTableHeader({
               label="Warehouse"
               size="md"
               multiple
-              value={["all"]}
-              onChange={() => {}}
+              value={warehouseFilter}
+              onChange={setWarehouseFilter}
               options={[
                 { value: "all", label: "All" },
                 { value: "a", label: "Warehouse A" },
                 { value: "b", label: "Warehouse B" },
+                { value: "c", label: "Warehouse C" },
+                { value: "d", label: "Warehouse D" },
+                { value: "e", label: "Warehouse E" },
+                { value: "f", label: "Warehouse F" },
               ]}
             />
 
@@ -93,8 +106,8 @@ export function DataTableHeader({
               label="Priority"
               size="md"
               multiple
-              value={["all"]}
-              onChange={() => {}}
+              value={priorityFilter}
+              onChange={setPriorityFilter}
               options={[
                 { value: "all", label: "All" },
                 { value: "high", label: "High" },
@@ -109,7 +122,16 @@ export function DataTableHeader({
               Customize columns
             </Button>
 
-            <Button variant="ghost" intent="danger" size="sm" leadingIcon="delete">
+            <Button
+              variant="ghost"
+              intent="danger"
+              size="sm"
+              leadingIcon="delete"
+              onClick={() => {
+                setWarehouseFilter([]);
+                setPriorityFilter([]);
+              }}
+            >
               Delete filters
             </Button>
           </div>

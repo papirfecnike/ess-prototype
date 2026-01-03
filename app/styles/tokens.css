@@ -35,6 +35,10 @@
   --color-input-text-focus: #14282F;
   --color-input-text-disabled: #919597;
 
+  --color-checkbox-bg: #ffffff;
+  --color-checkbox-border: #7E9094;
+  --color-checkbox-select: #137897;
+
   --color-chip-bg: #fcfdfd;
   --color-chip-border: #d0d7da;
   --color-chip-text: #7E9094;
@@ -62,6 +66,7 @@
   --sidebar-width: 280px;
   --input-height: 42px;
   --tag-height: 28px;
+  --listitem-height: 32px;
 
 
   /* =========================
