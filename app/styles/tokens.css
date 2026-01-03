@@ -35,6 +35,11 @@
   --color-input-text-focus: #14282F;
   --color-input-text-disabled: #919597;
 
+  --color-chip-bg: #fcfdfd;
+  --color-chip-border: #d0d7da;
+  --color-chip-text: #7E9094;
+  --color-chip-icon: #7E9094;
+
   --color-default: #137897;
   --color-success: #07930A;
   --color-warning: #F09300;

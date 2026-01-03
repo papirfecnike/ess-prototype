@@ -1,0 +1,65 @@
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  height: 24px;
+  padding: 0 8px;
+
+  background: var(--color-chip-bg, #F0F2F3);
+  border: 1px solid var(--color-chip-border, transparent);
+  border-radius: var(--radius-full);
+
+  font-size: var(--font-default);
+  color: var(--color-chip-text, var(--color-text));
+}
+
+/* =========================
+   LABEL
+   ========================= */
+
+.chip__label {
+  line-height: 1;
+  white-space: nowrap;
+}
+
+/* =========================
+   REMOVE BUTTON
+   ========================= */
+
+.chip__remove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 16px;
+  height: 16px;
+
+  padding: 0;
+  border: none;
+  background: transparent;
+
+  color: var(--color-chip-icon);
+  opacity: 0.6;
+  cursor: pointer;
+}
+
+.chip__remove .icon {
+  color: var(--color-chip-icon, var(--color-text));
+}
+
+.chip__remove svg {
+  width: 12px;
+  height: 12px;
+
+  fill: currentColor;
+  stroke: none;
+}
+
+/* =========================
+   HOVER
+   ========================= */
+
+.chip__remove:hover {
+  opacity: 1;
+}

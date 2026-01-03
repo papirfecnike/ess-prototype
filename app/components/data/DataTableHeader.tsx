@@ -1,8 +1,8 @@
 import { Toggle } from "../ui/toggle/Toggle";
 import { Icon } from "../ui/icon/Icon";
-import { SelectableList } from "../ui/list/SelectableList";
 import { Select } from "@/components/ui/select/Select";
 import { Button } from "@/components/ui/button/Button";
+import { Chip } from "@/components/ui/chip/Chip";
 
 type Props = {
   searchValue: string;
@@ -25,6 +25,9 @@ export function DataTableHeader({
 }: Props) {
   return (
     <div className="data-table__header">
+      {/* =========================
+          HEADER MAIN
+          ========================= */}
       <div className="data-table__header-main">
         <div className="data-table__header-left">
           <input
@@ -43,42 +46,33 @@ export function DataTableHeader({
             label="Show details"
           />
 
-          <button
-            type="button"
-            className="btn--secondary data-table__filter-button"
+          <Button
+            variant="ghost"
+            intent="default"
+            size="sm"
+            trailingIcon="chevronDownStroke"
             onClick={onToggleFilters}
           >
             Filter
-            <Icon
-              name="chevronDown"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth={1.25}
-              className={[
-                "data-table__chevron",
-                showFilters ? "is-open" : "",
-              ].join(" ")}
-            />
-          </button>
+          </Button>
         </div>
       </div>
 
-      {/* DETAILS PANEL */}
+      {/* =========================
+          DETAILS PANEL (CHIPS)
+          ========================= */}
       {showDetails && (
         <div className="data-table__header-details">
-          <SelectableList
-            items={[
-              { id: "in-progress", label: "In progress" },
-              { id: "completed", label: "Completed" },
-              { id: "blocked", label: "Blocked", disabled: true },
-            ]}
-            value={["in-progress", "completed"]}
-            onChange={() => {}}
-          />
+          <div className="data-table__chips">
+            <Chip onRemove={() => {}}>In progress</Chip>
+            <Chip onRemove={() => {}}>Completed</Chip>
+          </div>
         </div>
       )}
 
-      {/* FILTER PANEL */}
+      {/* =========================
+          FILTER PANEL
+          ========================= */}
       {showFilters && (
         <div className="data-table__filter-panel">
           <div className="data-table__filter-selects">
@@ -109,17 +103,13 @@ export function DataTableHeader({
             />
           </div>
 
+          {/* ACTIONS */}
           <div className="data-table__filter-actions">
-            <button type="button" className="btn--secondary" disabled>
+            <Button variant="secondary" intent="default" size="sm" disabled>
               Customize columns
-            </button>
+            </Button>
 
-            <Button
-              variant="ghost"
-              intent="danger"
-              size="sm"
-              leadingIcon="delete"
-            >
+            <Button variant="ghost" intent="danger" size="sm" leadingIcon="delete">
               Delete filters
             </Button>
           </div>
