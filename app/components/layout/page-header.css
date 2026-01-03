@@ -1,0 +1,28 @@
+.page-header {
+  background: transparent;
+  width: 100%;
+}
+
+.page-header__main {
+  width: 100%;
+}
+
+.page-header__title {
+  font-size: var(--font-h1);
+  font-weight: var(--font-weight-bold);
+}
+
+.page-header__title--custom {
+  margin: 0;
+  width: 100%;
+}
+
+.page-header__title--custom > * {
+  width: 100%;
+}
+
+.page-header__subtitle {
+  font-size: var(--font-h2);
+  color: var(--color-muted);
+  margin-top: var(--space-1);
+}

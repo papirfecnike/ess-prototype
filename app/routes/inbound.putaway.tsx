@@ -9,6 +9,9 @@ import type { DataTableColumn } from "@/components/data/DataTableCore";
 import { Tag } from "@/components/ui/tag/Tag";
 import { Icon } from "@/components/ui/icon/Icon";
 
+import { ScanInput } from "@/components/inputs/ScanInput";
+
+
 export const loader: LoaderFunction = async () => {
   return null;
 };
@@ -218,8 +221,7 @@ export default function InboundPutaway() {
 
   return (
     <PageLayout
-      title="Putaway"
-      subtitle="Handling and placement of inbound goods"
+      title={<ScanInput />}
     >
       <PageSection>
         <SelectableDataTable

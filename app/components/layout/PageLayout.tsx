@@ -1,9 +1,10 @@
 import type { ReactNode } from "react";
 import { PageHeader } from "./PageHeader";
+import "./page-layout.css";
 
 type Props = {
-  title?: string;
-  subtitle?: string;
+  title?: ReactNode;
+  subtitle?: ReactNode;
   headerContent?: ReactNode;
   headerActions?: ReactNode;
   children: ReactNode;

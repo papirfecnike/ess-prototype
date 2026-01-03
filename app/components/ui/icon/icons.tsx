@@ -60,7 +60,7 @@ export const icons: Record<string, ReactNode> = {
   /* =========================
      OTHER ICONS
      ========================= */
-
+     
   close: <path d="M6 6l12 12M6 18L18 6" />,
 
   closeStroke: (
@@ -120,6 +120,32 @@ export const icons: Record<string, ReactNode> = {
       />
     </g>
   ),
+
+    qrScanner: (
+    <>
+      {/* corners */}
+      <path
+        d="M4 8V6a2 2 0 012-2h2
+           M16 4h2a2 2 0 012 2v2
+           M20 16v2a2 2 0 01-2 2h-2
+           M8 20H6a2 2 0 01-2-2v-2"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+      />
+
+      {/* center scan line */}
+      <path
+        d="M6 12h12"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.25"
+        strokeLinecap="round"
+      />
+    </>
+  ),
+
 };
 
 export type IconName = keyof typeof icons;

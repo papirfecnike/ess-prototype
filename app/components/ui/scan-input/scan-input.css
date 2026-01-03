@@ -1,0 +1,13 @@
+.scan-input {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.scan-input-card {
+  width: 100%;
+}
+
+.scan-input .text-field {
+  flex: 1;
+}

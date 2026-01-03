@@ -159,7 +159,21 @@
    ========================================================= */
 
 .btn:disabled {
-  opacity: 0.5;
   cursor: not-allowed;
   pointer-events: none;
+}
+
+.btn--primary:disabled {
+  background: var(--color-border);
+  color: var(--color-muted);
+}
+
+.btn--primary:disabled svg {
+  fill: currentColor;
+}
+
+.btn--secondary:disabled,
+.btn--ghost:disabled {
+  color: var(--color-muted);
+  border-color: var(--color-border);
 }

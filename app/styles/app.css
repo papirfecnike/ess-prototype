@@ -120,72 +120,6 @@ aside {
   flex-direction: column;
 }
 
-.page-title {
-  font-size: var(--font-h1);
-  font-weight: var(--font-weight-bold);
-}
-
-/* PAGE LAYOUT */
-
-.page-layout {
-  display: flex;
-  flex-direction: column;
-}
-
-.page-layout__content {
-  display: flex;
-  flex-direction: column;
-}
-
-/* PAGE HEADER */
-
-.page-header {
-  display: flex;
-  align-items: flex-start;
-  margin: 1rem;
-  background: transparent;
-}
-
-.page-header__left {
-  margin: 0;
-  background: transparent;
-}
-.page-header__title {
-  font-size: var(--font-h1);
-  font-weight: var(--font-weight-bold);
-  margin: 0;
-  background: transparent;
-}
-
-.page-header__subtitle {
-  font-size: var(--font-h2);
-  font-weight: var(--font-weight-regular);
-  color: var(--color-muted);
-  margin: var(--space-1) 0 0;
-  background: transparent;
-}
-
-.page-header__actions {
-  display: flex;
-}
-
-/* PAGE SECTION */
-
-.page-section {
-  display: flex;
-  flex-direction: column;
-  overflow: visible;
-  background: transparent;
-}
-
-.page-section__title {
-  font-size: var(--font-section-title);
-  font-weight: var(--font-weight-bold);
-  margin-left: 1rem;
-  background: transparent;
-}
-
-
 /* =========================================================
    GENERIC UI
    ========================================================= */
@@ -200,14 +134,6 @@ button {
 
 button:hover {
   background: rgba(0,0,0,0.04);
-}
-
-.card {
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-l);
-  padding: 16px;
-  box-shadow: var(--shadow-sm);
 }
 
 /* =========================================================
