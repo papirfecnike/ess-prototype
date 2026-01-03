@@ -70,11 +70,13 @@
 /* EXPANDABLE DETAILS */
 
 .data-table__header-details {
-  padding-top: var(--space-3);
-  border-top: 1px dashed var(--color-border);
+  background: #F0F2F3;
+  border-radius: var(--radius-s);
 
-  display: flex;
-  gap: var(--space-4);
+  padding: var(--space-4);
+  margin-top: var(--space-3);
+
+  border: none;
 }
 
 .data-table__header-details {
@@ -536,4 +538,28 @@
 
 .data-table__expanded-inner tbody td {
   background: var(--color-table);
+}
+
+
+.data-table__filter-panel {
+  background: #f5f7f8;
+  border-radius: var(--radius-s);
+  padding: var(--space-4);
+}
+
+.data-table__filter-selects {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-4);
+}
+
+.data-table__filter-actions {
+  margin-top: var(--space-4);
+  padding-top: var(--space-3);
+
+  border-top: 1px solid var(--color-table-border);
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }

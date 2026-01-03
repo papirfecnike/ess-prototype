@@ -84,7 +84,7 @@ export function DataTableHeader({
           <div className="data-table__filter-selects">
             <Select
               label="Warehouse"
-              size="sm"
+              size="md"
               multiple
               value={["all"]}
               onChange={() => {}}
@@ -97,7 +97,7 @@ export function DataTableHeader({
 
             <Select
               label="Priority"
-              size="sm"
+              size="md"
               multiple
               value={["all"]}
               onChange={() => {}}
