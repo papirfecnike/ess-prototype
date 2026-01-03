@@ -50,6 +50,9 @@ export function DataTableHeader({
             Filter
             <Icon
               name="chevronDown"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth={1.25}
               className={[
                 "data-table__chevron",
                 showFilters ? "is-open" : "",
@@ -80,6 +83,7 @@ export function DataTableHeader({
           <div className="data-table__filter-selects">
             <Select
               label="Warehouse"
+              size="sm"
               multiple
               value={["all"]}
               onChange={() => {}}
@@ -92,6 +96,7 @@ export function DataTableHeader({
 
             <Select
               label="Priority"
+              size="sm"
               multiple
               value={["all"]}
               onChange={() => {}}

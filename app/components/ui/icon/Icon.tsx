@@ -32,11 +32,8 @@ export function Icon({
       height={px}
       className={`icon icon--${size} icon--${color}`}
       viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
+      fill="currentColor"
+      stroke="none"
       aria-hidden
       {...rest}
     >

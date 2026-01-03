@@ -170,6 +170,12 @@
   border-bottom: none;
 }
 
+/* hover only when NOT expanded */
+.data-table tbody tr:not(.data-table__row--expanded):hover td {
+  background: var(--color-table-hover);
+}
+
+
 /* =========================================================
    FOOTER
    ========================================================= */
@@ -240,16 +246,6 @@
   gap: var(--space-3);
 }
 
-
-/* =========================
-   EXPANDED ROW
-   ========================= */
-
-.data-table__expanded-row td {
-  background: var(--color-table-hover);
-  padding: var(--space-4);
-  border-bottom: 1px solid var(--color-table-border);
-}
 
 .data-table__chevron {
   transition: transform 150ms ease;
@@ -431,4 +427,113 @@
 .data-table__footer .btn--ghost:disabled {
   color: var(--color-text-muted);
   cursor: not-allowed;
+}
+
+/* =========================================================
+   EXPANDED ROW – ACTIVE STATE
+   ========================================================= */
+
+.data-table__row--expanded td {
+  background: #ECF0F2;
+}
+
+.data-table__expanded-row td {
+  background: #ECF0F2;
+  padding: 24px;
+  border-bottom: none;
+}
+
+/* =========================================================
+   EXPANDED STATE – ALWAYS VISIBLE BACKGROUND
+   ========================================================= */
+
+/* parent row when expanded */
+.data-table__row--expanded td {
+  background: #ECF0F2 !important;
+}
+
+/* expanded content row */
+.data-table__expanded-row td {
+  background: #ECF0F2 !important;
+  padding: 24px;
+  border-bottom: none;
+}
+
+/* disable hover when expanded */
+.data-table tbody tr:not(.data-table__row--expanded):hover td {
+  background: var(--color-table-hover);
+}
+
+
+/* =========================================================
+   EXPANDED ROW – INNER TABLE CARD
+   ========================================================= */
+
+.data-table__expanded-row table {
+  background-color: var(--color-table);
+  border-radius: 8px;
+
+  box-shadow: 0 0 0 1px var(--color-table-border);
+}
+
+/* =========================================================
+   EXPANDED ROW – INNER TABLE CONTAINER
+   ========================================================= */
+
+.data-table__expanded-row td {
+  background: var(--color-table);
+  padding: 24px;
+  border-bottom: none;
+}
+
+/* THIS is the visual card */
+.data-table__expanded-inner {
+  background: var(--color-table);
+  border-radius: 8px;
+  overflow: hidden; /* CRITICAL for radius */
+}
+
+/* inner table reset */
+.data-table__expanded-inner table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--color-table);
+}
+
+/* header */
+.data-table__expanded-inner thead th {
+  background: var(--color-table);
+  font-weight: 600;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--color-table-border);
+}
+
+/* body */
+.data-table__expanded-inner tbody td {
+  background: var(--color-table) !important;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--color-table-border);
+}
+
+.data-table__expanded-inner tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* =========================================================
+   EXPANDED ROW – FORCE WHITE INNER TABLE BODY
+   ========================================================= */
+
+.data-table__expanded-inner {
+  background: var(--color-table);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.data-table__expanded-inner thead th {
+  background: var(--color-table);
+  font-weight: 600;
+}
+
+.data-table__expanded-inner tbody td {
+  background: var(--color-table);
 }

@@ -230,7 +230,7 @@ export function DataTableCore({
                 <tr className="data-table__empty">
                   <td colSpan={colSpan}>
                     <div className="data-table__empty-content">
-                      <Icon name="search" size="lg" color="muted" />
+                      <Icon name="search" size="lg" color="default" />
                       <div>No results found</div>
                     </div>
                   </td>
@@ -243,7 +243,10 @@ export function DataTableCore({
 
                 return (
                   <>
-                    <tr key={id}>
+                    <tr
+                      key={id}
+                      className={isExpanded ? "data-table__row--expanded" : undefined}
+                    >
                       {selectable && (
                         <td>
                           <input
@@ -264,6 +267,9 @@ export function DataTableCore({
                             <Icon
                               name="chevronDown"
                               size="sm"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth={1.25}
                               className={[
                                 "data-table__chevron",
                                 isExpanded ? "is-open" : "",
@@ -275,21 +281,25 @@ export function DataTableCore({
 
                       {visibleColumns.map((col) => (
                         <td key={col.key}>
-                          {row[col.key]}
+                          {col.renderCell
+                            ? col.renderCell(row[col.key], row)
+                            : row[col.key]}
                         </td>
                       ))}
                     </tr>
-
                     {expandable && isExpanded && renderExpandedRow && (
                       <tr className="data-table__expanded-row">
                         <td colSpan={colSpan}>
-                          {renderExpandedRow(row)}
+                          <div className="data-table__expanded-inner">
+                            {renderExpandedRow(row)}
+                          </div>
                         </td>
                       </tr>
                     )}
                   </>
                 );
               })}
+
             </tbody>
           </table>
         </div>
