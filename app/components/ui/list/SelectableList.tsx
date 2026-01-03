@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { Checkbox } from "../checkbox/Checkbox";
-import { RadioButton } from "../radiobutton/Radiobutton";
+import { RadioButton } from "../radiobutton/RadioButton";
 
 
 export type CheckboxState = "checked" | "unchecked" | "indeterminate";
