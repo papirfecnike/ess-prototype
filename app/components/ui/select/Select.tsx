@@ -11,21 +11,36 @@ export type SelectOption = {
 
 type SelectSize = "md" | "sm";
 
-type Props = {
-  label: string;
+/* =========================
+   PROPS
+   ========================= */
+
+type BaseProps = {
+  label?: string;
   size?: SelectSize;
   options: SelectOption[];
+};
+
+type MultiSelectProps = BaseProps & {
+  multiple: true;
   value: string[];
-  multiple?: boolean;
   onChange: (value: string[]) => void;
 };
+
+type SingleSelectProps = BaseProps & {
+  multiple?: false;
+  value: string | null;
+  onChange: (value: string | null) => void;
+};
+
+type Props = MultiSelectProps | SingleSelectProps;
 
 export function Select({
   label,
   options,
-  value,
-  multiple = false,
   size = "md",
+  multiple = false,
+  value,
   onChange,
 }: Props) {
   const [open, setOpen] = useState(false);
@@ -52,12 +67,23 @@ export function Select({
   }, []);
 
   /* =========================
-     ALL / STATE LOGIC
+     NORMALIZED STATE
+     ========================= */
+
+    let selectedValues: string[];
+
+        if (multiple) {
+          selectedValues = value as string[];
+        } else {
+          selectedValues = value ? [value as string] : [];
+        }
+
+
+  /* =========================
+     ALL / STATE LOGIC (MULTI)
      ========================= */
 
   const selectableOptions = options.filter(o => o.value !== "all");
-  const selectedValues = value.filter(v => v !== "all");
-
   const allCount = selectableOptions.length;
   const selectedCount = selectedValues.length;
 
@@ -69,20 +95,25 @@ export function Select({
       : "indeterminate";
 
   function handleItemClick(id: string) {
-    if (id === "all") {
-      onChange(
-        selectedCount === allCount
-          ? []
-          : selectableOptions.map(o => o.value)
-      );
-      return;
-    }
+    if (multiple) {
+      if (id === "all") {
+        (onChange as MultiSelectProps["onChange"])(
+          selectedCount === allCount
+            ? []
+            : selectableOptions.map(o => o.value)
+        );
+        return;
+      }
 
-    onChange(
-      selectedValues.includes(id)
-        ? selectedValues.filter(v => v !== id)
-        : [...selectedValues, id]
-    );
+      (onChange as MultiSelectProps["onChange"])(
+        selectedValues.includes(id)
+          ? selectedValues.filter(v => v !== id)
+          : [...selectedValues, id]
+      );
+    } else {
+      (onChange as SingleSelectProps["onChange"])(id);
+      setOpen(false);
+    }
   }
 
   /* =========================
@@ -96,7 +127,11 @@ export function Select({
   const listItems = visibleOptions.map(option => {
     const isAll = option.value === "all";
 
-    const checkboxState: CheckboxState = isAll
+    const checkboxState: CheckboxState = !multiple
+      ? selectedValues[0] === option.value
+        ? "checked"
+        : "unchecked"
+      : isAll
       ? allState
       : selectedValues.includes(option.value)
       ? "checked"
@@ -132,14 +167,16 @@ export function Select({
         className="select__trigger"
         onClick={() => setOpen(v => !v)}
       >
-        <span
-          className={[
-            "select__label",
-            selectedCount > 0 ? "is-floating" : "",
-          ].join(" ")}
-        >
-          {label}
-        </span>
+        {label && (
+          <span
+            className={[
+              "select__label",
+              selectedCount > 0 ? "is-floating" : "",
+            ].join(" ")}
+          >
+            {label}
+          </span>
+        )}
 
         <span className="select__value">
           {multiple && selectedCount > 0 ? (
@@ -147,7 +184,7 @@ export function Select({
               {firstSelected && (
                 <Chip
                   onRemove={() =>
-                    onChange(
+                    (onChange as MultiSelectProps["onChange"])(
                       selectedValues.filter(
                         v => v !== firstSelected.value
                       )

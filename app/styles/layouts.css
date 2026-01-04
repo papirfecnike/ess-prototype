@@ -1,0 +1,147 @@
+/* =========================
+   GRID / GROUP PATTERNS
+   ========================= */
+
+.layout-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.layout-grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.layout-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.layout-split {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+/* =========================
+   CARD GROUPING
+   ========================= */
+
+.card-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.card-item-muted {
+  background: #f5f6f7;
+  border-radius: 12px;
+  padding: 8px;
+}
+
+/* =========================
+   ACTION ROWS
+   ========================= */
+
+.action-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+
+/* =========================
+   CARD FILL / ALIGNMENT
+   ========================= */
+
+.layout-card-fill {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.layout-card-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.layout-card-action {
+  margin-top: auto;
+}
+
+/* =========================
+   CHECKBOX
+   ========================= */
+
+.layout-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+}
+
+
+/* =========================
+   VERSION HISTORY
+   ========================= */
+
+.version-header-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  max-width: 100%;
+}
+
+.version-title {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.version-description {
+  margin-top: 4px;
+  font-size: 14px;
+  color: #5f6b6d;
+  line-height: 1.4;
+}
+
+.version-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  white-space: nowrap;
+}
+
+.version-meta {
+  display: inline-flex;          /* ⬅️ 5 + 7 ikon + szöveg */
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  color: #5f6b6d;
+}
+
+.version-expand-trigger {
+  background: none;              /* ⬅️ 8. accordion trigger */
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+}
+
+.version-expand-trigger:hover {
+  background: #eef0f1;
+  border-radius: 6px;
+}
+
+/* opcionális: expanded állapot */
+.version-expanded {
+  padding-top: 12px;
+  border-top: 1px solid #e0e8ea;
+}

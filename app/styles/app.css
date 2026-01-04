@@ -120,6 +120,11 @@ aside {
   flex-direction: column;
 }
 
+.page-title {
+  font-size: var(--font-h1);
+  font-weight: var(--font-weight-bold);
+}
+
 /* =========================================================
    GENERIC UI
    ========================================================= */

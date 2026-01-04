@@ -60,18 +60,18 @@ export const icons: Record<string, ReactNode> = {
   /* =========================
      OTHER ICONS
      ========================= */
-     
+
   close: <path d="M6 6l12 12M6 18L18 6" />,
 
   closeStroke: (
-  <path
-    d="M6 6l12 12M6 18L18 6"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="1.75"
-    strokeLinecap="round"
-  />
-),
+    <path
+      d="M6 6l12 12M6 18L18 6"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.75"
+      strokeLinecap="round"
+    />
+  ),
 
   history: (
     <path d="M13 3a9 9 0 00-9 9H1l4 4 4-4H6a7 7 0 117 7 7.01 7.01 0 01-6.93-6H4.02A9 9 0 1013 3zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z" />
@@ -121,31 +121,27 @@ export const icons: Record<string, ReactNode> = {
     </g>
   ),
 
-    qrScanner: (
-      <>
-        {/* corners */}
-        <path
-          d="M4 8V6a2 2 0 012-2h2M16 4h2a2 2 0 012 2v2M20 16v2a2 2 0 01-2 2h-2M8 20H6a2 2 0 01-2-2v-2"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-        />
-
-        {/* center scan line */}
-        <path
-          d="M6 12h12"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.25"
-          strokeLinecap="round"
-        />
-      </>
-    ),
+  qrScanner: (
+    <>
+      <path
+        d="M4 8V6a2 2 0 012-2h2M16 4h2a2 2 0 012 2v2M20 16v2a2 2 0 01-2 2h-2M8 20H6a2 2 0 01-2-2v-2"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+      />
+      <path
+        d="M6 12h12"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.25"
+        strokeLinecap="round"
+      />
+    </>
+  ),
 
   forklift: (
     <>
-      {/* mast */}
       <path
         d="M6 4v16"
         fill="none"
@@ -153,8 +149,6 @@ export const icons: Record<string, ReactNode> = {
         strokeWidth="1.5"
         strokeLinecap="round"
       />
-
-      {/* body */}
       <path
         d="M6 14h8l3 4h3"
         fill="none"
@@ -163,8 +157,6 @@ export const icons: Record<string, ReactNode> = {
         strokeLinecap="round"
         strokeLinejoin="round"
       />
-
-      {/* forks */}
       <path
         d="M17 18h4M17 16h4"
         fill="none"
@@ -172,13 +164,47 @@ export const icons: Record<string, ReactNode> = {
         strokeWidth="1.5"
         strokeLinecap="round"
       />
-
-      {/* wheels */}
       <circle cx="9" cy="19" r="1.5" fill="currentColor" />
       <circle cx="15" cy="19" r="1.5" fill="currentColor" />
     </>
-    ),
+  ),
 
+  /* =========================
+     VERSION HISTORY ICONS
+     ========================= */
+
+  save: (
+    <>
+      <path d="M5 3h12l4 4v14a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2z" />
+      <path d="M7 3v6h10V3" />
+      <path d="M12 13v6" />
+      <path d="M9 16h6" />
+    </>
+  ),
+
+  refresh: (
+    <path
+      d="M4 4v6h6M20 20v-6h-6M6.5 17.5a7 7 0 0011-1.5M17.5 6.5a7 7 0 00-11 1.5"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.75"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  ),
+
+  rocket: (
+    <>
+      <path
+        d="M12 2c3 2 6 6 6 10l-6 2-6-2c0-4 3-8 6-10z"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.5"
+      />
+      <path d="M12 14v6" stroke="currentColor" strokeWidth="1.5" />
+      <circle cx="12" cy="9" r="1.5" fill="currentColor" />
+    </>
+  ),
 };
 
 export type IconName = keyof typeof icons;

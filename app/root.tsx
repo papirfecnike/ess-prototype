@@ -1,6 +1,8 @@
 import tokens from "./styles/tokens.css?url";
 import base from "./styles/base.css?url";
 import app from "./styles/app.css?url";
+import layouts from "./styles/layouts.css?url";
+
 
 import {
   Meta,
@@ -25,6 +27,7 @@ export function links() {
     { rel: "stylesheet", href: tokens },
     { rel: "stylesheet", href: base },
     { rel: "stylesheet", href: app },
+    { rel: "stylesheet", href: layouts },
   ];
 }
 
