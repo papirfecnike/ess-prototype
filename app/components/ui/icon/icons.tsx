@@ -205,6 +205,26 @@ export const icons: Record<string, ReactNode> = {
       <circle cx="12" cy="9" r="1.5" fill="currentColor" />
     </>
   ),
+
+    checkCircle: (
+    <>
+      <circle
+        cx="12"
+        cy="12"
+        r="10"
+        fill="currentColor"
+      />
+      <path
+        d="M8 12.5l2.5 2.5L16 9.5"
+        fill="none"
+        stroke="#ffffff"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </>
+  ),
+
 };
 
 export type IconName = keyof typeof icons;

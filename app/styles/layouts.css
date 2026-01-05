@@ -140,8 +140,124 @@
   border-radius: 6px;
 }
 
-/* opcionális: expanded állapot */
 .version-expanded {
   padding-top: 12px;
-  border-top: 1px solid #e0e8ea;
+}
+
+/* =========================
+   VERSION HISTORY ITEM
+   ========================= */
+
+.version-item {
+  background: #f5f6f7;
+  border-radius: 16px;
+  padding: 16px;
+}
+
+.version-expanded {
+  margin-top: 12px;
+  padding-top: 12px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.version-change {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 14px;
+  line-height: 1.4;
+  color: #2f3a3c;
+}
+
+.version-expand-trigger.is-open {
+  transform: rotate(180deg);
+}
+
+
+/* =========================
+   VERSION EXPANDED CONTENT
+   ========================= */
+
+.version-expanded {
+  margin-top: 12px;
+  padding: 16px;
+  background: #ffffff;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.version-change {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 14px;
+  line-height: 1.45;
+  color: #2f3a3c;
+}
+
+.version-change .icon {
+  color: #51ae0a;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+
+/* =========================
+   EDITABLE CARD BASE
+   ========================= */
+
+.card--editing {
+  border-style: solid;
+  border-left-width: 5px;
+  border-top-width: 1px;
+  border-right-width: 1px;
+  border-bottom-width: 1px;
+}
+
+.card-header--editable {
+  transition: background-color 0.2s ease;
+}
+
+/* =========================
+   SAVE CARD (BLUE)
+   ========================= */
+
+.card--save.card--editing {
+  border-color: #5cc5d5;
+  border-left-width: 5px;
+}
+
+.card--save.card--editing .card-header--editable {
+  background: #dff5f8;
+}
+
+/* =========================
+   LOAD CARD (ORANGE)
+   ========================= */
+
+.card--load.card--editing {
+  border-color: #b15e05;
+  border-left-width: 5px;
+}
+
+.card--load.card--editing .card-header--editable {
+  background: #fef0e0;
+}
+
+/* =========================
+   APPLY CARD (PURPLE)
+   ========================= */
+
+.card--apply.card--editing {
+  border-color: #8e44ad;
+  border-left-width: 5px;
+}
+
+.card--apply.card--editing .card-header--editable {
+  background: #f9e9ff;
 }

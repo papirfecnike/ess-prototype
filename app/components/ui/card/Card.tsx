@@ -6,6 +6,6 @@ type Props = {
   className?: string;
 };
 
-export function Card({ children, className = "" }: Props) {
-  return <div className={`ui-card ${className}`}>{children}</div>;
+export function Card({ className, children }: Props) {
+  return <div className={["ui-card", className].join(" ")}>{children}</div>;
 }
