@@ -1,19 +1,51 @@
 .ui-toggle {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
+  width: 100%;
   cursor: pointer;
   user-select: none;
 }
 
-/* VISUALLY HIDDEN INPUT */
+/* layout */
+.ui-toggle__content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  width: 100%;
+}
+
+/* text */
+.ui-toggle__text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ui-toggle__title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.ui-toggle__description {
+  font-size: 13px;
+  color: #5f6b6d;
+  line-height: 1.4;
+}
+
+/* control */
+.ui-toggle__control {
+  display: flex;
+  align-items: center;
+}
+
+/* visually hidden input */
 .ui-toggle__input {
   position: absolute;
   opacity: 0;
   pointer-events: none;
 }
 
-/* TRACK */
+/* track */
 .ui-toggle__track {
   position: relative;
   width: 36px;
@@ -23,33 +55,24 @@
   transition: background-color 0.2s ease;
 }
 
-/* THUMB */
+/* thumb */
 .ui-toggle__thumb {
   position: absolute;
   top: 2px;
   left: 2px;
-
   width: 16px;
   height: 16px;
-
   background: #fff;
   border-radius: 50%;
   box-shadow: 0 1px 2px rgba(0,0,0,0.2);
-
   transition: transform 0.2s ease;
 }
 
-/* CHECKED STATE */
+/* checked */
 .ui-toggle__input:checked + .ui-toggle__track {
   background: var(--color-toggle-bg-on);
 }
 
 .ui-toggle__input:checked + .ui-toggle__track .ui-toggle__thumb {
   transform: translateX(16px);
-}
-
-/* LABEL */
-.ui-toggle__label {
-  font-size: var(--font-size-s);
-  color: var(--color-text);
 }

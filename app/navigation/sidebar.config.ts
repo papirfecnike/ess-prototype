@@ -74,4 +74,12 @@ export const sidebarConfig: SidebarSection[] = [
       { label: "Version history", path: "version-history" },
     ],
   },
+  {
+    basePath: "profile",
+    items: [
+      { label: "Personal information", path: "" },
+      { label: "System preferences", path: "system-preferences" },
+      { label: "Security", path: "security" },
+    ],
+  },
 ];

@@ -1,34 +1,57 @@
-import type { InputHTMLAttributes, ReactNode } from "react";
+import type { InputHTMLAttributes } from "react";
+import { useId } from "react";
+import "./text-field.css";
 
 type Props = {
   label?: string;
-  icon?: ReactNode;
-} & InputHTMLAttributes<HTMLInputElement>;
+  error?: string;
+} & Omit<InputHTMLAttributes<HTMLInputElement>, "placeholder">;
 
 export function TextField({
   label,
+  value,
+  disabled,
+  error,
   id,
-  icon,
   ...rest
 }: Props) {
-  const inputId = id ?? (label ? label.replace(/\s+/g, "-").toLowerCase() : undefined);
+  const inputId = id ?? useId();
+  const hasValue = Boolean(value && String(value).length > 0);
 
   return (
-    <div className="text-field-wrapper">
-      {label && (
-        <label htmlFor={inputId} className="text-field__label">
-          {label}
-        </label>
-      )}
-
+    <div
+      className={[
+        "text-field-wrapper",
+        label ? "is-floating" : "is-legacy",
+        hasValue ? "has-value" : "",
+        disabled ? "is-disabled" : "",
+        error ? "has-error" : "",
+      ].join(" ")}
+    >
       <div className="text-field">
-        {icon && <span className="text-field__icon">{icon}</span>}
         <input
           id={inputId}
           className="text-field__input"
+          value={value}
+          disabled={disabled}
           {...rest}
         />
+
+        {label && (
+          <label
+            htmlFor={inputId}
+            className="text-field__floating-label"
+          >
+            {label}
+          </label>
+        )}
       </div>
+
+      {error && (
+        <div className="text-field__error">
+          {error}
+        </div>
+      )}
     </div>
   );
 }

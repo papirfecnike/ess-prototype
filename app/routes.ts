@@ -56,7 +56,8 @@ export default [
     route("version-history", "routes/configuration.version-history.tsx"),
   ]),
 
-  route("profile", "routes/profile.personal-information.tsx", [
+  route("profile", "routes/profile.tsx", [
+    index("routes/profile.personal-information.tsx"),
     route("system-preferences", "routes/profile.system-preferences.tsx"),
     route("security", "routes/profile.security.tsx"),
   ]),

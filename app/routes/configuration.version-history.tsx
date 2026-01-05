@@ -116,9 +116,6 @@ export default function ConfigurationVersionHistory() {
       title="Version history"
       subtitle="Setup and overview versions across the software suite"
     >
-      {/* =========================
-         TOP ACTION CARDS
-         ========================= */}
       <PageSection>
         <div className="layout-grid-3">
           {/* SAVE */}
@@ -138,14 +135,14 @@ export default function ConfigurationVersionHistory() {
 
             <div className="layout-stack layout-card-body">
               <TextField
-                placeholder="Version name"
+                label="Version name"
                 value={versionName}
                 onFocus={() => setActiveCard("save")}
                 onChange={(e) => setVersionName(e.target.value)}
               />
 
               <TextField
-                placeholder="Description"
+                label="Description"
                 value={description}
                 onFocus={() => setActiveCard("save")}
                 onChange={(e) => setDescription(e.target.value)}
@@ -247,9 +244,6 @@ export default function ConfigurationVersionHistory() {
         </div>
       </PageSection>
 
-      {/* =========================
-         VERSION HISTORY
-         ========================= */}
       <PageSection>
         <Card>
           <div className="card-header">
@@ -259,7 +253,10 @@ export default function ConfigurationVersionHistory() {
 
           <div className="card-group">
             {versionHistory.map(entry => (
-              <VersionHistoryItem key={entry.version} entry={entry} />
+              <VersionHistoryItem
+                key={entry.version}
+                entry={entry}
+              />
             ))}
           </div>
         </Card>
@@ -271,8 +268,6 @@ export default function ConfigurationVersionHistory() {
 /* =========================
    VERSION HISTORY ITEM
    ========================= */
-
-// ... a fájl ELEJE változatlan
 
 function VersionHistoryItem({ entry }: { entry: VersionHistoryEntry }) {
   const [open, setOpen] = useState(false);
@@ -331,4 +326,3 @@ function VersionHistoryItem({ entry }: { entry: VersionHistoryEntry }) {
     </div>
   );
 }
-

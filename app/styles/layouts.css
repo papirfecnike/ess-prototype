@@ -261,3 +261,286 @@
 .card--apply.card--editing .card-header--editable {
   background: #f9e9ff;
 }
+
+
+/* =========================
+   PROFILE
+   ========================= */
+
+.profile-page {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* ===== PAGE HEADER ===== */
+
+.page-header__main {
+  display: flex;
+  flex-direction: column;
+}
+
+.page-header__title {
+  font-size: 28px;
+  font-weight: 800;
+}
+
+.page-header__subtitle {
+  font-size: 14px;
+  color: #5f6b6d;
+}
+
+/* ===== OUTER SECTION ===== */
+
+.profile-section {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 24px;
+  align-items: flex-start;
+  margin-top: 24px;
+}
+
+.profile-section__label {
+  font-size: 16px;
+  font-weight: 600;
+  color: #2d4e58;
+  text-align: right;
+  padding-top: 24px;
+}
+
+/* ===== CARD ROWS ===== */
+
+.profile-card-row {
+  display: grid;
+  grid-template-columns: 200px minmax(0, 1fr) 200px;
+  gap: 16px;
+  padding: 16px;
+  align-items: flex-start;
+}
+
+/* inset divider for all rows except last */
+.profile-card-row {
+  position: relative;
+}
+
+.profile-card-row:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  bottom: 0;
+  height: 1px;
+  background: #e0e8ea;
+}
+
+/* ===== LABEL COLUMN ===== */
+
+.profile-card-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #2f3a3c;
+  padding-top: 10px;
+}
+
+/* ===== CONTENT COLUMN ===== */
+
+.profile-card-fields {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  width: 100%;
+  min-width: 0;
+}
+
+.profile-card-fields .text-field-wrapper {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.profile-card-fields .tag {
+  flex: 0 0 auto;
+}
+
+.profile-card-fields {
+  flex-wrap: wrap;
+}
+
+.profile-card-fields.layout-stack {
+  flex-direction: column;
+}
+
+.profile-card-fields.layout-stack .text-field-wrapper {
+  width: 100%;
+}
+
+/* ===== ACTION COLUMN ===== */
+
+.profile-card-action {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+}
+
+/* content column always horizontal by default */
+.profile-card-fields {
+  flex-direction: row;
+}
+
+/* textfield fills available space */
+.profile-card-fields .text-field-wrapper {
+  flex: 1 1 auto;
+}
+
+/* full name only: stack vertically */
+.profile-card-fields.layout-stack {
+  flex-direction: column;
+}
+
+/* tags: content-sized, wrap nicely */
+.profile-card-fields .tag {
+  flex: 0 0 auto;
+}
+
+/* allow tag wrapping */
+.profile-card-fields {
+  flex-wrap: wrap;
+}
+
+
+/* =========================================================
+   PROFILE CARD ROW – OVERRIDE CARD INTERNAL LAYOUT
+   ========================================================= */
+
+/* Card default flex-column override */
+.profile-section .ui-card > .profile-card-row {
+  display: grid;
+  grid-template-columns: 200px minmax(0, 1fr) 100px;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+/* ensure fields stay horizontal */
+.profile-card-row .profile-card-fields {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 16px;
+  width: 100%;
+}
+
+/* only Full name stacks */
+.profile-card-row .profile-card-fields.layout-stack {
+  flex-direction: column;
+}
+
+/* textfield fills space */
+.profile-card-row .text-field-wrapper {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+/* tags keep natural size */
+.profile-card-row .tag {
+  flex: 0 0 auto;
+}
+
+/* allow tag wrapping */
+.profile-card-row .profile-card-fields {
+  flex-wrap: wrap;
+}
+
+/* =========================================================
+   PROFILE CARD – DISABLE CARD HEADER BEHAVIOR
+   ========================================================= */
+
+/* 🔒 Disable implicit Card header styling for profile cards */
+.profile-section .ui-card > .profile-card-row:first-child {
+  border-bottom: none;
+}
+
+/* also neutralize header-specific flex styling */
+.profile-section .ui-card > .profile-card-row:first-child {
+  display: grid;
+  align-items: flex-start;
+}
+
+
+.profile-section .ui-card > .profile-card-row.profile-card-row--two-col {
+  grid-template-columns: 200px minmax(0, 1fr);
+}
+
+.profile-section .ui-card > .profile-card-row.profile-card-row--one-col {
+  grid-template-columns: 1fr;
+}
+
+.profile-section
+.ui-card
+> .profile-card-row.profile-card-row--content-action {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 200px;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.profile-card-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #2f3a3c;
+  line-height: 1.4;
+}
+
+.profile-card-subtitle {
+  font-size: 13px;
+  color: #5f6b6d;
+  line-height: 1.4;
+}
+
+/* =========================
+   PROFILE – PASSWORD ROW
+   ========================= */
+
+/* PROFILE – PASSWORD ROW (FINAL) */
+
+.profile-card-row--password {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 230px 260px;
+  gap: 16px;
+  padding: 16px;
+  align-items: flex-start;
+}
+
+/* text column */
+.profile-card-row--password
+.profile-card-fields:first-child {
+  align-self: flex-start;
+}
+
+/* fields column */
+.profile-card-row--password
+.profile-card-fields.layout-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+/* password field width */
+.profile-card-row--password
+.text-field-wrapper {
+  width: 230px;
+}
+
+/* action column */
+.profile-card-row--password
+.profile-card-action {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+}
+
+/* button must never wrap */
+.profile-card-row--password
+.profile-card-action
+button {
+  white-space: nowrap;
+}

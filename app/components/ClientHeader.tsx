@@ -1,10 +1,9 @@
-import { NavLink } from "react-router";
+import { NavLink, useNavigate } from "react-router";
 import { useEffect, useState } from "react";
-import SearchInput from "@/search/SearchInput";
-import SearchResultsPanel from "@/search/SearchResultsPanel";
 
 export default function ClientHeader() {
   const [isDark, setIsDark] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const storedTheme = localStorage.getItem("theme");
@@ -42,7 +41,10 @@ export default function ClientHeader() {
           />
         </div>
 
-        <button className="btn--primary btn--m">
+        <button
+          className="btn--primary btn--m"
+          onClick={() => navigate("/profile")}
+        >
           Profile
         </button>
       </div>
