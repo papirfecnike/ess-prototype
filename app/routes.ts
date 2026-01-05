@@ -16,6 +16,7 @@ export default [
   route("inbound", "routes/inbound.tsx", [
     index("routes/inbound.overview.tsx"),
     route("putaway", "routes/inbound.putaway.tsx"),
+    route("putaway-product", "routes/inbound.putaway-product.tsx"),
   ]),
 
   route("outbound", "routes/outbound.tsx", [

@@ -22,9 +22,28 @@ export default function Sidebar() {
             ? `/${section.basePath}/${item.path}`
             : `/${section.basePath}`;
 
+          const isActive = () => {
+            // Overview (exact)
+            if (!item.path) {
+              return location.pathname === `/${section.basePath}`;
+            }
+
+            // Flow-based items (e.g. putaway)
+            return (
+              location.pathname === to ||
+              location.pathname.startsWith(`${to}/`) ||
+              location.pathname.startsWith(`${to}-`)
+            );
+          };
+
           return (
             <li key={to}>
-              <NavLink to={to}>
+              <NavLink
+                to={to}
+                className={({ isPending }) =>
+                  isActive() ? "is-active" : isPending ? "is-pending" : ""
+                }
+              >
                 {item.label}
               </NavLink>
             </li>

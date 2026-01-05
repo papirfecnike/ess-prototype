@@ -1,0 +1,118 @@
+.product-page {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* ===== CONTENT GRID ===== */
+
+.product-page__content {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 16px;
+  flex: 1;
+  padding-right: 320px; /* drawer width + spacing */
+}
+
+.product-page__column {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.product-page__column--primary {
+  min-width: 0;
+}
+
+/* ===== QUANTITY ===== */
+
+.product-page__quantity {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.product-page__quantity-value {
+  min-width: 40px;
+  text-align: center;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+/* ===== FOOTER ===== */
+
+.product-page__footer {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  border-top: 1px solid var(--border-subtle);
+  background-color: var(--surface-default);
+}
+
+.product-page__progress-bar {
+  height: 6px;
+  background-color: var(--surface-muted);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.product-page__progress-bar-fill {
+  height: 100%;
+  background-color: var(--accent-primary);
+  transition: width 0.2s ease;
+}
+
+/* =========================
+   DRAWER – FINAL
+   ========================= */
+
+.product-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+
+  width: 64px;
+  background-color: var(--surface-elevated);
+  border-left: 1px solid var(--border-subtle);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  transition: width 0.25s ease;
+  z-index: 1000;
+}
+
+.product-drawer--open {
+  width: 280px;
+}
+
+/* toggle button – ALWAYS TOP, CENTERED */
+
+.product-drawer__toggle {
+  margin-top: 16px;
+
+  width: 32px;
+  height: 32px;
+
+  border-radius: 16px;
+  border: 1px solid var(--border-subtle);
+  background: var(--surface-default);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+}
+
+/* future content area */
+
+.product-drawer__body {
+  flex: 1;
+  width: 100%;
+}

@@ -1,8 +1,7 @@
-import type { ChangeEvent } from "react";
+import type { ChangeEvent, KeyboardEvent } from "react";
 import { TextField } from "../input/TextField";
 import { Button } from "../button/Button";
 import { Card } from "../card/Card";
-import { Icon } from "../icon/Icon";
 import "./scan-input.css";
 
 type Props = {
@@ -26,20 +25,21 @@ export function ScanInput({
   isLoading = false,
   isDisabled = false,
 }: Props) {
+  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter" && !isDisabled) {
+      onSubmit();
+    }
+  };
+
   return (
     <Card className="scan-input-card">
       <div className="scan-input">
         <TextField
           value={value}
           onChange={onChange}
-          placeholder={placeholder}
-          icon={<Icon name="qrScanner" />}
+          label={placeholder}
           autoFocus
-          onKeyDown={(e) => {
-            if (e.key === "Enter" && !isDisabled) {
-              onSubmit();
-            }
-          }}
+          onKeyDown={handleKeyDown}
         />
 
         <Button

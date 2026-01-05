@@ -1,5 +1,5 @@
 import type { LoaderFunction } from "react-router";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 import { PageLayout } from "@/components/layout/PageLayout";
 import { PageSection } from "@/components/layout/PageSection";
@@ -9,8 +9,7 @@ import type { DataTableColumn } from "@/components/data/DataTableCore";
 import { Tag } from "@/components/ui/tag/Tag";
 import { Icon } from "@/components/ui/icon/Icon";
 
-import { ScanInput } from "@/components/inputs/ScanInput";
-
+import { ScanInput } from "@/components/ui/scan-input/ScanInput";
 
 export const loader: LoaderFunction = async () => {
   return null;
@@ -45,6 +44,7 @@ export default function InboundPutaway() {
      ========================= */
 
   const [selectedRows, setSelectedRows] = useState<string[]>([]);
+  const [scanValue, setScanValue] = useState("");
 
   /* =========================
      COLUMNS
@@ -60,8 +60,7 @@ export default function InboundPutaway() {
       key: "status",
       label: "Status",
       align: "center",
-      renderCell: (value) =>
-        renderStatusTag(String(value)),
+      renderCell: (value) => renderStatusTag(String(value)),
     },
 
     { key: "operator", label: "Assigned operator", align: "center" },
@@ -216,18 +215,53 @@ export default function InboundPutaway() {
   ];
 
   /* =========================
+     FILTER LOGIC
+     ========================= */
+
+  const filteredRows = useMemo(() => {
+    if (!scanValue.trim()) return rows;
+
+    const q = scanValue.toLowerCase();
+
+    return rows.filter((row) =>
+      [row.id, row.name, row.sku].some((value) =>
+        String(value).toLowerCase().includes(q)
+      )
+    );
+  }, [scanValue, rows]);
+
+  const hasMatch = filteredRows.length > 0;
+
+  /* =========================
+     HANDLERS
+     ========================= */
+
+  const handleConfirm = () => {
+    if (!hasMatch) return;
+    window.location.assign("putaway-product");
+  };
+
+  /* =========================
      RENDER
      ========================= */
 
   return (
     <PageLayout
-      title={<ScanInput />}
+      title={
+        <ScanInput
+          value={scanValue}
+          onChange={(e) => setScanValue(e.target.value)}
+          onSubmit={handleConfirm}
+          isDisabled={!hasMatch}
+          buttonLabel="Confirm"
+        />
+      }
     >
       <PageSection>
         <SelectableDataTable
           rowIdKey="id"
           columns={columns}
-          rows={rows}
+          rows={hasMatch ? filteredRows : []}
           selectedRows={selectedRows}
           onSelectionChange={setSelectedRows}
         />
