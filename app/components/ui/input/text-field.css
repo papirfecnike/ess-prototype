@@ -1,18 +1,21 @@
-/* =========================
-   BASE
-   ========================= */
-
-.text-field-wrapper {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
 .text-field {
   position: relative;
   width: 100%;
+  display: flex;
+  align-items: center;
 }
 
+.text-field__icon {
+  position: absolute;
+  left: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-muted);
+  pointer-events: none;
+}
+
+/* input padding ikon esetén */
 .text-field__input {
   width: 100%;
   height: var(--input-height);
@@ -24,63 +27,20 @@
   color: var(--color-text);
 }
 
-/* =========================
-   FLOATING LABEL
-   ========================= */
-
 .text-field-wrapper.is-floating .text-field__input {
   padding-top: 15px;
 }
 
+/* ha van ikon */
+.text-field__icon + .text-field__input {
+  padding-left: 40px;
+}
+
+/* floating label igazítás ikonhoz */
 .text-field__floating-label {
-  position: absolute;
   left: 12px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 14px;
-  color: #7e9094;
-  pointer-events: none;
-  transition: all 0.15s ease;
 }
 
-.text-field-wrapper.is-floating
-.text-field__input:focus + .text-field__floating-label,
-.text-field-wrapper.is-floating.has-value
-.text-field__floating-label {
-  top: 11px;
-  font-size: 11px;
-  font-weight: 600;
-  color: var(--color-primary);
-}
-
-/* =========================
-   DISABLED
-   ========================= */
-
-.text-field-wrapper.is-disabled .text-field__input {
-  background: #f5f6f7;
-  color: #5f6b6d;
-}
-
-.text-field-wrapper.is-disabled
-.text-field__floating-label {
-  color: #5f6b6d;
-}
-
-/* =========================
-   ERROR
-   ========================= */
-
-.text-field-wrapper.has-error .text-field__input {
-  border-color: var(--color-danger);
-}
-
-.text-field-wrapper.has-error
-.text-field__floating-label {
-  color: var(--color-danger);
-}
-
-.text-field__error {
-  font-size: 12px;
-  color: var(--color-danger);
+.text-field__icon + .text-field__input + .text-field__floating-label {
+  left: 40px;
 }

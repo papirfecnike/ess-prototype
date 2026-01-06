@@ -66,9 +66,11 @@ header a.active {
 }
 
 .app-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
   display: flex;
-  position: relative;
-  z-index: 100;
   align-items: center;
   justify-content: space-between;
   padding: 0 1rem;
@@ -76,6 +78,7 @@ header a.active {
   background: var(--color-header);
   border-bottom: var(--color-header-border);
   box-shadow: var(--shadow-m);
+  z-index: 1000;
 }
 
 /* LEFT SIDE: NAV */
@@ -107,8 +110,11 @@ aside {
 }
 
 .app-main {
+  margin-top: 5.25rem;
+  margin-right: 1rem;
+  margin-bottom: 1rem;
+  margin-left: 1rem;
   overflow: visible;
-  margin: 1rem;
 }
 
 /* =========================================================
@@ -148,7 +154,10 @@ button:hover {
 aside.sidebar {
   border-right: 1px solid var(--color-border);
   background: var(--color-surface);
-  padding: 16px;
+  padding-top: 5.875rem;
+  padding-right: 1rem;
+  padding-bottom: 1rem;
+  padding-left: 1rem;
   display: flex;
   flex-direction: column;
 }
@@ -159,7 +168,7 @@ aside.sidebar {
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 0.5rem;
 }
 
 .sidebar li {

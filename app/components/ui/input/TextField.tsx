@@ -1,10 +1,11 @@
-import type { InputHTMLAttributes } from "react";
+import type { InputHTMLAttributes, ReactNode } from "react";
 import { useId } from "react";
 import "./text-field.css";
 
 type Props = {
   label?: string;
   error?: string;
+  leadingIcon?: ReactNode;
 } & Omit<InputHTMLAttributes<HTMLInputElement>, "placeholder">;
 
 export function TextField({
@@ -13,6 +14,7 @@ export function TextField({
   disabled,
   error,
   id,
+  leadingIcon,
   ...rest
 }: Props) {
   const inputId = id ?? useId();
@@ -29,6 +31,12 @@ export function TextField({
       ].join(" ")}
     >
       <div className="text-field">
+        {leadingIcon && (
+          <span className="text-field__icon">
+            {leadingIcon}
+          </span>
+        )}
+
         <input
           id={inputId}
           className="text-field__input"
