@@ -1,9 +1,10 @@
 import "./data-table.css";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, Fragment } from "react";
 import { DataTableHeader } from "./DataTableHeader";
 import { DataTableFooter } from "./DataTableFooter";
 import { Icon } from "../ui/icon/Icon";
 import { DropdownMenu } from "../ui/menu/DropdownMenu";
+import { Checkbox } from "../ui/checkbox/Checkbox";
 import type { SelectableListItem } from "../ui/list/SelectableList";
 
 /* =========================
@@ -49,7 +50,7 @@ export function DataTableCore({
   columns,
   rows,
   rowIdKey,
-  selectable,
+  selectable = false,
   expandable,
   selectedRows = [],
   onSelectionChange,
@@ -64,8 +65,6 @@ export function DataTableCore({
 
   const [page, setPage] = useState(1);
   const pageSize = 10;
-
-  /* ===== CONTEXT MENU STATE ===== */
 
   const [openMenuRow, setOpenMenuRow] = useState<string | null>(null);
   const menuAnchorRef = useRef<HTMLElement | null>(null);
@@ -108,20 +107,17 @@ export function DataTableCore({
     page * pageSize
   );
 
-  /* =========================
-     MENU ITEMS
-     ========================= */
-
-  const rowMenuItems: SelectableListItem[] = [
-    { id: "edit", label: "Edit", checkboxState: "unchecked" },
-    { id: "duplicate", label: "Duplicate", checkboxState: "unchecked" },
-    { id: "delete", label: "Delete", checkboxState: "unchecked" },
-  ];
-
   const colSpan =
     visibleColumns.length +
     (selectable ? 1 : 0) +
     (expandable ? 1 : 0);
+
+  const headerCheckboxState =
+    selectedRows.length === 0
+      ? "unchecked"
+      : selectedRows.length === pagedRows.length
+      ? "checked"
+      : "indeterminate";
 
   /* =========================
      RENDER
@@ -139,102 +135,114 @@ export function DataTableCore({
           onToggleFilters={() => setShowFilters((v) => !v)}
         />
 
-        {/* 🔹 HEADER WRAPPER VISSZAÁLLÍTVA */}
         <div className="data-table__header-row">
           <table>
             <thead>
               <tr>
-                {selectable}
-                {expandable}
+                {selectable && (
+                  <th style={{ width: 40 }}>
+                    <Checkbox state={headerCheckboxState} />
+                  </th>
+                )}
+
+                {expandable && <th style={{ width: 40 }} />}
+
                 {visibleColumns.map((c) => (
                   <th key={c.key}>{c.label}</th>
                 ))}
-                <th />
               </tr>
             </thead>
 
             <tbody>
-              {pagedRows.map((row) => {
-                const id = String(row[rowIdKey]);
-                const isExpanded = expandedRows.includes(id);
+  {pagedRows.map((row) => {
+    const id = String(row[rowIdKey]);
+    const isExpanded = expandedRows.includes(id);
+    const isSelected = selectedRows.includes(id);
 
-                return (
-                  <>
-                    {/* MAIN ROW */}
-                    <tr
-                      key={id}
-                      className={isExpanded ? "data-table__row--expanded" : undefined}
-                    >
-                      {selectable}
+    return (
+      <Fragment key={id}>
+        {/* =========================
+            MAIN ROW
+            ========================= */}
+        <tr
+          className={
+            isExpanded ? "data-table__row--expanded" : undefined
+          }
+        >
+          {/* SELECTABLE */}
+          {selectable && (
+            <td style={{ width: 40 }}>
+              <Checkbox
+                state={isSelected ? "checked" : "unchecked"}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  if (!onSelectionChange) return;
 
-                      {expandable && (
-                        <td>
-                          <button
-                            type="button"
-                            className="btn--ghost"
-                            onClick={() =>
-                              setExpandedRows((prev) =>
-                                prev.includes(id)
-                                  ? prev.filter((x) => x !== id)
-                                  : [...prev, id]
-                              )
-                            }
-                          >
-                            <Icon
-                              name="chevronDownStroke"
-                              size="sm"
-                              className={`data-table__chevron ${
-                                isExpanded ? "is-open" : ""
-                              }`}
-                            />
-                          </button>
-                        </td>
-                      )}
+                  onSelectionChange(
+                    isSelected
+                      ? selectedRows.filter((x) => x !== id)
+                      : [...selectedRows, id]
+                  );
+                }}
+              />
+            </td>
+          )}
 
-                      {visibleColumns.map((col) => (
-                        <td key={col.key}>
-                          {col.renderCell
-                            ? col.renderCell(row[col.key], row)
-                            : row[col.key]}
-                        </td>
-                      ))}
-                    </tr>
+          {/* EXPANDABLE */}
+          {expandable && (
+            <td style={{ width: 40 }}>
+              <button
+                type="button"
+                className="btn--ghost"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setExpandedRows((prev) =>
+                    prev.includes(id)
+                      ? prev.filter((x) => x !== id)
+                      : [...prev, id]
+                  );
+                }}
+              >
+                <Icon
+                  name="chevronDownStroke"
+                  size="sm"
+                  className={`data-table__chevron ${
+                    isExpanded ? "is-open" : ""
+                  }`}
+                />
+              </button>
+            </td>
+          )}
 
-                    {/* EXPANDED ROW */}
-                    {expandable && isExpanded && renderExpandedRow && (
-                      <tr className="data-table__expanded-row">
-                        <td colSpan={colSpan}>
-                          <div className="data-table__expanded-inner">
-                            {renderExpandedRow(row)}
-                          </div>
-                        </td>
-                      </tr>
-                    )}
-                  </>
-                );
-              })}
-            </tbody>
+          {/* DATA CELLS */}
+          {visibleColumns.map((col) => (
+            <td key={col.key}>
+              {col.renderCell
+                ? col.renderCell(row[col.key], row)
+                : row[col.key]}
+            </td>
+          ))}
+        </tr>
+
+        {/* =========================
+            EXPANDED ROW
+            ========================= */}
+        {expandable && isExpanded && renderExpandedRow && (
+          <tr className="data-table__expanded-row">
+            <td colSpan={colSpan}>
+              <div className="data-table__expanded-inner">
+                {renderExpandedRow(row)}
+              </div>
+            </td>
+          </tr>
+        )}
+      </Fragment>
+    );
+  })}
+</tbody>
 
           </table>
         </div>
-
-        <DropdownMenu
-          open={!!openMenuRow}
-          anchorRef={menuAnchorRef}
-          items={rowMenuItems}
-          onClose={() => {
-            setOpenMenuRow(null);
-            menuAnchorRef.current = null;
-          }}
-          onSelect={(actionId) => {
-            console.log(
-              "row:",
-              openMenuRow,
-              "action:",
-              actionId
-            );
-          }}
-        />
 
         <DataTableFooter
           pagination={{ page, pageSize, total: sortedRows.length }}

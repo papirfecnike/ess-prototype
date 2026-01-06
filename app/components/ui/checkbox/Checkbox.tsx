@@ -1,5 +1,6 @@
 import type { HTMLAttributes } from "react";
 import { Icon } from "../icon/Icon";
+import "./checkbox.css";
 
 type CheckboxState = "checked" | "unchecked" | "indeterminate";
 
@@ -29,13 +30,10 @@ export function Checkbox({ state, disabled = false, ...rest }: Props) {
           <Icon name="checkStroke" size="xs" />
         )}
 
-        {state === "unchecked" && (
-          <Icon name=" " size="xs" />
-        )}
-
         {state === "indeterminate" && (
           <Icon name="minusStroke" size="xs" />
         )}
+        {/* 🔴 unchecked → NINCS ikon, csak üres box */}
       </span>
     </span>
   );

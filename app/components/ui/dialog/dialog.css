@@ -1,0 +1,129 @@
+/* =========================
+   WRAPPER
+   ========================= */
+
+.ui-dialog {
+  position: absolute;
+  inset: 0;
+  margin-top: -20px;
+  margin-left: -17px;
+  z-index: 100;
+}
+
+/* =========================
+   SCRIM
+   ========================= */
+
+.ui-dialog__scrim {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+/* =========================
+   CONTAINER
+   ========================= */
+
+.ui-dialog__container {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: -100px;
+  padding: 24px;
+}
+
+/* =========================
+   CARD
+   ========================= */
+
+.ui-dialog__card {
+  width: 100%;
+  max-width: 480px;
+}
+
+/* =========================
+   HEADER
+   ========================= */
+
+.ui-dialog__header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.ui-dialog__header-icon {
+  display: flex;
+  align-items: center;
+}
+
+/* intent borders */
+
+.ui-dialog__card--default .ui-dialog__header {
+  border-bottom: 3px solid #137897;
+}
+
+.ui-dialog__card--success .ui-dialog__header {
+  border-bottom: 3px solid #51AE0A;
+}
+
+.ui-dialog__card--warning .ui-dialog__header {
+  border-bottom: 3px solid #F09300;
+}
+
+/* icon colors */
+
+.ui-dialog__card--default .ui-dialog__header-icon svg {
+  color: #137897;
+}
+
+.ui-dialog__card--success .ui-dialog__header-icon svg {
+  color: #51AE0A;
+}
+
+.ui-dialog__card--warning .ui-dialog__header-icon svg {
+  color: #F09300;
+}
+
+.ui-dialog__header-title {
+  font-weight: 600;
+  font-size: 16px;
+}
+
+/* =========================
+   CONTENT
+   ========================= */
+
+.ui-dialog__content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 100px;
+  font-size: 1rem;
+}
+
+/* =========================
+   FOOTER – CARD OVERRIDE
+   ========================= */
+
+.ui-dialog__card > .ui-dialog__footer {
+  display: flex;
+  flex-direction: row;              /* kényszerített horizontal */
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border-top: 1px solid #E0E8EA;
+}
+
+/* footer button groups */
+
+.ui-dialog__footer-left,
+.ui-dialog__footer-right {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}

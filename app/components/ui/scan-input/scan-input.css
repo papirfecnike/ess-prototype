@@ -8,6 +8,12 @@
   width: 100%;
 }
 
-.scan-input .text-field {
+.scan-input__field {
   flex: 1;
+  min-width: 0; /* fontos flex overflow edge-case */
+}
+
+/* ha a TextField root .text-field */
+.scan-input__field .text-field {
+  width: 100%;
 }

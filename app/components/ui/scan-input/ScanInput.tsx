@@ -34,13 +34,16 @@ export function ScanInput({
   return (
     <Card className="scan-input-card">
       <div className="scan-input">
-        <TextField
-          value={value}
-          onChange={onChange}
-          label={placeholder}
-          autoFocus
-          onKeyDown={handleKeyDown}
-        />
+        {/* 🔴 FLEX FILL WRAPPER */}
+        <div className="scan-input__field">
+          <TextField
+            value={value}
+            onChange={onChange}
+            label={placeholder}
+            autoFocus
+            onKeyDown={handleKeyDown}
+          />
+        </div>
 
         <Button
           onClick={onSubmit}

@@ -7,7 +7,15 @@
 
 /* ===== CONTENT GRID ===== */
 
-.product-page__content {
+.product-page__content-putaway {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 12px;
+  flex: 1;
+  min-height: 0;
+}
+
+.product-page__content-picking {
   display: grid;
   grid-template-columns: 2fr 1fr 1fr;
   gap: 12px;
@@ -506,36 +514,67 @@
   opacity: 1;
 }
 
-/* CONTENT */
+/* =========================
+   PANEL
+   ========================= */
+
+.product-drawer__panel {
+  display: flex;
+  flex-direction: column;
+  width: 320px; /* vagy amennyit használsz */
+  height: 100%;
+  background: #ffffff;
+  border-left: 1px solid var(--color-table-border);
+}
+
+/* =========================
+   PANEL CONTENT
+   ========================= */
 
 .product-drawer__panel-content {
   flex: 1;
   display: flex;
   flex-direction: column;
+  min-height: 0; /* 🔴 KRITIKUS */
   overflow: hidden;
+  padding: 16px;
 }
+
+/* =========================
+   SECTIONS
+   ========================= */
 
 .drawer-section {
   display: flex;
   flex-direction: column;
   flex: 1;
-  min-height: 0;
+  min-height: 0; /* 🔴 KRITIKUS */
 }
+
+/* header item */
 
 .drawer-section-item-title {
   font-size: var(--font-h3);
   font-weight: 600;
   text-transform: uppercase;
+  padding-bottom: 12px;
 }
+
+/* =========================
+   SCROLLABLE GROUP
+   ========================= */
 
 .drawer-section-itemsgroup {
+  flex: 1;
+  min-height: 0; /* 🔴 KRITIKUS */
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
-
-  flex: 1;
-  min-height: 0;
-  overflow-y: auto;
 }
+
+/* =========================
+   ITEMS
+   ========================= */
 
 .drawer-section-item {
   padding: 16px 0;
@@ -543,9 +582,32 @@
   flex-shrink: 0;
 }
 
-.drawer-section-item-cta {
-  margin: 0;
+/* =========================
+   CTA
+   ========================= */
+
+.drawer-section-cta {
+  padding-top: 16px;
+  margin-top: auto; /* mindig alul */
 }
+
+/* =========================
+   PANEL CLOSE
+   ========================= */
+
+.product-drawer__panel-close {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.product-drawer__close svg {
+  transition: transform 150ms ease;
+}
+
+.product-drawer__close.is-open svg {
+  transform: rotate(180deg);
+}
+
 
 /* CLOSE */
 

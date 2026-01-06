@@ -1,78 +1,88 @@
-.ui-toggle {
+/* =========================
+   ROOT
+   ========================= */
+
+.toggle {
   width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+
   cursor: pointer;
   user-select: none;
 }
 
-/* layout */
-.ui-toggle__content {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 16px;
-  width: 100%;
-}
+/* =========================
+   TEXT
+   ========================= */
 
-/* text */
-.ui-toggle__text {
+.toggle__content {
   display: flex;
   flex-direction: column;
   gap: 4px;
 }
 
-.ui-toggle__title {
+.toggle__title {
   font-size: 14px;
   font-weight: 600;
   color: var(--color-text);
 }
 
-.ui-toggle__description {
+.toggle__description {
   font-size: 13px;
   color: #5f6b6d;
   line-height: 1.4;
 }
 
-/* control */
-.ui-toggle__control {
-  display: flex;
-  align-items: center;
-}
+/* =========================
+   SWITCH (TRACK)
+   ========================= */
 
-/* visually hidden input */
-.ui-toggle__input {
-  position: absolute;
-  opacity: 0;
-  pointer-events: none;
-}
-
-/* track */
-.ui-toggle__track {
+.toggle__switch {
   position: relative;
-  width: 36px;
-  height: 20px;
-  background: var(--color-toggle-bg);
+  width: 42px;
+  height: 24px;
+
+  flex-shrink: 0;
+  flex-grow: 0;
+
+  background: #F5F6F7;
   border-radius: 999px;
+  border: none;
+  padding: 0;
+
   transition: background-color 0.2s ease;
 }
 
-/* thumb */
-.ui-toggle__thumb {
+/* =========================
+   THUMB
+   ========================= */
+
+.toggle__switch::after {
+  content: "";
   position: absolute;
-  top: 2px;
-  left: 2px;
-  width: 16px;
-  height: 16px;
-  background: #fff;
+  top: 3px;
+  left: 3px;
+
+  width: 18px;
+  height: 18px;
+
+  background: #ffffff;
   border-radius: 50%;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
   transition: transform 0.2s ease;
 }
 
-/* checked */
-.ui-toggle__input:checked + .ui-toggle__track {
-  background: var(--color-toggle-bg-on);
+/* =========================
+   CHECKED STATE
+   ========================= */
+
+.toggle__switch.is-checked {
+  background: #137897;
 }
 
-.ui-toggle__input:checked + .ui-toggle__track .ui-toggle__thumb {
-  transform: translateX(16px);
+.toggle__switch.is-checked::after {
+  transform: translateX(18px);
 }

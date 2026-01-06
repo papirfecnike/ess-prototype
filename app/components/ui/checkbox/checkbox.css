@@ -2,14 +2,40 @@
   width: 16px;
   height: 16px;
   border-radius: 4px;
-  border: 1px solid var(--color-checkbox-border);
+
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: var(--color-checkbox-bg);
-  background: var(--color-checkbox-bg);
-  flex-shrink: 0;
+
+  background: transparent;
+  box-sizing: border-box;
+
+  /* 🔴 EZ A KRITIKUS */
+  outline: 1px solid var(--color-checkbox-border);
+  outline-offset: -1px;
 }
+
+/* =========================
+   STATES
+   ========================= */
+
+.checkbox--unchecked {
+  background: transparent;
+}
+
+.checkbox--checked {
+  background: var(--color-checkbox-select);
+  outline-color: var(--color-checkbox-select);
+}
+
+.checkbox--indeterminate {
+  background: var(--color-checkbox-select);
+  outline-color: var(--color-checkbox-select);
+}
+
+/* =========================
+   ICON
+   ========================= */
 
 .checkbox__icon {
   width: 12px;
@@ -23,23 +49,14 @@
 .checkbox svg {
   width: 12px;
   height: 12px;
+  color: #ffffff;
 }
 
-.checkbox--checked {
-  background: var(--color-checkbox-select);
-  border-color: var(--color-checkbox-select);
-}
-
-.checkbox--indeterminate {
-  background: var(--color-checkbox-select);
-  border-color: var(--color-checkbox-select);
-}
-
-.checkbox--unchecked {
-  background: var(--color-checkbox-bg);
-  color: transparent;
-}
+/* =========================
+   DISABLED
+   ========================= */
 
 .checkbox.is-disabled {
   opacity: 0.5;
+  cursor: not-allowed;
 }

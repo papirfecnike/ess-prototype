@@ -192,12 +192,12 @@ export default function InboundPutaway() {
     },
     {
       id: 432179,
-      name: "Name It Blouse - Rib - Noos - Lavender Gray",
-      sku: "WH768",
+      name: "Billieblush Dynevest - Peach",
+      sku: "BV122",
       progress: "11/11",
       status: "Completed",
-      operator: "a.kovach",
-      workstation: "Port 09",
+      operator: "j.tenner",
+      workstation: "Port 11",
       date: "08-Nov-2025",
       events: "x",
     },
@@ -236,10 +236,15 @@ export default function InboundPutaway() {
      HANDLERS
      ========================= */
 
-  const handleConfirm = () => {
-    if (!hasMatch) return;
-    window.location.assign("putaway-product");
-  };
+    const handleConfirm = () => {
+      if (!hasMatch) return;
+
+      const matchedRow = filteredRows[0];
+
+      window.location.assign(
+        `putaway-product?sku=${matchedRow.sku}`
+      );
+    };
 
   /* =========================
      RENDER

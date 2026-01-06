@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { ProductPageLayout } from "../components/layout/ProductPageLayout";
 
@@ -7,8 +7,7 @@ import { Button } from "../components/ui/button/Button";
 import { TextField } from "../components/ui/input/TextField";
 import { Toggle } from "../components/ui/toggle/Toggle";
 import { InputStepper } from "../components/ui/input-stepper/InputStepper";
-import { Tag } from "../components/ui/tag/Tag";
-import { ProgressBar } from "../components/ui/progress-bar/ProgressBar";
+import { Dialog } from "../components/ui/dialog/Dialog";
 import { icons } from "../components/ui/icon/icons";
 
 /* product images */
@@ -18,62 +17,119 @@ import img03 from "@/assets/product/img03.png";
 
 import "../styles/product-page.css";
 
+/* =========================
+   PRODUCT CATALOG
+   ========================= */
 
-  type Props = {
-    value: number; // 0–100
-  };
+const PRODUCT_MAP: Record<
+  string,
+  { name: string; sku: string; image?: string }
+> = {
+  WD750: { name: "Bisgaard Winter Boots - Pixie - Khaki", sku: "WD750" },
+  WF773: { name: "Name It Jumpsuit - NkfRoka - Burgundy", sku: "WF773" },
+  BW975: { name: "Minymo Cardigan - Knitted - Woodrose", sku: "BW975" },
+  WC551: { name: "Minymo Cardigan w. Teddy - Parisian Night", sku: "WC551" },
+  WF685: { name: "adidas Performance Shoes - Advantage 2.0", sku: "WF685" },
+  BS970: { name: "adidas Performance Shoes - VL Court 3.0 K", sku: "BS970" },
+  BM841: { name: "adidas Performance Shoes - Run 70s 2.0 EL C", sku: "BM841" },
+  WH768: { name: "Name It Blouse - Rib - Lavender Gray", sku: "WH768" },
+  WG096: { name: "Name It Blouses - 2-Pack - Iceland Fossil/Flint Stone", sku: "WG096" },
 
-  export function FooterProgress({ value }: Props) {
-    return (
-      <div className="footer-progress">
-        <div className="footer-progress__bar">
-          <div
-            className="footer-progress__fill"
-            style={{ width: `${value}%` }}
-          />
-        </div>
-      </div>
-    );
-  }
+  /* assets available */
+  WA874: {
+    name: "Hust and Claire Dynevest – HCEmily – Pale Mauve",
+    sku: "WA874",
+    image: img01,
+  },
+  BX962: {
+    name: "Name It Dynevest - NmfMylane - Woodrose m. Sløyfebånd",
+    sku: "BX962",
+    image: img02,
+  },
+  BV122: {
+    name: "Billieblush Dynevest – Peach",
+    sku: "BV122",
+    image: img03,
+  },
+};
+
+type Props = {
+  value: number; // 0–100
+};
 
 export default function InboundPutawayProductPage() {
   const [scanValue, setScanValue] = useState("");
-  const [quantity, setQuantity] = useState(12);
+  const [quantity, setQuantity] = useState(1);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [markForInspection, setMarkForInspection] = useState(false);
 
-
-  /* =========================
-     PICKLIST STATE
+/* =========================
+     DIALOG STATE
      ========================= */
 
-  const [activePickIndex, setActivePickIndex] = useState(0);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
-  const picklistItems = [
-    {
-      id: "1",
-      name: "Hust and Claire Dynevest – HCEmily – Pale Mauve",
-      sku: "WA874",
-      quantity: 3,
-      image: img01,
-    },
-    {
-      id: "2",
-      name: "Name It Dynevest – NmfMylane – Woodrose",
-      sku: "NM221",
-      quantity: 1,
-      image: img02,
-    },
-    {
-      id: "3",
-      name: "Billieblush Dynevest – Peach",
-      sku: "BB331",
-      quantity: 1,
-      image: img03,
-    },
-  ];
+  /* =========================
+     ACTIVE PRODUCT (DYNAMIC)
+     ========================= */
+  const [activeItem, setActiveItem] = useState<{
+    name: string;
+    sku: string;
+    image?: string;
+  }>({
+    name: "Unknown product",
+    sku: "",
+  });
 
-  const activeItem = picklistItems[activePickIndex];
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+  const params = new URLSearchParams(window.location.search);
+  const skuParam = (params.get("sku") || "").toUpperCase();
+
+  
+    if (PRODUCT_MAP[skuParam]) {
+      setActiveItem(PRODUCT_MAP[skuParam]);
+    } else {
+      setActiveItem({
+        name: "Unknown product",
+        sku: skuParam,
+      });
+    }
+  }, []);
+
+
+  /* =========================
+     PRODUCT VERIFICATION
+     ========================= */
+
+  const isProductVerified = scanValue.trim() === activeItem.sku;
+
+  /* =========================
+     CONFIRM LOGIC
+     ========================= */
+
+  function finalizeConfirm() {
+    if (typeof window !== "undefined") {
+      sessionStorage.setItem(
+        "putaway:completed",
+        JSON.stringify({ sku: activeItem.sku })
+      );
+
+      window.location.assign("/inbound/putaway");
+    }
+  }
+
+  function handleConfirm() {
+    if (!isProductVerified) return;
+
+    if (quantity > 1) {
+      setIsDialogOpen(true);
+      return;
+    }
+
+    finalizeConfirm();
+  }
 
   /* =========================
      DRAWER STATE
@@ -93,14 +149,10 @@ export default function InboundPutawayProductPage() {
     setDrawerView(null);
   }
 
-
   return (
     <ProductPageLayout>
       <div className="product-page">
-        {/* =========================
-            CONTENT
-            ========================= */}
-        <div className="product-page__content">
+        <div className="product-page__content-putaway">
           {/* LEFT COLUMN */}
           <div className="product-page__column product-page__column--primary">
             <Card>
@@ -133,7 +185,7 @@ export default function InboundPutawayProductPage() {
                     <div className="location-card__toggle">
                       <Toggle
                         checked={markForInspection}
-                        onChange={setMarkForInspection}
+                        onCheckedChange={() => {}}
                         title="Mark for inspection"
                       />
                     </div>
@@ -190,10 +242,16 @@ export default function InboundPutawayProductPage() {
                 <div className="product-details__row">
                   <span className="product-details__label">Image</span>
                   <div className="product-details__image">
-                    <img
-                      src={activeItem.image}
-                      alt={activeItem.name}
-                    />
+                    {activeItem.image ? (
+                      <img
+                        src={activeItem.image}
+                        alt={activeItem.name}
+                      />
+                    ) : (
+                      <div className="product-details__no-image">
+                        no image
+                      </div>
+                    )}
                   </div>
                 </div>
 
@@ -206,201 +264,148 @@ export default function InboundPutawayProductPage() {
               </div>
             </Card>
           </div>
-
-          {/* RIGHT COLUMN – PICKLIST */}
-          <div className="product-page__column">
-            <Card>
-              <h3 className="picklist-header">
-                <span>Picklist ID</span>
-                <Tag label="9305204753" />
-              </h3>
-
-              <div className="picklist">
-                {picklistItems.map((item, index) => {
-                  const isActive = index === activePickIndex;
-
-                  return (
-                    <div
-                      key={item.id}
-                      className={[
-                        "picklist-item",
-                        isActive ? "picklist-item--active" : "",
-                      ].join(" ")}
-                    >
-                      <div className="picklist-item__image">
-                        <img
-                          src={item.image}
-                          alt={item.name}
-                        />
-                      </div>
-
-                      <div className="picklist-item__content">
-                        <div className="picklist-item__name">
-                          {item.name}
-                        </div>
-
-                        <div className="picklist-item__meta">
-                          <span className="picklist-item__qty">
-                            {item.quantity}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-
-            </Card>
-          </div>
         </div>
 
 {/* =========================
     DRAWER
     ========================= */}
-    <aside
-      className={[
-        "product-drawer",
-        isDrawerOpen ? "product-drawer--open" : "",
-      ].join(" ")}
-    >
-      {/* ICON RAIL */}
-      <div className="product-drawer__rail">
+<aside
+  className={[
+    "product-drawer",
+    isDrawerOpen ? "product-drawer--open" : "",
+  ].join(" ")}
+>
+  {/* RAIL */}
+  <div className="product-drawer__rail">
+    <div className="product-drawer__rail-main">
+      <button
+        type="button"
+        className="product-drawer__icon"
+        onClick={() => openDrawer("settings")}
+      >
+        <svg viewBox="0 0 24 24" width="20" height="20">
+          {icons.settings}
+        </svg>
+      </button>
 
-      <div className="product-drawer__rail-main">
+      <button
+        type="button"
+        className="product-drawer__icon"
+        onClick={() => openDrawer("print")}
+      >
+        <svg viewBox="0 0 24 24" width="20" height="20">
+          {icons.print}
+        </svg>
+      </button>
+
+      <button
+        type="button"
+        className="product-drawer__icon"
+        onClick={() => openDrawer("history")}
+      >
+        <svg viewBox="0 0 24 24" width="20" height="20">
+          {icons.history}
+        </svg>
+      </button>
+    </div>
+
+    {/* CLOSE BUTTON */}
+      <div className="product-drawer__panel-close">
         <button
           type="button"
-          className="product-drawer__icon"
-          onClick={() => openDrawer("settings")}
-          aria-label="Settings"
+          className={[
+            "product-drawer__close",
+            isDrawerOpen ? "is-open" : "",
+          ].join(" ")}
+          onClick={closeDrawer}
         >
           <svg viewBox="0 0 24 24" width="20" height="20">
-            {icons.settings}
-          </svg>
-        </button>
-
-        <button
-          type="button"
-          className="product-drawer__icon"
-          onClick={() => openDrawer("print")}
-          aria-label="Print"
-        >
-          <svg viewBox="0 0 24 24" width="20" height="20">
-            {icons.print}
-          </svg>
-        </button>
-
-        <button
-          type="button"
-          className="product-drawer__icon"
-          onClick={() => openDrawer("history")}
-          aria-label="History"
-        >
-          <svg viewBox="0 0 24 24" width="20" height="20">
-            {icons.history}
+            {icons.chevronRightStroke}
           </svg>
         </button>
       </div>
+  </div>
 
-        <div className="product-drawer__panel-close">
-          <button
-            type="button"
-            className={[
-              "product-drawer__close",
-              isDrawerOpen ? "is-open" : "is-closed",
-            ].join(" ")}
-            onClick={closeDrawer}
-            aria-label="Close drawer"
-          >
-            <svg
-              viewBox="0 0 24 24"
-              width="20"
-              height="20"
-              aria-hidden="true"
-            >
-                    {isDrawerOpen
-                    ? icons.chevronRightStroke
-                    : icons.chevronLeftStroke}
-            </svg>
-          </button>
-        </div>
-
-      </div>
-
-      {/* PANEL */}
-      {isDrawerOpen && (
-        <div className="product-drawer__panel">
-          {/* CONTENT – fills height */}
-          <div className="product-drawer__panel-content">
-            {drawerView === "settings" && (
-              <div className="drawer-section">
-                <div className="drawer-section-item">
-                  <div className="drawer-section-item-title">Settings</div>
-                </div>
-
-                <div className="drawer-section-itemsgroup">
-                  <div className="drawer-section-item">
-                    <Toggle
-                      title="Auto confirm"
-                      checked={false}
-                      onChange={() => {}}
-                    />
-                  </div>
-
-                  <div className="drawer-section-item">
-                    <Toggle
-                      title="Require double scan"
-                      checked
-                      onChange={() => {}}
-                    />
-                  </div>
-                </div>
-
-                <div className="drawer-section-cta">
-                  <Button variant="ghost">
-                    Reset to defaults
-                  </Button>
-                </div>
+  {/* PANEL – A RAIL MELLETT NYÍLIK KI */}
+  {isDrawerOpen && (
+    <div className="product-drawer__panel">
+      <div className="product-drawer__panel-content">
+        {drawerView === "settings" && (
+          <div className="drawer-section">
+            <div className="drawer-section-item">
+              <div className="drawer-section-item-title">
+                Settings
               </div>
-            )}
+            </div>
 
-            {drawerView === "print" && (
-              <div className="drawer-section">
-                <div className="drawer-section-item">
-                  <div className="drawer-section-item-title">Print</div>
-                </div>
-
-                <div className="drawer-section-item">
-                  <Button variant="ghost">
-                    Print product label
-                  </Button>
-                </div>
-
-                <div className="drawer-section-item">
-                  <Button variant="ghost">
-                    Print location label
-                  </Button>
-                </div>
+            <div className="drawer-section-itemsgroup">
+              <div className="drawer-section-item">
+                <Toggle
+                  title="Auto confirm"
+                  checked={false}
+                  onCheckedChange={() => {}}
+                />
               </div>
-            )}
 
-            {drawerView === "history" && (
-              <div className="drawer-section">
-                <div className="drawer-section-item">
-                  <div className="drawer-section-item-title">History</div>
-                </div>
-
-                <div className="drawer-section-item">
-                  <li>Picked by a.kovach · 10:42</li>
-                  <li>Scanned SKU · 10:41</li>
-                  <li>Putaway started · 10:39</li>
-                </div>
+              <div className="drawer-section-item">
+                <Toggle
+                  title="Require double scan"
+                  checked={true}
+                  onCheckedChange={() => {}}
+                />
               </div>
-            )}
-            
+            </div>
+
+            <div className="drawer-section-cta">
+              <Button variant="ghost">
+                Reset to defaults
+              </Button>
+            </div>
           </div>
-        </div>
-      )}
-    </aside>
+        )}
+
+        {drawerView === "print" && (
+          <div className="drawer-section">
+            <div className="drawer-section-item">
+              <div className="drawer-section-item-title">
+                Print
+              </div>
+            </div>
+
+            <div className="drawer-section-item">
+              <Button variant="ghost">
+                Print product label
+              </Button>
+            </div>
+
+            <div className="drawer-section-item">
+              <Button variant="ghost">
+                Print location label
+              </Button>
+            </div>
+          </div>
+        )}
+
+        {drawerView === "history" && (
+          <div className="drawer-section">
+            <div className="drawer-section-item">
+              <div className="drawer-section-item-title">
+                History
+              </div>
+            </div>
+
+            <div className="drawer-section-item">
+              <p>Picked by a.kovach · 10:42</p>
+              <p>Scanned SKU · 10:41</p>
+              <p>Putaway started · 10:39</p>
+            </div>
+          </div>
+        )}
+      </div>
+
+    </div>
+  )}
+</aside>
 
 
         {/* FOOTER */}
@@ -410,15 +415,48 @@ export default function InboundPutawayProductPage() {
           </div>
 
           <div className="product-page__footer-center">
-            <ProgressBar value={40} />
+            
           </div>
 
           <div className="product-page__footer-right">
-            <Button variant="primary">Confirm</Button>
+            <Button
+              variant="primary"
+              disabled={!isProductVerified}
+              onClick={handleConfirm}
+            >
+              Confirm
+            </Button>
           </div>
         </footer>
-
       </div>
+
+      {/* =========================
+          QUANTITY CONFIRM DIALOG
+          ========================= */}
+
+      <Dialog
+        isOpen={isDialogOpen}
+        intent="warning"
+        title="Quantity changes"
+        footerLeft={
+          <Button
+            variant="ghost"
+            onClick={() => setIsDialogOpen(false)}
+          >
+            Cancel
+          </Button>
+        }
+        footerRight={
+          <Button
+            variant="primary"
+            onClick={finalizeConfirm}
+          >
+            Confirm
+          </Button>
+        }
+      >
+        Are you sure you can put away different quantity than expected?
+      </Dialog>
     </ProductPageLayout>
   );
 }
