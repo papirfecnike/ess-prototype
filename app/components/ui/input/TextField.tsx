@@ -19,6 +19,7 @@ export function TextField({
 }: Props) {
   const inputId = id ?? useId();
   const hasValue = Boolean(value && String(value).length > 0);
+  const hasIcon = Boolean(leadingIcon);
 
   return (
     <div
@@ -28,10 +29,11 @@ export function TextField({
         hasValue ? "has-value" : "",
         disabled ? "is-disabled" : "",
         error ? "has-error" : "",
+        hasIcon ? "has-leading-icon" : "",
       ].join(" ")}
     >
       <div className="text-field">
-        {leadingIcon && (
+        {hasIcon && (
           <span className="text-field__icon">
             {leadingIcon}
           </span>

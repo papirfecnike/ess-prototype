@@ -1,0 +1,11 @@
+.product-page-layout {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+
+  overflow: visible;
+
+  padding: 16px;
+
+  box-sizing: border-box;
+}

@@ -18,6 +18,28 @@ export const icons: Record<string, ReactNode> = {
     />
   ),
 
+  chevronLeftStroke: (
+    <path
+      d="M14 6l-6 6 6 6"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.25"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  ),
+
+  chevronRightStroke: (
+    <path
+      d="M10 6l6 6-6 6"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.25"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  ),
+
   /* =========================
      CHECKBOX ICONS
      ========================= */
@@ -55,6 +77,57 @@ export const icons: Record<string, ReactNode> = {
       strokeWidth="2"
       strokeLinecap="round"
     />
+  ),
+
+  /* =========================
+     DRAWER / SYSTEM ICONS
+     ========================= */
+
+  settings: (
+    <>
+      <path
+        d="M12 8.5a3.5 3.5 0 100 7 3.5 3.5 0 000-7z"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.5"
+      />
+      <path
+        d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06A1.65 1.65 0 0015 19.4a1.65 1.65 0 00-1 .6 1.65 1.65 0 00-.33 1.82V22a2 2 0 11-4 0v-.08a1.65 1.65 0 00-.33-1.82 1.65 1.65 0 00-1-.6 1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06A1.65 1.65 0 004.6 15a1.65 1.65 0 00-.6-1 1.65 1.65 0 00-1.82-.33H2a2 2 0 110-4h.08a1.65 1.65 0 001.82-.33 1.65 1.65 0 00.6-1 1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06A1.65 1.65 0 009 4.6c.38 0 .74-.14 1-.6a1.65 1.65 0 00.33-1.82V2a2 2 0 114 0v.08a1.65 1.65 0 00.33 1.82c.26.46.62.6 1 .6a1.65 1.65 0 001.82-.33l.06-.06a2 2 0 112.83 2.83l-.06.06A1.65 1.65 0 0019.4 9c0 .38.14.74.6 1a1.65 1.65 0 001.82.33H22a2 2 0 110 4h-.08a1.65 1.65 0 00-1.82.33 1.65 1.65 0 00-.6 1z"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.25"
+      />
+    </>
+  ),
+
+  print: (
+    <>
+      <path
+        d="M6 9V3h12v6"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+      />
+      <rect
+        x="6"
+        y="14"
+        width="12"
+        height="7"
+        rx="1"
+        ry="1"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.5"
+      />
+      <path
+        d="M6 13h12"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+      />
+      <circle cx="17" cy="11" r="1" fill="currentColor" />
+    </>
   ),
 
   /* =========================
@@ -206,14 +279,9 @@ export const icons: Record<string, ReactNode> = {
     </>
   ),
 
-    checkCircle: (
+  checkCircle: (
     <>
-      <circle
-        cx="12"
-        cy="12"
-        r="10"
-        fill="currentColor"
-      />
+      <circle cx="12" cy="12" r="10" fill="currentColor" />
       <path
         d="M8 12.5l2.5 2.5L16 9.5"
         fill="none"
@@ -224,7 +292,6 @@ export const icons: Record<string, ReactNode> = {
       />
     </>
   ),
-
 };
 
 export type IconName = keyof typeof icons;

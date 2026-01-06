@@ -1,0 +1,16 @@
+.ui-progress-bar {
+  width: 100%;
+  height: 6px;
+
+  background-color: var(--progress-track-color, #e6e8eb);
+  border-radius: 999px;
+  overflow: hidden;
+
+  box-sizing: border-box;
+}
+
+.ui-progress-bar__fill {
+  height: 100%;
+  background-color: var(--progress-fill-color, var(--accent-primary));
+  transition: width 0.25s ease;
+}
