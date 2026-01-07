@@ -4,6 +4,7 @@
 @import "../components/ui/icon/icon.css";
 @import "../components/ui/input/text-field.css";
 @import "../components/ui/select/select.css";
+@import "../styles/dashboard.css";
 
 /* =========================================================
    RESET / BASE
@@ -282,4 +283,12 @@ aside.sidebar {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.app-layout.layout--dashboard {
+  --sidebar-current-width: 0px;
+}
+
+.dashboard-shell {
+  margin-top: var(--header-height);
 }

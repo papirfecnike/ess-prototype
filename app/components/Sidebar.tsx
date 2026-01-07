@@ -3,6 +3,8 @@ import { useEffect, useMemo, useState } from "react";
 import { sidebarConfig } from "../navigation/sidebar.config";
 import { Icon } from "@/components/ui/icon/Icon";
 
+
+
 const COLLAPSE_BREAKPOINT = 1080;
 
 const PRODUCT_PAGES = [
@@ -25,6 +27,7 @@ export default function Sidebar() {
     () => PRODUCT_PAGES.some((p) => location.pathname.startsWith(p)),
     [location.pathname]
   );
+  
 
   useEffect(() => {
     const handleResize = () => {
@@ -73,7 +76,7 @@ export default function Sidebar() {
             <li key={to} className="sidebar-item">
               <NavLink
                 to={to}
-                end={!item.path}   // ✅ CSAK az Overview-nál exact match
+                end={!item.path} 
                 className={({ isActive }) =>
                   `sidebar-link ${isActive ? "is-active" : ""}`
                 }

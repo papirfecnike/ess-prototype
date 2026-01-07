@@ -1,0 +1,125 @@
+.dashboard-root {
+  width: 100%;
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+.dashboard-title {
+  padding: 16px;
+}
+
+/* =========================
+   MAIN GRID
+   ========================= */
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns:
+    minmax(200px, 240px)
+    minmax(480px, 1fr);
+  gap: 16px;
+  align-items: start;
+}
+
+/* =========================
+   COLUMNS
+   ========================= */
+
+.dashboard-column {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* =========================
+   KPI CARDS
+   ========================= */
+
+.dashboard-kpis {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(140px, 1fr));
+  gap: 16px;
+}
+
+.dashboard-kpi-value {
+  font-size: 28px;
+  font-weight: 600;
+}
+
+.dashboard-kpi-label {
+  margin-top: 4px;
+  color: var(--color-text-muted);
+}
+
+/* =========================
+   MAP + RECENT
+   ========================= */
+
+.dashboard-recent {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+/* Map */
+.dashboard-map {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: var(--radius-m);
+  background: var(--color-surface-muted);
+}
+
+.dashboard-map-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+/* =========================
+   ACTION STACKS
+   ========================= */
+
+.dashboard-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* =========================
+   ACTIVITY LIST
+   ========================= */
+
+.dashboard-activity-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.dashboard-activity {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* =========================
+   RESPONSIVE POLICY
+   ========================= */
+
+/*
+  ❗ NINCS 1fr-re törés
+  ❗ NINCS oszlop-alá törés
+  ❗ csak zsugorodás
+*/
+
+@media (max-width: 900px) {
+  .dashboard-root {
+    overflow-x: auto;
+  }
+
+  .dashboard-grid {
+    min-width: 900px;
+  }
+}

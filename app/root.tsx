@@ -3,13 +3,13 @@ import base from "./styles/base.css?url";
 import app from "./styles/app.css?url";
 import layouts from "./styles/layouts.css?url";
 
-
 import {
   Meta,
   Links,
   Outlet,
   Scripts,
   ScrollRestoration,
+  useLocation,
 } from "react-router";
 import type { Route } from "./+types/root";
 
@@ -17,10 +17,6 @@ import ClientHeader from "./components/ClientHeader";
 import Sidebar from "./components/Sidebar";
 import Footer from "./components/Footer";
 import { SearchProvider } from "./search/SearchContext";
-
-/* =========================
-   STYLES
-   ========================= */
 
 export function links() {
   return [
@@ -31,11 +27,12 @@ export function links() {
   ];
 }
 
-/* =========================
-   APP ROOT
-   ========================= */
-
 export default function App() {
+  const location = useLocation();
+
+  // ✅ DASHBOARD DETECTION
+  const isDashboard = location.pathname === "/dashboard";
+
   return (
     <html lang="en">
       <head>
@@ -46,12 +43,20 @@ export default function App() {
         <SearchProvider>
           <ClientHeader />
 
-          <div className="app-layout">
-            <Sidebar />
-            <main className="app-main">
+          {isDashboard ? (
+            // ✅ DASHBOARD: NO SIDEBAR, NO GRID
+            <main className="dashboard-shell">
               <Outlet />
             </main>
-          </div>
+          ) : (
+            // ✅ NORMAL APP LAYOUT
+            <div className="app-layout">
+              <Sidebar />
+              <main className="app-main">
+                <Outlet />
+              </main>
+            </div>
+          )}
 
           <Footer />
         </SearchProvider>
@@ -62,10 +67,6 @@ export default function App() {
     </html>
   );
 }
-
-/* =========================
-   ERROR BOUNDARY
-   ========================= */
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
   return (
