@@ -266,6 +266,37 @@ export const icons: Record<string, ReactNode> = {
     />
   ),
 
+  warning: (
+  <>
+    <path
+      d="M12 2l10 18H2L12 2z"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M12 8v5"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+    />
+    <circle cx="12" cy="16" r="1" fill="currentColor" />
+  </>
+),
+
+barChart: (
+  <>
+    <path
+      d="M5 9v10M10 5v14M15 12v7M20 3v16"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.75"
+      strokeLinecap="round"
+    />
+  </>
+),
+
   rocket: (
     <>
       <path

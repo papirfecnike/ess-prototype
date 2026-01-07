@@ -23,6 +23,11 @@
   --color-warning: #F09300;
   --color-danger: #CA1520;
 
+  --callout-default-bgcolor: #ecf9fc; 
+  --callout-success-bgcolor: #ecfaec;
+  --callout-warning-bgcolor: #fffaf1;
+  --callout-danger-bgcolor: #fdedee;
+
 /* SHADOW */
 
   --shadow-s: 0 1px 4px rgba(0,0,0,0.06);

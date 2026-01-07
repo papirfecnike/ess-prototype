@@ -2,6 +2,18 @@
    GRID / GROUP PATTERNS
    ========================= */
 
+.layout-grid-6 {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.layout-grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+
 .layout-grid-3 {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -542,4 +554,24 @@
 .profile-card-action
 button {
   white-space: nowrap;
+}
+
+/* =========================
+   SelectableDataTable – header & footer elrejtése
+   ========================= */
+
+/* felső toolbar / header */
+.table--no-header-footer [class*="TableHeader"],
+.table--no-header-footer [class*="table-header"],
+.table--no-header-footer [class*="headerRow"],
+.table--no-header-footer [class*="columnHeader"] {
+  display: none !important;
+}
+
+/* alsó footer / pagination */
+.table--no-header-footer [class*="TableFooter"],
+.table--no-header-footer [class*="table-footer"],
+.table--no-header-footer [class*="pagination"],
+.table--no-header-footer [class*="Pagination"] {
+  display: none !important;
 }

@@ -1,4 +1,6 @@
 .ui-card {
+  display: flex;
+  flex-direction: column;
   background: #ffffff;
   border: 1px solid #e0e8ea;
   border-radius: 16px;
@@ -22,5 +24,6 @@
 .ui-card > *:not(:first-child) {
   display: flex;
   flex-direction: column;
+  flex: 1;
   gap: 12px;
 }

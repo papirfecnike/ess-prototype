@@ -1,0 +1,75 @@
+.ui-callout {
+  position: relative;
+  border-radius: 8px;
+  padding: 16px;
+  padding-right: 56px;
+  border-left: 5px solid var(--callout-color);
+  border-top: 1px solid var(--callout-color);
+  border-right: 1px solid var(--callout-color);
+  border-bottom: 1px solid var(--callout-color);
+  background: var(--callout-bgcolor);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ui-callout__header {
+  display: block;
+}
+
+.ui-callout__title {
+  font-weight: 600;
+}
+
+.ui-callout__content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* =========================
+   ACTION BUTTON (GHOST)
+   ========================= */
+
+.ui-callout__header .btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  height: 32px;
+  min-height: 32px;
+  line-height: 1;
+
+  color: var(--callout-color);
+}
+
+.ui-callout__header .btn:hover {
+  background: var(--callout-bgcolor-hover);
+}
+
+/* =========================
+   INTENTS
+   ========================= */
+
+.ui-callout--default {
+  --callout-color: #137897;
+  --callout-bgcolor: #ecf9fc;
+  --callout-bgcolor-hover: #d5ebf0;
+}
+
+.ui-callout--success {
+  --callout-color: #07930A;
+  --callout-bgcolor: #ecfaec;
+  --callout-bgcolor-hover: #d2ebd2;
+}
+
+.ui-callout--warning {
+  --callout-color: #F09300;
+  --callout-bgcolor: #fffaf1;
+  --callout-bgcolor-hover: #efe4d0;
+}
+
+.ui-callout--danger {
+  --callout-color: #CA1520;
+  --callout-bgcolor: #fdedee;
+  --callout-bgcolor-hover: #f0d0d2;
+}
