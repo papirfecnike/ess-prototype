@@ -16,12 +16,15 @@ export default [
   route("inbound", "routes/inbound.tsx", [
     index("routes/inbound.overview.tsx"),
     route("putaway", "routes/inbound.putaway.tsx"),
+    route("putaway-table", "routes/inbound.putaway-table.tsx"),
     route("putaway-product", "routes/inbound.putaway-product.tsx"),
   ]),
 
   route("outbound", "routes/outbound.tsx", [
     index("routes/outbound.overview.tsx"),
     route("picking", "routes/outbound.picking.tsx"),
+    route("picking-table", "routes/outbound.picking-table.tsx"),
+    route("picking-product", "routes/outbound.picking-product.tsx"),
     route("order-batching", "routes/outbound.order-batching.tsx"),
     route("picking-strategies", "routes/outbound.picking-strategies.tsx"),
     route("printing", "routes/outbound.printing.tsx"),

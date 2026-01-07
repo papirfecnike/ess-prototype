@@ -150,6 +150,7 @@ export default function ConfigurationVersionHistory() {
 
               <div className="layout-card-action">
                 <Button
+                  size="sm"
                   leadingIcon="save"
                   disabled={!canSave}
                   onClick={handleSave}
@@ -203,6 +204,7 @@ export default function ConfigurationVersionHistory() {
 
               <div className="layout-card-action">
                 <Button
+                  size="sm"
                   leadingIcon="refresh"
                   disabled={!canLoad}
                   onClick={handleLoad}
@@ -233,6 +235,7 @@ export default function ConfigurationVersionHistory() {
 
               <div className="layout-card-action">
                 <Button
+                  size="sm"
                   leadingIcon="rocket"
                   disabled={activeCard !== "apply"}
                 >

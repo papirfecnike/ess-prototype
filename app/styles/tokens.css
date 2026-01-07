@@ -1,21 +1,44 @@
 :root {
-  /* =========================
-     COLORS
-     ========================= */
+/* =========================
+   COLORS
+   ========================= */
+
+/* BACKGROUND */
 
   --color-bg: #F0F2F3;
   --color-header: #e6ecee;
+  --color-header-active: #e6ecee;
   --color-header-border: #2D4E58;
+  --color-header-border-active: #137897;
   --color-surface: #D8E0E2;
   --color-surface-hover: #bbc7ca;
   --color-main: #f8f9fa;
   --color-footer: #E0E8EA;
   --color-drawer: #D4DADF;
 
+/* INTENT */
+
+  --color-default: #137897;
+  --color-success: #07930A;
+  --color-warning: #F09300;
+  --color-danger: #CA1520;
+
+/* SHADOW */
+
+  --shadow-s: 0 1px 4px rgba(0,0,0,0.06);
+  --shadow-m: 0 24px 42px rgba(0,0,0,0.1);
+
+/* ICONS, BORDERS AND TEXTS */
+
   --color-icon: #2D4E58;
   --color-text: #2D4E58;
+  --color-text-active: #137897;
   --color-text-muted: #2D4E58;
   --color-text-inverse: #FFFFFF;
+  --color-border-inverse: #FFFFFF;
+  --color-separator: #a5b4b9;
+
+/* TABLE */
 
   --color-table: #FFFFFF;
   --color-table-hover: #ECF0F2;
@@ -23,15 +46,33 @@
   --color-table-column-header: #F5F6F7;
   --color-table-chevron: #137897;
 
+/* TOGGLE SWITCH */
+
   --color-toggle-track: #2D4E58;
+  --color-toggle-bg: #E0E8EA;
+  --color-toggle-bg-on: #137897;
 
-  --color-primary: #137897;
-  --color-primary-hover: #16a8d5;
-  --color-primary-soft: #16a8d5;
+/* BUTTONS */
 
-  --color-secondary: #ffffff;
-  --color-secondary-hover: #137897;
-  --color-secondary-soft: #16a8d5;
+--color-primary: linear-gradient(
+   45deg,
+   #137897 0%,
+   #14282F 100%
+);
+
+--color-primary-hover: linear-gradient(
+   135deg,
+   #76CCE7 0%,
+   #14282F 100%
+);
+
+  --color-secondary: transparent;
+  --color-secondary-border: #137897;
+  --color-secondary-hover: #cad9dd;
+
+  --color-disabled: #bfc2c4;
+
+/* INPUT */
 
   --color-input-bg: #ffffff;
   --color-input-border: #b1c3c7;
@@ -39,32 +80,23 @@
   --color-input-text-focus: #14282F;
   --color-input-text-disabled: #919597;
 
+/* CHECKBOX */
+
   --color-checkbox-bg: #ffffff;
   --color-checkbox-border: #7E9094;
   --color-checkbox-select: #137897;
+
+/* CHIP */
 
   --color-chip-bg: #ecf1f2;
   --color-chip-border: #E0E8EA;
   --color-chip-text: #137897;
   --color-chip-icon: #137897;
 
-  --color-default: #137897;
-  --color-success: #07930A;
-  --color-warning: #F09300;
-  --color-danger: #CA1520;
 
-  --color-disabled: #bfc2c4;
-
-  --color-toggle-bg: #E0E8EA;
-  --color-toggle-bg-on: #137897;
-
-  --shadow-s: 0 1px 4px rgba(0,0,0,0.06);
-  --shadow-m: 0 24px 42px rgba(0,0,0,0.1);
-
-
-    /* =========================
-     SIZES
-     ========================= */
+/* =========================
+   SIZES
+   ========================= */
 
   --header-height: 64px;
   --sidebar-width: 280px;
@@ -73,9 +105,9 @@
   --listitem-height: 32px;
 
 
-  /* =========================
-     TYPOGRAPHY
-     ========================= */
+/* =========================
+   TYPOGRAPHY
+   ========================= */
 
   --font-sans: Roboto, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
@@ -85,15 +117,16 @@
   --font-h3: 1.25rem;
   --font-section-title: 1.25rem;
   --font-default: 0.875rem;
+  --font-button-default: 1.2rem;
   --font-navigation: 1rem;
 
   --font-weight-regular: 400;
   --font-weight-medium: 500;
   --font-weight-bold: 600;
 
-  /* =========================
-     SPACING
-     ========================= */
+/* =========================
+   SPACING
+   ========================= */
 
   --space-1: 4px;
   --space-2: 8px;
@@ -102,9 +135,9 @@
   --space-5: 20px;
   --space-6: 24px;
 
-  /* =========================
-     RADIUS
-     ========================= */
+/* =========================
+   RADIUS
+   ========================= */
 
   --radius-xs: 4px;
   --radius-s: 8px;
@@ -112,16 +145,16 @@
   --radius-l: 24px;
   --radius-full: 999px;
 
-  /* =========================
-     SHADOW
-     ========================= */
+/* =========================
+   SHADOW
+   ========================= */
 
   --shadow-s: 0 1px 2px rgba(0, 0, 0, 0.05);
   --shadow-m: 0 4px 10px rgba(0, 0, 0, 0.08);
 
-  /* =========================
-     Z-INDEX
-     ========================= */
+/* =========================
+   Z-INDEX
+   ========================= */
 
   --z-dropdown: 100;
   --z-overlay: 200;
@@ -129,8 +162,8 @@
 }
 
 /* =========================
-   DARK MODE
-   ========================= */
+DARK MODE
+========================= */
 
 .dark {
   --color-bg: #020617;

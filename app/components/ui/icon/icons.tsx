@@ -292,6 +292,26 @@ export const icons: Record<string, ReactNode> = {
       />
     </>
   ),
+
+  profile: (
+  <>
+    <circle
+      cx="12"
+      cy="8"
+      r="3.5"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+    />
+    <path
+      d="M5 20a7 7 0 0114 0"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+    />
+  </>
+),
 };
 
 export type IconName = keyof typeof icons;

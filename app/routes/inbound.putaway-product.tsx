@@ -14,6 +14,8 @@ import { icons } from "../components/ui/icon/icons";
 import img01 from "@/assets/product/img01.png";
 import img02 from "@/assets/product/img02.png";
 import img03 from "@/assets/product/img03.png";
+import img04 from "@/assets/product/img04.png";
+import img05 from "@/assets/product/img05.png";
 
 import "../styles/product-page.css";
 
@@ -29,13 +31,23 @@ const PRODUCT_MAP: Record<
   WF773: { name: "Name It Jumpsuit - NkfRoka - Burgundy", sku: "WF773" },
   BW975: { name: "Minymo Cardigan - Knitted - Woodrose", sku: "BW975" },
   WC551: { name: "Minymo Cardigan w. Teddy - Parisian Night", sku: "WC551" },
-  WF685: { name: "adidas Performance Shoes - Advantage 2.0", sku: "WF685" },
   BS970: { name: "adidas Performance Shoes - VL Court 3.0 K", sku: "BS970" },
-  BM841: { name: "adidas Performance Shoes - Run 70s 2.0 EL C", sku: "BM841" },
   WH768: { name: "Name It Blouse - Rib - Lavender Gray", sku: "WH768" },
   WG096: { name: "Name It Blouses - 2-Pack - Iceland Fossil/Flint Stone", sku: "WG096" },
 
   /* assets available */
+  WF685: {
+    name: "adidas Performance Shoes - Advantage 2.0", 
+    sku: "WF685", 
+    image: img04,
+  },
+  
+  BM841: { 
+    name: "adidas Performance Shoes - Run 70s 2.0 EL C", 
+    sku: "BM841",
+    image: img05,
+  },
+  
   WA874: {
     name: "Hust and Claire Dynevest – HCEmily – Pale Mauve",
     sku: "WA874",

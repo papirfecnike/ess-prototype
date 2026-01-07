@@ -44,7 +44,8 @@
 
 .btn--md {
   height: 42px;
-  font-size: var(--font-default);
+  font-size: var(--font-button-default);
+  font-weight: 700;
 }
 
 /* =========================================================
@@ -70,44 +71,37 @@
 /* ---------- PRIMARY ---------- */
 
 .btn--primary {
-  background: var(--btn-bg);
-  color: var(--btn-fg);
+  background: var(--color-primary);
+  color: var(--color-text-inverse);
 }
 
 .btn--primary:hover {
-  background: var(--btn-bg-hover);
-}
-
-.btn--primary:active {
-  background: var(--btn-bg-active);
+  background: var(--color-primary-hover);
+  color: var(--color-text-inverse);
 }
 
 /* ---------- SECONDARY ---------- */
 
 .btn--secondary {
-  background: transparent;
-  border: 1px solid var(--btn-border);
-  color: var(--btn-fg);
+  background: var(--color-secondary);
+  border: 1px solid var(--color-secondary-border);
+  color: var(--color-text);
 }
 
 .btn--secondary:hover {
-  border-color: var(--btn-border);
-  background: rgba(0, 0, 0, 0.02);
+  border-color: var(--color-secondary-border);
+  background: var(--color-secondary-hover);
 }
 
 /* ---------- GHOST ---------- */
 
 .btn--ghost {
   background: transparent;
-  color: var(--btn-fg);
+  color: var(--color-text);
 }
 
 .btn--ghost:hover {
-  background: var(--btn-bg-hover);
-}
-
-.btn--ghost:active {
-  background: var(--btn-bg-active);
+  background: var(--color-secondary-hover);
 }
 
 /* =========================================================

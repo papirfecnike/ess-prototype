@@ -73,18 +73,43 @@ export default function OutboundPickingProductPage() {
 
   const activeItem = picklistItems[activePickIndex];
 
-  /* =========================
+
+    /* =========================
      PRODUCT VERIFICATION
      ========================= */
 
   const isProductVerified = scanValue.trim() === activeItem.sku;
 
-  function handleConfirm() {
-    setActivePickIndex((prev) =>
-      prev < picklistItems.length - 1 ? prev + 1 : prev
-    );
-    setScanValue("");
+  /* =========================
+     CONFIRM LOGIC
+     ========================= */
+
+function finalizeConfirm() {
+  if (typeof window === "undefined") return;
+  window.location.href = "/outbound/product-table";
+}
+
+function handleConfirm() {
+  if (!isProductVerified) return;
+
+  const isLastItem =
+    activePickIndex === picklistItems.length - 1;
+
+  if (isLastItem) {
+    finalizeConfirm();
+    return;
   }
+
+  setActivePickIndex((prev) => prev + 1);
+  setScanValue("");
+}
+
+  /* =========================
+     DIALOG STATE
+     ========================= */
+
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
 
   /* =========================
      DRAWER STATE

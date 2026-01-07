@@ -36,11 +36,6 @@ header {
   justify-content: space-between;
 }
 
-header nav {
-  display: flex;
-  padding: 2rem;
-  gap: 12px;
-}
 
 nav.search {
   padding: 2rem;
@@ -50,19 +45,23 @@ nav.search {
 header a {
   text-decoration: none;
   font-size: var(--font-navigation);
-  font-weight: var(--font-weight-medium);
+  font-weight: var(--font-weight-bold);
   color: var(--color-text);
-  padding: 6px 10px;
-  border-radius: var(--radius-s);
+  padding: 24px 12px 8px 12px;
+  border-bottom: 3px solid var(--color-header);
 }
 
 header a:hover {
+  text-decoration: none;
   background: rgba(0, 0, 0, 0.04);
+  border-bottom: 3px solid var(--color-header-border);
 }
 
 header a.active {
-  background: var(--color-primary);
-  color: white;
+  text-decoration: none;
+  background: var(--color-header-active);
+  border-bottom: 3px solid var(--color-header-border-active);
+  color: var(--color-text-active);
 }
 
 .app-header {
@@ -71,9 +70,9 @@ header a.active {
   left: 0;
   right: 0;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 1rem;
+  align-items: stretch;
+  justify-content: flex-start;
+  padding: 0;
   height: var(--header-height);
   background: var(--color-header);
   border-bottom: var(--color-header-border);
@@ -81,12 +80,38 @@ header a.active {
   z-index: 1000;
 }
 
+.app-header__logo {
+  display: block;
+  height: 100%;
+  width: auto;
+
+  margin: 0;
+  padding: 0;
+  flex-shrink: 0;;
+}
+
+.app-header__separator {
+  display: flex;
+  align-items: center;
+
+  height: 100%;
+  padding: 0 8px;
+
+  color: var(--color-separator);
+  user-select: none;
+}
+
 /* LEFT SIDE: NAV */
 
 .app-header__nav {
   display: flex;
-  align-items: center;
-  gap: 12px;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: flex-start;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  gap: 0;
 }
 
 /* RIGHT SIDE: ACTIONS */
@@ -94,6 +119,8 @@ header a.active {
 .app-header__actions {
   display: flex;
   align-items: center;
+  margin-left: auto;
+  margin-right: 15px;
   gap: 12px;
 }
 
