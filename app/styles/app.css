@@ -9,6 +9,11 @@
    RESET / BASE
    ========================================================= */
 
+:root {
+  --sidebar-width: 240px;
+  --sidebar-width-collapsed: 64px;
+}
+
 *,
 *::before,
 *::after {
@@ -126,13 +131,41 @@ header a.active {
 
 .app-layout {
   display: grid;
-  grid-template-columns: var(--sidebar-width) 1fr;
+  grid-template-columns: var(--sidebar-current-width) 1fr;
   height: 100vh;
+  transition: grid-template-columns 200ms ease;
+  --sidebar-current-width: var(--sidebar-width);
 }
+
+.app-layout:has(.sidebar.is-collapsed) {
+  --sidebar-current-width: var(--sidebar-width-collapsed);
+}
+
+.sidebar.is-collapsed {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+.sidebar-link {
+  display: flex;
+  align-items: center;
+}
+
+.sidebar.is-collapsed .sidebar-label {
+  opacity: 0;
+  width: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.sidebar-label {
+  transition: opacity 150ms ease;
+}
+
 
 aside {
   border-right: 1px solid var(--color-border);
-  background: var(--color-surface);
+  background: var(--color-sidebar);
   padding: var(--space-2);
 }
 
@@ -165,7 +198,7 @@ aside {
 button {
   border-radius: var(--radius-s);
   border: 1px solid var(--color-border);
-  background: var(--color-surface);
+  background: var(--color-sidebar);
   padding: 6px 12px;
   cursor: pointer;
 }
@@ -180,7 +213,7 @@ button:hover {
 
 aside.sidebar {
   border-right: 1px solid var(--color-border);
-  background: var(--color-surface);
+  background: var(--color-sidebar);
   padding-top: 5.875rem;
   padding-right: 1rem;
   padding-bottom: 1rem;
@@ -204,18 +237,49 @@ aside.sidebar {
 
 .sidebar a {
   display: block;
-  padding: 8px 10px;
+  padding: 12px;
   border-radius: var(--radius-s);
   text-decoration: none;
   color: var(--color-text);
   font-size: 14px;
+  font-weight: 600;
+}
+
+.sidebar a.sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: 16px;
 }
 
 .sidebar a:hover {
   background: rgba(0, 0, 0, 0.04);
 }
 
-.sidebar a.active {
-  background: var(--color-primary);
-  color: white;
+.sidebar a.is-active {
+  background: var(--color-sidebar-active);
+  color: var(--color-text-active);
+  font-weight: 600;
+}
+
+.sidebar-toggle {
+  position: sticky;
+  top: calc(var(--header-height) + 8px);
+  z-index: 1;
+
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 8px;
+  padding-bottom: 16px;
+
+  border-bottom: 1px solid var(--color-sidebar-border);
+}
+
+.sidebar-toggle button {
+  padding: 4px;
+  width: 32px;
+  height: 32px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

@@ -38,7 +38,7 @@
 .product-page__footer {
   position: fixed;
   bottom: 0;
-  left: 280px;
+  left: 64px;
   right: 0;
 
   display: grid;
@@ -486,7 +486,7 @@
 }
 
 .product-drawer__icon:hover {
-  background: var(--color-surface-hover);
+  background: var(--color-sidebar-hover);
 }
 
 /* PANEL */
