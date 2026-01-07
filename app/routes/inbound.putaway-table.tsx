@@ -1,11 +1,12 @@
 import type { LoaderFunction } from "react-router";
-import { useMemo, useState } from "react";
+import { useMemo, useState, useRef } from "react";
 
 import { PageLayout } from "@/components/layout/PageLayout";
 import { PageSection } from "@/components/layout/PageSection";
 
 import { SelectableDataTable } from "@/components/data/SelectableDataTable";
 import type { DataTableColumn } from "@/components/data/DataTableCore";
+import { DropdownMenu } from "@/components/ui/menu/DropdownMenu";
 import { Tag } from "@/components/ui/tag/Tag";
 import { Icon } from "@/components/ui/icon/Icon";
 
@@ -45,6 +46,9 @@ export default function InboundPutaway() {
 
   const [selectedRows, setSelectedRows] = useState<string[]>([]);
   const [scanValue, setScanValue] = useState("");
+  const [openMenuRowId, setOpenMenuRowId] = useState<string | null>(null);
+  const menuAnchorRef = useRef<HTMLElement | null>(null);
+
 
   /* =========================
      COLUMNS
@@ -84,6 +88,40 @@ export default function InboundPutaway() {
         </button>
       ),
     },
+    {
+      key: "more",
+      label: "",
+      align: "right",
+      renderCell: (_value, row) => {
+        const currentRowId = String(row.id);
+        const isMenuOpen = openMenuRowId === currentRowId;
+
+        return (
+          <button
+            type="button"
+            className="btn--ghost"
+            aria-label="More"
+            ref={(el) => {
+              if (isMenuOpen) {
+                menuAnchorRef.current = el;
+              }
+            }}
+            onClick={(e) => {
+              e.stopPropagation();
+              setOpenMenuRowId(
+                isMenuOpen ? null : currentRowId
+              );
+            }}
+          >
+            <Icon
+              name={isMenuOpen ? "closeStroke" : "moreVert"}
+              size="sm"
+            />
+          </button>
+        );
+      },
+    },
+
   ];
 
   /* =========================
@@ -98,9 +136,10 @@ export default function InboundPutaway() {
       progress: "2/3",
       status: "In progress",
       operator: "c.newman",
-      workstation: "Port 01",
+      workstation: "Port 01, Port 02",
       date: "08-Jan-2026",
       events: "x",
+      more: "",
     },
     {
       id: 432171,
@@ -112,6 +151,7 @@ export default function InboundPutaway() {
       workstation: "Port 04",
       date: "08-Jan-2026",
       events: "x",
+      more: "",
     },
     {
       id: 432172,
@@ -120,9 +160,10 @@ export default function InboundPutaway() {
       progress: "7/9",
       status: "In progress",
       operator: "p.ramazotti",
-      workstation: "Port 07",
+      workstation: "Port 07, Port 08",
       date: "08-Jan-2026",
       events: "x",
+      more: "",
     },
     {
       id: 432173,
@@ -134,20 +175,10 @@ export default function InboundPutaway() {
       workstation: "Port 05",
       date: "08-Jan-2026",
       events: "x",
+      more: "",
     },
     {
       id: 432174,
-      name: "adidas Performance Shoes - Advantage 2.0",
-      sku: "WF685",
-      progress: "0/3",
-      status: "Prepared",
-      operator: "s.pittmann",
-      workstation: "Port 02",
-      date: "n/a",
-      events: "x",
-    },
-    {
-      id: 432175,
       name: "adidas Performance Shoes - VL Court 3.0 K",
       sku: "BS970",
       progress: "0/3",
@@ -156,20 +187,46 @@ export default function InboundPutaway() {
       workstation: "Port 03",
       date: "n/a",
       events: "x",
+      more: "",
+    },
+    {
+      id: 432175,
+      name: "Hust and Claire Dynevest – HCEmily – Pale Mauve",
+      sku: "WA874",
+      progress: "0/3",
+      status: "Prepared",
+      operator: "s.pittmann",
+      workstation: "Port 02",
+      date: "n/a",
+      events: "x",
+      more: "",
     },
     {
       id: 432176,
-      name: "adidas Performance Shoes - Run 70s 2.0 EL C",
-      sku: "BM841",
+      name: "Name It Dynevest - NmfMylane - Woodrose m. Sløyfebånd",
+      sku: "BX962",
       progress: "0/2",
       status: "Prepared",
       operator: "f.rickman",
       workstation: "Port 06",
       date: "n/a",
       events: "x",
+      more: "",
     },
     {
       id: 432177,
+      name: "Billieblush Dynevest – Peach",
+      sku: "BV122",
+      progress: "0/3",
+      status: "Prepared",
+      operator: "s.h.bergman",
+      workstation: "Port 02",
+      date: "n/a",
+      events: "x",
+      more: "",
+    },
+    {
+      id: 432178,
       name: "Name It Blouse - Rib - Lavender Gray",
       sku: "WH768",
       progress: "11/11",
@@ -178,9 +235,10 @@ export default function InboundPutaway() {
       workstation: "Port 09",
       date: "08-Nov-2025",
       events: "x",
+      more: "",
     },
     {
-      id: 432178,
+      id: 432179,
       name: "Name It Blouses - 2-Pack - Iceland Fossil/Flint Stone",
       sku: "WG096",
       progress: "9/9",
@@ -189,9 +247,10 @@ export default function InboundPutaway() {
       workstation: "Port 04",
       date: "08-Nov-2025",
       events: "x",
+      more: "",
     },
     {
-      id: 432179,
+      id: 432180,
       name: "Billieblush Dynevest - Peach",
       sku: "BV122",
       progress: "11/11",
@@ -200,9 +259,10 @@ export default function InboundPutaway() {
       workstation: "Port 11",
       date: "08-Nov-2025",
       events: "x",
+      more: "",
     },
     {
-      id: 432180,
+      id: 432181,
       name: "Name It Blouses - 2-Pack - Iceland Fossil/Flint Stone",
       sku: "WG096",
       progress: "9/9",
@@ -211,40 +271,40 @@ export default function InboundPutaway() {
       workstation: "Port 04",
       date: "08-Nov-2025",
       events: "x",
+      more: "",
     },
   ];
 
   /* =========================
-     FILTER LOGIC
+     EXACT MATCH LOGIC
      ========================= */
 
-  const filteredRows = useMemo(() => {
-    if (!scanValue.trim()) return rows;
+  const exactPreparedMatch = useMemo(() => {
+    const q = scanValue.trim();
+    if (!q) return null;
 
-    const q = scanValue.toLowerCase();
-
-    return rows.filter((row) =>
-      [row.id, row.name, row.sku].some((value) =>
-        String(value).toLowerCase().includes(q)
-      )
+    return rows.find(
+      (row) =>
+        row.status === "Prepared" &&
+        (String(row.id) === q ||
+          row.sku.toUpperCase() === q.toUpperCase() ||
+          row.name.toUpperCase() === q.toUpperCase())
     );
   }, [scanValue, rows]);
 
-  const hasMatch = filteredRows.length > 0;
+  const canConfirm = Boolean(exactPreparedMatch);
 
   /* =========================
      HANDLERS
      ========================= */
 
-    const handleConfirm = () => {
-      if (!hasMatch) return;
+    function handleConfirm() {
+    if (!exactPreparedMatch) return;
 
-      const matchedRow = filteredRows[0];
-
-      window.location.assign(
-        `putaway-product?sku=${matchedRow.sku}`
-      );
-    };
+    window.location.assign(
+      `/inbound/putaway-product?sku=${exactPreparedMatch.sku}`
+    );
+  }
 
   /* =========================
      RENDER
@@ -257,7 +317,7 @@ export default function InboundPutaway() {
           value={scanValue}
           onChange={(e) => setScanValue(e.target.value)}
           onSubmit={handleConfirm}
-          isDisabled={!hasMatch}
+          isDisabled={!canConfirm}
           buttonLabel="Confirm"
         />
       }
@@ -266,9 +326,24 @@ export default function InboundPutaway() {
         <SelectableDataTable
           rowIdKey="id"
           columns={columns}
-          rows={hasMatch ? filteredRows : []}
+          rows={rows}
           selectedRows={selectedRows}
           onSelectionChange={setSelectedRows}
+        />
+        
+        <DropdownMenu
+          open={openMenuRowId !== null}
+          anchorRef={menuAnchorRef}
+          items={[
+            { id: "putaway", label: "Put away" },
+            { id: "edit", label: "Edit" },
+            { id: "delete", label: "Delete", intent: "danger" },
+          ]}
+          onClose={() => setOpenMenuRowId(null)}
+          onSelect={(actionId) => {
+            console.log("action:", actionId, "row:", openMenuRowId);
+            setOpenMenuRowId(null);
+          }}
         />
       </PageSection>
     </PageLayout>

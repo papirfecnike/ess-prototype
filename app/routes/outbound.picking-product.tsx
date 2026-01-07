@@ -15,6 +15,8 @@ import { icons } from "../components/ui/icon/icons";
 import img01 from "@/assets/product/img01.png";
 import img02 from "@/assets/product/img02.png";
 import img03 from "@/assets/product/img03.png";
+import img04 from "@/assets/product/img04.png";
+import img05 from "@/assets/product/img05.png";
 
 import "../styles/product-page.css";
 
@@ -73,27 +75,26 @@ export default function OutboundPickingProductPage() {
 
   const activeItem = picklistItems[activePickIndex];
 
-
-    /* =========================
-     PRODUCT VERIFICATION
-     ========================= */
-
-  const isProductVerified = scanValue.trim() === activeItem.sku;
-
   /* =========================
      CONFIRM LOGIC
      ========================= */
 
+const FINAL_EXPECTED_SKU = "BV122";
+
+const isLastItem =
+  activePickIndex === picklistItems.length - 1;
+
+const isProductVerified = isLastItem
+  ? scanValue.trim().toUpperCase() === FINAL_EXPECTED_SKU
+  : scanValue.trim().toUpperCase() === activeItem.sku;
+
 function finalizeConfirm() {
   if (typeof window === "undefined") return;
-  window.location.href = "/outbound/product-table";
+  window.location.href = "/outbound/picking-table";
 }
 
 function handleConfirm() {
   if (!isProductVerified) return;
-
-  const isLastItem =
-    activePickIndex === picklistItems.length - 1;
 
   if (isLastItem) {
     finalizeConfirm();
@@ -103,6 +104,7 @@ function handleConfirm() {
   setActivePickIndex((prev) => prev + 1);
   setScanValue("");
 }
+
 
   /* =========================
      DIALOG STATE

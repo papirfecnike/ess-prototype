@@ -32,6 +32,8 @@ export default [
 
   route("inventory", "routes/inventory.tsx", [
     index("routes/inventory.overview.tsx"),
+    route("inspection-table", "routes/inventory.inspection-table.tsx"),
+    route("inspection-product", "routes/inventory.inspection-product.tsx"),
     route("inspection", "routes/inventory.inspection.tsx"),
   ]),
 

@@ -27,27 +27,6 @@ const PRODUCT_MAP: Record<
   string,
   { name: string; sku: string; image?: string }
 > = {
-  WD750: { name: "Bisgaard Winter Boots - Pixie - Khaki", sku: "WD750" },
-  WF773: { name: "Name It Jumpsuit - NkfRoka - Burgundy", sku: "WF773" },
-  BW975: { name: "Minymo Cardigan - Knitted - Woodrose", sku: "BW975" },
-  WC551: { name: "Minymo Cardigan w. Teddy - Parisian Night", sku: "WC551" },
-  BS970: { name: "adidas Performance Shoes - VL Court 3.0 K", sku: "BS970" },
-  WH768: { name: "Name It Blouse - Rib - Lavender Gray", sku: "WH768" },
-  WG096: { name: "Name It Blouses - 2-Pack - Iceland Fossil/Flint Stone", sku: "WG096" },
-
-  /* assets available */
-  WF685: {
-    name: "adidas Performance Shoes - Advantage 2.0", 
-    sku: "WF685", 
-    image: img04,
-  },
-  
-  BM841: { 
-    name: "adidas Performance Shoes - Run 70s 2.0 EL C", 
-    sku: "BM841",
-    image: img05,
-  },
-  
   WA874: {
     name: "Hust and Claire Dynevest – HCEmily – Pale Mauve",
     sku: "WA874",
@@ -96,9 +75,8 @@ export default function InboundPutawayProductPage() {
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-  const params = new URLSearchParams(window.location.search);
-  const skuParam = (params.get("sku") || "").toUpperCase();
-
+    const params = new URLSearchParams(window.location.search);
+    const skuParam = (params.get("sku") || "").toUpperCase();
   
     if (PRODUCT_MAP[skuParam]) {
       setActiveItem(PRODUCT_MAP[skuParam]);
@@ -115,7 +93,10 @@ export default function InboundPutawayProductPage() {
      PRODUCT VERIFICATION
      ========================= */
 
-  const isProductVerified = scanValue.trim() === activeItem.sku;
+  const EXPECTED_SKU = "WA874";
+
+  const isProductVerified =
+  scanValue.trim().toUpperCase() === EXPECTED_SKU;
 
   /* =========================
      CONFIRM LOGIC
@@ -128,7 +109,7 @@ export default function InboundPutawayProductPage() {
         JSON.stringify({ sku: activeItem.sku })
       );
 
-      window.location.assign("/inbound/putaway-table");
+      window.location.assign("/inventory/inspection");
     }
   }
 
@@ -231,39 +212,23 @@ export default function InboundPutawayProductPage() {
 
               <div className="product-details">
                 <div className="product-details__row">
-                  <span className="product-details__label">Order ID</span>
-                  <span className="product-details__value product-details__value--strong">
-                    2784741147
-                  </span>
-                </div>
-
-                <div className="product-details__row">
                   <span className="product-details__label">Name</span>
                   <span className="product-details__value product-details__value--strong">
-                    {activeItem.name}
+                    Hust and Claire Dynevest – HCEmily – Pale Mauve
                   </span>
                 </div>
 
                 <div className="product-details__row">
-                  <span className="product-details__label">SKU</span>
+                  <span className="product-details__label">Product ID</span>
                   <span className="product-details__value product-details__value--strong">
-                    {activeItem.sku}
+                    WA874
                   </span>
                 </div>
 
                 <div className="product-details__row">
                   <span className="product-details__label">Image</span>
                   <div className="product-details__image">
-                    {activeItem.image ? (
-                      <img
-                        src={activeItem.image}
-                        alt={activeItem.name}
-                      />
-                    ) : (
-                      <div className="product-details__no-image">
-                        no image
-                      </div>
-                    )}
+                    <img src={img01} alt="Hust and Claire Dynevest – HCEmily – Pale Mauve" />
                   </div>
                 </div>
 

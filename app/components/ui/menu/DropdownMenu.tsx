@@ -3,10 +3,17 @@ import { SelectableList } from "../list/SelectableList";
 import type { SelectableListItem } from "../list/SelectableList";
 import "./dropdown-menu.css";
 
+type MenuItemIntent = "default" | "danger";
+
+type MenuItem = Omit<SelectableListItem, "label"> & {
+  label: string;
+  intent?: MenuItemIntent;
+};
+
 type Props = {
   open: boolean;
   anchorRef: React.RefObject<HTMLElement>;
-  items: SelectableListItem[];
+  items: MenuItem[];
   onClose: () => void;
   onSelect: (id: string) => void;
 };
@@ -39,7 +46,6 @@ export function DropdownMenu({
     let top = anchorRect.bottom + 4;
     let left = anchorRect.left;
 
-    /* ---- viewport safety ---- */
     const viewportWidth = window.innerWidth;
     if (left + menuRect.width > viewportWidth) {
       left = viewportWidth - menuRect.width - 8;
@@ -81,6 +87,13 @@ export function DropdownMenu({
 
   if (!open) return null;
 
+  const mappedItems = items.map((item) => ({
+    id: item.id,
+    label: item.label,
+    disabled: item.disabled,
+    "data-intent": item.intent,
+  })) as unknown as SelectableListItem[];
+
   return (
     <div
       ref={menuRef}
@@ -92,14 +105,16 @@ export function DropdownMenu({
       }}
       role="menu"
     >
-      <SelectableList
-        variant="default"
-        items={items}
-        onItemClick={(id) => {
-          onSelect(id);
-          onClose();
-        }}
-      />
+      <div className="dropdown-menu__surface">
+        <SelectableList
+          variant="default"
+          items={mappedItems}
+          onItemClick={(id) => {
+            onSelect(id);
+            onClose();
+          }}
+        />
+      </div>
     </div>
   );
 }

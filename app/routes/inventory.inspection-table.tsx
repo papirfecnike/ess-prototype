@@ -17,7 +17,7 @@ export const loader: LoaderFunction = async () => {
 };
 
 /* =========================
-   STATUS → TAG MAPPING
+   STATUS → TAG (ha később kell)
    ========================= */
 
 function renderStatusTag(status: string) {
@@ -35,7 +35,7 @@ function renderStatusTag(status: string) {
   }
 }
 
-export default function OutboundPickingTable() {
+export default function InventoryInspection() {
   /* =========================
      STATE
      ========================= */
@@ -50,19 +50,12 @@ export default function OutboundPickingTable() {
      ========================= */
 
   const columns: DataTableColumn[] = [
-    { key: "id", label: "Picklist ID", sortable: true },
-    { key: "order", label: "Order ID", sortable: true },
-    { key: "created", label: "Created", sortable: true },
-    { key: "pickdate", label: "Pick date", sortable: true },
-    { key: "deliverydate", label: "Delivery date", align: "center" },
-    { key: "priority", label: "Priority", align: "center" },
-    { key: "noitems", label: "No. of items", align: "center" },
-    {
-      key: "status",
-      label: "Status",
-      align: "center",
-      renderCell: (value) => renderStatusTag(String(value)),
-    },
+    { key: "id", label: "Batch ID", sortable: true },
+    { key: "product", label: "Product", sortable: true },
+    { key: "sku", label: "SKU", sortable: true },
+    { key: "compartment", label: "Compartment ID", sortable: true },
+    { key: "maxcapacity", label: "Max. capacity", align: "center" },
+    { key: "currentqty", label: "Current qty", align: "center" },
     {
       key: "more",
       label: "",
@@ -102,57 +95,45 @@ export default function OutboundPickingTable() {
 
   const rows = [
     {
-      id: 9305204750,
-      order: 2784741143,
-      name: "Minymo Cardigan - Knitted - Woodrose",
-      created: "08-Jan-2026 14:48:45",
-      pickdate: "08-Jan-2026",
-      deliverydate: "11-Jan-2026 21:00:00",
-      priority: "50",
-      noitems: "8",
-      status: "In progress",
+      id: 432170,
+      product: "Bisgaard Winter Boots - Pixie - Khaki",
+      sku: "WD750",
+      compartment: "AS-887652-01-01",
+      maxcapacity: "12",
+      currentqty: "23",
       more: "",
     },
     {
-      id: 9305204751,
-      order: 2784741144,
-      name: "Minymo Cardigan w. Teddy - Parisian Night",
-      created: "08-Jan-2026 14:42:12",
-      pickdate: "08-Jan-2026",
-      deliverydate: "11-Jan-2026 21:00:00",
-      priority: "50",
-      noitems: "4",
-      status: "In progress",
+      id: 432171,
+      product: "Name It Jumpsuit - NkfRoka - Burgundy",
+      sku: "WF773",
+      compartment: "AS-887652-01-01",
+      maxcapacity: "12",
+      currentqty: "45",
       more: "",
     },
     {
-      id: 9305204752,
-      order: 2784741145,
-      name: "adidas Performance Shoes - Advantage 2.0",
-      created: "08-Jan-2026 14:39:37",
-      pickdate: "08-Jan-2026",
-      deliverydate: "11-Jan-2026 21:00:00",
-      priority: "50",
-      noitems: "4",
-      status: "In progress",
+      id: 432172,
+      product: "Minymo Cardigan - Knitted - Woodrose",
+      sku: "BW975",
+      compartment: "AS-887652-01-01",
+      maxcapacity: "12",
+      currentqty: "56",
       more: "",
     },
     {
-      id: 9305204753,
-      order: 2784741146,
-      name: "adidas Performance Shoes - VL Court 3.0 K",
-      created: "08-Jan-2026 14:34:29",
-      pickdate: "08-Jan-2026",
-      deliverydate: "11-Jan-2026 21:00:00",
-      priority: "50",
-      noitems: "4",
-      status: "Prepared",
+      id: 432173,
+      product: "Minymo Cardigan w. Teddy - Parisian Night",
+      sku: "WC551",
+      compartment: "AS-887652-01-01",
+      maxcapacity: "12",
+      currentqty: "72",
       more: "",
     },
   ];
 
   /* =========================
-     FILTER LOGIC
+     FILTER (substring search)
      ========================= */
 
   const filteredRows = useMemo(() => {
@@ -161,40 +142,48 @@ export default function OutboundPickingTable() {
     const q = scanValue.toLowerCase();
 
     return rows.filter((row) =>
-      [row.id, row.order, row.name].some((value) =>
+      [row.id, row.sku, row.product].some((value) =>
         String(value).toLowerCase().includes(q)
       )
     );
   }, [scanValue, rows]);
 
-  const canConfirm = useMemo(() => {
-    if (filteredRows.length !== 1) return false;
+  /* =========================
+     EXACT MATCH (ID vagy SKU)
+     ========================= */
 
-    return filteredRows[0].status === "Prepared";
-  }, [filteredRows]);
+  const exactMatch = useMemo(() => {
+    const q = scanValue.trim();
+    if (!q) return null;
 
-  const preparedRows = useMemo(() => {
-    return filteredRows.filter(
-      (row) => row.status === "Prepared"
+    return rows.find(
+      (row) =>
+        String(row.id) === q ||
+        row.sku.toLowerCase() === q.toLowerCase()
     );
-  }, [filteredRows]);
+  }, [scanValue, rows]);
 
-  const hasMatch = filteredRows.length > 0;
+  const canConfirm = Boolean(exactMatch);
 
   /* =========================
      HANDLERS
      ========================= */
 
-    function handleConfirm() {
-      if (!canConfirm) return;
+  function handleConfirm() {
+    if (!exactMatch) return;
 
-      window.location.href = `/outbound/picking-product`;
+    window.location.href = `/inventory/inspection-product`;
+  }
+
+  function handleSelectionChange(rowIds: string[]) {
+    if (!exactMatch) {
+      setSelectedRows([]);
+      return;
     }
 
-    function handleSelectionChange(rowIds: string[]) {
-      const allowedIds = preparedRows.map((r) => String(r.id));
-      setSelectedRows(rowIds.filter((id) => allowedIds.includes(id)));
-    }
+    const allowedId = String(exactMatch.id);
+    setSelectedRows(rowIds.filter((id) => id === allowedId));
+  }
 
   /* =========================
      RENDER
@@ -203,20 +192,20 @@ export default function OutboundPickingTable() {
   return (
     <PageLayout
       title={
-      <ScanInput
-        value={scanValue}
-        onChange={(e) => setScanValue(e.target.value)}
-        onSubmit={handleConfirm}
-        isDisabled={!canConfirm}
-        buttonLabel="Confirm"
-      />
+        <ScanInput
+          value={scanValue}
+          onChange={(e) => setScanValue(e.target.value)}
+          onSubmit={handleConfirm}
+          isDisabled={!canConfirm}
+          buttonLabel="Confirm"
+        />
       }
     >
       <PageSection>
         <SelectableDataTable
           rowIdKey="id"
           columns={columns}
-          rows={hasMatch ? filteredRows : []}
+          rows={filteredRows}
           selectedRows={selectedRows}
           onSelectionChange={handleSelectionChange}
         />
@@ -226,7 +215,7 @@ export default function OutboundPickingTable() {
         open={openMenuRowId !== null}
         anchorRef={menuAnchorRef}
         items={[
-          { id: "pick", label: "Pick" },
+          { id: "inspect", label: "Inspect" },
           { id: "edit", label: "Edit" },
           { id: "delete", label: "Delete", intent: "danger" },
         ]}
