@@ -1,6 +1,6 @@
 import "./tag.css";
 
-type TagVariant = "default" | "success" | "warning" | "danger";
+type TagVariant = "default" | "success" | "warning" | "danger" | "inbound" | "outbound" | "inventory" | "research";
 
 type Props = {
   label: string;

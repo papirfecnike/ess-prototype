@@ -57,14 +57,14 @@ export default function ClientHeader() {
         <NavLink to="/outbound">Outbound</NavLink>
         <NavLink to="/inventory">Inventory</NavLink>
         <span className="app-header__separator">|</span>
-        <NavLink to="/control-center">Control center</NavLink>
+        <NavLink to="/control-center/warehouse-layout">Control center</NavLink>
         <NavLink to="/configuration">Configuration</NavLink>
       </nav>
 
       {/* RIGHT: ACTIONS */}
       <div className="app-header__actions">
         <button
-            className="btn--secondary btn--md"
+            className="btn btn--secondary btn--md"
             onClick={() => setSearchOpen(true)}
             aria-label="Search"
           >
@@ -72,13 +72,14 @@ export default function ClientHeader() {
             <span>Search</span>
           </button>
 
-        <button
-          className="btn--primary btn--md btn--icon-only"
-          onClick={() => navigate("/profile")}
+        <Button
+          variant="icon"
+          size="md"
           aria-label="Profile"
+          onClick={() => navigate("/profile")}
         >
           <Icon name="profile" size="sm" />
-        </button>
+        </Button>
       </div>
     </header>
 

@@ -3,8 +3,6 @@ import { useEffect, useMemo, useState } from "react";
 import { sidebarConfig } from "../navigation/sidebar.config";
 import { Icon } from "@/components/ui/icon/Icon";
 
-
-
 const COLLAPSE_BREAKPOINT = 1080;
 
 const PRODUCT_PAGES = [
@@ -27,7 +25,6 @@ export default function Sidebar() {
     () => PRODUCT_PAGES.some((p) => location.pathname.startsWith(p)),
     [location.pathname]
   );
-  
 
   useEffect(() => {
     const handleResize = () => {
@@ -44,15 +41,15 @@ export default function Sidebar() {
   }, [isProductPage]);
 
   useEffect(() => {
-    if (isProductPage) {
-      setCollapsed(true);
-    }
+    if (isProductPage) setCollapsed(true);
   }, [isProductPage]);
 
   if (!section) return null;
 
   return (
     <aside className={`sidebar ${collapsed ? "is-collapsed" : ""}`}>
+
+      {/* TOGGLE */}
       <div className="sidebar-toggle">
         <button
           type="button"
@@ -66,38 +63,81 @@ export default function Sidebar() {
         </button>
       </div>
 
-      <ul className="sidebar-list">
-        {section.items.map((item) => {
-          const to = item.path
-            ? `/${section.basePath}/${item.path}`
-            : `/${section.basePath}`;
+      {/* MAIN NAV */}
+<nav className="sidebar-nav">
+  {section.groups ? (
+    section.groups.map((group) => (
+      <div key={group.title} className="sidebar-group">
+        {!collapsed && (
+          <div className="sidebar-group-title">
+            {group.title}
+          </div>
+        )}
 
-          return (
-            <li key={to} className="sidebar-item">
-              <NavLink
-                to={to}
-                end={!item.path} 
-                className={({ isActive }) =>
-                  `sidebar-link ${isActive ? "is-active" : ""}`
-                }
-              >
-                <span className="sidebar-icon">
-                  <Icon
-                    name={item.icon ?? "placeholder"}
-                    size="sm"
-                  />
-                </span>
+        <ul className="sidebar-list">
+          {group.items.map((item) => {
+            const to = item.path
+              ? `/${section.basePath}/${item.path}`
+              : `/${section.basePath}`;
 
-                {!collapsed && (
-                  <span className="sidebar-label">
-                    {item.label}
+            return (
+              <li key={to} className="sidebar-item">
+                <NavLink
+                  to={to}
+                  end={item.path === ""}
+                  className={({ isActive }) =>
+                    `sidebar-link ${isActive ? "is-active" : ""}`
+                  }
+                >
+                  <span className="sidebar-icon">
+                    <Icon name={item.icon} size="sm" />
                   </span>
-                )}
-              </NavLink>
-            </li>
-          );
-        })}
-      </ul>
+
+                  {!collapsed && (
+                    <span className="sidebar-label">
+                      {item.label}
+                    </span>
+                  )}
+                </NavLink>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    ))
+  ) : (
+    <ul className="sidebar-list">
+      {section.items?.map((item) => {
+        const to = item.path
+          ? `/${section.basePath}/${item.path}`
+          : `/${section.basePath}`;
+
+        return (
+          <li key={to} className="sidebar-item">
+            <NavLink
+              to={to}
+              end={item.path === ""}
+              className={({ isActive }) =>
+                `sidebar-link ${isActive ? "is-active" : ""}`
+              }
+            >
+              <span className="sidebar-icon">
+                <Icon name={item.icon} size="sm" />
+              </span>
+
+              {!collapsed && (
+                <span className="sidebar-label">
+                  {item.label}
+                </span>
+              )}
+            </NavLink>
+          </li>
+        );
+      })}
+    </ul>
+  )}
+</nav>
+
     </aside>
   );
 }

@@ -36,3 +36,24 @@
   background: var(--color-danger);
   color: var(--color-text-inverse);
 }
+
+
+.tag--inbound {
+  background: #5CC5D5;
+  color: #14282F;
+}
+
+.tag--outbound {
+  background: #8E44AD;
+  color: #fff;
+}
+
+.tag--inventory {
+  background: #D252A1;
+  color: #fff;
+}
+
+.tag--research {
+  background: #F7DC6F;
+  color: #623D00;
+}

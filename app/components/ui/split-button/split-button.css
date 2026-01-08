@@ -1,0 +1,152 @@
+.split-button {
+  display: inline-flex;
+  position: relative;
+  align-items: stretch;
+
+  min-width: 185px;
+  gap: 2px;
+}
+
+/* =========================
+   BUTTONS
+   ========================= */
+
+.split-button__primary,
+.split-button__toggle {
+  height: 42px;
+  font-size: 14px;
+  font-weight: 600;
+
+  background: transparent;
+  color: #137897;
+
+  border: 2px solid #137897;
+  cursor: pointer;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  box-sizing: border-box;
+}
+
+/* PRIMARY */
+
+.split-button__primary {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: left;
+
+  flex: 1 1 auto;
+  min-width: 0;
+
+  height: 42px;
+  padding: 6px 12px;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  background: #ffffff;
+  color: #137897;
+
+  border: 2px solid #137897;
+
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+  border-top-left-radius: 99px;
+  border-bottom-left-radius: 99px;
+
+  cursor: pointer;
+}
+
+
+/* TOGGLE */
+
+.split-button__toggle {
+  flex: 0 0 42px;   /* 🔑 fix szélesség */
+  width: 42px;
+  padding: 0;
+
+  background: #ffffff;
+  
+  border-left: 2px solid #137897;
+
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+  border-top-right-radius: 999px;
+  border-bottom-right-radius: 999px;
+}
+
+.split-button__toggle svg {
+  transition: transform 150ms ease;
+}
+
+.split-button__toggle.is-open svg {
+  transform: rotate(180deg);
+}
+
+/* =========================
+   HOVER
+   ========================= */
+
+.split-button__primary:hover,
+.split-button__toggle:hover {
+  background: #f5f6f7;
+}
+
+/* =========================
+   SELECTED
+   ========================= */
+
+.split-button__primary.is-selected,
+.split-button__toggle.is-selected {
+  background: #137897;
+  color: #ffffff;
+}
+
+/* =========================
+   MENU
+   ========================= */
+
+.split-button__menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  z-index: 2000;
+
+  min-width: 200px;
+  background: #ffffff;
+
+  border: 2px solid #137897;
+  border-radius: 8px;
+
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+  overflow: hidden;
+}
+
+/* MENU ITEM (checkbox row) */
+
+.split-button__menu-item {
+  width: 100%;
+  padding: 10px 12px;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  font-size: 14px;
+  font-weight: 600;
+  color: #137897;
+
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+.split-button__menu-item input {
+  cursor: pointer;
+}
+
+.split-button__menu-item:hover {
+  background: #f5f6f7;
+}

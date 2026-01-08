@@ -29,7 +29,7 @@ export default function InventoryInspection() {
           }}
         >
           <Button
-            variant="secondary"
+            variant="context"
             style={{ width: 250 }}
             onClick={goToTable}
           >
@@ -37,7 +37,7 @@ export default function InventoryInspection() {
           </Button>
 
           <Button
-            variant="secondary"
+            variant="context"
             style={{ width: 250 }}
             onClick={goToTable}
           >

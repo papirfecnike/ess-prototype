@@ -125,3 +125,30 @@
   margin-top: 6px;
   font-size: 12px;
 }
+
+
+.select__single-list {
+  list-style: none;
+  margin: 0;
+  padding: 4px 0;
+}
+
+.select__single-item {
+  width: 100%;
+  text-align: left;
+
+  background: transparent;
+  border: none;
+  border-radius: 0;
+
+  padding: 10px 12px;
+
+  font-size: 14px;
+  color: #14282f;
+
+  cursor: pointer;
+}
+
+.select__single-item:hover {
+  background: rgba(19, 120, 151, 0.08);
+}

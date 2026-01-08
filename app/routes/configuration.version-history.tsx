@@ -4,6 +4,7 @@ import { useState } from "react";
 import { PageLayout } from "@/components/layout/PageLayout";
 import { PageSection } from "@/components/layout/PageSection";
 
+import { Notification } from "@/components/ui/notification/Notification";
 import { Card } from "@/components/ui/card/Card";
 import { Button } from "@/components/ui/button/Button";
 import { Icon } from "@/components/ui/icon/Icon";
@@ -67,7 +68,13 @@ const INITIAL_VERSION_HISTORY: VersionHistoryEntry[] = [
 export const loader: LoaderFunction = async () => null;
 
 export default function ConfigurationVersionHistory() {
+  /* =========================
+     STATE
+     ========================= */
+
   const [activeCard, setActiveCard] = useState<ActiveCard>(null);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [showNotification, setShowNotification] = useState(false);
 
   const [versionHistory, setVersionHistory] =
     useState<VersionHistoryEntry[]>(INITIAL_VERSION_HISTORY);
@@ -78,8 +85,16 @@ export default function ConfigurationVersionHistory() {
   const [selectedVersion, setSelectedVersion] = useState<string | null>(null);
   const [backupCurrent, setBackupCurrent] = useState(false);
 
+  /* =========================
+     DERIVED
+     ========================= */
+
   const canSave = Boolean(versionName && description);
   const canLoad = Boolean(selectedVersion);
+
+  /* =========================
+     HANDLERS
+     ========================= */
 
   function handleSave() {
     if (!canSave) return;
@@ -108,8 +123,28 @@ export default function ConfigurationVersionHistory() {
 
   function handleLoad() {
     if (!canLoad) return;
+
+    setIsLoaded(true);
     setActiveCard("apply");
   }
+
+  function handleApply() {
+    if (!isLoaded) return;
+
+    // apply logic would go here
+
+    setShowNotification(true);
+
+    setIsLoaded(false);
+    setSelectedVersion(null);
+    setBackupCurrent(false);
+    setActiveCard(null);
+  }
+
+
+  /* =========================
+     RENDER
+     ========================= */
 
   return (
     <PageLayout
@@ -177,26 +212,46 @@ export default function ConfigurationVersionHistory() {
             </div>
 
             <div className="layout-stack layout-card-body">
-              <Select
-                label="Version"
-                value={selectedVersion}
-                onChange={(v) => {
-                  setSelectedVersion(v);
-                  setActiveCard("load");
+              {/* SELECT WRAPPER */}
+              <div
+                onFocusCapture={() => {
+                  if (activeCard !== "load") {
+                    setActiveCard("load");
+                  }
                 }}
-                options={versionHistory.map(v => ({
-                  value: v.version,
-                  label: v.version,
-                }))}
-              />
+                onMouseDown={() => {
+                  if (activeCard !== "load") {
+                    setActiveCard("load");
+                  }
+                }}
+              >
+                <Select
+                  label="Version"
+                  value={selectedVersion}
+                  onChange={(v) => {
+                    setSelectedVersion(v);
+                  }}
+                  options={versionHistory.map(v => ({
+                    value: v.version,
+                    label: v.version,
+                  }))}
+                />
+              </div>
 
-              <label className="layout-checkbox">
+              {/* CHECKBOX */}
+              <label
+                className="layout-checkbox"
+                onMouseDown={() => {
+                  if (activeCard !== "load") {
+                    setActiveCard("load");
+                  }
+                }}
+              >
                 <input
                   type="checkbox"
                   checked={backupCurrent}
                   onChange={(e) => {
                     setBackupCurrent(e.target.checked);
-                    setActiveCard("load");
                   }}
                 />
                 Backup current configuration
@@ -206,7 +261,7 @@ export default function ConfigurationVersionHistory() {
                 <Button
                   size="sm"
                   leadingIcon="refresh"
-                  disabled={!canLoad}
+                  disabled={!canLoad || isLoaded}
                   onClick={handleLoad}
                 >
                   Load configuration
@@ -237,7 +292,8 @@ export default function ConfigurationVersionHistory() {
                 <Button
                   size="sm"
                   leadingIcon="rocket"
-                  disabled={activeCard !== "apply"}
+                  disabled={!isLoaded}
+                  onClick={handleApply}
                 >
                   Apply configuration
                 </Button>
@@ -264,6 +320,16 @@ export default function ConfigurationVersionHistory() {
           </div>
         </Card>
       </PageSection>
+
+      {showNotification && (
+        <Notification
+          intent="success"
+          title="Configuration loaded."
+          message="The configuration v2.4.2 has been loaded successfully."
+          onClose={() => setShowNotification(false)}
+        />
+      )}
+
     </PageLayout>
   );
 }
@@ -285,7 +351,9 @@ function VersionHistoryItem({ entry }: { entry: VersionHistoryEntry }) {
             {entry.isNew && <Tag label="New" variant="warning" />}
           </div>
 
-          <p className="version-description">{entry.description}</p>
+          <p className="version-description">
+            {entry.description}
+          </p>
         </div>
 
         <div className="version-actions">
@@ -319,7 +387,10 @@ function VersionHistoryItem({ entry }: { entry: VersionHistoryEntry }) {
       {open && entry.changes.length > 0 && (
         <div className="version-expanded">
           {entry.changes.map(change => (
-            <div key={change.id} className="version-change">
+            <div
+              key={change.id}
+              className="version-change"
+            >
               <Icon name="checkCircle" size="sm" />
               <span>{change.text}</span>
             </div>

@@ -4,12 +4,17 @@ import { Chip } from "../chip/Chip";
 import { SelectableList } from "../list/SelectableList";
 import type { CheckboxState } from "../list/SelectableList";
 
+/* =========================
+   TYPES
+   ========================= */
+
 export type SelectOption = {
   value: string;
   label: string;
 };
 
 type SelectSize = "md" | "sm";
+type SelectVariant = "single" | "multi";
 
 /* =========================
    PROPS
@@ -19,30 +24,37 @@ type BaseProps = {
   label?: string;
   size?: SelectSize;
   options: SelectOption[];
-};
-
-type MultiSelectProps = BaseProps & {
-  multiple: true;
-  value: string[];
-  onChange: (value: string[]) => void;
+  variant?: SelectVariant;
 };
 
 type SingleSelectProps = BaseProps & {
-  multiple?: false;
+  variant?: "single";
   value: string | null;
   onChange: (value: string | null) => void;
 };
 
-type Props = MultiSelectProps | SingleSelectProps;
+type MultiSelectProps = BaseProps & {
+  variant: "multi";
+  value: string[];
+  onChange: (value: string[]) => void;
+};
+
+type Props = SingleSelectProps | MultiSelectProps;
+
+/* =========================
+   COMPONENT
+   ========================= */
 
 export function Select({
   label,
   options,
   size = "md",
-  multiple = false,
+  variant = "single",
   value,
   onChange,
 }: Props) {
+  const isMulti = variant === "multi";
+
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState("");
   const containerRef = useRef<HTMLDivElement>(null);
@@ -70,22 +82,23 @@ export function Select({
      NORMALIZED STATE
      ========================= */
 
-    let selectedValues: string[];
+  const selectedValues: string[] = isMulti
+    ? (value as string[])
+    : value
+    ? [value as string]
+    : [];
 
-        if (multiple) {
-          selectedValues = value as string[];
-        } else {
-          selectedValues = value ? [value as string] : [];
-        }
-
+  const selectedCount = selectedValues.length;
 
   /* =========================
-     ALL / STATE LOGIC (MULTI)
+     MULTI: ALL STATE
      ========================= */
 
-  const selectableOptions = options.filter(o => o.value !== "all");
+  const selectableOptions = isMulti
+    ? options.filter(o => o.value !== "all")
+    : [];
+    
   const allCount = selectableOptions.length;
-  const selectedCount = selectedValues.length;
 
   const allState: CheckboxState =
     selectedCount === 0
@@ -94,8 +107,12 @@ export function Select({
       ? "checked"
       : "indeterminate";
 
+  /* =========================
+     ITEM CLICK
+     ========================= */
+
   function handleItemClick(id: string) {
-    if (multiple) {
+    if (isMulti) {
       if (id === "all") {
         (onChange as MultiSelectProps["onChange"])(
           selectedCount === allCount
@@ -127,14 +144,12 @@ export function Select({
   const listItems = visibleOptions.map(option => {
     const isAll = option.value === "all";
 
-    const checkboxState: CheckboxState = !multiple
-      ? selectedValues[0] === option.value
+    const checkboxState: CheckboxState = isMulti
+      ? isAll
+        ? allState
+        : selectedValues.includes(option.value)
         ? "checked"
         : "unchecked"
-      : isAll
-      ? allState
-      : selectedValues.includes(option.value)
-      ? "checked"
       : "unchecked";
 
     return {
@@ -159,7 +174,11 @@ export function Select({
   return (
     <div
       ref={containerRef}
-      className={["select", size === "sm" ? "select--sm" : ""].join(" ")}
+      className={[
+        "select",
+        size === "sm" ? "select--sm" : "",
+        variant === "single" ? "select--single" : "",
+      ].join(" ")}
     >
       {/* TRIGGER */}
       <button
@@ -179,7 +198,7 @@ export function Select({
         )}
 
         <span className="select__value">
-          {multiple && selectedCount > 0 ? (
+          {isMulti && selectedCount > 0 ? (
             <div className="select__chips">
               {firstSelected && (
                 <Chip
@@ -228,10 +247,29 @@ export function Select({
           />
 
           <div className="select__list-wrapper">
-            <SelectableList
-              items={listItems}
-              onItemClick={handleItemClick}
-            />
+            {isMulti ? (
+              <SelectableList
+                items={listItems}
+                onItemClick={handleItemClick}
+              />
+            ) : (
+              <ul className="select__single-list">
+                {visibleOptions.map(option => (
+                  <li key={option.value}>
+                    <button
+                      type="button"
+                      className={[
+                        "select__single-item",
+                        value === option.value ? "is-selected" : "",
+                      ].join(" ")}
+                      onClick={() => handleItemClick(option.value)}
+                    >
+                      {option.label}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
         </div>
       )}

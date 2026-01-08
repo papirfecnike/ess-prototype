@@ -95,7 +95,7 @@ export default function InventoryInspection() {
 
   const rows = [
     {
-      id: 432170,
+      id: 9875,
       product: "Bisgaard Winter Boots - Pixie - Khaki",
       sku: "WD750",
       compartment: "AS-887652-01-01",
@@ -104,7 +104,7 @@ export default function InventoryInspection() {
       more: "",
     },
     {
-      id: 432171,
+      id: 9876,
       product: "Name It Jumpsuit - NkfRoka - Burgundy",
       sku: "WF773",
       compartment: "AS-887652-01-01",
@@ -113,7 +113,7 @@ export default function InventoryInspection() {
       more: "",
     },
     {
-      id: 432172,
+      id: 9877,
       product: "Minymo Cardigan - Knitted - Woodrose",
       sku: "BW975",
       compartment: "AS-887652-01-01",
@@ -122,7 +122,7 @@ export default function InventoryInspection() {
       more: "",
     },
     {
-      id: 432173,
+      id: 9878,
       product: "Minymo Cardigan w. Teddy - Parisian Night",
       sku: "WC551",
       compartment: "AS-887652-01-01",

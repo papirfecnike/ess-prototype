@@ -51,7 +51,18 @@
 }
 
 .data-table__header-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
   flex: 1;
+  min-width: 0; 
+}
+
+.data-table__header-left .text-field__input {
+  flex: 1 1 auto;
+  min-width: 120px;
+  max-width: 250px;
 }
 
 .data-table__header-right {

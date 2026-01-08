@@ -5,6 +5,7 @@ import { PageSection } from "@/components/layout/PageSection";
 import { Card } from "@/components/ui/card/Card";
 import { Button } from "@/components/ui/button/Button";
 import { Tag } from "@/components/ui/tag/Tag";
+import { Icon } from "@/components/ui/icon/Icon";
 
 import warehouseMap from "@/assets/warehousemap.png";
 
@@ -19,17 +20,17 @@ export default function Dashboard() {
           <div className="dashboard-grid">
             {/* LEFT COLUMN */}
             <div className="dashboard-column">
-              <Card>
+              <Card variant="darkHeader">
                 <h3>Putaway tasks</h3>
                 <div className="dashboard-stack">
                   <Button
-                    variant="secondary"
+                    variant="context"
                     onClick={() => navigate("/inbound/putaway-table")}
                   >
                     Putaway 1/1
                   </Button>
                   <Button
-                    variant="secondary"
+                    variant="context"
                     onClick={() => navigate("/inbound/putaway-table")}
                   >
                     Putaway 1/2
@@ -37,53 +38,92 @@ export default function Dashboard() {
                 </div>
               </Card>
 
-              <Card>
+              <Card variant="darkHeader">
                 <h3>Picking tasks</h3>
                 <div className="dashboard-stack">
-                  <Button variant="secondary">Retail</Button>
-                  <Button variant="secondary">Single</Button>
-                  <Button variant="secondary">Multi</Button>
+                  <Button
+                    variant="context"
+                    onClick={() => navigate("/outbound/picking-table")}
+                  >
+                    Retail
+                  </Button>
+                  <Button
+                    variant="context"
+                    onClick={() => navigate("/outbound/picking-table")}
+                  >
+                    Single
+                  </Button>
+                  <Button
+                    variant="context"
+                    onClick={() => navigate("/outbound/picking-table")}
+                  >
+                    Multi
+                  </Button>
                 </div>
               </Card>
 
-              <Card>
+              <Card variant="darkHeader">
                 <h3>Operations</h3>
                 <div className="dashboard-stack">
-                  <Button variant="secondary">Compression</Button>
-                  <Button variant="secondary">Inspection</Button>
+                  <Button
+                    variant="context"
+                    onClick={() => navigate("/inventory/inspection-table")}
+                  >
+                    Compression
+                  </Button>
+                  <Button
+                    variant="context"
+                    onClick={() => navigate("/inventory/inspection-table")}
+                  >
+                    Inspection
+                  </Button>
                 </div>
               </Card>
             </div>
 
-            {/* CENTER COLUMN */}
+            {/* MAIN CONTENT */}
             <div className="dashboard-column">
-              <div className="dashboard-kpis">
+              <div className="dashboard-main-grid">
+                {/* KPI 1 */}
                 <Card>
-                  <strong className="dashboard-kpi-value">18 / 24</strong>
-                  <div className="dashboard-kpi-label">
-                    Orders processed today
+                  <div className="dashboard-card-header">
+                    <strong className="dashboard-kpi-value">Orders completed</strong>
+                  </div>
+
+                  <div className="layout-stack">
+                    <strong style={{ fontSize: 28, color: "#137897" }}>12,456</strong>
+                    <span>On track for daily goal</span>
                   </div>
                 </Card>
 
+                {/* KPI 2 */}
                 <Card>
-                  <strong className="dashboard-kpi-value">35 / 45</strong>
-                  <div className="dashboard-kpi-label">
-                    Orders shipped today
+                  <div className="dashboard-card-header">
+                    <strong className="dashboard-kpi-value">Picking</strong>
+                    <Tag variant="danger" label="Needs attention" />
+                  </div>
+
+                  <div className="layout-stack">
+                    <strong style={{ fontSize: 28, color: "#CA1520" }}>161</strong>
+                    <span style={{ color: "#CA1520" }}>-9% efficiency decrease</span>
                   </div>
                 </Card>
 
+                {/* KPI 3 */}
                 <Card>
-                  <strong className="dashboard-kpi-value">12,540</strong>
-                  <div className="dashboard-kpi-label">
-                    Total items in stock
+                  <div className="dashboard-card-header">
+                    <strong className="dashboard-kpi-value">Putaway</strong>
+                  </div>
+
+                  <div className="layout-stack">
+                    <strong style={{ fontSize: 28, color: "#137897" }}>34</strong>
+                    <span>No. of orders being put away</span>
                   </div>
                 </Card>
-              </div>
 
-              <div className="dashboard-recent">
-                <Card>
+                {/* MAP – spans 2 columns */}
+                <Card className="dashboard-map-card">
                   <h3>Warehouse map</h3>
-
                   <div className="dashboard-map">
                     <img
                       src={warehouseMap}
@@ -93,26 +133,68 @@ export default function Dashboard() {
                   </div>
                 </Card>
 
-                <Card>
-                  <h3>Recent activities</h3>
+                {/* RECENT – 1 column */}
+                <div className="recent-activities">
+                  <div className="recent-activities__header">
+                    <Icon name="history" size="sm" />
+                    <h3>Recent activities</h3>
+                  </div>
 
-                  <div className="dashboard-activity-list">
-                    <div className="dashboard-activity">
-                      <Tag variant="success" label="Inbound" />
-                      <span>Order IB-2024-055 completed</span>
+                  <div className="recent-activities__list">
+                    <div className="recent-activity">
+                      <div className="recent-activity__icon success">
+                        <Icon name="checkCircle" size="sm" />
+                      </div>
+
+                      <div className="recent-activity__content">
+                        <span className="recent-activity__time">15 mins ago</span>
+                        <strong>Order IB-2024-055 completed</strong>
+                      </div>
+
+                      <Tag variant="inbound" label="Inbound" />
                     </div>
 
-                    <div className="dashboard-activity">
-                      <Tag variant="warning" label="Inventory" />
-                      <span>Low stock alert for 3 items</span>
+                    <div className="recent-activity">
+                      <div className="recent-activity__icon success">
+                        <Icon name="checkCircle" size="sm" />
+                      </div>
+
+                      <div className="recent-activity__content">
+                        <span className="recent-activity__time">22 mins ago</span>
+                        <strong>Order IB-2024-055 dispatched</strong>
+                      </div>
+
+                      <Tag variant="outbound" label="Outbound" />
                     </div>
 
-                    <div className="dashboard-activity">
-                      <Tag variant="default" label="Research" />
-                      <span>Weekly analysis report created</span>
+                    <div className="recent-activity">
+                      <div className="recent-activity__icon warning">
+                        <Icon name="warning" size="sm" />
+                      </div>
+
+                      <div className="recent-activity__content">
+                        <span className="recent-activity__time">3 hours ago</span>
+                        <strong>Low stock alert for 3 items</strong>
+                      </div>
+
+                      <Tag variant="inventory" label="Inventory" />
+                    </div>
+
+                    <div className="recent-activity">
+                      <div className="recent-activity__icon neutral">
+                        <Icon name="barChart" size="sm" />
+                      </div>
+
+                      <div className="recent-activity__content">
+                        <span className="recent-activity__time">5 hours ago</span>
+                        <strong>Weekly analysis report created</strong>
+                      </div>
+
+                      <Tag variant="research" label="Research" />
                     </div>
                   </div>
-                </Card>
+                </div>
+
               </div>
             </div>
             

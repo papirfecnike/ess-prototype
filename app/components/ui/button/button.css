@@ -83,8 +83,8 @@
 /* ---------- SECONDARY ---------- */
 
 .btn--secondary {
-  background: var(--color-secondary);
-  border: 1px solid var(--color-secondary-border);
+  background: transparent;
+  border: 2px solid var(--color-secondary-border);
   color: var(--color-text);
 }
 
@@ -103,6 +103,68 @@
 .btn--ghost:hover {
   background: var(--color-secondary-hover);
 }
+
+/* ---------- CONTEXT ---------- */
+
+.btn--context {
+  background: #E0E8EA;
+  color: #137897;
+  border-radius: 4px;
+  border: none;
+}
+
+.btn--context svg {
+  fill: currentColor;
+}
+
+.btn--context:hover {
+  background: rgb(201, 217, 223);
+  color: #2D4E58;
+}
+
+.btn--context.btn--sm {
+  height: 36px;
+  font-weight: 600;
+}
+
+/* ---------- ICON ---------- */
+
+.btn--icon {
+  background: #14282F;
+  color: #ffffff;
+
+  width: 42px;
+  height: 42px;
+  padding: 0;
+
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn--icon:hover {
+  background: #137897;
+  color: #ffffff;
+}
+
+.btn--icon.btn--sm {
+  width: 32px;
+  height: 32px;
+}
+
+.btn--icon.btn--md {
+  width: 42px;
+  height: 42px;
+}
+
+.btn--icon svg {
+  fill: currentColor;
+  width: 16px;
+  height: 16px;
+}
+
+
 
 /* =========================================================
    TONES (INTENTS)

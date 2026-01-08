@@ -7,18 +7,30 @@
   padding: 0; /* fontos */
   box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.08);
   width: 100%;
-  overflow: hidden;
 }
 
 .ui-card > * {
   padding: 16px;
 }
 
-.ui-card > *:first-child {
-  border-bottom: 1px solid #e0e8ea;
+.ui-card > .card-header {
+  padding: 16px;
   display: flex;
   align-items: center;
   gap: 12px;
+  border-bottom: 1px solid #e0e8ea;
+}
+
+.ui-card > *:first-child {
+  padding: 16px;
+
+  background: #ffffff;
+  color: inherit;
+
+  border-bottom: 1px solid #e0e8ea;
+
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
 }
 
 .ui-card > *:not(:first-child) {
@@ -26,4 +38,47 @@
   flex-direction: column;
   flex: 1;
   gap: 12px;
+}
+
+
+/* =========================
+   CARD VARIANTS
+   ========================= */
+
+.ui-card--darkHeader > *:first-child {
+  background: #2D4E58;
+  color: #ffffff;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+  border-bottom: none;
+}
+
+.ui-card--darkHeader > *:first-child h3 {
+  color: #ffffff;
+}
+
+
+/* =========================
+   SCAN INPUT CARD VARIANT
+   ========================= */
+
+.ui-card--scanInput {
+  border-radius: 16px;
+  border: 1px solid #e0e8ea;
+  overflow: hidden;
+  border: none;
+  padding: 0;
+}
+
+.ui-card--scanInput > * {
+  border: none;
+  padding: 0;
+}
+
+.ui-card--scanInput .card-header,
+.ui-card--scanInput .card-header--editable {
+  background: transparent;
+  border-bottom: none;
+  padding: 0;
+  border: none;
 }

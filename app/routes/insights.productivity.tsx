@@ -57,7 +57,7 @@ export default function InsightsSProductivity() {
           <Card className="layout-card-fill">
             <div className="card-header">
               <Icon name="alertTriangle" />
-              <h3>94%</h3>
+              <h3>Efficiency score</h3>
             </div>
 
             <div className="layout-stack">

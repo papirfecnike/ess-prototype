@@ -2,6 +2,12 @@
   display: flex;
   gap: 12px;
   align-items: center;
+  padding: 16px;
+  border-radius: 16px;
+  background-color: #fff;
+  border: 1px solid #E0E8EA;
+  box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.08);
+
 }
 
 .scan-input-card {
@@ -10,10 +16,10 @@
 
 .scan-input__field {
   flex: 1;
-  min-width: 0; /* fontos flex overflow edge-case */
+  min-width: 0;
+  border-radius: 16px;
 }
 
-/* ha a TextField root .text-field */
 .scan-input__field .text-field {
   width: 100%;
 }

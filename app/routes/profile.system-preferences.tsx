@@ -63,6 +63,7 @@ export default function ProfileSystemPreferences() {
 
                 <div className="profile-card-fields">
                   <Select
+                    variant="single"
                     label="Language"
                     value={language}
                     onChange={setLanguage}
@@ -78,6 +79,7 @@ export default function ProfileSystemPreferences() {
 
                 <div className="profile-card-fields">
                   <Select
+                    variant="single"
                     label="Timezone"
                     value={timezone}
                     onChange={setTimezone}
@@ -97,45 +99,45 @@ export default function ProfileSystemPreferences() {
             <Card>
               <div className="profile-card-row profile-card-row--one-col">
                 <div className="profile-card-fields">
-                  <Toggle
-                    title="Email notifications"
-                    description="Receive notifications via email"
-                    checked={emailNotifications}
-                    onChange={setEmailNotifications}
-                  />
+                <Toggle
+                  title="Email notifications"
+                  description="Receive notifications via email"
+                  checked={emailNotifications}
+                  onCheckedChange={setEmailNotifications}
+                />
                 </div>
               </div>
 
               <div className="profile-card-row profile-card-row--one-col">
                 <div className="profile-card-fields">
-                  <Toggle
-                    title="Push notifications"
-                    description="Receive push notifications on your device"
-                    checked={pushNotifications}
-                    onChange={setPushNotifications}
-                  />
+                <Toggle
+                  title="Push notifications"
+                  description="Receive push notifications on your device"
+                  checked={pushNotifications}
+                  onCheckedChange={setPushNotifications}
+                />
                 </div>
               </div>
 
               <div className="profile-card-row profile-card-row--one-col">
                 <div className="profile-card-fields">
-                  <Toggle
-                    title="Critical alerts"
-                    description="Always notify me about critical system alerts"
-                    checked={criticalAlerts}
-                    onChange={setCriticalAlerts}
-                  />
+                <Toggle
+                  title="Critical alerts"
+                  description="Always notify me about critical system alerts"
+                  checked={criticalAlerts}
+                  onCheckedChange={setCriticalAlerts}
+                />
                 </div>
               </div>
 
               <div className="profile-card-row profile-card-row--one-col">
                 <div className="profile-card-fields">
-                  <Toggle
-                    title="Workflow updates"
-                    description="Notify me when workflows change or complete"
-                    checked={workflowUpdates}
-                    onChange={setWorkflowUpdates}
-                  />
+                <Toggle
+                  title="Workflow updates"
+                  description="Notify me when workflows change or complete"
+                  checked={workflowUpdates}
+                  onCheckedChange={setWorkflowUpdates}
+                />
                 </div>
               </div>
             </Card>

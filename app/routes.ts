@@ -2,7 +2,7 @@ import { type RouteConfig, route, index } from "@react-router/dev/routes";
 
 export default [
   /* ROOT REDIRECT */
-  route("", "routes/root-redirect.tsx"),
+  index("routes/root-redirect.tsx"),
 
   /* DASHBOARD */
   route("dashboard", "routes/dashboard.tsx"),
@@ -42,7 +42,7 @@ export default [
   ]),
 
   route("control-center", "routes/control-center.tsx", [
-    index("routes/control-center.warehouse-layout.tsx"),
+    route("warehouse-layout", "routes/control-center.warehouse-layout.tsx"),
     route("alert-monitoring", "routes/control-center.alert-monitoring.tsx"),
     route("orders-tracking", "routes/control-center.orders-tracking.tsx"),
     route("eoperator-console", "routes/control-center.eoperator-console.tsx"),
@@ -53,7 +53,7 @@ export default [
   ]),
 
   route("configuration", "routes/configuration.tsx", [
-    index("routes/configuration.user-management.tsx"),
+    route("user-management", "routes/configuration.user-management.tsx"),
     route("language-settings", "routes/configuration.language-settings.tsx"),
     route("system-settings", "routes/configuration.system-settings.tsx"),
     route("inbound", "routes/configuration.inbound.tsx"),

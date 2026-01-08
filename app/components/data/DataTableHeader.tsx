@@ -4,6 +4,7 @@ import { Icon } from "../ui/icon/Icon";
 import { Select } from "@/components/ui/select/Select";
 import { Button } from "@/components/ui/button/Button";
 import { Chip } from "@/components/ui/chip/Chip";
+import { SplitButton } from "@/components/ui/split-button/SplitButton";
 
 type Props = {
   searchValue: string;
@@ -29,7 +30,7 @@ export function DataTableHeader({
      ========================= */
 
   const [warehouseFilter, setWarehouseFilter] = useState<string[]>([]);
-  const [priorityFilter, setPriorityFilter] = useState<string[]>([]);
+  const [portFilter, setPortFilter] = useState<string[]>([]);
 
   return (
     <div className="data-table__header">
@@ -45,13 +46,26 @@ export function DataTableHeader({
             value={searchValue}
             onChange={(e) => onSearchChange(e.target.value)}
           />
+          <SplitButton
+            label="Status"
+            items={[
+              { id: "inprogress", label: "In progress" },
+              { id: "prepared", label: "Prepared" },
+              { id: "waiting", label: "Waiting" },
+              { id: "completed", label: "Completed" },
+            ]}
+            onChange={(selectedIds, active) => {
+              console.log("Selected:", selectedIds);
+              console.log("Active:", active);
+            }}
+          />
         </div>
 
         <div className="data-table__header-right">
           <Toggle
             checked={showDetails}
-            onChange={onToggleDetails}
-            label="Show details"
+            onCheckedChange={onToggleDetails}
+            title="Show details"
           />
 
           <Button
@@ -88,7 +102,7 @@ export function DataTableHeader({
             <Select
               label="Warehouse"
               size="md"
-              multiple
+              variant="multi"
               value={warehouseFilter}
               onChange={setWarehouseFilter}
               options={[
@@ -103,17 +117,26 @@ export function DataTableHeader({
             />
 
             <Select
-              label="Priority"
+              label="Port"
               size="md"
-              multiple
-              value={priorityFilter}
-              onChange={setPriorityFilter}
+              variant="multi"
+              value={portFilter}
+              onChange={setPortFilter}
               options={[
                 { value: "all", label: "All" },
-                { value: "high", label: "High" },
-                { value: "low", label: "Low" },
+                { value: "01", label: "Port 01" },
+                { value: "02", label: "Port 02" },
+                { value: "03", label: "Port 03" },
+                { value: "04", label: "Port 04" },
+                { value: "05", label: "Port 05" },
+                { value: "06", label: "Port 06" },
+                { value: "07", label: "Port 07" },
+                { value: "08", label: "Port 08" },
+                { value: "09", label: "Port 09" },
+                { value: "10", label: "Port 10" },
               ]}
             />
+
           </div>
 
           {/* ACTIONS */}
@@ -134,7 +157,7 @@ export function DataTableHeader({
               leadingIcon="delete"
               onClick={() => {
                 setWarehouseFilter([]);
-                setPriorityFilter([]);
+                setPortFilter([]);
               }}
             >
               Delete filters

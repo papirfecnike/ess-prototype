@@ -4,6 +4,7 @@
 @import "../components/ui/icon/icon.css";
 @import "../components/ui/input/text-field.css";
 @import "../components/ui/select/select.css";
+@import "../components/ui/split-button/split-button.css";
 @import "../styles/dashboard.css";
 @import "../styles/spotlight.css";
 
@@ -266,7 +267,7 @@ aside.sidebar {
 
 .sidebar-toggle {
   position: sticky;
-  top: calc(var(--header-height) + 8px);
+  top: calc(var(--header-height));
   z-index: 1;
 
   display: flex;
@@ -274,6 +275,7 @@ aside.sidebar {
   margin-bottom: 8px;
   padding-bottom: 16px;
 
+  background: var(--color-sidebar);
   border-bottom: 1px solid var(--color-sidebar-border);
 }
 
@@ -293,4 +295,41 @@ aside.sidebar {
 
 .dashboard-shell {
   margin-top: var(--header-height);
+}
+
+
+/* =========================
+   SIDEBAR STRUCTURE
+   ========================= */
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+}
+
+
+/* =========================
+   SIDEBAR GROUPS
+   ========================= */
+
+.sidebar-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar:not(.is-collapsed) .sidebar-group {
+  margin-bottom: 16px;
+}
+
+/* group title */
+.sidebar-group-title {
+  margin: 12px 0 8px;
+  padding-left: 4px;
+
+  font-size: 12px;
+  font-weight: 300;
+  font-weight: 600;
+  text-transform: uppercase;
+
+  color: #60838D;
 }

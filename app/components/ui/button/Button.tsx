@@ -1,7 +1,7 @@
 import type { ButtonHTMLAttributes, ReactNode } from "react";
 import { Icon } from "../icon/Icon";
 
-type Variant = "primary" | "secondary" | "ghost";
+type Variant = "primary" | "secondary" | "ghost" | "context" | "icon";
 type Intent = "default" | "danger" | "warning" | "success";
 type Size = "sm" | "md";
 

@@ -240,12 +240,12 @@
    ========================= */
 
 .card--save.card--editing {
-  border-color: #5cc5d5;
+  border-color: #82b10a;
   border-left-width: 5px;
 }
 
 .card--save.card--editing .card-header--editable {
-  background: #dff5f8;
+  background: #f1f4ea;
 }
 
 /* =========================
@@ -253,12 +253,12 @@
    ========================= */
 
 .card--load.card--editing {
-  border-color: #b15e05;
+  border-color: #5cc5d5;
   border-left-width: 5px;
 }
 
 .card--load.card--editing .card-header--editable {
-  background: #fef0e0;
+  background: #dff5f8;
 }
 
 /* =========================
@@ -284,22 +284,7 @@
   flex-direction: column;
 }
 
-/* ===== PAGE HEADER ===== */
 
-.page-header__main {
-  display: flex;
-  flex-direction: column;
-}
-
-.page-header__title {
-  font-size: 28px;
-  font-weight: 800;
-}
-
-.page-header__subtitle {
-  font-size: 14px;
-  color: #5f6b6d;
-}
 
 /* ===== OUTER SECTION ===== */
 

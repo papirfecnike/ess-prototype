@@ -32,6 +32,23 @@
   gap: 16px;
 }
 
+.dashboard-main-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(140px, 1fr));
+  gap: 16px;
+}
+
+.dashboard-map-card {
+  grid-column: span 2;
+}
+
+.dashboard-card-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 /* =========================
    KPI CARDS
    ========================= */
@@ -43,7 +60,7 @@
 }
 
 .dashboard-kpi-value {
-  font-size: 28px;
+  font-size: 20px;
   font-weight: 600;
 }
 
@@ -89,37 +106,88 @@
 }
 
 /* =========================
-   ACTIVITY LIST
+   RECENT ACTIVITIES
    ========================= */
 
-.dashboard-activity-list {
+.recent-activities {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 16px;
+  padding: 24px;
 }
 
-.dashboard-activity {
+/* HEADER */
+.recent-activities__header {
   display: flex;
   align-items: center;
   gap: 8px;
+
+  color: #6f8a92;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 14px;
+
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
 }
 
-/* =========================
-   RESPONSIVE POLICY
-   ========================= */
+/* LIST */
+.recent-activities__list {
+  display: flex;
+  flex-direction: column;
+}
 
-/*
-  ❗ NINCS 1fr-re törés
-  ❗ NINCS oszlop-alá törés
-  ❗ csak zsugorodás
-*/
+/* ROW */
+.recent-activity {
+  display: grid;
+  grid-template-columns: 32px 1fr auto;
+  gap: 12px;
+  align-items: center;
 
-@media (max-width: 900px) {
-  .dashboard-root {
-    overflow-x: auto;
-  }
+  padding: 16px 0;
+  border-bottom: 1px solid var(--color-sidebar-border);
+}
 
-  .dashboard-grid {
-    min-width: 900px;
-  }
+.recent-activity:last-child {
+  border-bottom: none;
+}
+
+/* ICON */
+.recent-activity__icon {
+  width: 24px;
+  height: 24px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.recent-activity__icon.success {
+  color: #07930A;
+}
+
+.recent-activity__icon.warning {
+  color: #F09300;
+}
+
+.recent-activity__icon.neutral {
+  color: #137897;
+}
+
+/* CONTENT */
+.recent-activity__content {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.recent-activity__time {
+  font-size: 13px;
+  color: #6f8a92;
+}
+
+.recent-activity strong {
+  font-size: 14px;
+  font-weight: 600;
+  color: #0b1f26;
 }

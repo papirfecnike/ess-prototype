@@ -1,7 +1,6 @@
 import type { ChangeEvent, KeyboardEvent } from "react";
 import { TextField } from "../input/TextField";
 import { Button } from "../button/Button";
-import { Card } from "../card/Card";
 import "./scan-input.css";
 
 type Props = {
@@ -32,7 +31,6 @@ export function ScanInput({
   };
 
   return (
-    <Card className="scan-input-card">
       <div className="scan-input">
         {/* 🔴 FLEX FILL WRAPPER */}
         <div className="scan-input__field">
@@ -54,6 +52,5 @@ export function ScanInput({
           {buttonLabel}
         </Button>
       </div>
-    </Card>
   );
 }

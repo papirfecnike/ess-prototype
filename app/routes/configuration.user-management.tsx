@@ -12,12 +12,10 @@ export default function ConfigUserMgmt() {
   const navigate = useNavigate();
 
   return (
-    <PageLayout>
       <PageSection>
         <EmptyState
           onAction={() => navigate("/")}
         />
       </PageSection>
-    </PageLayout>
   );
 }
