@@ -3,6 +3,8 @@ import { useNavigate } from "react-router";
 
 import { Card } from "@/components/ui/card/Card";
 import { TextField } from "@/components/ui/input/TextField";
+import { Icon } from "@/components/ui/icon/Icon";
+
 import { searchIndex } from "./searchIndex";
 
 type Props = {
@@ -47,34 +49,48 @@ export function GlobalSearch({ isOpen, onClose }: Props) {
         onClick={(e) => e.stopPropagation()}
       >
         <Card className="spotlight-card">
-          <TextField
-            autoFocus
-            label="Search"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-          />
+          {/* HEADER */}
+          <div className="spotlight-header">
+            <strong>Search across ESS</strong>
 
-          <ul className="spotlight-results">
-            {results.length === 0 && query && (
-              <li className="spotlight-result">
-                <span>No results</span>
-              </li>
-            )}
+            <button
+            type="button"
+            className="spotlight-icon-btn"
+            aria-label="Close"
+            onClick={onClose}
+          >
+            <Icon name="closeStroke" size="sm" />
+          </button>
+          </div>
 
-            {results.map((item) => (
-              <li
-                key={item.route}
-                className="spotlight-result"
-                onClick={() => {
-                  navigate(item.route);
-                  onClose();
-                }}
-              >
-                <strong>{item.label}</strong>
-                {item.description && <span>{item.description}</span>}
-              </li>
-            ))}
-          </ul>
+          {/* INPUT */}
+          <div className="spotlight-actions">
+              <TextField
+                autoFocus
+                label="Search"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+              />
+            </div>
+
+          {/* RESULTS – CSAK HA VAN TALÁLAT */}
+          {results.length > 0 && (
+            <ul className="spotlight-results">
+              {results.map((item) => (
+                <li
+                  key={item.route}
+                  className="spotlight-result"
+                  onClick={() => {
+                    navigate(item.route);
+                    onClose();
+                  }}
+                >
+                  <strong>{item.label}</strong>
+                  {item.description && <span>{item.description}</span>}
+                </li>
+              ))}
+            </ul>
+          )}
         </Card>
       </div>
     </div>

@@ -64,11 +64,11 @@ export default function ClientHeader() {
       {/* RIGHT: ACTIONS */}
       <div className="app-header__actions">
         <button
-            className="search-trigger"
+            className="btn--secondary btn--md"
             onClick={() => setSearchOpen(true)}
             aria-label="Search"
           >
-            <Icon name="search" size="sm" />
+            <Icon name="search" size="md" />
             <span>Search</span>
           </button>
 
