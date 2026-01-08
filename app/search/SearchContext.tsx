@@ -1,42 +1,12 @@
-import { createContext, useContext, useState, useEffect } from "react";
-import type { SearchResult } from "./search.types";
-import { searchIndex } from "./search.index";
+import { createContext, useContext, type ReactNode } from "react";
 
-type SearchContextType = {
-  query: string;
-  setQuery: (q: string) => void;
-  results: SearchResult[];
-  clear: () => void;
-};
+type SearchContextValue = {};
 
-const SearchContext = createContext<SearchContextType | null>(null);
+const SearchContext = createContext<SearchContextValue | null>(null);
 
-export function SearchProvider({ children }: { children: React.ReactNode }) {
-  const [query, setQuery] = useState("");
-  const [results, setResults] = useState<SearchResult[]>([]);
-
-  useEffect(() => {
-    if (!query) {
-      setResults([]);
-      return;
-    }
-
-    const filtered = searchIndex.filter((item) =>
-      item.title.toLowerCase().includes(query.toLowerCase())
-    );
-
-    setResults(filtered);
-  }, [query]);
-
-  const clear = () => {
-    setQuery("");
-    setResults([]);
-  };
-
+export function SearchProvider({ children }: { children: ReactNode }) {
   return (
-    <SearchContext.Provider
-      value={{ query, setQuery, results, clear }}
-    >
+    <SearchContext.Provider value={{}}>
       {children}
     </SearchContext.Provider>
   );

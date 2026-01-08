@@ -3,14 +3,27 @@ import { useEffect, useState } from "react";
 import logo from "@/assets/logo.svg";
 import { Icon } from "@/components/ui/icon/Icon";
 
+import { GlobalSearch } from "../search/GlobalSearch";
 import { Dialog } from "../components/ui/dialog/Dialog";
 import { Button } from "../components/ui/button/Button";
 
 export default function ClientHeader() {
+  const [searchOpen, setSearchOpen] = useState(false);
   const [isDark, setIsDark] = useState(false);
   const navigate = useNavigate();
   const [isPrototypeOpen, setIsPrototypeOpen] = useState(false);
 
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === "k") {
+        e.preventDefault();
+        setSearchOpen(true);
+      }
+    };
+
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
 
   useEffect(() => {
     const storedTheme = localStorage.getItem("theme");
@@ -50,13 +63,14 @@ export default function ClientHeader() {
 
       {/* RIGHT: ACTIONS */}
       <div className="app-header__actions">
-        <div className="text-field">
-          <input
-            type="search"
-            placeholder="Search"
-            className="text-field__input"
-          />
-        </div>
+        <button
+            className="search-trigger"
+            onClick={() => setSearchOpen(true)}
+            aria-label="Search"
+          >
+            <Icon name="search" size="sm" />
+            <span>Search</span>
+          </button>
 
         <button
           className="btn--primary btn--md btn--icon-only"
@@ -67,6 +81,11 @@ export default function ClientHeader() {
         </button>
       </div>
     </header>
+
+    <GlobalSearch
+        isOpen={searchOpen}
+        onClose={() => setSearchOpen(false)}
+    />
 
     {/* =========================
           PROTOTYPE DIALOG

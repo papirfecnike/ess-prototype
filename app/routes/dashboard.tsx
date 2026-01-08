@@ -1,3 +1,5 @@
+import { useNavigate } from "react-router";
+
 import { PageHeader } from "@/components/layout/PageHeader";
 import { PageSection } from "@/components/layout/PageSection";
 import { Card } from "@/components/ui/card/Card";
@@ -7,6 +9,7 @@ import { Tag } from "@/components/ui/tag/Tag";
 import warehouseMap from "@/assets/warehousemap.png";
 
 export default function Dashboard() {
+  const navigate = useNavigate();
   return (
     <main className="dashboard-title">
       <PageHeader title="Warehouse operations dashboard" />
@@ -19,8 +22,18 @@ export default function Dashboard() {
               <Card>
                 <h3>Putaway tasks</h3>
                 <div className="dashboard-stack">
-                  <Button variant="secondary">Putaway 1/1</Button>
-                  <Button variant="secondary">Putaway 1/2</Button>
+                  <Button
+                    variant="secondary"
+                    onClick={() => navigate("/inbound/putaway-table")}
+                  >
+                    Putaway 1/1
+                  </Button>
+                  <Button
+                    variant="secondary"
+                    onClick={() => navigate("/inbound/putaway-table")}
+                  >
+                    Putaway 1/2
+                  </Button>
                 </div>
               </Card>
 
