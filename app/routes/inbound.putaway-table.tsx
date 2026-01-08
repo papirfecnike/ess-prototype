@@ -1,16 +1,15 @@
 import type { LoaderFunction } from "react-router";
-import { useMemo, useState, useRef } from "react";
-
+import { useState, useEffect, useMemo, useRef } from "react";
 import { PageLayout } from "@/components/layout/PageLayout";
 import { PageSection } from "@/components/layout/PageSection";
-
 import { SelectableDataTable } from "@/components/data/SelectableDataTable";
 import type { DataTableColumn } from "@/components/data/DataTableCore";
 import { DropdownMenu } from "@/components/ui/menu/DropdownMenu";
 import { Tag } from "@/components/ui/tag/Tag";
+import { ScanInput } from "@/components/ui/scan-input/ScanInput";
+import { Notification } from "@/components/ui/notification/Notification";
 import { Icon } from "@/components/ui/icon/Icon";
 
-import { ScanInput } from "@/components/ui/scan-input/ScanInput";
 
 export const loader: LoaderFunction = async () => {
   return null;
@@ -48,7 +47,29 @@ export default function InboundPutaway() {
   const [scanValue, setScanValue] = useState("");
   const [openMenuRowId, setOpenMenuRowId] = useState<string | null>(null);
   const menuAnchorRef = useRef<HTMLElement | null>(null);
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [hiddenSkus, setHiddenSkus] = useState<string[]>([]);
+  const [showNotification, setShowNotification] = useState(false);
 
+  useEffect(() => {
+    const raw = sessionStorage.getItem("putaway:completed");
+    if (!raw) return;
+
+    const { sku } = JSON.parse(raw);
+
+    setHiddenSkus((prev) => [...prev, sku]);
+    setShowNotification(true);
+
+    sessionStorage.removeItem("putaway:completed");
+  }, []);
+
+  function handleConfirm() {
+    if (!exactPreparedMatch) return;
+
+    window.location.assign(
+      `/inbound/putaway-product?sku=${exactPreparedMatch.sku}`
+    );
+  }
 
   /* =========================
      COLUMNS
@@ -225,55 +246,13 @@ export default function InboundPutaway() {
       events: "x",
       more: "",
     },
-    {
-      id: 432178,
-      name: "Name It Blouse - Rib - Lavender Gray",
-      sku: "WH768",
-      progress: "11/11",
-      status: "Completed",
-      operator: "a.kovach",
-      workstation: "Port 09",
-      date: "08-Nov-2025",
-      events: "x",
-      more: "",
-    },
-    {
-      id: 432179,
-      name: "Name It Blouses - 2-Pack - Iceland Fossil/Flint Stone",
-      sku: "WG096",
-      progress: "9/9",
-      status: "Completed",
-      operator: "j.braathen",
-      workstation: "Port 04",
-      date: "08-Nov-2025",
-      events: "x",
-      more: "",
-    },
-    {
-      id: 432180,
-      name: "Billieblush Dynevest - Peach",
-      sku: "BV122",
-      progress: "11/11",
-      status: "Completed",
-      operator: "j.tenner",
-      workstation: "Port 11",
-      date: "08-Nov-2025",
-      events: "x",
-      more: "",
-    },
-    {
-      id: 432181,
-      name: "Name It Blouses - 2-Pack - Iceland Fossil/Flint Stone",
-      sku: "WG096",
-      progress: "9/9",
-      status: "Completed",
-      operator: "j.braathen",
-      workstation: "Port 04",
-      date: "08-Nov-2025",
-      events: "x",
-      more: "",
-    },
   ];
+
+
+
+  const visibleRows = rows.filter(
+    (row) => !hiddenSkus.includes(row.sku)
+  );
 
   /* =========================
      EXACT MATCH LOGIC
@@ -295,18 +274,6 @@ export default function InboundPutaway() {
   const canConfirm = Boolean(exactPreparedMatch);
 
   /* =========================
-     HANDLERS
-     ========================= */
-
-    function handleConfirm() {
-    if (!exactPreparedMatch) return;
-
-    window.location.assign(
-      `/inbound/putaway-product?sku=${exactPreparedMatch.sku}`
-    );
-  }
-
-  /* =========================
      RENDER
      ========================= */
 
@@ -326,7 +293,7 @@ export default function InboundPutaway() {
         <SelectableDataTable
           rowIdKey="id"
           columns={columns}
-          rows={rows}
+          rows={visibleRows}
           selectedRows={selectedRows}
           onSelectionChange={setSelectedRows}
         />
@@ -346,6 +313,15 @@ export default function InboundPutaway() {
           }}
         />
       </PageSection>
+
+      {showNotification && (
+        <Notification
+          intent="success"
+          title="Putaway completed"
+          message="Product successfully put away."
+          onClose={() => setShowNotification(false)}
+        />
+      )}
     </PageLayout>
   );
 }
