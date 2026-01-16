@@ -1,5 +1,5 @@
 import type { LoaderFunction } from "react-router";
-import { useMemo, useState, useRef } from "react";
+import { useMemo, useState, useEffect, useRef } from "react";
 
 import { PageLayout } from "@/components/layout/PageLayout";
 import { PageSection } from "@/components/layout/PageSection";
@@ -8,12 +8,29 @@ import { SelectableDataTable } from "@/components/data/SelectableDataTable";
 import type { DataTableColumn } from "@/components/data/DataTableCore";
 import { DropdownMenu } from "@/components/ui/menu/DropdownMenu";
 import { Tag } from "@/components/ui/tag/Tag";
-import { Icon } from "@/components/ui/icon/Icon";
-
+import { Notification } from "@/components/ui/notification/Notification";
 import { ScanInput } from "@/components/ui/scan-input/ScanInput";
+import { Icon } from "@/components/ui/icon/Icon";
 
 export const loader: LoaderFunction = async () => {
   return null;
+};
+
+/* =========================
+   TYPES
+   ========================= */
+
+type Row = {
+  id: number;
+  order: number;
+  name: string;
+  created: string;
+  pickdate: string;
+  deliverydate: string;
+  priority: string;
+  noitems: string;
+  status: string;
+  more: string;
 };
 
 /* =========================
@@ -44,6 +61,7 @@ export default function OutboundPickingTable() {
   const [scanValue, setScanValue] = useState("");
   const [openMenuRowId, setOpenMenuRowId] = useState<string | null>(null);
   const menuAnchorRef = useRef<HTMLElement | null>(null);
+  const [showNotification, setShowNotification] = useState(false);
 
   /* =========================
      COLUMNS
@@ -100,7 +118,7 @@ export default function OutboundPickingTable() {
      ROWS
      ========================= */
 
-  const rows = [
+  const INITIAL_ROWS: Row[] = [
     {
       id: 9305204750,
       order: 2784741143,
@@ -150,6 +168,32 @@ export default function OutboundPickingTable() {
       more: "",
     },
   ];
+
+    const [rows, setRows] = useState<Row[]>(INITIAL_ROWS);
+
+  /* =========================
+     HANDLE RETURN FROM PRODUCT
+     ========================= */
+
+  useEffect(() => {
+    const completedId =
+      sessionStorage.getItem("picking:completedPicklistId");
+
+    if (!completedId) return;
+
+    setRows((prev) =>
+      prev.map((row) =>
+        String(row.id) === completedId
+          ? { ...row, status: "Completed" }
+          : row
+      )
+    );
+
+    sessionStorage.removeItem("picking:completedPicklistId");
+
+    setShowNotification(true);
+  }, []);
+
 
   /* =========================
      FILTER LOGIC
@@ -236,6 +280,17 @@ export default function OutboundPickingTable() {
           setOpenMenuRowId(null);
         }}
       />
+
+
+
+      {showNotification && (
+        <Notification
+          intent="success"
+          title="Picking completed"
+          message="The picklist has been picked successfully."
+          onClose={() => setShowNotification(false)}
+        />
+      )}
     </PageLayout>
   );
 }

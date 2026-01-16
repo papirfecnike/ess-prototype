@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 
 import { ProductPageLayout } from "../components/layout/ProductPageLayout";
 
@@ -42,6 +42,7 @@ export default function OutboundPickingProductPage() {
   const [quantity, setQuantity] = useState(12);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [markForInspection, setMarkForInspection] = useState(false);
+  const [hasScanError, setHasScanError] = useState(false);
 
   /* =========================
      PICKLIST STATE
@@ -74,6 +75,11 @@ export default function OutboundPickingProductPage() {
   ];
 
   const activeItem = picklistItems[activePickIndex];
+  const progressValue = useMemo(() => {
+  if (activePickIndex === 1) return 30;
+  if (activePickIndex === 2) return 60;
+  return 0;
+}, [activePickIndex]);
 
   /* =========================
      CONFIRM LOGIC
@@ -89,12 +95,21 @@ const isProductVerified = isLastItem
   : scanValue.trim().toUpperCase() === activeItem.sku;
 
 function finalizeConfirm() {
-  if (typeof window === "undefined") return;
+  sessionStorage.setItem(
+    "picking:completedPicklistId",
+    "9305204753"
+  );
+
   window.location.href = "/outbound/picking-table";
 }
 
 function handleConfirm() {
-  if (!isProductVerified) return;
+  if (!isProductVerified) {
+    setHasScanError(true);
+    return;
+  }
+
+  setHasScanError(false);
 
   if (isLastItem) {
     finalizeConfirm();
@@ -182,17 +197,21 @@ function handleConfirm() {
             <Card>
               <h3>Scan product</h3>
               <div>
-                <TextField
-                  label="Product verification"
-                  value={scanValue}
-                  onChange={(e) => setScanValue(e.target.value)}
-                  autoFocus
-                  leadingIcon={
-                    <svg viewBox="0 0 24 24" width="20" height="20">
-                      {icons.qrScanner}
-                    </svg>
-                  }
-                />
+              <TextField
+                label="Product verification"
+                value={scanValue}
+                onChange={(e) => {
+                  setScanValue(e.target.value);
+                  setHasScanError(false);
+                }}
+                error={hasScanError ? "Invalid SKU" : undefined}
+                autoFocus
+                leadingIcon={
+                  <svg viewBox="0 0 24 24" width="20" height="20">
+                    {icons.qrScanner}
+                  </svg>
+                }
+              />
               </div>
             </Card>
           </div>
@@ -447,7 +466,7 @@ function handleConfirm() {
           </div>
 
           <div className="product-page__footer-center">
-            <ProgressBar value={40} />
+            <ProgressBar value={progressValue} />
           </div>
 
           <div className="product-page__footer-right">

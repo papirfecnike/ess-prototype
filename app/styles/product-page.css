@@ -53,7 +53,7 @@
   z-index: 1001;
 
   --progress-track-color: rgba(0, 0, 0, 0.12);
-  --progress-fill-color: var(--accent-primary);
+  --progress-fill-color: var(--color-default);
 }
 
 .product-page__footer-left,
