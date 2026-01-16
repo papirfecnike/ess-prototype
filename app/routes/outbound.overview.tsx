@@ -81,7 +81,7 @@ export default function OutboundOverview() {
 
   const rows = [
     {
-      picklist: 9305204751,
+      picklist: 9305204750,
       order: "2784741143",
       created: "08-Jan-2026 15:29:17",
       pickdate: "09-Jan-2026",
@@ -91,7 +91,7 @@ export default function OutboundOverview() {
       status: "In progress",
     },
     {
-      picklist: 9305204752,
+      picklist: 9305204751,
       order: "2784741144",
       created: "08-Jan-2026 15:29:17",
       pickdate: "09-Jan-2026",
@@ -101,7 +101,7 @@ export default function OutboundOverview() {
       status: "In progress",
     },
     {
-      picklist: 9305204753,
+      picklist: 9305204752,
       order: "2784741145",
       created: "08-Jan-2026 15:29:17",
       pickdate: "09-Jan-2026",
@@ -111,7 +111,7 @@ export default function OutboundOverview() {
       status: "In progress",
     },
     {
-      picklist: 9305204754,
+      picklist: 9305204753,
       order: "2784741146",
       created: "08-Jan-2026 15:29:17",
       pickdate: "09-Jan-2026",
@@ -121,7 +121,7 @@ export default function OutboundOverview() {
       status: "In progress",
     },
     {
-      picklist: 9305204755,
+      picklist: 9305204754,
       order: "2784741147",
       created: "08-Jan-2026 15:29:17",
       pickdate: "09-Jan-2026",
@@ -131,7 +131,7 @@ export default function OutboundOverview() {
       status: "Prepared",
     },
     {
-      picklist: 9305204756,
+      picklist: 9305204755,
       order: "2784741148",
       created: "08-Jan-2026 15:29:17",
       pickdate: "09-Jan-2026",
@@ -141,7 +141,7 @@ export default function OutboundOverview() {
       status: "Waiting",
     },
     {
-      picklist: 9305204757,
+      picklist: 9305204756,
       order: "2784741149",
       created: "08-Jan-2026 15:29:17",
       pickdate: "09-Jan-2026",
@@ -151,7 +151,7 @@ export default function OutboundOverview() {
       status: "Prepared",
     },
     {
-      picklist: 9305204758,
+      picklist: 9305204757,
       order: "2784741150",
       created: "08-Jan-2026 15:29:17",
       pickdate: "09-Jan-2026",
@@ -161,7 +161,7 @@ export default function OutboundOverview() {
       status: "Completed",
     },
     {
-      picklist: 9305204759,
+      picklist: 9305204758,
       order: "2784741151",
       created: "08-Jan-2026 15:29:17",
       pickdate: "09-Jan-2026",
@@ -171,7 +171,7 @@ export default function OutboundOverview() {
       status: "Completed",
     },
     {
-      picklist: 9305204760,
+      picklist: 9305204759,
       order: "2784741152",
       created: "08-Jan-2026 15:29:17",
       pickdate: "09-Jan-2026",
@@ -181,7 +181,7 @@ export default function OutboundOverview() {
       status: "Completed",
     },
     {
-      picklist: 9305204761,
+      picklist: 9305204760,
       order: "2784741153",
       created: "08-Jan-2026 15:29:17",
       pickdate: "09-Jan-2026",
