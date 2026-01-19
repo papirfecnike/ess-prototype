@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { Icon } from "@/components/ui/icon/Icon";
 
 /* =========================
@@ -14,6 +14,9 @@ type Props = {
   label: string;
   items: Item[];
   onChange?: (selectedIds: string[], active: boolean) => void;
+
+  /** NEW – controlled support */
+  selectedIds?: string[];
 };
 
 /* =========================
@@ -24,10 +27,27 @@ export function SplitButton({
   label,
   items,
   onChange,
+  selectedIds: controlledSelectedIds,
 }: Props) {
+  const isControlled = controlledSelectedIds !== undefined;
+
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState(false);
-  const [selectedIds, setSelectedIds] = useState<string[]>([]);
+  const [internalSelectedIds, setInternalSelectedIds] = useState<string[]>([]);
+
+  const selectedIds = isControlled
+    ? controlledSelectedIds
+    : internalSelectedIds;
+
+  /* =========================
+     SYNC ACTIVE STATE
+     ========================= */
+
+  useEffect(() => {
+    if (selectedIds.length === 0) {
+      setActive(false);
+    }
+  }, [selectedIds]);
 
   /* =========================
      DERIVED STATE
@@ -47,6 +67,16 @@ export function SplitButton({
      HANDLERS
      ========================= */
 
+  function update(next: string[]) {
+    if (!isControlled) {
+      setInternalSelectedIds(next);
+    }
+
+    const nextActive = next.length > 0;
+    setActive(nextActive);
+    onChange?.(next, nextActive);
+  }
+
   function togglePrimary() {
     if (selectedIds.length === 0) return;
 
@@ -56,31 +86,18 @@ export function SplitButton({
   }
 
   function toggleItem(id: string) {
-    setSelectedIds((prev) => {
-      const next = prev.includes(id)
-        ? prev.filter((v) => v !== id)
-        : [...prev, id];
+    const next = selectedIds.includes(id)
+      ? selectedIds.filter((v) => v !== id)
+      : [...selectedIds, id];
 
-      if (next.length === 0) {
-        setActive(false);
-        onChange?.([], false);
-      } else {
-        onChange?.(next, active);
-      }
-
-      return next;
-    });
+    update(next);
   }
 
   function toggleAll() {
     if (allSelected) {
-      setSelectedIds([]);
-      setActive(false);
-      onChange?.([], false);
+      update([]);
     } else {
-      const all = items.map((i) => i.id);
-      setSelectedIds(all);
-      onChange?.(all, active);
+      update(items.map((i) => i.id));
     }
   }
 

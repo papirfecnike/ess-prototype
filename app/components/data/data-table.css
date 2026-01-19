@@ -69,7 +69,24 @@
   display: flex;
   align-items: center;
   gap: var(--space-3);
+
+  flex: 0 0 auto;
 }
+
+.data-table__header-select {
+  width: 250px;
+  min-width: 250px;
+  max-width: 250px;
+
+  flex: 0 0 auto;
+}
+
+.data-table__header-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 
 /* TOGGLE */
 
@@ -88,6 +105,11 @@
   margin-top: var(--space-3);
 
   border: none;
+
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
 }
 
 .data-table__header-details {
@@ -242,13 +264,6 @@
   animation: expand 150ms ease-out;
 }
 
-/* SELECTS ROW */
-
-.data-table__filter-selects {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: var(--space-4);
-}
 
 /* ACTIONS */
 
@@ -575,6 +590,14 @@
 }
 
 
+.data-table__text {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 600;
+}
 .data-table__chips {
   display: flex;
   flex-wrap: wrap;

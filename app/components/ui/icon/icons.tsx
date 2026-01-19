@@ -100,6 +100,61 @@ export const icons: Record<string, ReactNode> = {
     </>
   ),
 
+  externalLink: (
+  <>
+    <path
+      d="M14 3h7v7"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M21 3l-9 9"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M19 14v5a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h5"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </>
+),
+
+assessment: (
+  <>
+    {/* outer frame */}
+    <rect
+      x="4"
+      y="4"
+      width="16"
+      height="16"
+      rx="1"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+    />
+
+    {/* bars */}
+    <path
+      d="M8 12v5M12 7v10M16 10v7"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.75"
+      strokeLinecap="round"
+    />
+  </>
+),
+
+
   print: (
     <>
       <path
