@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button/Button";
 import { Checkbox } from "@/components/ui/checkbox/Checkbox";
 import { Icon } from "@/components/ui/icon/Icon";
+
 
 import "./customize-columns-modal.css";
 
@@ -23,18 +24,29 @@ export function CustomizeColumnsModal({
   onClose,
   onSave,
 }: Props) {
-  const [localColumns, setLocalColumns] =
-    useState<ColumnConfig[]>(columns);
 
-  function toggleColumn(key: string) {
-    setLocalColumns((prev) =>
-      prev.map((c) =>
-        c.key === key && !c.locked
-          ? { ...c, visible: !c.visible }
-          : c
-      )
-    );
+  const defaultColumnsRef = useRef<ColumnConfig[]>(
+    columns.map((c) => ({ ...c }))
+  );
+
+  const [localColumns, setLocalColumns] =
+  useState<ColumnConfig[]>(columns);
+  
+  function handleReset() {
+    setLocalColumns(defaultColumnsRef.current);
   }
+
+    function toggleColumn(key: string) {
+      setLocalColumns((prev) => {
+        const next = prev.map((c) =>
+          c.key === key && !c.locked
+            ? { ...c, visible: !c.visible }
+            : c
+        );
+
+        return next;
+      });
+    }
 
   return (
     <div className="modal-overlay">
@@ -50,29 +62,32 @@ export function CustomizeColumnsModal({
           <div className="modal-columns">
             {/* ACTIVE */}
             <div>
-              <h4>Active columns</h4>
+              <div className="modal-columns-header">
+                <h3>Active columns</h3>
+              </div>
 
-              {localColumns
-                .filter((c) => c.visible)
-                .map((c) => (
-                  <div key={c.key} className="modal-row">
-                    <Checkbox
-                      state="checked"
-                      disabled={c.locked}
-                    />
-                    <span>{c.label}</span>
-                    {c.locked && (
-                      <Icon name="lock" />
-                    )}
-                  </div>
-                ))}
+            {localColumns
+              .filter((c) => c.visible && c.label.trim() !== "")
+              .map((c) => (
+                <div key={c.key} className="modal-row">
+                  <Checkbox
+                    state="checked"
+                    disabled={c.locked}
+                    onClick={() => toggleColumn(c.key)}
+                  />
+                  <span>{c.label}</span>
+                  {c.locked && <Icon name="lock" />}
+                </div>
+            ))}
             </div>
 
-            <div className="modal-divider" />
+            <div className="modal-divider"> </div> 
 
             {/* AVAILABLE */}
             <div>
-              <h4>Available columns</h4>
+              <div className="modal-columns-header">
+                <h3>Available columns</h3>
+              </div>
 
               {localColumns
                 .filter((c) => !c.visible)
@@ -96,9 +111,7 @@ export function CustomizeColumnsModal({
           <Button
             variant="ghost"
             intent="danger"
-            onClick={() =>
-              setLocalColumns(columns)
-            }
+            onClick={handleReset}
           >
             Reset to default
           </Button>

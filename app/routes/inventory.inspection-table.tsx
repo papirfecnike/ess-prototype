@@ -1,6 +1,5 @@
 import type { LoaderFunction } from "react-router";
-import { useEffect, useMemo, useState, useRef } from "react";
-import { useNavigate } from "react-router";
+import { useMemo, useState, useRef } from "react";
 
 import { PageLayout } from "@/components/layout/PageLayout";
 import { PageSection } from "@/components/layout/PageSection";
@@ -9,11 +8,15 @@ import { SelectableDataTable } from "@/components/data/SelectableDataTable";
 import type { DataTableColumn } from "@/components/data/DataTableCore";
 import { DropdownMenu } from "@/components/ui/menu/DropdownMenu";
 import { Tag } from "@/components/ui/tag/Tag";
-import { ScanInput } from "@/components/ui/scan-input/ScanInput";
-import { Notification } from "@/components/ui/notification/Notification";
 import { Icon } from "@/components/ui/icon/Icon";
 
-export const loader: LoaderFunction = async () => null;
+import type { ColumnConfig } from "@/components/data/CustomizeColumnsModal";
+
+import { ScanInput } from "@/components/ui/scan-input/ScanInput";
+
+export const loader: LoaderFunction = async () => {
+  return null;
+};
 
 /* =========================
    STATUS → TAG
@@ -34,103 +37,18 @@ function renderStatusTag(status: string) {
   }
 }
 
-type Row = {
-  id: number;
-  product: string;
-  sku: string;
-  compartment: string;
-  maxcapacity: string;
-  currentqty: string;
-};
-
 export default function InventoryInspection() {
+  /* =========================
+     STATE
+     ========================= */
+
+  const [selectedRows, setSelectedRows] = useState<string[]>([]);
   const [scanValue, setScanValue] = useState("");
   const [openMenuRowId, setOpenMenuRowId] = useState<string | null>(null);
   const menuAnchorRef = useRef<HTMLElement | null>(null);
-  const [showNotification, setShowNotification] = useState(false);
-  const navigate = useNavigate();
 
   /* =========================
-     BASE ROWS (STATEFUL)
-     ========================= */
-
- const INITIAL_ROWS: Row[] = [
-    {
-      id: 9875,
-      product: "Bisgaard Winter Boots - Pixie - Khaki",
-      sku: "WD750",
-      compartment: "AS-887651-01-01",
-      maxcapacity: "12",
-      currentqty: "23",
-    },
-    {
-      id: 9876,
-      product: "Name It Jumpsuit - NkfRoka - Burgundy",
-      sku: "WF773",
-      compartment: "AS-887652-01-01",
-      maxcapacity: "12",
-      currentqty: "45",
-    },
-    {
-      id: 9877,
-      product: "Minymo Cardigan - Knitted - Woodrose",
-      sku: "BW975",
-      compartment: "AS-887653-01-01",
-      maxcapacity: "12",
-      currentqty: "56",
-    },
-    {
-      id: 9878,
-      product: "Minymo Cardigan w. Teddy - Parisian Night",
-      sku: "WC551",
-      compartment: "AS-887654-01-01",
-      maxcapacity: "12",
-      currentqty: "72",
-    },
-  ];
-
-  const [rows, setRows] = useState<Row[]>(INITIAL_ROWS);
-
-useEffect(() => {
-  const raw = sessionStorage.getItem("inspection:completedIds");
-  if (!raw) return;
-
-  const completedIds: number[] = JSON.parse(raw);
-
-  setRows(
-    INITIAL_ROWS.filter(r => !completedIds.includes(r.id))
-  );
-
-  setShowNotification(true);
-}, []);
-
-  /* =========================
-     HANDLE RETURN FROM PRODUCT
-     ========================= */
-
-useEffect(() => {
-  const completedRaw = sessionStorage.getItem("inspection:completedIds");
-  if (!completedRaw) return;
-
-  const completedIds: number[] = JSON.parse(completedRaw);
-
-  setRows(
-    INITIAL_ROWS.filter((row) => !completedIds.includes(row.id))
-  );
-
-  setShowNotification(true);
-}, []);
-
-useEffect(() => {
-  const nav = performance.getEntriesByType("navigation")[0] as PerformanceNavigationTiming;
-
-  if (nav?.type === "reload") {
-    sessionStorage.removeItem("inspection:completedIds");
-  }
-}, []);
-
-  /* =========================
-     COLUMNS
+     COLUMNS (STATIC DEFINITION)
      ========================= */
 
   const columns: DataTableColumn[] = [
@@ -140,6 +58,13 @@ useEffect(() => {
     { key: "compartment", label: "Compartment ID", sortable: true },
     { key: "maxcapacity", label: "Max. capacity", align: "center" },
     { key: "currentqty", label: "Current qty", align: "center" },
+    { key: "origin", label: "Origin", align: "center" },
+    {
+      key: "status",
+      label: "Status",
+      align: "center",
+      renderCell: (value) => renderStatusTag(String(value)),
+    },
     {
       key: "more",
       label: "",
@@ -152,8 +77,11 @@ useEffect(() => {
           <button
             type="button"
             className="btn--ghost"
+            aria-label="More"
             ref={(el) => {
-              if (isMenuOpen) menuAnchorRef.current = el;
+              if (isMenuOpen) {
+                menuAnchorRef.current = el;
+              }
             }}
             onClick={(e) => {
               e.stopPropagation();
@@ -171,39 +99,134 @@ useEffect(() => {
   ];
 
   /* =========================
-     FILTER + MATCH
+     COLUMN CONFIG (CUSTOMIZE COLUMNS)
+     ========================= */
+
+  const [columnConfig, setColumnConfig] = useState<ColumnConfig[]>(
+    columns.map((c) => ({
+      key: c.key,
+      label: c.label ?? c.key,
+      visible: true,
+      locked: c.key === "id",
+    }))
+  );
+
+  const visibleColumns = useMemo(() => {
+    const visibleKeys = columnConfig
+      .filter((c) => c.visible)
+      .map((c) => c.key);
+
+    return columns.filter((c) =>
+      visibleKeys.includes(c.key)
+    );
+  }, [columns, columnConfig]);
+
+  /* =========================
+     ROWS
+     ========================= */
+
+  const rows = [
+    {
+      id: 9875,
+      product: "Bisgaard Winter Boots - Pixie - Khaki",
+      sku: "WD750",
+      compartment: "AS-887652-01-01",
+      maxcapacity: "12",
+      currentqty: "23",
+      origin: "Manual",
+      status: "In progress",
+      more: "",
+    },
+    {
+      id: 9876,
+      product: "Name It Jumpsuit - NkfRoka - Burgundy",
+      sku: "WF773",
+      compartment: "AS-887652-01-01",
+      maxcapacity: "12",
+      currentqty: "45",
+      origin: "Scheduled inspection",
+      status: "In progress",
+      more: "",
+    },
+    {
+      id: 9877,
+      product: "Minymo Cardigan - Knitted - Woodrose",
+      sku: "BW975",
+      compartment: "AS-887652-01-01",
+      maxcapacity: "12",
+      currentqty: "56",
+      origin: "Manual",
+      status: "In progress",
+      more: "",
+    },
+    {
+      id: 9878,
+      product: "Minymo Cardigan w. Teddy - Parisian Night",
+      sku: "WC551",
+      compartment: "AS-887652-01-01",
+      maxcapacity: "12",
+      currentqty: "72",
+      origin: "Manual",
+      status: "In progress",
+      more: "",
+    },
+  ];
+
+  /* =========================
+     FILTER (substring search)
      ========================= */
 
   const filteredRows = useMemo(() => {
     if (!scanValue.trim()) return rows;
+
     const q = scanValue.toLowerCase();
+
     return rows.filter((row) =>
-      [row.id, row.sku, row.product].some((v) =>
-        String(v).toLowerCase().includes(q)
+      [row.id, row.sku, row.product].some((value) =>
+        String(value).toLowerCase().includes(q)
       )
     );
   }, [scanValue, rows]);
 
+  /* =========================
+     EXACT MATCH
+     ========================= */
+
   const exactMatch = useMemo(() => {
     const q = scanValue.trim();
     if (!q) return null;
+
     return rows.find(
-      (r) =>
-        String(r.id) === q || r.sku.toLowerCase() === q.toLowerCase()
+      (row) =>
+        String(row.id) === q ||
+        row.sku.toLowerCase() === q.toLowerCase()
     );
   }, [scanValue, rows]);
 
+  const canConfirm = Boolean(exactMatch);
+
   /* =========================
-     NAVIGATION
+     HANDLERS
      ========================= */
 
   function handleConfirm() {
     if (!exactMatch) return;
-
-    navigate(
-      `/inventory/inspection-product?id=${exactMatch.id}&sku=${exactMatch.sku}`
-    );
+    window.location.href = `/inventory/inspection-product`;
   }
+
+  function handleSelectionChange(rowIds: string[]) {
+    if (!exactMatch) {
+      setSelectedRows([]);
+      return;
+    }
+
+    const allowedId = String(exactMatch.id);
+    setSelectedRows(rowIds.filter((id) => id === allowedId));
+  }
+
+  /* =========================
+     RENDER
+     ========================= */
 
   return (
     <PageLayout
@@ -212,7 +235,7 @@ useEffect(() => {
           value={scanValue}
           onChange={(e) => setScanValue(e.target.value)}
           onSubmit={handleConfirm}
-          isDisabled={!exactMatch}
+          isDisabled={!canConfirm}
           buttonLabel="Confirm"
         />
       }
@@ -220,29 +243,29 @@ useEffect(() => {
       <PageSection>
         <SelectableDataTable
           rowIdKey="id"
-          columns={columns}
+          columns={visibleColumns}
           rows={filteredRows}
-          selectedRows={exactMatch ? [String(exactMatch.id)] : []}
-          onSelectionChange={() => {}}
+          selectedRows={selectedRows}
+          onSelectionChange={handleSelectionChange}
+          columnConfig={columnConfig}
+          onColumnConfigChange={setColumnConfig}
         />
       </PageSection>
 
       <DropdownMenu
         open={openMenuRowId !== null}
         anchorRef={menuAnchorRef}
-        items={[{ id: "inspect", label: "Inspect" }]}
+        items={[
+          { id: "inspect", label: "Inspect" },
+          { id: "edit", label: "Edit" },
+          { id: "delete", label: "Delete", intent: "danger" },
+        ]}
         onClose={() => setOpenMenuRowId(null)}
-        onSelect={() => setOpenMenuRowId(null)}
+        onSelect={(actionId) => {
+          console.log("action:", actionId, "row:", openMenuRowId);
+          setOpenMenuRowId(null);
+        }}
       />
-
-      {showNotification && (
-        <Notification
-          intent="success"
-          title="Inspection completed"
-          message="Product has been inspected successfully."
-          onClose={() => setShowNotification(false)}
-        />
-      )}
     </PageLayout>
   );
 }

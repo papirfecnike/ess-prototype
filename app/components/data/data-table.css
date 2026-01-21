@@ -199,6 +199,12 @@
   background: var(--color-table-hover);
 }
 
+/* EXPANDED */
+
+.data-table tbody tr.data-table__row--expanded > td {
+  background: #ECF0F2 !important;
+}
+
 /* LAST ROW */
 
 .data-table tbody tr:last-child td {
@@ -460,10 +466,6 @@
    EXPANDED ROW – ACTIVE STATE
    ========================================================= */
 
-.data-table__row--expanded td {
-  background: #ECF0F2;
-}
-
 .data-table__expanded-row td {
   background: #ECF0F2;
   padding: 24px;
@@ -508,10 +510,15 @@
    ========================================================= */
 
 .data-table__expanded-row td {
-  background: var(--color-table);
+  background: #ECF0F2 !important;
   padding: 24px;
   border-bottom: none;
 }
+
+.data-table__row--expanded td {
+  background: #ECF0F2;
+}
+
 
 /* THIS is the visual card */
 .data-table__expanded-inner {
