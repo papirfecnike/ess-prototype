@@ -20,9 +20,6 @@ type Props = {
   headerVariant?: HeaderVariant;
 };
 
-
-
-
 export function SelectableDataTable(props: Props) {
   return (
     <DataTableCore
