@@ -216,7 +216,7 @@ export function DataTableCore({
 
                   return (
                     <Fragment key={id}>
-                      <tr>
+                      <tr className={isExpanded ? "data-table__row--expanded" : undefined}>
                         {selectable && (
                           <td>
                             <Checkbox
@@ -276,15 +276,15 @@ export function DataTableCore({
                         ))}
                       </tr>
 
-                      {expandable &&
-                        isExpanded &&
-                        renderExpandedRow && (
-                          <tr>
-                            <td colSpan={colSpan}>
+                      {expandable && isExpanded && renderExpandedRow && (
+                        <tr className="data-table__expanded-row">
+                          <td colSpan={colSpan}>
+                            <div className="data-table__expanded-inner">
                               {renderExpandedRow(row)}
-                            </td>
-                          </tr>
-                        )}
+                            </div>
+                          </td>
+                        </tr>
+                      )}
                     </Fragment>
                   );
                 })}

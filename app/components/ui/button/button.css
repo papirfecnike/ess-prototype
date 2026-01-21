@@ -97,7 +97,7 @@
 
 .btn--ghost {
   background: transparent;
-  color: var(--color-text);
+  color: var(--btn-fg, var(--color-text));
 }
 
 .btn--ghost:hover {
@@ -185,7 +185,7 @@
 .btn--danger {
   --btn-fg: var(--color-danger);
   --btn-bg: var(--color-danger);
-  --btn-bg-hover: rgba(202, 21, 32, 0.08);
+  --btn-bg-hover: rgba(215, 156, 160, 0.08);
   --btn-bg-active: rgba(202, 21, 32, 0.16);
   --btn-border: var(--color-danger);
 }
