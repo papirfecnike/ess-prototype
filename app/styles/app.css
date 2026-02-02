@@ -16,6 +16,7 @@
 :root {
   --sidebar-width: 240px;
   --sidebar-width-collapsed: 64px;
+  --sidebar-tree-indent: 36px;
 }
 
 *,
@@ -166,6 +167,105 @@ header a.active {
   transition: opacity 150ms ease;
 }
 
+/* =========================
+   SIDEBAR CHILD ITEMS
+   ========================= */
+
+.sidebar-item--child {
+  padding-left: 20px;
+}
+
+.sidebar-item--child .sidebar-icon {
+  display: none;
+}
+
+/* =========================
+   SIDEBAR TREE STRUCTURE
+   ========================= */
+   
+.sidebar-sublist {
+  position: relative;
+  margin-left: var(--sidebar-tree-indent);
+  padding-left: var(--sidebar-tree-indent);
+}
+
+.sidebar-sublist::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: calc(var(--sidebar-tree-indent) / 2);
+  width: 1px;
+  height: 93%;
+  background-color: #9fb1b7;
+}
+
+.sidebar-item--child {
+  position: relative;
+  margin-left: 20px;
+  padding-left: 20px;
+}
+
+.sidebar-item--child > .sidebar-item__content {
+  margin-left: 24px;
+}
+
+.sidebar-item--child > .sidebar-item__content::before {
+  content: "";
+  position: absolute;
+
+  top: 50%;
+  left: -25px;
+  width: 20px;
+  height: 1px;
+
+  background-color: #9fb1b7;
+  transform: translateY(-50%);
+}
+
+.sidebar-item__content {
+  position: relative;
+}
+
+
+.sidebar-item--child .sidebar-icon {
+  display: none;
+}
+
+.sidebar-item--child .sidebar-link {
+  padding-left: 0;
+}
+
+/* =========================
+   SIDEBAR SUBLIST ANIMATION
+   ========================= */
+
+.sidebar-sublist {
+  overflow: hidden;
+
+  max-height: 0;
+  opacity: 0;
+  transform: translateY(-4px);
+
+  transition:
+    max-height 200ms ease,
+    opacity 150ms ease,
+    transform 200ms ease;
+}
+
+.sidebar-sublist.is-open {
+  max-height: 500px; 
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.sidebar-link--parent svg {
+  transition: transform 200ms ease;
+}
+
+.sidebar-link--parent[aria-expanded="true"] svg {
+  transform: rotate(180deg);
+}
+
 
 aside {
   border-right: 1px solid var(--color-border);
@@ -296,6 +396,29 @@ aside.sidebar {
 .dashboard-shell {
   margin-top: var(--header-height);
 }
+
+.sidebar-link--parent {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  padding: 12px;
+  border-radius: var(--radius-s);
+
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text);
+
+  background: transparent;
+  border: none;
+  width: 100%;
+  text-align: left;
+}
+
+.sidebar-link--parent:hover {
+  background: rgba(0, 0, 0, 0.04);
+}
+
 
 
 /* =========================

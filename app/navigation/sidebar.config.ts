@@ -2,6 +2,7 @@ export type SidebarItem = {
   label: string;
   path: string;
   icon: string;
+  children?: SidebarItem[];
 };
 
 export type SidebarGroup = {
@@ -12,7 +13,7 @@ export type SidebarGroup = {
 export type SidebarSection = {
   basePath: string;
   groups?: SidebarGroup[];
-  items?: SidebarItem[]; // backward compatibility
+  items?: SidebarItem[];
 };
 
 export const sidebarConfig: SidebarSection[] = [
@@ -123,7 +124,19 @@ export const sidebarConfig: SidebarSection[] = [
         items: [
           { label: "AutoStore", path: "autostore", icon: "rocket" },
           { label: "General setup", path: "general-setup", icon: "settings" },
-          { label: "Modules", path: "modules", icon: "settings" },
+          {
+            label: "Modules",
+            path: "modules",
+            icon: "settings",
+            children: [
+              { label: "eManager", path: "emanager", icon: "settings" },
+              { label: "Robotic Piece Picking", path: "robotic-piece-picking", icon: "forklift" },
+              { label: "Robot arm settings", path: "robot-arm-settings", icon: "settings" },
+              { label: "Material flow control", path: "material-flow-control", icon: "settings" },
+              { label: "Workflows", path: "workflows", icon: "barChart" },
+              { label: "Conveyors", path: "conveyors", icon: "forklift" },
+            ],
+          },
           { label: "Orchestration", path: "orchestration", icon: "settings" },
           { label: "Version history", path: "version-history", icon: "history" },
         ],
