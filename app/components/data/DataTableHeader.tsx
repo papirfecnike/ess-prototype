@@ -7,7 +7,7 @@ import { Chip } from "@/components/ui/chip/Chip";
 import { SplitButton } from "@/components/ui/split-button/SplitButton";
 
 type Props = {
-  variant?: "statusSplit" | "warehouseSelect";
+  variant?: HeaderVariant;
 
   searchValue: string;
   onSearchChange: (value: string) => void;
@@ -24,8 +24,10 @@ type Props = {
   onStatusChange: (ids: string[]) => void;
 };
 
-
-export type HeaderVariant = "statusSplit" | "warehouseSelect";
+export type HeaderVariant =
+  | "statusSplit"
+  | "warehouseSelect"
+  | "reorder";
 
 /* =========================
    STATUS DEFINITIONS
@@ -57,10 +59,12 @@ export function DataTableHeader({
   selectedStatusIds,
   onStatusChange,
 }: Props) {
-
   const [warehouseFilter, setWarehouseFilter] = useState<string[]>([]);
   const [portFilter, setPortFilter] = useState<string[]>([]);
 
+  const isStatusSplit = variant === "statusSplit";
+  const isWarehouseSelect = variant === "warehouseSelect";
+  const isReorder = variant === "reorder";
 
   return (
     <div className="data-table__header">
@@ -69,26 +73,26 @@ export function DataTableHeader({
           ========================= */}
       <div className="data-table__header-main">
         <div className="data-table__header-left">
-          {variant === "statusSplit" && (
-            <>
-              <input
-                type="search"
-                placeholder="Search"
-                className="text-field__input"
-                value={searchValue}
-                onChange={(e) => onSearchChange(e.target.value)}
-              />
-
-              <SplitButton
-                label="Status"
-                items={STATUS_ITEMS}
-                selectedIds={selectedStatusIds}
-                onChange={(ids) => onStatusChange(ids)}
-              />
-            </>
+          {(isStatusSplit || isReorder) && (
+            <input
+              type="search"
+              placeholder="Search"
+              className="text-field__input"
+              value={searchValue}
+              onChange={(e) => onSearchChange(e.target.value)}
+            />
           )}
 
-          {variant === "warehouseSelect" && (
+          {isStatusSplit && (
+            <SplitButton
+              label="Status"
+              items={STATUS_ITEMS}
+              selectedIds={selectedStatusIds}
+              onChange={(ids) => onStatusChange(ids)}
+            />
+          )}
+
+          {isWarehouseSelect && (
             <div className="data-table__header-title">
               <Icon name="barChart" />
               <h3>Storage by location</h3>
@@ -97,7 +101,7 @@ export function DataTableHeader({
         </div>
 
         <div className="data-table__header-right">
-          {variant === "statusSplit" && (
+          {(isStatusSplit || isReorder) && (
             <>
               <Toggle
                 checked={showDetails}
@@ -116,8 +120,19 @@ export function DataTableHeader({
               </Button>
             </>
           )}
+          
+          {isReorder && (
+            <Button
+              variant="secondary"
+              intent="default"
+              size="sm"
+              style={{ whiteSpace: "nowrap" }}
+            >
+              Add rule
+            </Button>
+          )}
 
-          {variant === "warehouseSelect" && (
+          {isWarehouseSelect && (
             <>
               <div className="data-table__header-select">
                 <Select
@@ -148,9 +163,9 @@ export function DataTableHeader({
       </div>
 
       {/* =========================
-          DETAILS PANEL (CHIPS)
+          DETAILS PANEL
           ========================= */}
-      {variant === "statusSplit" && showDetails && (
+      {isStatusSplit && showDetails && (
         <div className="data-table__header-details">
           <div className="data-table__text">STATUS</div>
 
@@ -161,16 +176,16 @@ export function DataTableHeader({
               </span>
             ) : (
               selectedStatusIds.map((id) => (
-              <Chip
-                key={id}
-                onRemove={() =>
-                  onStatusChange(
-                    selectedStatusIds.filter((x) => x !== id)
-                  )
-                }
-              >
-                {STATUS_LABEL_BY_ID[id]}
-              </Chip>
+                <Chip
+                  key={id}
+                  onRemove={() =>
+                    onStatusChange(
+                      selectedStatusIds.filter((x) => x !== id)
+                    )
+                  }
+                >
+                  {STATUS_LABEL_BY_ID[id]}
+                </Chip>
               ))
             )}
           </div>
@@ -194,9 +209,6 @@ export function DataTableHeader({
                 { value: "a", label: "Warehouse A" },
                 { value: "b", label: "Warehouse B" },
                 { value: "c", label: "Warehouse C" },
-                { value: "d", label: "Warehouse D" },
-                { value: "e", label: "Warehouse E" },
-                { value: "f", label: "Warehouse F" },
               ]}
             />
 
@@ -211,13 +223,6 @@ export function DataTableHeader({
                 { value: "01", label: "Port 01" },
                 { value: "02", label: "Port 02" },
                 { value: "03", label: "Port 03" },
-                { value: "04", label: "Port 04" },
-                { value: "05", label: "Port 05" },
-                { value: "06", label: "Port 06" },
-                { value: "07", label: "Port 07" },
-                { value: "08", label: "Port 08" },
-                { value: "09", label: "Port 09" },
-                { value: "10", label: "Port 10" },
               ]}
             />
           </div>

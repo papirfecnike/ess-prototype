@@ -8,7 +8,7 @@ export const loader: LoaderFunction = async () => {
   return null;
 };
 
-export default function ConfigOrchestration() {
+export default function ConfigSystem() {
   const navigate = useNavigate();
 
   return (

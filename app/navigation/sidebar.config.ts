@@ -104,41 +104,21 @@ export const sidebarConfig: SidebarSection[] = [
     basePath: "configuration",
     groups: [
       {
-        title: "Administration",
+        title: "",
         items: [
-          { label: "User management", path: "user-management", icon: "profile" },
-          { label: "Language settings", path: "language-settings", icon: "settings" },
+          { label: "Prioritization", path: "prioritization", icon: "profile" },
+          { label: "Strategies", path: "strategies", icon: "settings" },
+          { label: "Bins", path: "bins", icon: "settings" },
           { label: "System settings", path: "system-settings", icon: "settings" },
+          { label: "Inventory rules", path: "inventory-rules", icon: "settings" },
         ],
       },
       {
-        title: "Workflow",
+        title: "Workflow configuration",
         items: [
           { label: "Inbound", path: "inbound", icon: "forklift" },
           { label: "Outbound", path: "outbound", icon: "forklift" },
           { label: "Inventory", path: "inventory", icon: "barChart" },
-        ],
-      },
-      {
-        title: "Configuration",
-        items: [
-          { label: "AutoStore", path: "autostore", icon: "rocket" },
-          { label: "General setup", path: "general-setup", icon: "settings" },
-          {
-            label: "Modules",
-            path: "modules",
-            icon: "settings",
-            children: [
-              { label: "eManager", path: "emanager", icon: "settings" },
-              { label: "Robotic Piece Picking", path: "robotic-piece-picking", icon: "forklift" },
-              { label: "Robot arm settings", path: "robot-arm-settings", icon: "settings" },
-              { label: "Material flow control", path: "material-flow-control", icon: "settings" },
-              { label: "Workflows", path: "workflows", icon: "barChart" },
-              { label: "Conveyors", path: "conveyors", icon: "forklift" },
-            ],
-          },
-          { label: "Orchestration", path: "orchestration", icon: "settings" },
-          { label: "Version history", path: "version-history", icon: "history" },
         ],
       },
     ],

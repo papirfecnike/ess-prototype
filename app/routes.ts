@@ -53,17 +53,14 @@ export default [
   ]),
 
   route("configuration", "routes/configuration.tsx", [
-    route("user-management", "routes/configuration.user-management.tsx"),
-    route("language-settings", "routes/configuration.language-settings.tsx"),
+    route("prioritization", "routes/configuration.prioritization.tsx"),
+    route("strategies", "routes/configuration.strategies.tsx"),
+    route("bins", "routes/configuration.bins.tsx"),
     route("system-settings", "routes/configuration.system-settings.tsx"),
+    route("inventory-rules", "routes/configuration.inventory-rules.tsx"),
     route("inbound", "routes/configuration.inbound.tsx"),
     route("outbound", "routes/configuration.outbound.tsx"),
     route("inventory", "routes/configuration.inventory.tsx"),
-    route("autostore", "routes/configuration.autostore.tsx"),
-    route("general-setup", "routes/configuration.general-setup.tsx"),
-    route("modules", "routes/configuration.modules.tsx"),
-    route("orchestration", "routes/configuration.orchestration.tsx"),
-    route("version-history", "routes/configuration.version-history.tsx"),
   ]),
 
   route("profile", "routes/profile.tsx", [
