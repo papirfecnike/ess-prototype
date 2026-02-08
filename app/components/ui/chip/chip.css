@@ -59,3 +59,17 @@
 .chip__remove:hover {
   opacity: 1;
 }
+
+
+.chip--active {
+  background-color: #137897;
+  color: #ffffff;
+}
+
+.chip--active .chip__label {
+  color: #ffffff;
+}
+
+.chip--active .chip__remove {
+  color: #ffffff;
+}

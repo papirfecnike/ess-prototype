@@ -4,17 +4,33 @@ import "./chip.css";
 
 type Props = {
   children: ReactNode;
+  isActive?: boolean;
+  onClick?: () => void;
   onRemove?: () => void;
 };
 
-export function Chip({ children, onRemove }: Props) {
+export function Chip({
+  children,
+  isActive = false,
+  onClick,
+  onRemove,
+}: Props) {
   function handleRemove(e: MouseEvent) {
     e.stopPropagation();
     onRemove?.();
   }
 
   return (
-    <div className="chip">
+    <div
+      className={[
+        "chip",
+        isActive ? "chip--active" : "",
+      ]
+        .filter(Boolean)
+        .join(" ")}
+      onClick={onClick}
+      role="button"
+    >
       <span className="chip__label">{children}</span>
 
       {onRemove && (
