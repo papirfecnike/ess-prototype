@@ -211,7 +211,7 @@ export default function ConfigurationStrategies() {
                   }}
                 >
                   <Icon name={s.icon} size="sm" />
-                  <strong>{s.title}</strong>
+                  <h3>{s.title}</h3>
                   <Tag
                     label={s.type}
                     color={

@@ -101,7 +101,7 @@ export function DataTableHeader({
         </div>
 
         <div className="data-table__header-right">
-          {(isStatusSplit || isReorder) && (
+          {isStatusSplit && (
             <>
               <Toggle
                 checked={showDetails}

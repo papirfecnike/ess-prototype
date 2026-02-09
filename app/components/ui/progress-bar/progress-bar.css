@@ -11,6 +11,6 @@
 
 .ui-progress-bar__fill {
   height: 100%;
-  background-color: var(--progress-fill-color, var(--accent-primary));
+  background-color: var(--progress-fill-color, #137897);
   transition: width 0.25s ease;
 }

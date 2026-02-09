@@ -15,12 +15,8 @@ type Props = {
   rows: DataTableRow[];
   rowIdKey: string;
 
-  /**
-   * Called when a row should be moved.
-   * index: current row index (in rendered order)
-   * direction: "up" | "down"
-   */
-  onMoveRow: (index: number, direction: "up" | "down") => void;
+  onMoveRow?: (index: number, direction: "up" | "down") => void;
+  enableReorder?: boolean;
 };
 
 /* =========================
@@ -32,6 +28,7 @@ export function ReorderDataTable({
   rows,
   rowIdKey,
   onMoveRow,
+  enableReorder = true,
 }: Props) {
   /* =========================
      REORDER COLUMN
@@ -66,10 +63,10 @@ export function ReorderDataTable({
     },
   };
 
-  const finalColumns: DataTableColumn[] = [
-    reorderColumn,
-    ...columns,
-  ];
+const finalColumns = enableReorder
+  ? [reorderColumn, ...columns]
+  : columns;
+
 
   /* =========================
      RENDER
