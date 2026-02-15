@@ -4,10 +4,6 @@ import { Chip } from "../chip/Chip";
 import { SelectableList } from "../list/SelectableList";
 import type { CheckboxState } from "../list/SelectableList";
 
-/* =========================
-   TYPES
-   ========================= */
-
 export type SelectOption = {
   value: string;
   label: string;
@@ -15,10 +11,6 @@ export type SelectOption = {
 
 type SelectSize = "md" | "sm";
 type SelectVariant = "single" | "multi";
-
-/* =========================
-   PROPS
-   ========================= */
 
 type BaseProps = {
   label?: string;
@@ -41,10 +33,6 @@ type MultiSelectProps = BaseProps & {
 
 type Props = SingleSelectProps | MultiSelectProps;
 
-/* =========================
-   COMPONENT
-   ========================= */
-
 export function Select({
   label,
   options,
@@ -59,12 +47,9 @@ export function Select({
   const [search, setSearch] = useState("");
   const containerRef = useRef<HTMLDivElement>(null);
 
-  /* =========================
-     CLICK OUTSIDE
-     ========================= */
-
+  /* CLICK OUTSIDE — FIXED */
   useEffect(() => {
-    function handleClickOutside(e: MouseEvent) {
+    function handlePointerDown(e: PointerEvent) {
       if (
         containerRef.current &&
         !containerRef.current.contains(e.target as Node)
@@ -73,14 +58,10 @@ export function Select({
       }
     }
 
-    document.addEventListener("click", handleClickOutside);
+    document.addEventListener("pointerdown", handlePointerDown);
     return () =>
-      document.removeEventListener("click", handleClickOutside);
+      document.removeEventListener("pointerdown", handlePointerDown);
   }, []);
-
-  /* =========================
-     NORMALIZED STATE
-     ========================= */
 
   const selectedValues: string[] = isMulti
     ? (value as string[])
@@ -90,14 +71,10 @@ export function Select({
 
   const selectedCount = selectedValues.length;
 
-  /* =========================
-     MULTI: ALL STATE
-     ========================= */
-
   const selectableOptions = isMulti
     ? options.filter(o => o.value !== "all")
     : [];
-    
+
   const allCount = selectableOptions.length;
 
   const allState: CheckboxState =
@@ -106,10 +83,6 @@ export function Select({
       : selectedCount === allCount
       ? "checked"
       : "indeterminate";
-
-  /* =========================
-     ITEM CLICK
-     ========================= */
 
   function handleItemClick(id: string) {
     if (isMulti) {
@@ -133,10 +106,6 @@ export function Select({
     }
   }
 
-  /* =========================
-     SEARCH + LIST ITEMS
-     ========================= */
-
   const visibleOptions = options.filter(o =>
     o.label.toLowerCase().includes(search.toLowerCase())
   );
@@ -159,17 +128,9 @@ export function Select({
     };
   });
 
-  /* =========================
-     TRIGGER VALUE
-     ========================= */
-
   const firstSelected = options.find(
     o => o.value === selectedValues[0]
   );
-
-  /* =========================
-     RENDER
-     ========================= */
 
   return (
     <div
@@ -180,7 +141,6 @@ export function Select({
         variant === "single" ? "select--single" : "",
       ].join(" ")}
     >
-      {/* TRIGGER */}
       <button
         type="button"
         className="select__trigger"
@@ -215,7 +175,7 @@ export function Select({
               )}
 
               {selectedCount > 1 && (
-                <span className="select__more">
+                <span>
                   +{selectedCount - 1} more
                 </span>
               )}
@@ -226,8 +186,8 @@ export function Select({
         </span>
 
         <Icon
-          name="chevronDown"
-          size="xs"
+          name="chevronDownStroke"
+          size="sm"
           className={[
             "select__chevron",
             open ? "is-open" : "",
@@ -235,7 +195,6 @@ export function Select({
         />
       </button>
 
-      {/* DROPDOWN */}
       {open && (
         <div className="select__dropdown">
           <input
@@ -258,11 +217,10 @@ export function Select({
                   <li key={option.value}>
                     <button
                       type="button"
-                      className={[
-                        "select__single-item",
-                        value === option.value ? "is-selected" : "",
-                      ].join(" ")}
-                      onClick={() => handleItemClick(option.value)}
+                      className="select__single-item"
+                      onClick={() =>
+                        handleItemClick(option.value)
+                      }
                     >
                       {option.label}
                     </button>

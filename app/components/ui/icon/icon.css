@@ -16,6 +16,6 @@
    COLORS
    ========================= */
 .icon--default { color: var(--color-text); }
-.icon--muted { color: var(--color-text-muted); }
+.icon--muted { color: var(--color-text); }
 .icon--primary { color: var(--color-primary); }
 .icon--danger { color: var(--color-danger); }

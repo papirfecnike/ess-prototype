@@ -1,7 +1,6 @@
 /* =========================
    WRAPPER
    ========================= */
-
 .ui-dialog {
   position: absolute;
   inset: 0;
@@ -13,17 +12,15 @@
 /* =========================
    SCRIM
    ========================= */
-
 .ui-dialog__scrim {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: var(--color-dialog-overlay);
 }
 
 /* =========================
    CONTAINER
    ========================= */
-
 .ui-dialog__container {
   position: relative;
   z-index: 1;
@@ -33,13 +30,12 @@
   align-items: center;
   justify-content: center;
   margin-top: -100px;
-  padding: 24px;
+  padding: var(--padding-xxl);
 }
 
 /* =========================
    CARD
    ========================= */
-
 .ui-dialog__card {
   width: 100%;
   max-width: 480px;
@@ -48,11 +44,10 @@
 /* =========================
    HEADER
    ========================= */
-
 .ui-dialog__header {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: var(--space-3);
 }
 
 .ui-dialog__header-icon {
@@ -61,46 +56,43 @@
 }
 
 /* intent borders */
-
 .ui-dialog__card--default .ui-dialog__header {
-  border-bottom: 3px solid #137897;
+  border-bottom: 3px solid var(--color-default);
 }
 
 .ui-dialog__card--success .ui-dialog__header {
-  border-bottom: 3px solid #51AE0A;
+  border-bottom: 3px solid var(--color-success);
 }
 
 .ui-dialog__card--warning .ui-dialog__header {
-  border-bottom: 3px solid #F09300;
+  border-bottom: 3px solid var(--color-warning);
 }
 
 /* icon colors */
-
 .ui-dialog__card--default .ui-dialog__header-icon svg {
-  color: #137897;
+  color: var(--color-default);
 }
 
 .ui-dialog__card--success .ui-dialog__header-icon svg {
-  color: #51AE0A;
+  color: var(--color-success);
 }
 
 .ui-dialog__card--warning .ui-dialog__header-icon svg {
-  color: #F09300;
+  color: var(--color-warning);
 }
 
 .ui-dialog__header-title {
   font-weight: 600;
-  font-size: 16px;
+  font-size: var(--font-h2);
 }
 
 /* =========================
    CONTENT
    ========================= */
-
 .ui-dialog__content {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: var(--space-3);
   min-height: 100px;
   font-size: 1rem;
 }
@@ -108,22 +100,19 @@
 /* =========================
    FOOTER – CARD OVERRIDE
    ========================= */
-
 .ui-dialog__card > .ui-dialog__footer {
   display: flex;
-  flex-direction: row;              /* kényszerített horizontal */
+  flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
-  border-top: 1px solid #E0E8EA;
+  gap: var(--space-3);
+  border-top: 1px solid var(--color-dialog-footer);
 }
-
-/* footer button groups */
 
 .ui-dialog__footer-left,
 .ui-dialog__footer-right {
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 8px;
+  gap: var(--space-2);
 }

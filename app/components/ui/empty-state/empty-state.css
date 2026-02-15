@@ -9,7 +9,7 @@
 }
 
 .empty-state {
-  background: #ffffff;
+  background: var(--color-white);
   border-radius: 16px;
   padding: 2rem;
 
@@ -27,7 +27,7 @@
   width: 56px;
   height: 56px;
 
-  color: #a0b4ba;
+  color: var(--color-disabled);
   display: flex;
   align-items: center;
   justify-content: center;

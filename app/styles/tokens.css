@@ -4,132 +4,153 @@
    ========================= */
 
 /* BACKGROUND */
-
-  --color-bg: #F0F2F3;
   --color-header: #e6ecee;
-  --color-header-active: #e6ecee;
-  --color-header-border: #2D4E58;
-  --color-header-border-active: #137897;
   --color-main: #f8f9fa;
   --color-footer: #E0E8EA;
   --color-drawer: #D4DADF;
-
+  --color-product: #F5F6F7;
 
 /* SIDEBAR */
-
   --color-sidebar: #D8E0E2;
   --color-sidebar-hover: #bbc7ca;
-  --color-sidebar-active: #ffffff50;
   --color-sidebar-border: #c9d3d4;
+  --color-sidebar-sublist: #9fb1b7;
+  --color-sidebar-section: #60838D;
 
 /* INTENT */
-
   --color-default: #137897;
   --color-success: #07930A;
   --color-warning: #F09300;
   --color-danger: #CA1520;
 
-  --callout-default-bgcolor: #ecf9fc; 
-  --callout-success-bgcolor: #ecfaec;
-  --callout-warning-bgcolor: #fffaf1;
-  --callout-danger-bgcolor: #fdedee;
-
-/* SHADOW */
-
-  --shadow-s: 0 1px 4px rgba(0,0,0,0.06);
-  --shadow-m: 0 24px 42px rgba(0,0,0,0.1);
+/* LABELS, GENERIC COLORS */
+  --color-white: #FFFFFF;
+  --color-lightblue: #F0F2F3;
+  --color-purple: #593a73;
+  --color-cyan: #05515b;
+  --color-greyblue: #353e53;
+  --color-lightblue: #4a6696;
 
 /* ICONS, BORDERS AND TEXTS */
-
-  --color-icon: #2D4E58;
   --color-text: #2D4E58;
-  --color-text-active: #137897;
-  --color-text-muted: #2D4E58;
-  --color-text-inverse: #FFFFFF;
-  --color-border-inverse: #FFFFFF;
+  --color-text-section: #6b8790;
+  --color-text-description: #496d78;
   --color-separator: #a5b4b9;
 
-/* TABLE */
+/* =========================
+   COMPONENTS
+   ========================= */
 
-  --color-table: #FFFFFF;
+/* TABLE */
   --color-table-hover: #ECF0F2;
-  --color-table-border: #E0E8EA;
-  --color-table-column-header: #F5F6F7;
-  --color-table-chevron: #137897;
+  --color-white-border: #E0E8EA;
+  --color-white-column-header: #F5F6F7;
+
+/* CARD, DIALOG */
+  --color-dialog-overlay: rgba(0,0,0,0.35);
+  --color-dialog-column: #f5f7f8;
+  --color-dialog-divider: #d3dade;
+  --color-dialog-footer: #E0E8EA;
+  --color-dialog-header-dark: #2D4E58;
+
+ /* CALLOUT */ 
+  --callout-default: #ecf9fc; 
+  --callout-success: #ecfaec;
+  --callout-warning: #fffaf1;
+  --callout-danger: #fdedee;
 
 /* TOGGLE SWITCH */
-
   --color-toggle-track: #2D4E58;
   --color-toggle-bg: #E0E8EA;
   --color-toggle-bg-on: #137897;
 
 /* BUTTONS */
+  --color-primary: linear-gradient(
+    45deg,
+    #137897 0%,
+    #14282F 100%
+  );
 
---color-primary: linear-gradient(
-   45deg,
-   #137897 0%,
-   #14282F 100%
-);
+  --color-primary-hover: linear-gradient(
+    135deg,
+    #76CCE7 0%,
+    #14282F 100%
+  );
 
---color-primary-hover: linear-gradient(
-   135deg,
-   #76CCE7 0%,
-   #14282F 100%
-);
+  --button-primary-active: #137897;
+  --button-primary-hover: #0f5f75;
+  --button-primary-inverse: #FFFFFF;
 
   --color-secondary: transparent;
-  --color-secondary-border: #2D4E58;
+  --color-secondary-border: #137897;
   --color-secondary-hover: #cad9dd;
+  --color-disabled: #c4cdd3;
 
-  --color-disabled: #bfc2c4;
+  --color-danger-hover: #e5afb2;
+  --color-danger-active:rgb(185, 14, 25);
+
+  --color-warning-hover: #e9a434;
+  --color-warning-active: #c27a07;
+
+  --color-success-hover: #26a328;
+  --color-success-active: #046005;
+
+  --button-context: #137897;
+  --button-context-bg: rgb(201, 217, 223);
+  --button-context-hover: #2D4E58;
+
+  --button-icon: #14282F;
+  --button-icon-bg: #FFFFFF;
+  --button-icon-hover:
+   45deg,
+   #137897 0%,
+   #14282F 100%;
 
 /* INPUT */
-
   --color-input-bg: #ffffff;
   --color-input-border: #b1c3c7;
+  --color-input-hover: #b1c3c735;
   --color-input-text-default: #7E9094;
   --color-input-text-focus: #14282F;
   --color-input-text-disabled: #919597;
+  --color-floating-label: #7e9094;
+  --color-input-wrapperbg: #f5f6f7;
+  --color-input-text: #5f6b6d;
 
 /* CHECKBOX */
-
   --color-checkbox-bg: #ffffff;
   --color-checkbox-border: #7E9094;
   --color-checkbox-select: #137897;
 
 /* CHIP */
-
   --color-chip-bg: #ecf1f2;
+  --color-chip-active: #137897;
+  --color-chip-active-text: #FFFFFF;
   --color-chip-border: #E0E8EA;
   --color-chip-text: #137897;
   --color-chip-icon: #137897;
+  --color-chip-icon-reverse: #FFFFFF;
 
-
-/* =========================
-   SIZES
-   ========================= */
-
-  --header-height: 64px;
-  --sidebar-width: 280px;
-  --input-height: 42px;
-  --tag-height: 24px;
-  --listitem-height: 32px;
-
+/* LIST */
+  --color-list-bg: #e9ecef;
+  --color-list-selected: #f5f6f7;
 
 /* =========================
    TYPOGRAPHY
    ========================= */
-
   --font-sans: Roboto, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
 
-  --font-h1: 2.25rem;
-  --font-h2: 1rem;
-  --font-h3: 1.25rem;
-  --font-section-title: 1.25rem;
-  --font-default: 0.875rem;
-  --font-button-default: 1.2rem;
-  --font-navigation: 1rem;
+  --font-h1: 2.25rem; /* 36px  */
+  --font-h2: 1rem; /* 16px  */
+  --font-h3: 1.25rem; /* 20px  */
+  --font-h4: 1.5rem; /* 24px  */
+  --font-section-title: 1.25rem; /* 20px  */
+  --font-default: 0.875rem; /* 14px  */
+  --font-input: 0.75rem; /* 12px  */
+  --font-button-default: 1.25rem; /* 20px  */
+  --font-navigation: 1rem; /* 16px  */
+  --font-big: 6rem; /* 96px  */
 
   --font-weight-regular: 400;
   --font-weight-medium: 500;
@@ -138,7 +159,6 @@
 /* =========================
    SPACING
    ========================= */
-
   --space-1: 4px;
   --space-2: 8px;
   --space-3: 12px;
@@ -146,10 +166,37 @@
   --space-5: 20px;
   --space-6: 24px;
 
+  /* =========================
+   MARGINS, PADDINGS
+   ========================= */
+  --margin-xs: 6px;
+  --margin-s: 8px;
+  --margin-m: 12px;
+  --margin-l: 16px;
+  --margin-xl: 20px;
+  --margin-xxl: 24px;
+
+  --padding-xxs: 4px;
+  --padding-xs: 6px;
+  --padding-s: 8px;
+  --padding-m: 12px;
+  --padding-l: 16px;
+  --padding-xl: 20px;
+  --padding-xxl: 24px;
+  --padding-xxxl: 36px;
+
+/* =========================
+   ICON SIZES
+   ========================= */
+  --icon-xs: 12px;
+  --icon-s: 16px;
+  --icon-m: 20px;
+  --icon-l: 24px;
+  --icon-xl: 32px;
+
 /* =========================
    RADIUS
    ========================= */
-
   --radius-xs: 4px;
   --radius-s: 8px;
   --radius-m: 16px;
@@ -157,37 +204,45 @@
   --radius-full: 999px;
 
 /* =========================
+   SIZES
+   ========================= */
+  --header-height: 64px;
+  --sidebar-width: 280px;
+  --input-height: 42px;
+  --tag-height: 24px;
+  --listitem-height: 32px;
+
+  --height-xxxs: 16px;
+  --height-xxs: 20px;
+  --height-xs: 24px;
+  --height-s: 32px;
+  --height-m: 42px;
+  --height-l: 48px;
+  --height-xl: 56px;
+  --height-xxl: 64px;
+
+  --width-xxxs: 16px;
+  --width-xxs: 20px;
+  --width-xs: 24px;
+  --width-s: 32px;
+  --width-m: 42px;
+  --width-l: 48px;
+  --width-xl: 56px;
+  --width-xxl: 64px;
+
+/* =========================
    SHADOW
    ========================= */
-
   --shadow-s: 0 1px 2px rgba(0, 0, 0, 0.05);
-  --shadow-m: 0 4px 10px rgba(0, 0, 0, 0.08);
+  --shadow-m: 0 4px 8px rgba(0, 0, 0, 0.08);
+  --shadow-l: 0 4px 12px rgba(0, 0, 0, 0.12);
+  --shadow-xl: 0 12px 12px rgba(0, 0, 0, 0.16);
+  --shadow-xxl: 0 12px 20px rgba(0, 0, 0, 0.16);
 
 /* =========================
    Z-INDEX
    ========================= */
-
   --z-dropdown: 100;
   --z-overlay: 200;
   --z-modal: 300;
-}
-
-/* =========================
-DARK MODE
-========================= */
-
-.dark {
-  --color-bg: #020617;
-  --color-bg-muted: #020617;
-  --color-bg-elevated: #020617;
-
-  --color-text: #e5e7eb;
-  --color-text-muted: #94a3b8;
-
-  --color-border: #1e293b;
-  --color-border-strong: #334155;
-
-  --color-primary: #3b82f6;
-  --color-primary-hover: #2563eb;
-  --color-primary-soft: #1e3a8a;
 }

@@ -1,69 +1,74 @@
+/* =========================
+   BASE
+   ========================= */
 .select {
   position: relative;
   width: 100%;
-  font-size: 14px;
+  font-size: var(--font-default);
 }
 
 /* =========================
    TRIGGER
    ========================= */
-
 .select__trigger {
   width: 100%;
   height: var(--input-height);
-  padding: 6px 36px 6px 12px;
-
+  padding: 0 32px 0 12px;
   background: var(--color-input-bg);
   border: 1px solid var(--color-input-border);
   border-radius: var(--radius-s);
-
   display: flex;
   align-items: center;
-  justify-content: space-between;
-
+  justify-content: flex-start;
   cursor: pointer;
   position: relative;
 }
 
 .select__label {
   position: absolute;
-  left: 12px;
+  left: var(--margin-m);
   top: 50%;
   transform: translateY(-50%);
-  color: #7e9094;
+  color: var(--color-floating-label);
   transition: all 0.15s ease;
   pointer-events: none;
 }
 
 .select__label.is-floating {
-  top: 11px;
-  font-size: 11px;
+  top: var(--margin-s);
+  font-size: var(--font-input);
   font-weight: 600;
 }
 
 .select__value {
-  margin-top: 15px;
-  color: #14282f;
+  flex: 1;
+  margin-top: 14px;
+  color: var(--color-text);
+  text-align: left;
 }
 
+/* CHEVRON */
 .select__chevron {
   position: absolute;
   right: 10px;
-  color: #7e9094;
+  top: 50%;
+  transform: translateY(-50%) rotate(0deg);
+  transform-origin: center;
   transition: transform 0.15s ease;
+  pointer-events: none;
 }
 
 .select__chevron.is-open {
-  transform: rotate(180deg);
+  transform: translateY(-50%) rotate(180deg);
 }
+
 
 /* =========================
    DROPDOWN
    ========================= */
-
 .select__dropdown {
   position: absolute;
-  z-index: 100;
+  z-index: 1000;
   top: calc(100% + 4px);
   left: 0;
   right: 0;
@@ -71,85 +76,45 @@
   background: var(--color-input-bg);
   border: 1px solid var(--color-input-border);
   border-radius: var(--radius-s);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--shadow-m);
 
   max-height: 240px;
   display: flex;
   flex-direction: column;
 }
 
-/* 🔑 SCROLL CONTAINER */
 .select__list-wrapper {
   flex: 1;
-  min-height: 0; /* flexbox scroll fix */
+  min-height: 0;
   overflow-y: auto;
 }
-
-/* SEARCH */
 
 .select__search {
   margin: 4px;
   padding: 8px;
   border: none;
-  border-bottom: 1px solid #e0e8ea;
+  border-bottom: 1px solid var(--color-white-border);
   outline: none;
 }
 
-/* =========================
-   CHIPS IN TRIGGER
-   ========================= */
-
-.select__chips {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  max-height: 48px;
-  overflow: hidden;
-}
-
-/* =========================
-   SIZE – SMALL
-   ========================= */
-
-.select--sm .select__trigger {
-  height: 32px;
-  padding: 0 32px 0 8px;
-}
-
-.select--sm .select__label {
-  font-size: 10px;
-  top: 8px;
-  left: 8px;
-}
-
-.select--sm .select__value {
-  margin-top: 8px;
-  font-size: 12px;
-}
-
-
+/* SINGLE */
 .select__single-list {
   list-style: none;
-  margin: 0;
-  padding: 4px 0;
+  margin: var(--margin-xs);
+  padding: 0;
 }
 
 .select__single-item {
   width: 100%;
   text-align: left;
-
   background: transparent;
   border: none;
-  border-radius: 0;
-
-  padding: 10px 12px;
-
-  font-size: 14px;
-  color: #14282f;
-
+  padding: var(--padding-m);
+  font-size: var(--font-default);
+  color: var(--color-text);
   cursor: pointer;
 }
 
 .select__single-item:hover {
-  background: rgba(19, 120, 151, 0.08);
+  background: var(--color-input-hover);
 }

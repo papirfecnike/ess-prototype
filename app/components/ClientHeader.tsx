@@ -2,10 +2,12 @@ import { NavLink, useNavigate } from "react-router";
 import { useEffect, useState } from "react";
 import logo from "@/assets/logo.svg";
 import { Icon } from "@/components/ui/icon/Icon";
-
 import { GlobalSearch } from "../search/GlobalSearch";
 import { Dialog } from "../components/ui/dialog/Dialog";
 import { Button } from "../components/ui/button/Button";
+
+
+
 
 export default function ClientHeader() {
   const [searchOpen, setSearchOpen] = useState(false);
@@ -37,6 +39,8 @@ export default function ClientHeader() {
     document.body.classList.toggle("dark", isDark);
     localStorage.setItem("theme", isDark ? "dark" : "light");
   }, [isDark]);
+
+
 
   return (
     <>
@@ -88,27 +92,24 @@ export default function ClientHeader() {
         onClose={() => setSearchOpen(false)}
     />
 
-    {/* =========================
-          PROTOTYPE DIALOG
-          ========================= */}
-
-      <Dialog
-        isOpen={isPrototypeOpen}
-        intent="warning"
-        title="PROTOTYPE"
-        footerRight={
-          <Button
-            variant="primary"
-            onClick={() => setIsPrototypeOpen(false)}
-          >
-            OK
-          </Button>
-        }
-      >
-        <p>The purpose of this prototype is to demonstrate animations, component behavior and styling, minimal interactions and logical flows.</p>
-        <p>Please note that some functions might not work, some features are not done yet. </p>
-        <p>This prototype was not done by a professional developer, it might have some flaws. Handle this with care and love.</p>
-      </Dialog>
+    
+    <Dialog
+      isOpen={isPrototypeOpen}
+      intent="warning"
+      title="PROTOTYPE"
+      footerRight={
+        <Button
+          variant="primary"
+          onClick={() => setIsPrototypeOpen(false)}
+        >
+          OK
+        </Button>
+      }
+    >
+      <p>The purpose of this prototype is to demonstrate animations, component behavior and styling, minimal interactions and logical flows.</p>
+      <p>Please note that some functions might not work, some features are not done yet. </p>
+      <p>This prototype was not done by a professional developer, it might have some flaws. Handle this with care and love.</p>
+    </Dialog>
       </>
     );
 }

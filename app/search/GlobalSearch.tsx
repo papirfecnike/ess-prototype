@@ -1,11 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router";
-
 import { Card } from "@/components/ui/card/Card";
 import { TextField } from "@/components/ui/input/TextField";
 import { Icon } from "@/components/ui/icon/Icon";
-
 import { searchIndex } from "./searchIndex";
+
 
 type Props = {
   isOpen: boolean;

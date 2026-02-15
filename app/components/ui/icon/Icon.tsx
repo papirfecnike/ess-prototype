@@ -1,6 +1,6 @@
 import type { SVGProps } from "react";
-import { icons, type IconName } from "./icons";
 import "./icon.css";
+import { icons, type IconName } from "./icons";
 
 type IconSize = "xs" | "sm" | "md" | "lg";
 type IconColor = "inherit" | "default" | "muted" | "primary" | "danger";
@@ -22,6 +22,7 @@ export function Icon({
   name,
   size = "md",
   color = "inherit",
+  className,
   ...rest
 }: Props) {
   const px = SIZE_MAP[size];
@@ -31,13 +32,17 @@ export function Icon({
       width={px}
       height={px}
       viewBox="0 0 24 24"
+      preserveAspectRatio="xMidYMid meet"
       className={[
         "icon",
-        `icon--${size}`,
         color !== "inherit" ? `icon--${color}` : "",
+        className ?? "",
       ].join(" ")}
-      fill="currentColor"
-      stroke="none"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
       aria-hidden
       {...rest}
     >

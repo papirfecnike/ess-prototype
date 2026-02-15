@@ -12,7 +12,6 @@
 /* =========================
    MAIN GRID
    ========================= */
-
 .dashboard-grid {
   display: grid;
   grid-template-columns:
@@ -25,7 +24,6 @@
 /* =========================
    COLUMNS
    ========================= */
-
 .dashboard-column {
   display: flex;
   flex-direction: column;
@@ -52,7 +50,6 @@
 /* =========================
    KPI CARDS
    ========================= */
-
 .dashboard-kpis {
   display: grid;
   grid-template-columns: repeat(3, minmax(140px, 1fr));
@@ -66,20 +63,18 @@
 
 .dashboard-kpi-label {
   margin-top: 4px;
-  color: var(--color-text-muted);
+  color: var(--color-text);
 }
 
 /* =========================
    MAP + RECENT
    ========================= */
-
 .dashboard-recent {
   display: grid;
   grid-template-columns: repeat(2, minmax(220px, 1fr));
   gap: 16px;
 }
 
-/* Map */
 .dashboard-map {
   width: 100%;
   aspect-ratio: 16 / 9;
@@ -98,7 +93,6 @@
 /* =========================
    ACTION STACKS
    ========================= */
-
 .dashboard-stack {
   display: flex;
   flex-direction: column;
@@ -108,7 +102,6 @@
 /* =========================
    RECENT ACTIVITIES
    ========================= */
-
 .recent-activities {
   display: flex;
   flex-direction: column;
@@ -122,7 +115,7 @@
   align-items: center;
   gap: 8px;
 
-  color: #6f8a92;
+  color: var(--color-text);
   font-weight: 700;
   text-transform: uppercase;
   font-size: 14px;
@@ -163,15 +156,15 @@
 }
 
 .recent-activity__icon.success {
-  color: #07930A;
+  color: var(--color-success);
 }
 
 .recent-activity__icon.warning {
-  color: #F09300;
+  color: var(--color-warning);
 }
 
 .recent-activity__icon.neutral {
-  color: #137897;
+  color: var(--color-default);
 }
 
 /* CONTENT */
@@ -183,11 +176,11 @@
 
 .recent-activity__time {
   font-size: 13px;
-  color: #6f8a92;
+  color: var(--color-text);
 }
 
 .recent-activity strong {
   font-size: 14px;
   font-weight: 600;
-  color: #0b1f26;
+  color: var(--color-text);
 }

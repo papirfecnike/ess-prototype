@@ -1,3 +1,6 @@
+/* =========================
+   BASE
+   ========================= */
 .ui-callout {
   position: relative;
   border-radius: 8px;
@@ -30,15 +33,13 @@
 /* =========================
    ACTION BUTTON (GHOST)
    ========================= */
-
 .ui-callout__header .btn {
   position: absolute;
-  top: 12px;
-  right: 12px;
-  height: 32px;
-  min-height: 32px;
+  top: var(--space-3);
+  right: var(--space-3);
+  height: var(--height-s);
+  min-height: var(--height-s);
   line-height: 1;
-
   color: var(--callout-color);
 }
 
@@ -49,7 +50,6 @@
 /* =========================
    INTENTS
    ========================= */
-
 .ui-callout--default {
   --callout-color: #137897;
   --callout-bgcolor: #ecf9fc;

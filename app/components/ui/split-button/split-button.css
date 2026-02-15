@@ -1,3 +1,6 @@
+/* =========================
+   BASE
+   ========================= */
 .split-button {
   display: inline-flex;
   position: relative;
@@ -10,17 +13,16 @@
 /* =========================
    BUTTONS
    ========================= */
-
 .split-button__primary,
 .split-button__toggle {
-  height: 42px;
-  font-size: 14px;
+  height: var(--height-m);
+  font-size: var(--font-default);
   font-weight: 600;
 
   background: transparent;
-  color: #137897;
+  color: var(--color-default);
 
-  border: 2px solid #137897;
+  border: 2px solid var(--color-default);
   cursor: pointer;
 
   display: inline-flex;
@@ -31,7 +33,6 @@
 }
 
 /* PRIMARY */
-
 .split-button__primary {
   display: flex;
   align-items: center;
@@ -41,41 +42,40 @@
   flex: 1 1 auto;
   min-width: 0;
 
-  height: 42px;
-  padding: 6px 12px;
+  height: var(--height-m);
+  padding: var(--padding-xs) var(--padding-m);
 
-  font-size: 14px;
+  font-size: var(--font-default);
   font-weight: 600;
 
-  background: #ffffff;
-  color: #137897;
+  background: var(--button-primary-inverse);
+  color: var(--color-default);
 
-  border: 2px solid #137897;
+  border: 2px solid var(--color-default);
 
-  border-top-right-radius: 4px;
-  border-bottom-right-radius: 4px;
-  border-top-left-radius: 99px;
-  border-bottom-left-radius: 99px;
+  border-top-right-radius: var(--radius-xs);
+  border-bottom-right-radius: var(--radius-xs);
+  border-top-left-radius: var(--radius-full);
+  border-bottom-left-radius: var(--radius-full);
 
   cursor: pointer;
 }
 
 
 /* TOGGLE */
-
 .split-button__toggle {
-  flex: 0 0 42px;   /* 🔑 fix szélesség */
-  width: 42px;
+  flex: 0 0 42px; 
+  width: var(--width-m);
   padding: 0;
 
-  background: #ffffff;
+  background: var(--button-primary-inverse);
   
-  border-left: 2px solid #137897;
+  border-left: 2px solid var(--color-default);
 
-  border-top-left-radius: 4px;
-  border-bottom-left-radius: 4px;
-  border-top-right-radius: 999px;
-  border-bottom-right-radius: 999px;
+  border-top-left-radius: var(--radius-xs);
+  border-bottom-left-radius: var(--radius-xs);
+  border-top-right-radius: var(--radius-full);
+  border-bottom-right-radius: var(--radius-full);
 }
 
 .split-button__toggle svg {
@@ -89,55 +89,48 @@
 /* =========================
    HOVER
    ========================= */
-
 .split-button__primary:hover,
 .split-button__toggle:hover {
-  background: #f5f6f7;
+  background: var(--color-secondary-hover);
 }
 
 /* =========================
    SELECTED
    ========================= */
-
 .split-button__primary.is-selected,
 .split-button__toggle.is-selected {
-  background: #137897;
-  color: #ffffff;
+  background: var(--color-default);
+  color: var(--color-white);
 }
 
 /* =========================
    MENU
    ========================= */
-
 .split-button__menu {
   position: absolute;
   top: calc(100% + 6px);
   right: 0;
   z-index: 2000;
-
   min-width: 200px;
-  background: #ffffff;
+  background: var(---color-white);
+  border: 2px solid var(--color-default);
+  border-radius: var(--radius-s);
 
-  border: 2px solid #137897;
-  border-radius: 8px;
-
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+  box-shadow: var(--shadow-xl);
   overflow: hidden;
 }
 
-/* MENU ITEM (checkbox row) */
-
 .split-button__menu-item {
   width: 100%;
-  padding: 10px 12px;
+  padding: 10px var(--padding-m);
 
   display: flex;
   align-items: center;
   gap: 10px;
 
-  font-size: 14px;
+  font-size: var(--font-default);
   font-weight: 600;
-  color: #137897;
+  color: var(--color-default);
 
   cursor: pointer;
   box-sizing: border-box;
@@ -148,5 +141,5 @@
 }
 
 .split-button__menu-item:hover {
-  background: #f5f6f7;
+  background: var(--color-secondary-hover);
 }

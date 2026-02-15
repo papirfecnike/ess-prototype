@@ -2,15 +2,11 @@
   width: 16px;
   height: 16px;
   border-radius: 4px;
-
   display: inline-flex;
   align-items: center;
   justify-content: center;
-
   background: transparent;
   box-sizing: border-box;
-
-  /* 🔴 EZ A KRITIKUS */
   outline: 1px solid var(--color-checkbox-border);
   outline-offset: -1px;
 }
@@ -18,7 +14,6 @@
 /* =========================
    STATES
    ========================= */
-
 .checkbox--unchecked {
   background: transparent;
 }
@@ -36,26 +31,24 @@
 /* =========================
    ICON
    ========================= */
-
 .checkbox__icon {
-  width: 12px;
-  height: 12px;
-
+  width: var(--icon-xs);
+  height: var(--icon-xs);
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .checkbox svg {
-  width: 12px;
-  height: 12px;
-  color: #ffffff;
+  width: var(--icon-xs);
+  height: var(--icon-xs);
+  background: var(--color-default);
+  color: var(--color-white);
 }
 
 /* =========================
    DISABLED
    ========================= */
-
 .checkbox.is-disabled {
   opacity: 0.5;
   cursor: not-allowed;

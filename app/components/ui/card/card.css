@@ -1,60 +1,55 @@
 .ui-card {
   display: flex;
   flex-direction: column;
-  background: #ffffff;
-  border: 1px solid #e0e8ea;
-  border-radius: 16px;
-  padding: 0; /* fontos */
-  box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.08);
+  background: var(--color-white);
+  border: 1px solid var(--color-dialog-footer);
+  border-radius: var(--radius-m);
+  padding: 0;
+  box-shadow: var(--shadow-m);
   width: 100%;
 }
 
 .ui-card > * {
-  padding: 16px;
+  padding: var(--padding-l);
 }
 
 .ui-card > .card-header {
-  padding: 16px;
+  padding: var(--padding-l);
   display: flex;
   align-items: center;
-  gap: 12px;
-  border-bottom: 1px solid #e0e8ea;
+  gap: var(--space-3);
+  border-bottom: 1px solid var(--color-dialog-footer);
 }
 
 .ui-card > *:first-child {
-  padding: 16px;
-
-  background: #ffffff;
+  padding: var(--padding-l);
+  background: var(--color-white);
   color: inherit;
-
-  border-bottom: 1px solid #e0e8ea;
-
-  border-top-left-radius: 16px;
-  border-top-right-radius: 16px;
+  border-bottom: 1px solid var(--color-dialog-footer);
+  border-top-left-radius: var(--radius-m);
+  border-top-right-radius: var(--radius-m);
 }
 
 .ui-card > *:not(:first-child) {
   display: flex;
   flex-direction: column;
   flex: 1;
-  gap: 12px;
+  gap: var(--space-3);
 }
-
 
 /* =========================
    CARD VARIANTS
    ========================= */
-
 .ui-card--darkHeader > *:first-child {
-  background: #2D4E58;
-  color: #ffffff;
-  border-top-left-radius: 16px;
-  border-top-right-radius: 16px;
+  background: var( --color-dialog-header-dark);
+  color: var(--color-white);
+  border-top-left-radius: var(--radius-m);
+  border-top-right-radius: var(--radius-m);
   border-bottom: none;
 }
 
 .ui-card--darkHeader > *:first-child h3 {
-  color: #ffffff;
+  color: var(--color-white);
 }
 
 
@@ -63,8 +58,8 @@
    ========================= */
 
 .ui-card--scanInput {
-  border-radius: 16px;
-  border: 1px solid #e0e8ea;
+  border-radius: var(--radius-m);
+  border: 1px solid var(--color-dialog-footer);
   overflow: hidden;
   border: none;
   padding: 0;

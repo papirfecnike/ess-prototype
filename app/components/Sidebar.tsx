@@ -12,10 +12,6 @@ const PRODUCT_PAGES = [
   "/inventory/inspection-product",
 ];
 
-/* =========================
-   RECURSIVE SIDEBAR ITEM
-   ========================= */
-
 type SidebarItemNodeProps = {
   item: SidebarItem;
   basePath: string;

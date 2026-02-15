@@ -1,48 +1,39 @@
 /* =========================================================
    DATA TABLE – CARD WRAPPER
    ========================================================= */
-
 .data-table-card {
-  background: var(--color-table);
+  background: var(--color-white);
   border-radius: var(--radius-m);
   box-shadow: var(--shadow-m);
   overflow: visible;
-
   margin: 0;
 }
 
 /* =========================================================
    DATA TABLE ROOT
    ========================================================= */
-
 .data-table {
   display: flex;
   flex-direction: column;
-
-  background: var(--color-table);
+  background: var(--color-white);
   border-radius: inherit;
-  border: 1px solid var(--color-table-border);
-
+  border: 1px solid var(--color-white-border);
   overflow: hidden;
 }
 
 /* =========================================================
    HEADER (Search + Filters)
    ========================================================= */
-
 .data-table__header {
   display: flex;
   flex-direction: column;
   gap: var(--space-3);
-
   padding: var(--space-3);
-  background: var(--color-table);
-  border-bottom: 1px solid var(--color-table-border);
+  background: var(--color-white);
+  border-bottom: 1px solid var(--color-white-border);
 }
 
-
 /* TOP ROW */
-
 .data-table__header-main {
   display: flex;
   align-items: center;
@@ -54,7 +45,6 @@
   display: flex;
   align-items: center;
   gap: 8px;
-
   flex: 1;
   min-width: 0; 
 }
@@ -69,7 +59,6 @@
   display: flex;
   align-items: center;
   gap: var(--space-3);
-
   flex: 0 0 auto;
 }
 
@@ -77,7 +66,6 @@
   width: 250px;
   min-width: 250px;
   max-width: 250px;
-
   flex: 0 0 auto;
 }
 
@@ -87,25 +75,19 @@
   gap: 8px;
 }
 
-
 /* TOGGLE */
-
 .data-table__toggle {
   display: flex;
   align-items: center;
 }
 
 /* EXPANDABLE DETAILS */
-
 .data-table__header-details {
-  background: #f5f7f8;
+  background: var(--color-white-column-header);
   border-radius: var(--radius-s);
-
   padding: var(--space-4);
   margin-top: var(--space-3);
-
   border: none;
-
   display: flex;
   align-items: center;
   gap: var(--space-3);
@@ -115,7 +97,6 @@
 .data-table__header-details {
   animation: expand 150ms ease-out;
 }
-
 @keyframes expand {
   from {
     opacity: 0;
@@ -130,7 +111,6 @@
 /* =========================
    COLUMN HEADER ROW
    ========================= */
-
 .data-table__header-row {
   margin: 8px;
   border-radius: var(--radius-xs);
@@ -149,7 +129,6 @@
   font-weight: var(--font-weight-medium);
   text-align: left;
   color: var(--color-text);
-
   background: transparent;
   border: none;
 }
@@ -158,55 +137,46 @@
 /* =========================================================
    TABLE CONTENT
    ========================================================= */
-
 .data-table__content {
   overflow-x: auto;
 }
 
 /* TABLE */
-
 .data-table table {
   width: 100%;
   border-collapse: collapse;
 }
 
 /* HEADER ROW */
-
 .data-table thead th {
-  background: var(--color-table-column-header);
+  background: var(--color-white-column-header);
   font-weight: var(--font-weight-bold);
   font-size: var(--font-size-s);
   color: var(--color-text);
-
   padding: var(--space-3);
   text-align: left;
 }
 
 /* BODY ROWS */
-
 .data-table tbody td {
   padding: var(--space-3);
   font-size: var(--font-size-s);
   color: var(--color-text);
-
-  border-bottom: 1px solid var(--color-table-border);
-  background: var(--color-table);
+  border-bottom: 1px solid var(--color-white-border);
+  background: var(--color-white);
 }
 
 /* HOVER */
-
 .data-table tbody tr:hover td {
   background: var(--color-table-hover);
 }
 
 /* EXPANDED */
-
 .data-table tbody tr.data-table__row--expanded > td {
-  background: #ECF0F2 !important;
+  background: var(--color-table-hover) !important;
 }
 
 /* LAST ROW */
-
 .data-table tbody tr:last-child td {
   border-bottom: none;
 }
@@ -216,76 +186,66 @@
   background: var(--color-table-hover);
 }
 
-
 /* =========================================================
    FOOTER
    ========================================================= */
-
 .data-table__footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
-
   padding: var(--space-3);
-  background: var(--color-table);
-  border-top: 1px solid var(--color-table-border);
-
+  background: var(--color-white);
+  border-top: 1px solid var(--color-white-border);
   font-size: var(--font-size-s);
 }
-
 
 /* =========================
    FILTER BUTTON
    ========================= */
-
 .data-table__filter-button {
   display: inline-flex;
   align-items: center;
   gap: 6px;
 }
 
-/* CHEVRON */
-
-.data-table__chevron {
-  transition: transform 150ms ease;
-}
-
-.data-table__chevron.is-open {
-  transform: rotate(180deg);
-}
 /* =========================
    FILTER PANEL
    ========================= */
-
 .data-table__filter-panel {
   margin-top: var(--space-3);
   padding-top: var(--space-3);
-
   border-top: 1px dashed var(--color-border);
-
   display: flex;
   flex-direction: column;
   gap: var(--space-4);
-
   animation: expand 150ms ease-out;
 }
 
-
 /* ACTIONS */
-
 .data-table__filter-actions {
   display: flex;
   justify-content: space-between;
   gap: var(--space-3);
 }
 
-
 .data-table__chevron {
   transition: transform 150ms ease;
+  width: 16px;
+  height: 16px;
+  display: inline-block;
+  color: var(--color-text);
 }
 
 .data-table__chevron.is-open {
   transform: rotate(180deg);
+}
+
+.data-table__chevron-left {
+  transform: rotate(90deg);
+}
+
+.data-table__chevron-right {
+  transform: rotate(-90deg);
 }
 
 .data-table td svg {
@@ -294,21 +254,14 @@
   display: block;
 }
 
-.data-table__chevron {
-  width: 16px;
-  height: 16px;
-  display: inline-block;
-}
-
 .data-table td .btn--ghost {
-  color: var(--color-table-chevron);
+  color: var(--color-default);
   fill: currentColor;
 }
 
 /* =========================
    DETAILS BAR
    ========================= */
-
 .data-table__details-bar {
   padding: var(--space-3);
   background: var(--color-table-hover);
@@ -319,18 +272,15 @@
 /* =========================
    FILTER PLACEHOLDER
    ========================= */
-
 .data-table__filter-placeholder {
   padding: var(--space-4);
-  color: var(--color-text-muted);
+  color: var(--color-text);
   font-size: var(--font-size-s);
 }
-
 
 /* =========================
    EMPTY STATE
    ========================= */
-
 .data-table__empty td {
   padding: var(--space-6) 0;
   border-bottom: none;
@@ -341,11 +291,9 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-
   gap: var(--space-3);
   text-align: center;
-
-  color: var(--color-text-muted);
+  color: var(--color-text);
 }
 
 .data-table__empty-content svg {
@@ -366,15 +314,14 @@
 /* =========================
    DATA TABLE FOOTER
    ========================= */
-
 .data-table__footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
 
   padding: var(--space-3);
-  border-top: 1px solid var(--color-table-border);
-  background: var(--color-table);
+  border-top: 1px solid var(--color-white-border);
+  background: var(--color-white);
 }
 
 .data-table__footer-center {
@@ -384,45 +331,26 @@
 }
 
 /* RANGE TEXT */
-
 .data-table__footer-range {
   font-size: var(--font-size-s);
-  color: var(--color-text-muted);
+  color: var(--color-text);
   white-space: nowrap;
 }
 
-/* CHEVRONS */
-
-.data-table__chevron {
-  color: var(--color-text);
-}
-
-.data-table__chevron-left {
-  transform: rotate(90deg);
-}
-
-.data-table__chevron-right {
-  transform: rotate(-90deg);
-}
-
-/* ghost buttons should not kill icon contrast */
 .data-table__footer .btn--ghost {
   color: var(--color-text);
 }
 
-
 /* =========================
    FOOTER – PAGINATION
    ========================= */
-
 .data-table__footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
-
   padding: var(--space-3);
-  border-top: 1px solid var(--color-table-border);
-  background: var(--color-table);
+  border-top: 1px solid var(--color-white-border);
+  background: var(--color-white);
 }
 
 .data-table__footer-center {
@@ -433,148 +361,77 @@
 
 .data-table__footer-range {
   font-size: var(--font-size-s);
-  color: var(--color-text-muted);
+  color: var(--color-text);
   white-space: nowrap;
 }
 
-/* SELECT OFFSET */
 .data-table__footer-page-select {
   margin-left: var(--space-2);
 }
 
-/* CHEVRONS */
-
-.data-table__chevron {
-  color: var(--color-text);
-}
-
-/* prev / next */
-.data-table__chevron-left {
-  transform: rotate(90deg);
-}
-.data-table__chevron-right {
-  transform: rotate(-90deg);
-}
-
-/* disabled ghost buttons */
 .data-table__footer .btn--ghost:disabled {
-  color: var(--color-text-muted);
+  color: var(--color-text);
   cursor: not-allowed;
-}
-
-/* =========================================================
-   EXPANDED ROW – ACTIVE STATE
-   ========================================================= */
-
-.data-table__expanded-row td {
-  background: #ECF0F2;
-  padding: 24px;
-  border-bottom: none;
 }
 
 /* =========================================================
    EXPANDED STATE – ALWAYS VISIBLE BACKGROUND
    ========================================================= */
-
-/* parent row when expanded */
 .data-table__row--expanded td {
-  background: #ECF0F2 !important;
+  background: var(--color-table-hover) !important;
 }
-
-/* expanded content row */
 .data-table__expanded-row td {
-  background: #ECF0F2 !important;
+  background: var(--color-table-hover) !important;
   padding: 24px;
   border-bottom: none;
 }
-
-/* disable hover when expanded */
 .data-table tbody tr:not(.data-table__row--expanded):hover td {
   background: var(--color-table-hover);
 }
 
-
 /* =========================================================
    EXPANDED ROW – INNER TABLE CARD
    ========================================================= */
-
 .data-table__expanded-row table {
-  background-color: var(--color-table);
+  background-color: var(--color-white);
   border-radius: 8px;
-
-  box-shadow: 0 0 0 1px var(--color-table-border);
+  box-shadow: 0 0 0 1px var(--color-white-border);
 }
 
-/* =========================================================
-   EXPANDED ROW – INNER TABLE CONTAINER
-   ========================================================= */
-
-.data-table__expanded-row td {
-  background: #ECF0F2 !important;
-  padding: 24px;
-  border-bottom: none;
-}
-
-.data-table__row--expanded td {
-  background: #ECF0F2;
-}
-
-
-/* THIS is the visual card */
 .data-table__expanded-inner {
-  background: var(--color-table);
+  background: var(--color-white);
   border-radius: 8px;
-  overflow: hidden; /* CRITICAL for radius */
+  overflow: hidden;
 }
 
-/* inner table reset */
 .data-table__expanded-inner table {
   width: 100%;
   border-collapse: collapse;
-  background: var(--color-table);
+  background: var(--color-white);
+  border-radius: 8px;
+  overflow: hidden;
 }
 
-/* header */
 .data-table__expanded-inner thead th {
-  background: var(--color-table);
+  background: var(--color-white);
   font-weight: 600;
   padding: 12px 16px;
-  border-bottom: 1px solid var(--color-table-border);
+  border-bottom: 1px solid var(--color-white-border);
 }
 
-/* body */
 .data-table__expanded-inner tbody td {
-  background: var(--color-table) !important;
+  background: var(--color-white) !important;
   padding: 12px 16px;
-  border-bottom: 1px solid var(--color-table-border);
+  border-bottom: 1px solid var(--color-white-border);
 }
 
 .data-table__expanded-inner tbody tr:last-child td {
   border-bottom: none;
 }
 
-/* =========================================================
-   EXPANDED ROW – FORCE WHITE INNER TABLE BODY
-   ========================================================= */
-
-.data-table__expanded-inner {
-  background: var(--color-table);
-  border-radius: 8px;
-  overflow: hidden;
-}
-
-.data-table__expanded-inner thead th {
-  background: var(--color-table);
-  font-weight: 600;
-}
-
-.data-table__expanded-inner tbody td {
-  background: var(--color-table);
-}
-
 
 .data-table__filter-panel {
-  background: #f5f7f8;
+  background: var(--color-white-column-header);
   border-radius: var(--radius-s);
   padding: var(--space-4);
 }
@@ -588,14 +445,11 @@
 .data-table__filter-actions {
   margin-top: var(--space-4);
   padding-top: var(--space-3);
-
-  border-top: 1px solid var(--color-table-border);
-
+  border-top: 1px solid var(--color-white-border);
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-
 
 .data-table__text {
   display: flex;
@@ -605,6 +459,7 @@
   font-size: 14px;
   font-weight: 600;
 }
+
 .data-table__chips {
   display: flex;
   flex-wrap: wrap;

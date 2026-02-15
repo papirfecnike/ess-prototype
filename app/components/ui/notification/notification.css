@@ -1,28 +1,27 @@
 /* =========================
    ROOT
    ========================= */
-
 .notification {
   position: fixed;
-  bottom: 24px;
-  right: 24px;
+  bottom: var(--margin-xxl);
+  right: var(--margin-xxl);
 
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: var(--space-4);
 
   min-width: 360px;
   max-width: 420px;
 
-  padding: 12px 16px;
+  padding: var(--padding-m) var(--padding-l);
 
-  border-radius: 8px;
+  border-radius: var(--radius-s);
   border-left: 5px solid;
   border-top: 1px solid;
   border-bottom: 1px solid;
   border-right: 1px solid;
 
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
+  box-shadow: var(--shadow-xl);
 
   animation: notification-slide-in 240ms ease-out;
   z-index: 5000;
@@ -39,7 +38,6 @@
 /* =========================
    ICON
    ========================= */
-
 .notification__icon {
   display: flex;
   align-items: center;
@@ -49,28 +47,26 @@
 /* =========================
    CONTENT
    ========================= */
-
 .notification__content {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: var(--space-1);
   flex: 1;
 }
 
 .notification__title {
-  font-size: 14px;
+  font-size: var(--font-default);
   font-weight: 700;
 }
 
 .notification__message {
-  font-size: 14px;
+  font-size: var(--font-default);
   line-height: 1.4;
 }
 
 /* =========================
    ACTION
    ========================= */
-
 .notification__action {
   flex-shrink: 0;
 }
@@ -78,27 +74,26 @@
 /* =========================
    INTENTS
    ========================= */
-
 .notification--default {
-  background: var(--callout-default-bgcolor);
+  background: var(--callout-default);
   border-color: var(--color-default);
   color: var(--color-default);
 }
 
 .notification--success {
-  background: var(--callout-success-bgcolor);
+  background: var(--callout-success);
   border-color: var(--color-success);
   color: var(--color-success);
 }
 
 .notification--warning {
-  background: var(--callout-warning-bgcolor);
+  background: var(--callout-warning);
   border-color: var(--color-warning);
   color: var(--color-warning);
 }
 
 .notification--danger {
-  background: var(--callout-danger-bgcolor);
+  background: var(--callout-danger);
   border-color: var(--color-danger);
   color: var(--color-danger);
 }
@@ -106,7 +101,6 @@
 /* =========================
    ANIMATION
    ========================= */
-
 @keyframes notification-slide-in {
   from {
     transform: translateX(120%);
@@ -122,48 +116,47 @@
 /* =========================
    ACTION BUTTON
    ========================= */
-
 .notification__button {
-  border-radius: 999px;
+  border-radius: var(--radius-full);
   font-weight: 700;
 }
 
 /* DEFAULT */
 .notification__button--default {
-  background: #137897;
-  color: #fff;
+  background: var(--color-default);
+  color: var(--color-white);
 }
 
 .notification__button--default:hover {
-  background: #0f5f75;
+  background: var(--button-primary-hover);
 }
 
 /* SUCCESS */
 .notification__button--success {
-  background: #07930A;
-  color: #fff;
+  background: var(--color-success);
+  color: var(--color-white);
 }
 
 .notification__button--success:hover {
-  background: #067a08;
+  background: var(--color-success-hover);
 }
 
 /* WARNING */
 .notification__button--warning {
-  background: #F09300;
-  color: #fff;
+  background: var(--color-warning);
+  color: var(--color-white);
 }
 
 .notification__button--warning:hover {
-  background: #d68100;
+  background: var(--color-warning-hover);
 }
 
 /* DANGER */
 .notification__button--danger {
-  background: #CA1520;
-  color: #fff;
+  background: var(--color-danger);
+  color: var(--color-white);
 }
 
 .notification__button--danger:hover {
-  background: #a9121b;
+  background: var(--color-danger-hover);
 }

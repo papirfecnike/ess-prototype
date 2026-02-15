@@ -4,16 +4,16 @@
 }
 
 .dropdown-menu__surface {
-  background: var(--color-bg-elevated, #ffffff);
+  background: var(--color-lightblue);
   border: 1px solid var(--color-border, #e0e8ea);
   border-radius: var(--radius-s);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  box-shadow: var(--shadow-l);
   overflow: hidden;
 }
 
 .dropdown-menu__surface .selectable-list {
   margin: 0;
-  padding: 8px;
+  padding: var(--padding-s);
   background: transparent;
   border-radius: var(--radius-xs);
 }
@@ -25,12 +25,11 @@
 /* =========================
    DANGER ITEM
    ========================= */
-
 .dropdown-menu__item--danger {
   color: var(--color-danger);
 }
 
 .dropdown-menu__item--danger:hover,
 .dropdown-menu__item--danger:focus {
-  background-color: rgba(255, 0, 0, 0.08);
+  background-color: var(--shadow-m);
 }

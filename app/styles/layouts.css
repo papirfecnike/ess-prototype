@@ -1,11 +1,29 @@
 /* =========================================================
    GRID / GROUP PATTERNS
-   ========================================================= */
+   ========================= */
+.layout-grid-6 {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 16px;
+}
 
-.layout-grid-6 { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 16px; }
-.layout-grid-4 { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
-.layout-grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
-.layout-grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.layout-grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.layout-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.layout-grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
 
 .layout-stack {
   display: flex;
@@ -23,8 +41,7 @@
 
 /* =========================================================
    CARD GROUPING
-   ========================================================= */
-
+   ========================= */
 .card-group {
   display: flex;
   flex-direction: column;
@@ -32,7 +49,7 @@
 }
 
 .card-item-muted {
-  background: #f5f6f7;
+  background: var(--color-white-column-header);
   border-radius: 12px;
   padding: 8px;
 }
@@ -40,8 +57,7 @@
 
 /* =========================================================
    ACTION ROWS
-   ========================================================= */
-
+   ========================= */
 .action-row {
   display: flex;
   align-items: center;
@@ -49,11 +65,9 @@
   white-space: nowrap;
 }
 
-
-/* =========================================================
+/* =========================
    CARD FILL / ALIGNMENT
-   ========================================================= */
-
+   ========================= */
 .layout-card-fill {
   display: flex;
   flex-direction: column;
@@ -102,7 +116,7 @@
 .version-description {
   margin-top: 4px;
   font-size: 14px;
-  color: #5f6b6d;
+  color: var(--color-text);
   line-height: 1.4;
 }
 
@@ -114,11 +128,11 @@
 }
 
 .version-meta {
-  display: inline-flex;
+  display: inline-flex; 
   align-items: center;
   gap: 4px;
   font-size: 13px;
-  color: #5f6b6d;
+  color: var(--color-text);
 }
 
 .version-expand-trigger {
@@ -131,7 +145,7 @@
 }
 
 .version-expand-trigger:hover {
-  background: #eef0f1;
+  background: var(--color-white);
   border-radius: 6px;
 }
 
@@ -143,16 +157,15 @@
 /* ===== VERSION ITEM ===== */
 
 .version-item {
-  background: #f5f6f7;
+  color: var(--color-text);
   border-radius: 16px;
   padding: 16px;
 }
 
 .version-expanded {
   margin-top: 12px;
-  padding: 16px;
-  background: #ffffff;
-  border-radius: 8px;
+  padding-top: 12px;
+
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -163,12 +176,16 @@
   align-items: flex-start;
   gap: 8px;
   font-size: 14px;
-  line-height: 1.45;
-  color: #2f3a3c;
+  line-height: 1.4;
+  color: var(--color-text);
+}
+
+.version-expand-trigger.is-open {
+  transform: rotate(180deg);
 }
 
 .version-change .icon {
-  color: #51ae0a;
+  color: var(--color-text);
   flex-shrink: 0;
   margin-top: 2px;
 }
@@ -190,7 +207,9 @@
   transition: background-color 0.2s ease;
 }
 
-/* SAVE */
+/* =========================
+   SAVE CARD
+   ========================= */
 .card--save.card--editing {
   border-color: #82b10a;
 }
@@ -199,7 +218,9 @@
   background: #f1f4ea;
 }
 
-/* LOAD */
+/* =========================
+   LOAD CARD
+   ========================= */
 .card--load.card--editing {
   border-color: #5cc5d5;
 }
@@ -208,7 +229,9 @@
   background: #dff5f8;
 }
 
-/* APPLY */
+/* =========================
+   APPLY CARD
+   ========================= */
 .card--apply.card--editing {
   border-color: #8e44ad;
 }
@@ -217,38 +240,42 @@
   background: #f9e9ff;
 }
 
-
-/* =========================================================
-   SETTINGS PAGE
-   ========================================================= */
-
-.settings-page {
+/* =========================
+   PROFILE
+   ========================= */
+.profile-page {
   display: flex;
   flex-direction: column;
 }
 
-.settings-section {
+.profile-section {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 24px;
+  align-items: flex-start;
   margin-top: 24px;
   display: flex;
   flex-direction: column;
   gap: 24px;
 }
 
-
-/* =========================================================
-   SETTINGS CARD LAYOUT
-   ========================================================= */
-
-.settings-card-title {
-  font-size: var(--font-h3);
-  font-weight: var(--font-weight-bold);
+.profile-section__label {
+  font-size: 16px;
+  font-weight: 600;
   color: var(--color-text);
-  line-height: 1.4;
+  text-align: right;
+  padding-top: 24px;
 }
 
-/* ===== ROW ===== */
-.settings-card-row {
+.profile-card-row {
+  display: grid;
+  grid-template-columns: 200px minmax(0, 1fr) 200px;
+  gap: 16px;
   padding: 16px;
+  align-items: flex-start;
+}
+
+.profile-card-row {
   position: relative;
 }
 
@@ -342,43 +369,19 @@
   right: 16px;
   bottom: 0;
   height: 1px;
-  background: var(--color-table-border);
+  background: var(--color-main);
 }
 
-.settings-card-row-twocol:not(:last-child)::after {
-  content: "";
-  position: absolute;
-  left: 16px;
-  right: 16px;
-  bottom: 0;
-  height: 1px;
-  background: var(--color-table-border);
+/* ===== LABEL COLUMN ===== */
+.profile-card-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #2f3a3c;
+  padding-top: 10px;
 }
 
-.settings-card-stack:not(:last-child)::after {
-  content: "";
-  position: absolute;
-  left: 16px;
-  right: 16px;
-  bottom: 0;
-  height: 1px;
-  background: var(--color-table-border);
-}
-
-.settings-card-groups:not(:last-child)::after {
-  content: "";
-  position: absolute;
-  left: 16px;
-  right: 16px;
-  bottom: 0;
-  height: 1px;
-  background: var(--color-table-border);
-}
-
-
-/* ===== TEXT COLUMN ===== */
-
-.settings-card-text {
+/* ===== CONTENT COLUMN ===== */
+.profile-card-fields {
   display: flex;
   flex-direction: column;
   min-width: 0;
@@ -412,6 +415,141 @@
 /* ===== TOGGLE ROW (FULL WIDTH) ===== */
 
 .settings-card-toggle {
+  padding: 16px;
+  display: flex;
+  width: 100%;
+}
+
+/* ===== ACTION COLUMN ===== */
+.profile-card-action {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+}
+
+/* content column always horizontal by default */
+.profile-card-fields {
+  flex-direction: row;
+}
+
+/* textfield fills available space */
+.profile-card-fields .text-field-wrapper {
+  flex: 1 1 auto;
+}
+
+/* full name only: stack vertically */
+.profile-card-fields.layout-stack {
+  flex-direction: column;
+}
+
+/* tags: content-sized, wrap nicely */
+.profile-card-fields .tag {
+  flex: 0 0 auto;
+}
+
+/* allow tag wrapping */
+.profile-card-fields {
+  flex-wrap: wrap;
+}
+
+
+/* =========================================================
+   PROFILE CARD ROW – OVERRIDE CARD INTERNAL LAYOUT
+   ========================================================= */
+
+/* Card default flex-column override */
+.profile-section .ui-card > .profile-card-row {
+  display: grid;
+  grid-template-columns: 200px minmax(0, 1fr) 100px;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+/* ensure fields stay horizontal */
+.profile-card-row .profile-card-fields {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 16px;
+  width: 100%;
+}
+
+/* only Full name stacks */
+.profile-card-row .profile-card-fields.layout-stack {
+  flex-direction: column;
+}
+
+/* textfield fills space */
+.profile-card-row .text-field-wrapper {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+/* tags keep natural size */
+.profile-card-row .tag {
+  flex: 0 0 auto;
+}
+
+/* allow tag wrapping */
+.profile-card-row .profile-card-fields {
+  flex-wrap: wrap;
+}
+
+/* =========================================================
+   PROFILE CARD – DISABLE CARD HEADER BEHAVIOR
+   ========================================================= */
+
+/* 🔒 Disable implicit Card header styling for profile cards */
+.profile-section .ui-card > .profile-card-row:first-child {
+  border-bottom: none;
+}
+
+/* also neutralize header-specific flex styling */
+.profile-section .ui-card > .profile-card-row:first-child {
+  display: grid;
+  align-items: flex-start;
+}
+
+
+.profile-section .ui-card > .profile-card-row.profile-card-row--two-col {
+  grid-template-columns: 200px minmax(0, 1fr);
+}
+
+.profile-section .ui-card > .profile-card-row.profile-card-row--one-col {
+  grid-template-columns: 1fr;
+}
+
+.profile-section
+.ui-card
+> .profile-card-row.profile-card-row--content-action {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 200px;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.profile-card-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text);
+  line-height: 1.4;
+}
+
+.profile-card-subtitle {
+  font-size: 13px;
+  color: var(--color-text);
+  line-height: 1.4;
+}
+
+/* =========================
+   PROFILE – PASSWORD ROW
+   ========================= */
+
+/* PROFILE – PASSWORD ROW (FINAL) */
+.profile-card-row--password {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 230px 260px;
+  gap: 16px;
   padding: 16px;
   display: flex;
   width: 100%;

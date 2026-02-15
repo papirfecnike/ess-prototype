@@ -1,12 +1,11 @@
 .scan-input {
   display: flex;
-  gap: 12px;
+  gap: var(--space-3);
   align-items: center;
-  padding: 16px;
-  border-radius: 16px;
-  background-color: #fff;
-  border: 1px solid #E0E8EA;
-  box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.08);
+  padding: var(--padding-l);
+  border-radius: var(--radius-m);
+  background-color: var(--color-input-bg);
+  box-shadow: var(--shadow-m);
 
 }
 
@@ -17,7 +16,7 @@
 .scan-input__field {
   flex: 1;
   min-width: 0;
-  border-radius: 16px;
+  border-radius: var(--radius-m);
 }
 
 .scan-input__field .text-field {

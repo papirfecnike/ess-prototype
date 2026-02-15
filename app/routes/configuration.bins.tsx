@@ -38,6 +38,8 @@ type BinRow = DataTableRow & {
    ========================= */
 
 export default function ConfigurationBins() {
+
+
   /* =========================
      TABLE DATA
      ========================= */
@@ -100,10 +102,10 @@ export default function ConfigurationBins() {
         const label = String(value);
 
         const colorMap: Record<string, string> = {
-          Standard: "#6B7280",
-          Oversized: "#9333EA",
-          Hazmat: "#DC2626",
-          "Temperature-controlled": "#0EA5E9",
+          Standard: "var(--color-greyblue)",
+          Oversized: "var(--color-purple)",
+          Hazmat: "var(--color-danger)",
+          "Temperature-controlled": "var(--color-lightblue)",
         };
 
         return (

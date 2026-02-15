@@ -1,22 +1,20 @@
 .radio {
-  width: 16px;
-  height: 16px;
+  width: var(--width-xxxs);
+  height: var(--height-xxxs);
   border-radius: 50%;
-
-  border: 2px solid var(--color-border);
+  border: 2px solid var(--color-default);
   display: inline-flex;
   align-items: center;
   justify-content: center;
-
   flex-shrink: 0;
 }
 
 .radio::after {
   content: "";
-  width: 8px;
-  height: 8px;
+  width: var(--radius-s);
+  height: var(--radius-s);
   border-radius: 50%;
-  background: var(--color-primary);
+  background: var(--color-default);
   opacity: 0;
 }
 

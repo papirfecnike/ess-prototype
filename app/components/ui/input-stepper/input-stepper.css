@@ -6,35 +6,27 @@
 }
 
 /* icon-only buttons */
-
 .input-stepper__button {
-  width: 48px;
-  height: 48px;
+  width: var(--width-l);
+  height: var(--height-l);
   padding: 0;
-
   border-radius: 50%;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
-  font-size: 24px;
+  font-size: var(--font-h4);
   line-height: 1;
 }
 
 /* big numeric input */
-
 .input-stepper__input {
   width: 100%;
-
   border: none;
   background: transparent;
-
   text-align: center;
-  font-size: 96px;
+  font-size: var(--font-big);
   font-weight: 700;
   line-height: 1;
-
   outline: none;
 
   /* remove native spinners */
@@ -47,20 +39,15 @@
   margin: 0;
 }
 
-
 /* force icon-only button centering */
-
 .input-stepper__button-wrapper button {
-  width: 48px;
-  height: 48px;
+  width: var(--width-l);
+  height: var(--height-l);
   padding: 0;
-
   border-radius: 50%;
-
   display: inline-flex;
   align-items: center;
   justify-content: center;
-
-  font-size: 24px;
+  font-size: var(--font-h4);
   line-height: 1;
 }

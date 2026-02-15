@@ -1,14 +1,12 @@
 /* =========================
    ROOT
    ========================= */
-
 .toggle {
   width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 16px;
-
+  gap: var(--space-4);
   cursor: pointer;
   user-select: none;
 }
@@ -16,71 +14,61 @@
 /* =========================
    TEXT
    ========================= */
-
 .toggle__content {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: var(--space-1);
 }
 
 .toggle__title {
-  font-size: 14px;
+  font-size: var(--font-default);
   font-weight: 600;
   color: var(--color-text);
 }
 
 .toggle__description {
-  font-size: 13px;
-  color: #5f6b6d;
+  font-size: var(--font-default);
+  color: var(--color-text-description);
   line-height: 1.4;
 }
 
 /* =========================
    SWITCH (TRACK)
    ========================= */
-
 .toggle__switch {
   position: relative;
-  width: 42px;
-  height: 24px;
-
+  width: var(--width-m);
+  height: var(--height-xs);
   flex-shrink: 0;
   flex-grow: 0;
-
-  background: #F5F6F7;
-  border-radius: 999px;
+  background: var(--color-product);
+  border-radius: var(--radius-full);
   border: none;
   padding: 0;
-
   transition: background-color 0.2s ease;
 }
 
 /* =========================
    THUMB
    ========================= */
-
 .toggle__switch::after {
   content: "";
   position: absolute;
   top: 3px;
   left: 3px;
-
   width: 18px;
   height: 18px;
-
-  background: #ffffff;
+  background: var(--color-input-bg);
   border-radius: 50%;
-
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  box-shadow: var(--shadow-l);
   transition: transform 0.2s ease;
 }
 
 /* =========================
    CHECKED STATE
    ========================= */
-
 .toggle__switch.is-checked {
-  background: #137897;
+  background: var(--color-default);
 }
 
 .toggle__switch.is-checked::after {
