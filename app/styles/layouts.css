@@ -247,33 +247,52 @@
 }
 
 /* ===== ROW ===== */
-
 .settings-card-row {
   padding: 16px;
   position: relative;
 }
-.ui-card > .settings-card-row {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 200px;
+
+.settings-card-row-twocol {
+  padding: 16px;
+  position: relative;
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) 150px;
   align-items: start;
-  gap: 16px;
+  column-gap: 16px;
+  row-gap: 8px;
+  width: 100%;
 }
 
 .settings-card-stack {
   padding: 16px;
   position: relative;
-}
-
-.ui-card > .settings-card-stack {
-  display: grid;
-  grid-template-columns: 2fr 1fr 200px;
+  display: grid !important;
+  grid-template-columns: 320px minmax(0, 1fr) 150px;
   align-items: start;
-  gap: 16px;
+  column-gap: 16px;
+  row-gap: 8px;
+  width: 100%;
 }
 
-.settings-card-stack-content {
-  gap: 16px;
+.settings-card-stack > .settings-card-label {
+  grid-column: 1;
 }
+
+.settings-card-stack > .settings-card-stack-content {
+  grid-column: 2 !important;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+  width: 100%;
+}
+
+.settings-card-stack > .settings-card-action {
+  grid-column: 3;
+  justify-self: end;
+  align-self: start;
+}
+
 
 
 .ui-card > .settings-card-groups {
@@ -317,6 +336,16 @@
 
 /* divider */
 .settings-card-row:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  bottom: 0;
+  height: 1px;
+  background: var(--color-table-border);
+}
+
+.settings-card-row-twocol:not(:last-child)::after {
   content: "";
   position: absolute;
   left: 16px;

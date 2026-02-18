@@ -78,7 +78,7 @@ export default function ConfigurationSystemSettings() {
                 Robot configuration
               </div>
 
-              <div className="settings-card-row">
+              <div className="settings-card-row-twocol">
                 <div className="settings-card-text">
                   <div className="settings-card-label">
                     Max. active robots
@@ -100,7 +100,7 @@ export default function ConfigurationSystemSettings() {
                 </div>
               </div>
 
-              <div className="settings-card-row">
+              <div className="settings-card-row-twocol">
                 <div className="settings-card-text">
                   <div className="settings-card-label">
                     Robot speed
@@ -144,7 +144,7 @@ export default function ConfigurationSystemSettings() {
                 Order processing
               </div>
 
-              <div className="settings-card-row">
+              <div className="settings-card-row-twocol">
                 <div className="settings-card-text">
                   <div className="settings-card-label">
                     Max. order queue size
@@ -166,7 +166,7 @@ export default function ConfigurationSystemSettings() {
                 </div>
               </div>
 
-              <div className="settings-card-row">
+              <div className="settings-card-row-twocol">
                 <div className="settings-card-text">
                   <div className="settings-card-label">
                     Wave size
@@ -208,7 +208,7 @@ export default function ConfigurationSystemSettings() {
                 Notifications
               </div>
 
-              <div className="settings-card-row">
+              <div className="settings-card-row-twocol">
                 <div className="settings-card-text">
                   <div className="settings-card-label">
                     Alert threshold
@@ -252,7 +252,7 @@ export default function ConfigurationSystemSettings() {
                 Performance
               </div>
 
-              <div className="settings-card-row">
+              <div className="settings-card-row-twocol">
                 <div className="settings-card-text">
                   <div className="settings-card-label">
                     Log retention days

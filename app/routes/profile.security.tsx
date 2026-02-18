@@ -179,7 +179,7 @@ export default function ProfileSecurity() {
               </div>
               
               {/* Account recovery */}
-              <div className="settings-card-row">
+              <div className="settings-card-row-twocol">
                 <div className="settings-card-text">
                   <div className="settings-card-label">
                     Account recovery
@@ -197,7 +197,7 @@ export default function ProfileSecurity() {
               </div>
 
               {/* Active sessions */}
-              <div className="settings-card-row">
+              <div className="settings-card-row-twocol">
                 <div className="settings-card-text">
                   <div className="settings-card-label">
                     Active sessions
