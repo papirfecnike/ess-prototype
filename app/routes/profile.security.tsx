@@ -5,11 +5,11 @@ import { useState } from "react";
 
 import { PageLayout } from "@/components/layout/PageLayout";
 import { PageSection } from "@/components/layout/PageSection";
-
 import { Card } from "@/components/ui/card/Card";
 import { Button } from "@/components/ui/button/Button";
 import { Toggle } from "@/components/ui/toggle/Toggle";
 import { TextField } from "@/components/ui/input/TextField";
+import { Notification } from "@/components/ui/notification/Notification";
 
 export const loader: LoaderFunction = async () => null;
 
@@ -37,6 +37,8 @@ export default function ProfileSecurity() {
   const [newError, setNewError] = useState<string | null>(null);
   const [confirmError, setConfirmError] = useState<string | null>(null);
 
+  const [showNotification, setShowNotification] = useState(false);
+
   /* =========================
      HANDLERS
      ========================= */
@@ -57,7 +59,7 @@ export default function ProfileSecurity() {
     setter(value);
   }
 
-  function handleAction() {
+  function handlePasswordAction() {
     if (!editing) {
       setEditing(true);
       return;
@@ -65,12 +67,15 @@ export default function ProfileSecurity() {
 
     /* mock save */
     setEditing(false);
+
     setNewPassword("");
     setConfirmPassword("");
 
     setCurrentError(null);
     setNewError(null);
     setConfirmError(null);
+
+    setShowNotification(true);
   }
 
   /* =========================
@@ -83,29 +88,27 @@ export default function ProfileSecurity() {
       subtitle="Manage your password, authentication and active sessions"
     >
       <PageSection>
-        <div className="profile-page">
-          {/* =========================
-             PASSWORD
-             ========================= */}
-          <div className="profile-section">
-            <div className="profile-section__label">Password</div>
+        <div className="settings-page">
+          <div className="settings-section">
+
+            {/* ================= PASSWORD ================= */}
 
             <Card>
-              <div className="profile-card-row profile-card-row--password">
-                {/* TEXT */}
-                <div className="profile-card-fields layout-stack">
-                  <div>
-                    <div className="profile-card-title">
-                      You have never changed your password
-                    </div>
-                    <div className="profile-card-subtitle">
-                      It’s recommended to update it regularly.
-                    </div>
+              <div className="settings-card-title">
+                Password
+              </div>
+
+              <div className="settings-card-stack">
+                <div className="settings-card-text">
+                  <div className="settings-card-label">
+                    You have not changed your password yet
+                  </div>
+                  <div className="settings-card-description">
+                    It is recommended to update it regularly
                   </div>
                 </div>
 
-                {/* FIELDS */}
-                <div className="profile-card-fields layout-stack">
+                <div className="settings-card-stack-content">
                   <TextField
                     label="Current password"
                     type="password"
@@ -121,6 +124,7 @@ export default function ProfileSecurity() {
                     }
                   />
 
+                <br/>
                   {editing && (
                     <>
                       <TextField
@@ -137,6 +141,7 @@ export default function ProfileSecurity() {
                         }
                       />
 
+                <br/>
                       <TextField
                         label="Confirm new password"
                         type="password"
@@ -154,83 +159,91 @@ export default function ProfileSecurity() {
                   )}
                 </div>
 
-                {/* ACTION */}
-                <div className="profile-card-action">
+                <div className="settings-card-action settings-card-action--right">
                   <Button
-                    variant="secondary"
+                    variant="ghost"
                     size="sm"
-                    onClick={handleAction}
+                    onClick={handlePasswordAction}
                   >
-                    {editing ? "Save" : "Change"}
+                    {editing ? "Save" : "Update"}
                   </Button>
                 </div>
               </div>
             </Card>
-          </div>
 
-          {/* =========================
-             AUTHENTICATION
-             ========================= */}
-          <div className="profile-section">
-            <div className="profile-section__label">Authentication</div>
+            {/* ================= MFA ================= */}
 
             <Card>
-              {/* MFA */}
-              <div className="profile-card-row profile-card-row--one-col">
-                <div className="profile-card-fields">
-                  <Toggle
-                    title="Multi-factor authentication"
-                    description="After entering your password, verify your identity with an authentication method."
-                    checked={mfaEnabled}
-                    onChange={setMfaEnabled}
-                  />
-                </div>
-                <div className="profile-card-action" />
+              <div className="settings-card-title">
+                Authentication
               </div>
-
+              
               {/* Account recovery */}
-              <div className="profile-card-row profile-card-row--content-action">
-                <div className="profile-card-fields layout-stack">
-                  <div>
-                    <div className="profile-card-title">
-                      Account recovery
-                    </div>
-                    <div className="profile-card-subtitle">
-                      Set up recovery options to regain access if you lose your credentials.
-                    </div>
+              <div className="settings-card-row">
+                <div className="settings-card-text">
+                  <div className="settings-card-label">
+                    Account recovery
+                  </div>
+                  <div className="settings-card-description">
+                    Set up recovery options to regain access if you lose your credentials
                   </div>
                 </div>
 
-                <div className="profile-card-action">
-                  <Button variant="secondary" size="sm">
+                <div className="settings-card-action settings-card-action--right">
+                  <Button variant="ghost" size="sm">
                     Configure
                   </Button>
                 </div>
               </div>
 
               {/* Active sessions */}
-              <div className="profile-card-row profile-card-row--content-action">
-                <div className="profile-card-fields layout-stack">
-                  <div>
-                    <div className="profile-card-title">
-                      Active sessions
-                    </div>
-                    <div className="profile-card-subtitle">
-                      View devices and locations where your account is currently signed in.
-                    </div>
+              <div className="settings-card-row">
+                <div className="settings-card-text">
+                  <div className="settings-card-label">
+                    Active sessions
+                  </div>
+                  <div className="settings-card-description">
+                    View devices and locations where your account is currently signed in.
                   </div>
                 </div>
 
-                <div className="profile-card-action">
-                  <Button variant="secondary" size="sm">
+                <div className="settings-card-action settings-card-action--right">
+                  <Button variant="ghost" size="sm">
                     View
                   </Button>
                 </div>
               </div>
+
+
+              {/* MFA */}
+              <div className="settings-card-toggle">
+                <Toggle
+                  title="Multi-factor authentication"
+                  description="After entering your password, verify your identity with an authentication method"
+                  checked={mfaEnabled}
+                  onCheckedChange={(v) => {
+                    setMfaEnabled(v);
+                    setShowNotification(true);
+                  }}
+                />
+              </div>
             </Card>
+
           </div>
         </div>
       </PageSection>
+
+      {/* ================= NOTIFICATION ================= */}
+
+      {showNotification && (
+        <Notification
+          intent="success"
+          title="Security settings updated"
+          message="Your changes have been saved."
+          onClose={() => setShowNotification(false)}
+        />
+      )}
+
     </PageLayout>
   );
 }

@@ -6,6 +6,7 @@ import { PageSection } from "@/components/layout/PageSection";
 import { Card } from "@/components/ui/card/Card";
 import { Select } from "@/components/ui/select/Select";
 import { Toggle } from "@/components/ui/toggle/Toggle";
+import { Notification } from "@/components/ui/notification/Notification";
 
 export const loader: LoaderFunction = async () => {
   return null;
@@ -23,6 +24,21 @@ export default function ProfileSystemPreferences() {
   const [pushNotifications, setPushNotifications] = useState(false);
   const [criticalAlerts, setCriticalAlerts] = useState(true);
   const [workflowUpdates, setWorkflowUpdates] = useState(true);
+
+  const [showNotification, setShowNotification] = useState(false);
+
+  /* =========================
+     HELPERS
+     ========================= */
+
+  function notifyChange() {
+    setShowNotification(true);
+  }
+
+  function update<T>(setter: (v: T) => void, value: T) {
+    setter(value);
+    notifyChange();
+  }
 
   /* =========================
      OPTIONS
@@ -42,108 +58,121 @@ export default function ProfileSystemPreferences() {
     { value: "UTC", label: "UTC" },
   ];
 
+  /* =========================
+     RENDER
+     ========================= */
+
   return (
     <PageLayout
       title="System preferences"
       subtitle="Configure regional settings and notification preferences"
     >
       <PageSection>
-        <div className="profile-page">
-          {/* ===== SECTION: REGION SETTINGS ===== */}
-          <div className="profile-section">
-            <div className="profile-section__label">
-              Region settings
-            </div>
+        <div className="settings-page">
+          <div className="settings-section">
+
+            {/* ================= REGIONAL SETTINGS ================= */}
 
             <Card>
-              <div className="profile-card-row profile-card-row--two-col">
-                <div className="profile-card-label">
-                  Preferred language
+              <div className="settings-card-title">
+                Regional settings
+              </div>
+
+              <div className="settings-card-row--full">
+                <div className="settings-card-text">
+                  <div className="settings-card-label">
+                    Preferred language
+                  </div>
                 </div>
 
-                <div className="profile-card-fields">
+                <div className="settings-card-control">
                   <Select
                     variant="single"
                     label="Language"
                     value={language}
-                    onChange={setLanguage}
+                    onChange={(v) => update(setLanguage, v)}
                     options={languageOptions}
                   />
                 </div>
               </div>
 
-              <div className="profile-card-row profile-card-row--two-col">
-                <div className="profile-card-label">
-                  Timezone
+              <div className="settings-card-row--full">
+                <div className="settings-card-text">
+                  <div className="settings-card-label">
+                    Timezone
+                  </div>
                 </div>
 
-                <div className="profile-card-fields">
+                <div className="settings-card-control">
                   <Select
                     variant="single"
                     label="Timezone"
                     value={timezone}
-                    onChange={setTimezone}
+                    onChange={(v) => update(setTimezone, v)}
                     options={timezoneOptions}
                   />
                 </div>
               </div>
             </Card>
-          </div>
 
-          {/* ===== SECTION: NOTIFICATIONS ===== */}
-          <div className="profile-section">
-            <div className="profile-section__label">
-              Notifications
-            </div>
+            {/* ================= NOTIFICATIONS ================= */}
 
             <Card>
-              <div className="profile-card-row profile-card-row--one-col">
-                <div className="profile-card-fields">
-                <Toggle
-                  title="Email notifications"
-                  description="Receive notifications via email"
-                  checked={emailNotifications}
-                  onCheckedChange={setEmailNotifications}
-                />
-                </div>
+              <div className="settings-card-title">
+                Notifications
               </div>
 
-              <div className="profile-card-row profile-card-row--one-col">
-                <div className="profile-card-fields">
+              <div className="settings-card-toggle--row">
+                <Toggle
+                  title="Email notifications"
+                  description="Receive important information through mail"
+                  checked={emailNotifications}
+                  onCheckedChange={(v) => update(setEmailNotifications, v)}
+                />
+              </div>
+
+              <div className="settings-card-toggle--row">
                 <Toggle
                   title="Push notifications"
                   description="Receive push notifications on your device"
                   checked={pushNotifications}
-                  onCheckedChange={setPushNotifications}
+                  onCheckedChange={(v) => update(setPushNotifications, v)}
                 />
-                </div>
               </div>
 
-              <div className="profile-card-row profile-card-row--one-col">
-                <div className="profile-card-fields">
+              <div className="settings-card-toggle--row">
                 <Toggle
                   title="Critical alerts"
-                  description="Always notify me about critical system alerts"
+                  description="Always get notification about critical system alerts"
                   checked={criticalAlerts}
-                  onCheckedChange={setCriticalAlerts}
+                  onCheckedChange={(v) => update(setCriticalAlerts, v)}
                 />
-                </div>
               </div>
 
-              <div className="profile-card-row profile-card-row--one-col">
-                <div className="profile-card-fields">
+              <div className="settings-card-toggle">
                 <Toggle
                   title="Workflow updates"
-                  description="Notify me when workflows change or complete"
+                  description="Get notified when workflow changes"
                   checked={workflowUpdates}
-                  onCheckedChange={setWorkflowUpdates}
+                  onCheckedChange={(v) => update(setWorkflowUpdates, v)}
                 />
-                </div>
               </div>
             </Card>
+
           </div>
         </div>
       </PageSection>
+
+      {/* ================= NOTIFICATION ================= */}
+
+      {showNotification && (
+        <Notification
+          intent="success"
+          title="Preferences updated"
+          message="Your changes have been saved."
+          onClose={() => setShowNotification(false)}
+        />
+      )}
     </PageLayout>
   );
 }

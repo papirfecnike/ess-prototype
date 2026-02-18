@@ -1,30 +1,11 @@
-/* =========================
+/* =========================================================
    GRID / GROUP PATTERNS
-   ========================= */
+   ========================================================= */
 
-.layout-grid-6 {
-  display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
-  gap: 16px;
-}
-
-.layout-grid-4 {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 16px;
-}
-
-.layout-grid-3 {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 16px;
-}
-
-.layout-grid-2 {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 16px;
-}
+.layout-grid-6 { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 16px; }
+.layout-grid-4 { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+.layout-grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.layout-grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
 
 .layout-stack {
   display: flex;
@@ -39,9 +20,10 @@
   gap: 16px;
 }
 
-/* =========================
+
+/* =========================================================
    CARD GROUPING
-   ========================= */
+   ========================================================= */
 
 .card-group {
   display: flex;
@@ -55,9 +37,10 @@
   padding: 8px;
 }
 
-/* =========================
+
+/* =========================================================
    ACTION ROWS
-   ========================= */
+   ========================================================= */
 
 .action-row {
   display: flex;
@@ -67,9 +50,9 @@
 }
 
 
-/* =========================
+/* =========================================================
    CARD FILL / ALIGNMENT
-   ========================= */
+   ========================================================= */
 
 .layout-card-fill {
   display: flex;
@@ -88,9 +71,10 @@
   margin-top: auto;
 }
 
-/* =========================
+
+/* =========================================================
    CHECKBOX
-   ========================= */
+   ========================================================= */
 
 .layout-checkbox {
   display: flex;
@@ -100,15 +84,14 @@
 }
 
 
-/* =========================
+/* =========================================================
    VERSION HISTORY
-   ========================= */
+   ========================================================= */
 
 .version-header-row {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  max-width: 100%;
 }
 
 .version-title {
@@ -131,7 +114,7 @@
 }
 
 .version-meta {
-  display: inline-flex;          /* ⬅️ 5 + 7 ikon + szöveg */
+  display: inline-flex;
   align-items: center;
   gap: 4px;
   font-size: 13px;
@@ -139,7 +122,7 @@
 }
 
 .version-expand-trigger {
-  background: none;              /* ⬅️ 8. accordion trigger */
+  background: none;
   border: none;
   cursor: pointer;
   padding: 4px;
@@ -152,46 +135,18 @@
   border-radius: 6px;
 }
 
-.version-expanded {
-  padding-top: 12px;
+.version-expand-trigger.is-open {
+  transform: rotate(180deg);
 }
 
-/* =========================
-   VERSION HISTORY ITEM
-   ========================= */
+
+/* ===== VERSION ITEM ===== */
 
 .version-item {
   background: #f5f6f7;
   border-radius: 16px;
   padding: 16px;
 }
-
-.version-expanded {
-  margin-top: 12px;
-  padding-top: 12px;
-
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.version-change {
-  display: flex;
-  align-items: flex-start;
-  gap: 8px;
-  font-size: 14px;
-  line-height: 1.4;
-  color: #2f3a3c;
-}
-
-.version-expand-trigger.is-open {
-  transform: rotate(180deg);
-}
-
-
-/* =========================
-   VERSION EXPANDED CONTENT
-   ========================= */
 
 .version-expanded {
   margin-top: 12px;
@@ -219,9 +174,9 @@
 }
 
 
-/* =========================
-   EDITABLE CARD BASE
-   ========================= */
+/* =========================================================
+   EDITABLE CARD STATES
+   ========================================================= */
 
 .card--editing {
   border-style: solid;
@@ -235,39 +190,27 @@
   transition: background-color 0.2s ease;
 }
 
-/* =========================
-   SAVE CARD (BLUE)
-   ========================= */
-
+/* SAVE */
 .card--save.card--editing {
   border-color: #82b10a;
-  border-left-width: 5px;
 }
 
 .card--save.card--editing .card-header--editable {
   background: #f1f4ea;
 }
 
-/* =========================
-   LOAD CARD (ORANGE)
-   ========================= */
-
+/* LOAD */
 .card--load.card--editing {
   border-color: #5cc5d5;
-  border-left-width: 5px;
 }
 
 .card--load.card--editing .card-header--editable {
   background: #dff5f8;
 }
 
-/* =========================
-   APPLY CARD (PURPLE)
-   ========================= */
-
+/* APPLY */
 .card--apply.card--editing {
   border-color: #8e44ad;
-  border-left-width: 5px;
 }
 
 .card--apply.card--editing .card-header--editable {
@@ -275,288 +218,247 @@
 }
 
 
-/* =========================
-   PROFILE
-   ========================= */
+/* =========================================================
+   SETTINGS PAGE
+   ========================================================= */
 
-.profile-page {
+.settings-page {
   display: flex;
   flex-direction: column;
 }
 
-
-
-/* ===== OUTER SECTION ===== */
-
-.profile-section {
-  display: grid;
-  grid-template-columns: 200px 1fr;
-  gap: 24px;
-  align-items: flex-start;
+.settings-section {
   margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 }
 
-.profile-section__label {
-  font-size: 16px;
-  font-weight: 600;
-  color: #2d4e58;
-  text-align: right;
-  padding-top: 24px;
+
+/* =========================================================
+   SETTINGS CARD LAYOUT
+   ========================================================= */
+
+.settings-card-title {
+  font-size: var(--font-h3);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text);
+  line-height: 1.4;
 }
 
-/* ===== CARD ROWS ===== */
+/* ===== ROW ===== */
 
-.profile-card-row {
-  display: grid;
-  grid-template-columns: 200px minmax(0, 1fr) 200px;
-  gap: 16px;
+.settings-card-row {
   padding: 16px;
-  align-items: flex-start;
+  position: relative;
+}
+.ui-card > .settings-card-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 200px;
+  align-items: start;
+  gap: 16px;
 }
 
-/* inset divider for all rows except last */
-.profile-card-row {
+.settings-card-stack {
+  padding: 16px;
   position: relative;
 }
 
-.profile-card-row:not(:last-child)::after {
+.ui-card > .settings-card-stack {
+  display: grid;
+  grid-template-columns: 2fr 1fr 200px;
+  align-items: start;
+  gap: 16px;
+}
+
+.settings-card-stack-content {
+  gap: 16px;
+}
+
+
+.ui-card > .settings-card-groups {
+  display: grid !important;
+  grid-template-columns: 320px minmax(0, 1fr);
+  align-items: start;
+  gap: 16px;
+}
+
+.settings-card-action {
+  display: flex;
+  width: 100%;
+  min-width: 0;
+}
+
+.settings-card-action > * {
+  width: auto;
+  flex: 0 0 auto;
+}
+
+.settings-card-action--right {
+  justify-content: flex-end;
+}
+
+.settings-card-groups {
+  align-items: start;
+  gap: 16px;
+  padding: 16px;
+  position: relative;
+  width: 100%;
+}
+
+.settings-groups-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: flex-start;
+  width: 100%;
+  min-width: 0;
+}
+
+/* divider */
+.settings-card-row:not(:last-child)::after {
   content: "";
   position: absolute;
   left: 16px;
   right: 16px;
   bottom: 0;
   height: 1px;
-  background: #e0e8ea;
+  background: var(--color-table-border);
 }
 
-/* ===== LABEL COLUMN ===== */
-
-.profile-card-label {
-  font-size: 14px;
-  font-weight: 600;
-  color: #2f3a3c;
-  padding-top: 10px;
+.settings-card-stack:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  bottom: 0;
+  height: 1px;
+  background: var(--color-table-border);
 }
 
-/* ===== CONTENT COLUMN ===== */
+.settings-card-groups:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  bottom: 0;
+  height: 1px;
+  background: var(--color-table-border);
+}
 
-.profile-card-fields {
+
+/* ===== TEXT COLUMN ===== */
+
+.settings-card-text {
   display: flex;
-  align-items: flex-start;
-  gap: 16px;
-  width: 100%;
+  flex-direction: column;
   min-width: 0;
 }
 
-.profile-card-fields .text-field-wrapper {
-  flex: 1 1 auto;
-  min-width: 0;
+.settings-card-label {
+  font-size: var(--font-h2);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text);
 }
 
-.profile-card-fields .tag {
-  flex: 0 0 auto;
+.settings-card-description {
+  font-size: var(--font-default);
+  color: var(--color-text);
+  margin-top: 4px;
 }
 
-.profile-card-fields {
-  flex-wrap: wrap;
+
+/* ===== CONTROL COLUMN ===== */
+
+.settings-card-control {
+  width: 200px;
+  justify-self: end;
 }
 
-.profile-card-fields.layout-stack {
-  flex-direction: column;
-}
-
-.profile-card-fields.layout-stack .text-field-wrapper {
+.settings-card-control .text-field-wrapper {
   width: 100%;
 }
 
-/* ===== ACTION COLUMN ===== */
 
-.profile-card-action {
-  display: flex;
-  justify-content: flex-end;
-  align-items: flex-start;
-}
+/* ===== TOGGLE ROW (FULL WIDTH) ===== */
 
-/* content column always horizontal by default */
-.profile-card-fields {
-  flex-direction: row;
-}
-
-/* textfield fills available space */
-.profile-card-fields .text-field-wrapper {
-  flex: 1 1 auto;
-}
-
-/* full name only: stack vertically */
-.profile-card-fields.layout-stack {
-  flex-direction: column;
-}
-
-/* tags: content-sized, wrap nicely */
-.profile-card-fields .tag {
-  flex: 0 0 auto;
-}
-
-/* allow tag wrapping */
-.profile-card-fields {
-  flex-wrap: wrap;
-}
-
-
-/* =========================================================
-   PROFILE CARD ROW – OVERRIDE CARD INTERNAL LAYOUT
-   ========================================================= */
-
-/* Card default flex-column override */
-.profile-section .ui-card > .profile-card-row {
-  display: grid;
-  grid-template-columns: 200px minmax(0, 1fr) 100px;
-  align-items: flex-start;
-  gap: 16px;
-}
-
-/* ensure fields stay horizontal */
-.profile-card-row .profile-card-fields {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  gap: 16px;
-  width: 100%;
-}
-
-/* only Full name stacks */
-.profile-card-row .profile-card-fields.layout-stack {
-  flex-direction: column;
-}
-
-/* textfield fills space */
-.profile-card-row .text-field-wrapper {
-  flex: 1 1 auto;
-  min-width: 0;
-}
-
-/* tags keep natural size */
-.profile-card-row .tag {
-  flex: 0 0 auto;
-}
-
-/* allow tag wrapping */
-.profile-card-row .profile-card-fields {
-  flex-wrap: wrap;
-}
-
-/* =========================================================
-   PROFILE CARD – DISABLE CARD HEADER BEHAVIOR
-   ========================================================= */
-
-/* 🔒 Disable implicit Card header styling for profile cards */
-.profile-section .ui-card > .profile-card-row:first-child {
-  border-bottom: none;
-}
-
-/* also neutralize header-specific flex styling */
-.profile-section .ui-card > .profile-card-row:first-child {
-  display: grid;
-  align-items: flex-start;
-}
-
-
-.profile-section .ui-card > .profile-card-row.profile-card-row--two-col {
-  grid-template-columns: 200px minmax(0, 1fr);
-}
-
-.profile-section .ui-card > .profile-card-row.profile-card-row--one-col {
-  grid-template-columns: 1fr;
-}
-
-.profile-section
-.ui-card
-> .profile-card-row.profile-card-row--content-action {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 200px;
-  gap: 16px;
-  align-items: flex-start;
-}
-
-.profile-card-title {
-  font-size: 14px;
-  font-weight: 600;
-  color: #2f3a3c;
-  line-height: 1.4;
-}
-
-.profile-card-subtitle {
-  font-size: 13px;
-  color: #5f6b6d;
-  line-height: 1.4;
-}
-
-/* =========================
-   PROFILE – PASSWORD ROW
-   ========================= */
-
-/* PROFILE – PASSWORD ROW (FINAL) */
-
-.profile-card-row--password {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 230px 260px;
-  gap: 16px;
+.settings-card-toggle {
   padding: 16px;
-  align-items: flex-start;
-}
-
-/* text column */
-.profile-card-row--password
-.profile-card-fields:first-child {
-  align-self: flex-start;
-}
-
-/* fields column */
-.profile-card-row--password
-.profile-card-fields.layout-stack {
   display: flex;
-  flex-direction: column;
-  gap: 12px;
-  align-items: flex-start;
+  width: 100%;
 }
 
-/* password field width */
-.profile-card-row--password
-.text-field-wrapper {
-  width: 230px;
+/* =========================================================
+   SETTINGS CARD — FULL WIDTH ROW (LABEL + SELECT)
+   ========================================================= */
+
+.settings-card-row--full {
+  padding: 16px;
+  position: relative;
 }
 
-/* action column */
-.profile-card-row--password
-.profile-card-action {
+.ui-card > .settings-card-row--full {
+  display: grid !important;
+  grid-template-columns: 320px minmax(0, 1fr); /* label | flexible control */
+  align-items: center;
+  gap: 16px;
+}
+
+/* control fills remaining space */
+.settings-card-row--full .settings-card-control {
+  width: 100%;
+  justify-self: stretch;
+}
+
+.settings-card-row--full .settings-card-control > * {
+  width: 100%;
+}
+
+/* divider */
+.settings-card-row--full:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  bottom: 0;
+  height: 1px;
+  background: var(--color-table-border);
+}
+
+
+
+/* =========================================================
+   SETTINGS CARD — TOGGLE ROW WITH DIVIDER
+   ========================================================= */
+
+.settings-card-toggle--row {
+  padding: 16px;
   display: flex;
-  justify-content: flex-end;
-  align-items: flex-start;
+  width: 100%;
+  position: relative;
 }
 
-/* button must never wrap */
-.profile-card-row--password
-.profile-card-action
-button {
-  white-space: nowrap;
+/* divider like settings-card-row */
+.settings-card-toggle--row:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  bottom: 0;
+  height: 1px;
+  background: var(--color-table-border);
 }
 
-/* =========================
-   SelectableDataTable – header & footer elrejtése
-   ========================= */
 
-/* felső toolbar / header */
+/* =========================================================
+   TABLE HEADER / FOOTER HIDE
+   ========================================================= */
+
 .table--no-header-footer [class*="TableHeader"],
 .table--no-header-footer [class*="table-header"],
 .table--no-header-footer [class*="headerRow"],
-.table--no-header-footer [class*="columnHeader"] {
-  display: none !important;
-}
-
-/* alsó footer / pagination */
+.table--no-header-footer [class*="columnHeader"],
 .table--no-header-footer [class*="TableFooter"],
 .table--no-header-footer [class*="table-footer"],
 .table--no-header-footer [class*="pagination"],
-.table--no-header-footer [class*="Pagination"] {
-  display: none !important;
-}
+.table--no-header-footer [class*="Pagination"] {display: none !important;}
