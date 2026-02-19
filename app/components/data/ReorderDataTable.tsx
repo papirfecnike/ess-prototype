@@ -39,6 +39,8 @@ export function ReorderDataTable({
     label: "",
     align: "center",
     renderCell: (_value, row) => {
+      if (!onMoveRow) return null;
+
       const index = rows.findIndex(
         (r) => String(r[rowIdKey]) === String(row[rowIdKey])
       );
@@ -54,19 +56,22 @@ export function ReorderDataTable({
             onMoveRow(index, isFirst ? "down" : "up")
           }
         >
-        <Icon
+          <Icon
             name={isFirst ? "arrowDownward" : "arrowUpward"}
             size="sm"
-        />
+          />
         </Button>
       );
     },
   };
 
-const finalColumns = enableReorder
-  ? [reorderColumn, ...columns]
-  : columns;
+  /* =========================
+     FINAL COLUMNS
+     ========================= */
 
+  const finalColumns = enableReorder
+    ? [reorderColumn, ...columns]
+    : columns;
 
   /* =========================
      RENDER
@@ -77,8 +82,9 @@ const finalColumns = enableReorder
       rowIdKey={rowIdKey}
       columns={finalColumns}
       rows={rows}
-      headerVariant="reorder"
-      /* explicitly NOT selectable / expandable */
+      {...(enableReorder
+        ? { headerVariant: "reorder" }
+        : {})}
     />
   );
 }
