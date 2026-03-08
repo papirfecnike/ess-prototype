@@ -2,9 +2,9 @@ import type { LoaderFunction } from "react-router";
 import { PageLayout } from "@/components/layout/PageLayout";
 import { PageSection } from "@/components/layout/PageSection";
 import { Card } from "@/components/ui/card/Card";
-import { Icon } from "@/components/ui/icon/Icon";
+import { Button } from "@/components/ui/button/Button";
 import { Callout } from "@/components/ui/callout/Callout";
-import { LineChart } from "@mui/x-charts";
+import { Icon } from "@/components/ui/icon/Icon";
 
 export const loader: LoaderFunction = async () => null;
 
@@ -12,112 +12,172 @@ export default function InsightsOverview() {
   return (
     <PageLayout
       title="Insights overview"
-      subtitle="High-level operational performance"
+      subtitle="Real-time warehouse analytics and performance insights"
     >
-      {/* TOP WIDGETS */}
       <PageSection>
-        <div className="layout-grid-4">
-          <MetricCard
-            title="Today’s throughput"
-            value="1287"
-            description="Orders processed today"
-          />
+        {/* WIDTH WRAPPER */}
+        <div
+          style={{
+            width: "33%",
+            minWidth: 320,
+            maxWidth: 520,
+          }}
+        >
+          <Card>
+            {/* HEADER */}
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                padding: "var(--space-5)",
+                borderBottom: "1px solid var(--color-table-border)",
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "var(--space-3)",
+                }}
+              >
+                <Icon name="info" size="md" />
 
-          <MetricCard
-            title="Active robots"
-            value="55 / 60"
-            description="Orders shipped today"
-          />
+                <div
+                  style={{
+                    fontSize: "var(--font-h3)",
+                    fontWeight: "var(--font-weight-bold)",
+                  }}
+                >
+                  Space optimization
+                </div>
+              </div>
 
-          <MetricCard
-            title="Storage utilization"
-            value="99%"
-            description="Total items in stock"
-          />
+              <Button
+                variant="ghost"
+                trailingIcon="chevronRightStroke"
+              >
+                View more
+              </Button>
+            </div>
 
-          <MetricCard
-            title="Active ports"
-            value="5 / 8"
-            description="Analyses completed this week"
-          />
+            {/* BODY */}
+            <div
+              style={{
+                padding: "var(--space-5)",
+                display: "flex",
+                flexDirection: "column",
+                gap: "var(--space-4)",
+              }}
+            >
+              {/* FILL RATE */}
+              <Callout intent="success">
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "var(--space-2)",
+                  }}
+                >
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "var(--space-2)",
+                      fontSize: "var(--font-default)",
+                      fontWeight: "var(--font-weight-medium)",
+                    }}
+                  >
+                    Avg. location fill rate
+
+                    <span
+                      title="Average percentage of storage capacity currently used across warehouse locations."
+                      style={{ display: "inline-flex" }}
+                    >
+                      <Icon name="info" size="xs" />
+                    </span>
+                  </div>
+
+                  <div
+                    style={{
+                      fontSize: 36,
+                      fontWeight: "var(--font-weight-bold)",
+                      color: "var(--color-success)",
+                    }}
+                  >
+                    58.54%
+                  </div>
+
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "var(--space-2)",
+                      color: "var(--color-success)",
+                      fontSize: "var(--font-default)",
+                    }}
+                  >
+                    <Icon name="arrowUpward" size="sm" />
+                    5% vs. yesterday
+                  </div>
+                </div>
+              </Callout>
+
+              {/* POTENTIAL */}
+              <Callout intent="default">
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "var(--space-2)",
+                  }}
+                >
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "var(--space-2)",
+                      fontSize: "var(--font-default)",
+                      fontWeight: "var(--font-weight-medium)",
+                    }}
+                  >
+                    Potential by compressing
+
+                    <span
+                      title="Estimated number of additional storage locations that could be freed by consolidating inventory."
+                      style={{ display: "inline-flex" }}
+                    >
+                      <Icon name="info" size="xs" />
+                    </span>
+                  </div>
+
+                  <div
+                    style={{
+                      fontSize: 36,
+                      fontWeight: "var(--font-weight-bold)",
+                    }}
+                  >
+                    9 876
+                  </div>
+
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "var(--space-2)",
+                      color: "var(--color-text-muted)",
+                      fontSize: "var(--font-default)",
+                    }}
+                  >
+                    <Icon name="barcode" size="sm" />
+                    All locations
+                  </div>
+                </div>
+              </Callout>
+            </div>
+          </Card>
         </div>
       </PageSection>
-
-      {/* PERFORMANCE ISSUES */}
-      <PageSection>
-        <Card>
-          <div className="card-header">
-            <Icon name="warning" />
-            <strong>Performance issues</strong>
-          </div>
-
-          <div className="layout-stack">
-            <Callout
-              intent="danger"
-              title="Robot capacity constraint"
-              action={{
-                label: "Maintenance",
-                trailingIcon: "chevronRightStroke",
-              }}
-            >
-              Detected 12 minutes ago
-            </Callout>
-
-            <Callout
-              intent="danger"
-              title="Storage near capacity"
-              action={{
-                label: "View details",
-                trailingIcon: "chevronRightStroke",
-              }}
-            >
-              Detected 12 minutes ago
-            </Callout>
-
-            <Callout
-              intent="warning"
-              title="Suboptimal port usage"
-              action={{
-                label: "Optimize",
-                trailingIcon: "chevronRightStroke",
-              }}
-            >
-              Detected 12 minutes ago
-            </Callout>
-          </div>
-        </Card>
-      </PageSection>
-
-      
     </PageLayout>
-  );
-}
-
-/* =========================
-   METRIC CARD
-   ========================= */
-
-function MetricCard({
-  title,
-  value,
-  description,
-}: {
-  title: string;
-  value: string;
-  description: string;
-}) {
-  return (
-    <Card className="layout-card-fill">
-      <div className="card-header">
-        <strong>{title}</strong>
-      </div>
-
-      <div className="layout-stack">
-        <strong style={{ fontSize: 32, color: "#07930A" }}>
-          {value}
-        </strong>
-        <span>{description}</span>
-      </div>
-    </Card>
   );
 }

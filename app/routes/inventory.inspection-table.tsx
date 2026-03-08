@@ -1,271 +1,53 @@
 import type { LoaderFunction } from "react-router";
-import { useMemo, useState, useRef } from "react";
+import { useState } from "react";
 
 import { PageLayout } from "@/components/layout/PageLayout";
 import { PageSection } from "@/components/layout/PageSection";
 
-import { SelectableDataTable } from "@/components/data/SelectableDataTable";
-import type { DataTableColumn } from "@/components/data/DataTableCore";
-import { DropdownMenu } from "@/components/ui/menu/DropdownMenu";
-import { Tag } from "@/components/ui/tag/Tag";
-import { Icon } from "@/components/ui/icon/Icon";
+import { TabBar } from "@/components/ui/tab/TabBar";
 
-import type { ColumnConfig } from "@/components/data/CustomizeColumnsModal";
+import CompartmentsTab from "./inventory.tab.compartments";
+import InspectionsTab from "./inventory.tab.inspections";
 
-import { ScanInput } from "@/components/ui/scan-input/ScanInput";
-
-export const loader: LoaderFunction = async () => {
-  return null;
-};
-
-/* =========================
-   STATUS → TAG
-   ========================= */
-
-function renderStatusTag(status: string) {
-  switch (status) {
-    case "In progress":
-      return <Tag label={status} variant="warning" />;
-    case "Prepared":
-      return <Tag label={status} variant="default" />;
-    case "Waiting":
-      return <Tag label={status} variant="danger" />;
-    case "Completed":
-      return <Tag label={status} variant="success" />;
-    default:
-      return <Tag label={status} />;
-  }
-}
+export const loader: LoaderFunction = async () => null;
 
 export default function InventoryInspection() {
-  /* =========================
-     STATE
-     ========================= */
 
-  const [selectedRows, setSelectedRows] = useState<string[]>([]);
-  const [scanValue, setScanValue] = useState("");
-  const [openMenuRowId, setOpenMenuRowId] = useState<string | null>(null);
-  const menuAnchorRef = useRef<HTMLElement | null>(null);
-
-  /* =========================
-     COLUMNS (STATIC DEFINITION)
-     ========================= */
-
-  const columns: DataTableColumn[] = [
-    { key: "id", label: "Batch ID", sortable: true },
-    { key: "product", label: "Product", sortable: true },
-    { key: "sku", label: "SKU", sortable: true },
-    { key: "compartment", label: "Compartment ID", sortable: true },
-    { key: "maxcapacity", label: "Max. capacity", align: "center" },
-    { key: "currentqty", label: "Current qty", align: "center" },
-    { key: "origin", label: "Origin", align: "center" },
-    {
-      key: "status",
-      label: "Status",
-      align: "center",
-      renderCell: (value) => renderStatusTag(String(value)),
-    },
-    {
-      key: "more",
-      label: "",
-      align: "right",
-      renderCell: (_value, row) => {
-        const currentRowId = String(row.id);
-        const isMenuOpen = openMenuRowId === currentRowId;
-
-        return (
-          <button
-            type="button"
-            className="btn--ghost"
-            aria-label="More"
-            ref={(el) => {
-              if (isMenuOpen) {
-                menuAnchorRef.current = el;
-              }
-            }}
-            onClick={(e) => {
-              e.stopPropagation();
-              setOpenMenuRowId(isMenuOpen ? null : currentRowId);
-            }}
-          >
-            <Icon
-              name={isMenuOpen ? "closeStroke" : "moreVert"}
-              size="sm"
-            />
-          </button>
-        );
-      },
-    },
-  ];
-
-  /* =========================
-     COLUMN CONFIG (CUSTOMIZE COLUMNS)
-     ========================= */
-
-  const [columnConfig, setColumnConfig] = useState<ColumnConfig[]>(
-    columns.map((c) => ({
-      key: c.key,
-      label: c.label ?? c.key,
-      visible: true,
-      locked: c.key === "id",
-    }))
-  );
-
-  const visibleColumns = useMemo(() => {
-    const visibleKeys = columnConfig
-      .filter((c) => c.visible)
-      .map((c) => c.key);
-
-    return columns.filter((c) =>
-      visibleKeys.includes(c.key)
-    );
-  }, [columns, columnConfig]);
-
-  /* =========================
-     ROWS
-     ========================= */
-
-  const rows = [
-    {
-      id: 9875,
-      product: "Bisgaard Winter Boots - Pixie - Khaki",
-      sku: "WD750",
-      compartment: "AS-887652-01-01",
-      maxcapacity: "12",
-      currentqty: "23",
-      origin: "Manual",
-      status: "In progress",
-      more: "",
-    },
-    {
-      id: 9876,
-      product: "Name It Jumpsuit - NkfRoka - Burgundy",
-      sku: "WF773",
-      compartment: "AS-887652-01-01",
-      maxcapacity: "12",
-      currentqty: "45",
-      origin: "Scheduled inspection",
-      status: "In progress",
-      more: "",
-    },
-    {
-      id: 9877,
-      product: "Minymo Cardigan - Knitted - Woodrose",
-      sku: "BW975",
-      compartment: "AS-887652-01-01",
-      maxcapacity: "12",
-      currentqty: "56",
-      origin: "Manual",
-      status: "In progress",
-      more: "",
-    },
-    {
-      id: 9878,
-      product: "Minymo Cardigan w. Teddy - Parisian Night",
-      sku: "WC551",
-      compartment: "AS-887652-01-01",
-      maxcapacity: "12",
-      currentqty: "72",
-      origin: "Manual",
-      status: "In progress",
-      more: "",
-    },
-  ];
-
-  /* =========================
-     FILTER (substring search)
-     ========================= */
-
-  const filteredRows = useMemo(() => {
-    if (!scanValue.trim()) return rows;
-
-    const q = scanValue.toLowerCase();
-
-    return rows.filter((row) =>
-      [row.id, row.sku, row.product].some((value) =>
-        String(value).toLowerCase().includes(q)
-      )
-    );
-  }, [scanValue, rows]);
-
-  /* =========================
-     EXACT MATCH
-     ========================= */
-
-  const exactMatch = useMemo(() => {
-    const q = scanValue.trim();
-    if (!q) return null;
-
-    return rows.find(
-      (row) =>
-        String(row.id) === q ||
-        row.sku.toLowerCase() === q.toLowerCase()
-    );
-  }, [scanValue, rows]);
-
-  const canConfirm = Boolean(exactMatch);
-
-  /* =========================
-     HANDLERS
-     ========================= */
-
-  function handleConfirm() {
-    if (!exactMatch) return;
-    window.location.href = `/inventory/inspection-product`;
-  }
-
-  function handleSelectionChange(rowIds: string[]) {
-    if (!exactMatch) {
-      setSelectedRows([]);
-      return;
-    }
-
-    const allowedId = String(exactMatch.id);
-    setSelectedRows(rowIds.filter((id) => id === allowedId));
-  }
-
-  /* =========================
-     RENDER
-     ========================= */
+  const [tab, setTab] = useState("compartments");
 
   return (
     <PageLayout
-      title={
-        <ScanInput
-          value={scanValue}
-          onChange={(e) => setScanValue(e.target.value)}
-          onSubmit={handleConfirm}
-          isDisabled={!canConfirm}
-          buttonLabel="Confirm"
-        />
-      }
+      title="Overview"
+      subtitle="All inventory operations and advice lines"
     >
+      {/* TAB BAR */}
       <PageSection>
-        <SelectableDataTable
-          rowIdKey="id"
-          columns={visibleColumns}
-          rows={filteredRows}
-          selectedRows={selectedRows}
-          onSelectionChange={handleSelectionChange}
-          columnConfig={columnConfig}
-          onColumnConfigChange={setColumnConfig}
+        <TabBar
+          activeTab={tab}
+          onChange={setTab}
+          tabs={[
+            { id: "compartments", label: <>Compartments <span className="tab-count">7</span></> },
+            { id: "bins", label: <>Bins <span className="tab-count">12</span></> },
+            { id: "inspections", label: <>Inspections <span className="tab-count">6</span></> },
+          ]}
         />
       </PageSection>
 
-      <DropdownMenu
-        open={openMenuRowId !== null}
-        anchorRef={menuAnchorRef}
-        items={[
-          { id: "inspect", label: "Inspect" },
-          { id: "edit", label: "Edit" },
-          { id: "delete", label: "Delete", intent: "danger" },
-        ]}
-        onClose={() => setOpenMenuRowId(null)}
-        onSelect={(actionId) => {
-          console.log("action:", actionId, "row:", openMenuRowId);
-          setOpenMenuRowId(null);
-        }}
-      />
+      {/* TAB CONTENT */}
+      <PageSection>
+
+        {tab === "compartments" && <CompartmentsTab />}
+
+        {tab === "inspections" && <InspectionsTab />}
+
+        {tab === "bins" && (
+          <div style={{ padding: 24 }}>
+            Bins content coming later
+          </div>
+        )}
+
+      </PageSection>
+
     </PageLayout>
   );
 }

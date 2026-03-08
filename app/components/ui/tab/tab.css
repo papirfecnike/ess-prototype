@@ -1,0 +1,75 @@
+/* ========================================
+   TAB BAR
+======================================== */
+
+.tabbar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  border-bottom: 1px solid var(--color-table-border);
+}
+
+/* ========================================
+   TAB
+======================================== */
+
+.tabbar__tab {
+  appearance: none;
+  border: none;
+  background: none;
+  cursor: pointer;
+
+  font-family: var(--font-sans);
+  font-size: var(--font-default);
+  font-weight: var(--font-weight-medium);
+
+  color: var(--color-text-muted);
+
+  padding: var(--space-3) var(--space-4);
+
+  border-radius: var(--radius-s) var(--radius-s) 0 0;
+
+  position: relative;
+  transition: all 120ms ease;
+}
+
+/* hover */
+
+.tabbar__tab:hover {
+  color: var(--color-text);
+}
+
+/* active */
+
+.tabbar__tab.is-active {
+  color: var(--color-text-active);
+  font-weight: var(--font-weight-bold);
+}
+
+.tabbar__tab.is-active::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 3px;
+  background: var(--color-default);
+  border-radius: 2px;
+}
+
+/* disabled */
+
+.tabbar__tab.is-disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+
+.tab-count{
+  background:#CA1520;
+  color:white;
+  font-size:11px;
+  padding:2px 6px;
+  border-radius:999px;
+  margin-left:6px;
+}

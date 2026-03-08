@@ -40,6 +40,9 @@ type Props = {
   selectedRows?: string[];
   onSelectionChange?: (ids: string[]) => void;
 
+  expandedRows?: string[];
+  onExpandChange?: (ids: string[]) => void;
+
   renderExpandedRow?: (row: DataTableRow) => React.ReactNode;
 
   headerVariant?: HeaderVariant;
