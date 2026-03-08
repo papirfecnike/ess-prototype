@@ -1,7 +1,7 @@
-import * as tokens from "./styles/tokens.css";
-import * as base from "./styles/base.css";
-import * as app from "./styles/app.css";
-import * as layouts from "./styles/layouts.css";
+import tokens from "./styles/tokens.css?url";
+import base from "./styles/base.css?url";
+import app from "./styles/app.css?url";
+import layouts from "./styles/layouts.css?url";
 
 import {
   Meta,
