@@ -10,7 +10,6 @@ import { InputStepper } from "../components/ui/input-stepper/InputStepper";
 import { Dialog } from "../components/ui/dialog/Dialog";
 import { icons } from "../components/ui/icon/icons";
 
-/* product images */
 import img01 from "@/assets/product/img01.png";
 import img02 from "@/assets/product/img02.png";
 import img03 from "@/assets/product/img03.png";
@@ -19,14 +18,7 @@ import img05 from "@/assets/product/img05.png";
 
 import "../styles/product-page.css";
 
-/* =========================
-   PRODUCT CATALOG
-   ========================= */
-
-const PRODUCT_MAP: Record<
-  string,
-  { name: string; sku: string; image?: string }
-> = {
+const PRODUCT_MAP: Record<string, { name: string; sku: string; image?: string }> = {
   WD750: { name: "Bisgaard Winter Boots - Pixie - Khaki", sku: "WD750" },
   WF773: { name: "Name It Jumpsuit - NkfRoka - Burgundy", sku: "WF773" },
   BW975: { name: "Minymo Cardigan - Knitted - Woodrose", sku: "BW975" },
@@ -34,134 +26,42 @@ const PRODUCT_MAP: Record<
   BS970: { name: "adidas Performance Shoes - VL Court 3.0 K", sku: "BS970" },
   WH768: { name: "Name It Blouse - Rib - Lavender Gray", sku: "WH768" },
   WG096: { name: "Name It Blouses - 2-Pack - Iceland Fossil/Flint Stone", sku: "WG096" },
-
-  /* assets available */
-  WF685: {
-    name: "adidas Performance Shoes - Advantage 2.0", 
-    sku: "WF685", 
-    image: img04,
-  },
-  
-  BM841: { 
-    name: "adidas Performance Shoes - Run 70s 2.0 EL C", 
-    sku: "BM841",
-    image: img05,
-  },
-  
-  WA874: {
-    name: "Hust and Claire Dynevest – HCEmily – Pale Mauve",
-    sku: "WA874",
-    image: img01,
-  },
-  BX962: {
-    name: "Name It Dynevest - NmfMylane - Woodrose m. Sløyfebånd",
-    sku: "BX962",
-    image: img02,
-  },
-  BV122: {
-    name: "Billieblush Dynevest – Peach",
-    sku: "BV122",
-    image: img03,
-  },
-};
-
-type Props = {
-  value: number; // 0–100
+  WF685: { name: "adidas Performance Shoes - Advantage 2.0", sku: "WF685", image: img04 },
+  BM841: { name: "adidas Performance Shoes - Run 70s 2.0 EL C", sku: "BM841", image: img05 },
+  WA874: { name: "Hust and Claire Dynevest – HCEmily – Pale Mauve", sku: "WA874", image: img01 },
+  BX962: { name: "Name It Dynevest - NmfMylane - Woodrose m. Sløyfebånd", sku: "BX962", image: img02 },
+  BV122: { name: "Billieblush Dynevest – Peach", sku: "BV122", image: img03 },
 };
 
 export default function InboundPutawayProductPage() {
+
   const [scanValue, setScanValue] = useState("");
   const [quantity, setQuantity] = useState(1);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [markForInspection, setMarkForInspection] = useState(false);
-
-/* =========================
-     DIALOG STATE
-     ========================= */
-
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isExitDialogOpen, setIsExitDialogOpen] = useState(false);
 
-  /* =========================
-     ACTIVE PRODUCT (DYNAMIC)
-     ========================= */
-  const [activeItem, setActiveItem] = useState<{
-    name: string;
-    sku: string;
-    image?: string;
-  }>({
+  const [activeItem, setActiveItem] = useState<{ name: string; sku: string; image?: string }>({
     name: "Unknown product",
     sku: "",
   });
 
   useEffect(() => {
     if (typeof window === "undefined") return;
-
-  const params = new URLSearchParams(window.location.search);
-  const skuParam = (params.get("sku") || "").toUpperCase();
-
-  
-    if (PRODUCT_MAP[skuParam]) {
-      setActiveItem(PRODUCT_MAP[skuParam]);
-    } else {
-      setActiveItem({
-        name: "Unknown product",
-        sku: skuParam,
-      });
-    }
+    const params = new URLSearchParams(window.location.search);
+    const skuParam = (params.get("sku") || "").toUpperCase();
+    setActiveItem(PRODUCT_MAP[skuParam] ?? { name: "Unknown product", sku: skuParam });
   }, []);
 
-
-  /* =========================
-     PRODUCT VERIFICATION
-     ========================= */
-
-  const isProductVerified = scanValue.trim() === activeItem.sku;
-
-  /* =========================
-     CONFIRM LOGIC
-     ========================= */
-
-  function finalizeConfirm() {
-    if (typeof window !== "undefined") {
-      sessionStorage.setItem(
-        "putaway:completed",
-        JSON.stringify({ sku: activeItem.sku })
-      );
-
-      window.location.assign("/inbound/putaway-table");
-    }
-  }
-
-  function handleConfirm() {
-    if (!isProductVerified) return;
-
-    if (quantity > 1) {
-      setIsDialogOpen(true);
-      return;
-    }
-
-    finalizeConfirm();
-  }
-
-  function handleExitConfirm() {
-      sessionStorage.setItem(
-        "putaway:interrupted",
-        JSON.stringify({ sku: activeItem.sku })
-      );
-
-      window.location.assign("/inbound/putaway-table");
-    }
-
-  /* =========================
-     DRAWER STATE
-     ========================= */
-
-  type DrawerView = "settings" | "print" | "history" | null;
-
+  type DrawerView = "settings" | "print" | "history" | "stock" | null;
   const [drawerView, setDrawerView] = useState<DrawerView>(null);
 
   function openDrawer(view: DrawerView) {
+    if (drawerView === view && isDrawerOpen) {
+      closeDrawer();
+      return;
+    }
     setDrawerView(view);
     setIsDrawerOpen(true);
   }
@@ -171,20 +71,40 @@ export default function InboundPutawayProductPage() {
     setDrawerView(null);
   }
 
+  const isProductVerified = scanValue.trim() === activeItem.sku;
+
+  function finalizeConfirm() {
+    if (typeof window !== "undefined") {
+      sessionStorage.setItem("putaway:completed", JSON.stringify({ sku: activeItem.sku }));
+      window.location.assign("/inbound/putaway-table");
+    }
+  }
+
+  function handleConfirm() {
+    if (!isProductVerified) return;
+    if (quantity > 1) {
+      setIsDialogOpen(true);
+      return;
+    }
+    finalizeConfirm();
+  }
+
+  function handleExitConfirm() {
+    sessionStorage.setItem("putaway:interrupted", JSON.stringify({ sku: activeItem.sku }));
+    window.location.assign("/inbound/putaway-table");
+  }
+
   return (
     <ProductPageLayout>
       <div className="product-page">
         <div className="product-page__content-putaway">
+
           {/* LEFT COLUMN */}
           <div className="product-page__column product-page__column--primary">
             <Card>
               <h3>Quantity</h3>
               <div>
-                <InputStepper
-                  value={quantity}
-                  onChange={setQuantity}
-                  min={1}
-                />
+                <InputStepper value={quantity} onChange={setQuantity} min={1} />
               </div>
             </Card>
 
@@ -193,17 +113,11 @@ export default function InboundPutawayProductPage() {
               <div>
                 <div className="location-card">
                   <div className="location-card__visual" />
-
                   <div className="location-card__content">
                     <div className="location-card__text">
-                      <span className="location-card__label">
-                        Location ID
-                      </span>
-                      <span className="location-card__value">
-                        AS-112025-01-01
-                      </span>
+                      <span className="location-card__label">Location ID</span>
+                      <span className="location-card__value">AS-112025-01-01</span>
                     </div>
-
                     <div className="location-card__toggle">
                       <Toggle
                         checked={markForInspection}
@@ -234,285 +148,217 @@ export default function InboundPutawayProductPage() {
             </Card>
           </div>
 
-          {/* MIDDLE COLUMN – DETAILS */}
+          {/* MIDDLE COLUMN */}
           <div className="product-page__column">
             <Card>
               <h3>Details</h3>
-
               <div className="product-details">
                 <div className="product-details__row">
                   <span className="product-details__label">Order ID</span>
-                  <span className="product-details__value product-details__value--strong">
-                    2784741147
-                  </span>
+                  <span className="product-details__value product-details__value--strong">2784741147</span>
                 </div>
-
                 <div className="product-details__row">
                   <span className="product-details__label">Name</span>
-                  <span className="product-details__value product-details__value--strong">
-                    {activeItem.name}
-                  </span>
+                  <span className="product-details__value product-details__value--strong">{activeItem.name}</span>
                 </div>
-
                 <div className="product-details__row">
                   <span className="product-details__label">SKU</span>
-                  <span className="product-details__value product-details__value--strong">
-                    {activeItem.sku}
-                  </span>
+                  <span className="product-details__value product-details__value--strong">{activeItem.sku}</span>
                 </div>
-
                 <div className="product-details__row">
                   <span className="product-details__label">Image</span>
                   <div className="product-details__image">
                     {activeItem.image ? (
-                      <img
-                        src={activeItem.image}
-                        alt={activeItem.name}
-                      />
+                      <img src={activeItem.image} alt={activeItem.name} />
                     ) : (
-                      <div className="product-details__no-image">
-                        no image
-                      </div>
+                      <div className="product-details__no-image">no image</div>
                     )}
                   </div>
                 </div>
-
                 <div className="product-details__row">
                   <span className="product-details__label">Order line</span>
-                  <span className="product-details__value product-details__value--strong">
-                    n/a
-                  </span>
+                  <span className="product-details__value product-details__value--strong">n/a</span>
                 </div>
               </div>
             </Card>
           </div>
         </div>
 
-{/* =========================
-    DRAWER
-    ========================= */}
-<aside
-  className={[
-    "product-drawer",
-    isDrawerOpen ? "product-drawer--open" : "",
-  ].join(" ")}
->
-  {/* RAIL */}
-  <div className="product-drawer__rail">
-    <div className="product-drawer__rail-main">
-      <button
-        type="button"
-        className="product-drawer__icon"
-        onClick={() => openDrawer("settings")}
-      >
-        <svg viewBox="0 0 24 24" width="20" height="20">
-          {icons.settings}
-        </svg>
-      </button>
+        {/* DRAWER */}
+        <aside className={["product-drawer", isDrawerOpen ? "product-drawer--open" : ""].join(" ")}>
+          <div className="product-drawer__rail">
+            <div className="product-drawer__rail-main">
 
-      <button
-        type="button"
-        className="product-drawer__icon"
-        onClick={() => openDrawer("print")}
-      >
-        <svg viewBox="0 0 24 24" width="20" height="20">
-          {icons.print}
-        </svg>
-      </button>
+              <button type="button" className="product-drawer__icon" onClick={() => openDrawer("settings")}>
+                <svg viewBox="0 0 24 24" width="20" height="20">{icons.settings}</svg>
+              </button>
 
-      <button
-        type="button"
-        className="product-drawer__icon"
-        onClick={() => openDrawer("history")}
-      >
-        <svg viewBox="0 0 24 24" width="20" height="20">
-          {icons.history}
-        </svg>
-      </button>
-    </div>
+              <button type="button" className="product-drawer__icon" onClick={() => openDrawer("stock")}>
+                <svg viewBox="0 0 24 24" width="20" height="20">{icons.inventory}</svg>
+              </button>
 
-    {/* CLOSE BUTTON */}
-      <div className="product-drawer__panel-close">
-        <button
-          type="button"
-          className={[
-            "product-drawer__close",
-            isDrawerOpen ? "is-open" : "",
-          ].join(" ")}
-          onClick={closeDrawer}
-        >
-          <svg viewBox="0 0 24 24" width="20" height="20">
-            {icons.chevronRightStroke}
-          </svg>
-        </button>
-      </div>
-  </div>
+              <button type="button" className="product-drawer__icon" onClick={() => openDrawer("print")}>
+                <svg viewBox="0 0 24 24" width="20" height="20">{icons.print}</svg>
+              </button>
 
-  {/* PANEL – A RAIL MELLETT NYÍLIK KI */}
-  {isDrawerOpen && (
-    <div className="product-drawer__panel">
-      <div className="product-drawer__panel-content">
-        {drawerView === "settings" && (
-          <div className="drawer-section">
-            <div className="drawer-section-item">
-              <div className="drawer-section-item-title">
-                Settings
-              </div>
+              <button type="button" className="product-drawer__icon" onClick={() => openDrawer("history")}>
+                <svg viewBox="0 0 24 24" width="20" height="20">{icons.history}</svg>
+              </button>
+
             </div>
 
-            <div className="drawer-section-itemsgroup">
-              <div className="drawer-section-item">
-                <Toggle
-                  title="Auto confirm"
-                  checked={false}
-                  onCheckedChange={() => {}}
-                />
-              </div>
-
-              <div className="drawer-section-item">
-                <Toggle
-                  title="Require double scan"
-                  checked={true}
-                  onCheckedChange={() => {}}
-                />
-              </div>
-            </div>
-
-            <div className="drawer-section-cta">
-              <Button variant="ghost">
-                Reset to defaults
-              </Button>
+            <div className="product-drawer__panel-close">
+              <button
+                type="button"
+                className={["product-drawer__close", isDrawerOpen ? "is-open" : ""].join(" ")}
+                onClick={closeDrawer}
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  width="20"
+                  height="20"
+                  style={{
+                    transform: isDrawerOpen ? "rotate(180deg)" : "rotate(0deg)",
+                    transition: "transform 200ms ease",
+                  }}
+                >
+                  {icons.chevronRightStroke}
+                </svg>
+              </button>
             </div>
           </div>
-        )}
 
-        {drawerView === "print" && (
-          <div className="drawer-section">
-            <div className="drawer-section-item">
-              <div className="drawer-section-item-title">
-                Print
+          {isDrawerOpen && (
+            <div className="product-drawer__panel">
+              <div className="product-drawer__panel-content">
+
+                {/* SETTINGS */}
+                {drawerView === "settings" && (
+                  <div className="drawer-section">
+                    <div className="drawer-section-item">
+                      <div className="drawer-section-item-title">Settings</div>
+                    </div>
+                    <div className="drawer-section-itemsgroup">
+                      <div className="drawer-section-item">
+                        <Toggle title="Auto confirm" checked={false} onCheckedChange={() => {}} />
+                      </div>
+                      <div className="drawer-section-item">
+                        <Toggle title="Require double scan" checked={true} onCheckedChange={() => {}} />
+                      </div>
+                    </div>
+                    <div className="drawer-section-cta">
+                      <Button variant="ghost" size="sm">
+                        Reset to defaults
+                      </Button>
+                    </div>
+                  </div>
+                )}
+
+                {/* STOCK INFORMATION */}
+                {drawerView === "stock" && (
+                  <div className="drawer-section">
+                    <div className="drawer-section-item">
+                      <div className="drawer-section-item-title">Stock information</div>
+                    </div>
+                    <div className="drawer-section-itemsgroup">
+                      <div className="drawer-section-item">
+                        <span className="drawer-section-item-label">SKU</span>
+                        <span className="drawer-section-item-value">{activeItem.sku}</span>
+                      </div>
+                      <div className="drawer-section-item">
+                        <span className="drawer-section-item-label">Total in stock</span>
+                        <span className="drawer-section-item-value">142 units</span>
+                      </div>
+                      <div className="drawer-section-item">
+                        <span className="drawer-section-item-label">Reserved</span>
+                        <span className="drawer-section-item-value">38 units</span>
+                      </div>
+                      <div className="drawer-section-item">
+                        <span className="drawer-section-item-label">Available</span>
+                        <span className="drawer-section-item-value">104 units</span>
+                      </div>
+                      <div className="drawer-section-item">
+                        <span className="drawer-section-item-label">Locations</span>
+                        <span className="drawer-section-item-value">3 bins</span>
+                      </div>
+                      <div className="drawer-section-item">
+                        <span className="drawer-section-item-label">Last putaway</span>
+                        <span className="drawer-section-item-value">07-Jan-2026</span>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* PRINT */}
+                {drawerView === "print" && (
+                  <div className="drawer-section">
+                    <div className="drawer-section-item">
+                      <div className="drawer-section-item-title">Print</div>
+                    </div>
+                    <div className="drawer-section-item">
+                      <Button variant="ghost" size="sm">Print product label</Button>
+                    </div>
+                    <div className="drawer-section-item">
+                      <Button variant="ghost" size="sm">Print location label</Button>
+                    </div>
+                  </div>
+                )}
+
+                {/* HISTORY */}
+                {drawerView === "history" && (
+                  <div className="drawer-section">
+                    <div className="drawer-section-item">
+                      <div className="drawer-section-item-title">History</div>
+                    </div>
+                    <div className="drawer-section-item">
+                      <p>Picked by a.kovach · 10:42</p>
+                      <p>Scanned SKU · 10:41</p>
+                      <p>Putaway started · 10:39</p>
+                    </div>
+                  </div>
+                )}
+
               </div>
             </div>
-
-            <div className="drawer-section-item">
-              <Button variant="ghost">
-                Print product label
-              </Button>
-            </div>
-
-            <div className="drawer-section-item">
-              <Button variant="ghost">
-                Print location label
-              </Button>
-            </div>
-          </div>
-        )}
-
-        {drawerView === "history" && (
-          <div className="drawer-section">
-            <div className="drawer-section-item">
-              <div className="drawer-section-item-title">
-                History
-              </div>
-            </div>
-
-            <div className="drawer-section-item">
-              <p>Picked by a.kovach · 10:42</p>
-              <p>Scanned SKU · 10:41</p>
-              <p>Putaway started · 10:39</p>
-            </div>
-          </div>
-        )}
-      </div>
-
-    </div>
-  )}
-</aside>
-
+          )}
+        </aside>
 
         {/* FOOTER */}
         <footer className="product-page__footer">
           <div className="product-page__footer-left">
-            <Button
-              variant="ghost"
-              onClick={() => setIsExitDialogOpen(true)}
-            >
-              Back
-            </Button>
+            <Button variant="ghost" onClick={() => setIsExitDialogOpen(true)}>Back</Button>
           </div>
-
-          <div className="product-page__footer-center">
-            
-          </div>
-
+          <div className="product-page__footer-center" />
           <div className="product-page__footer-right">
-            <Button
-              variant="primary"
-              disabled={!isProductVerified}
-              onClick={handleConfirm}
-            >
+            <Button variant="primary" disabled={!isProductVerified} onClick={handleConfirm}>
               Confirm
             </Button>
           </div>
         </footer>
       </div>
 
-      {/* =========================
-          QUANTITY CONFIRM DIALOG
-          ========================= */}
-
+      {/* QUANTITY CONFIRM DIALOG */}
       <Dialog
         isOpen={isDialogOpen}
         intent="warning"
         title="Quantity changes"
-        footerLeft={
-          <Button
-            variant="ghost"
-            onClick={() => setIsDialogOpen(false)}
-          >
-            Cancel
-          </Button>
-        }
-        footerRight={
-          <Button
-            variant="primary"
-            onClick={finalizeConfirm}
-          >
-            Confirm
-          </Button>
-        }
+        footerLeft={<Button variant="ghost" onClick={() => setIsDialogOpen(false)}>Cancel</Button>}
+        footerRight={<Button variant="primary" onClick={finalizeConfirm}>Confirm</Button>}
       >
         Are you sure you can put away different quantity than expected?
       </Dialog>
 
-
-      {/* =========================
-          EXIT CONFIRM DIALOG
-          ========================= */}
-
+      {/* EXIT CONFIRM DIALOG */}
       <Dialog
         isOpen={isExitDialogOpen}
         intent="warning"
         title="Exit task"
-        footerLeft={
-          <Button
-            variant="ghost"
-            onClick={() => setIsExitDialogOpen(false)}
-          >
-            Cancel
-          </Button>
-        }
-        footerRight={
-          <Button
-            variant="primary"
-            onClick={handleExitConfirm}
-          >
-            Confirm
-          </Button>
-        } 
+        footerLeft={<Button variant="ghost" onClick={() => setIsExitDialogOpen(false)}>Cancel</Button>}
+        footerRight={<Button variant="primary" onClick={handleExitConfirm}>Confirm</Button>}
       >
         Are you sure you want to cancel the current task and return to the dashboard?
       </Dialog>
+
     </ProductPageLayout>
   );
 }
