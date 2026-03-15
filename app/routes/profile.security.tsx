@@ -124,7 +124,6 @@ export default function ProfileSecurity() {
                     }
                   />
 
-                <br/>
                   {editing && (
                     <>
                       <TextField
@@ -141,7 +140,6 @@ export default function ProfileSecurity() {
                         }
                       />
 
-                <br/>
                       <TextField
                         label="Confirm new password"
                         type="password"

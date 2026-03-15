@@ -68,6 +68,9 @@ type Props = {
 
   detailsContent?: React.ReactNode
   batchActions?: React.ReactNode
+
+  tableTitle?: string
+  headerActions?: React.ReactNode
 }
 
 /* =========================
@@ -84,12 +87,10 @@ export function DataTableCore({
   onSelectionChange,
   headerVariant = "statusSplit",
   detailsContent,
-  batchActions
+  batchActions,
+  tableTitle,
+  headerActions,
 }: Props) {
-
-  /* =========================
-     STATE
-  ========================= */
 
   const [search, setSearch] = useState("")
   const [showDetails, setShowDetails] = useState(false)
@@ -99,23 +100,13 @@ export function DataTableCore({
   const [existingOpen, setExistingOpen] = useState(true)
 
   const [filters, setFilters] = useState<Filter[]>([
-    {
-      column: columns[0]?.key ?? "",
-      operator: "equals",
-      value: ""
-    }
+    { column: columns[0]?.key ?? "", operator: "equals", value: "" }
   ])
 
   const [appliedFilters, setAppliedFilters] = useState<Filter[]>([])
-
   const [page, setPage] = useState(1)
   const pageSize = 10
-
   const [showCustomizeColumns, setShowCustomizeColumns] = useState(false)
-
-  /* =========================
-     SELECTED ROW DATA
-  ========================= */
 
   const selectedRowData = useMemo<InspectionRow[]>(() => {
     const idSet = new Set(selectedRows)
@@ -132,10 +123,6 @@ export function DataTableCore({
   const inspectionBins = useMemo(() => {
     return Array.from(new Set(selectedRowData.map(r => r.bin)))
   }, [selectedRowData])
-
-  /* =========================
-     COLUMN CONFIG
-  ========================= */
 
   const [columnConfig, setColumnConfig] = useState<ColumnConfig[]>(() =>
     columns.map(c => ({
@@ -158,16 +145,11 @@ export function DataTableCore({
   }, [columns])
 
   const visibleColumns = useMemo(
-    () =>
-      columns.filter(col =>
-        columnConfig.find(cfg => cfg.key === col.key && cfg.visible)
-      ),
+    () => columns.filter(col =>
+      columnConfig.find(cfg => cfg.key === col.key && cfg.visible)
+    ),
     [columns, columnConfig]
   )
-
-  /* =========================
-     FILTER ENGINE
-  ========================= */
 
   function applyFilters(rows: DataTableRow[]) {
     return rows.filter(row =>
@@ -181,10 +163,6 @@ export function DataTableCore({
       })
     )
   }
-
-  /* =========================
-     SEARCH + FILTER
-  ========================= */
 
   const filteredRows = useMemo(() => {
     let result = rows
@@ -201,18 +179,10 @@ export function DataTableCore({
     return result
   }, [rows, search, appliedFilters, visibleColumns])
 
-  /* =========================
-     PAGINATION
-  ========================= */
-
   const pagedRows = filteredRows.slice(
     (page - 1) * pageSize,
     page * pageSize
   )
-
-  /* =========================
-     DEFAULT BATCH ACTIONS
-  ========================= */
 
   const defaultBatchActions = (
     <>
@@ -227,20 +197,10 @@ export function DataTableCore({
       >
         Inspection
       </Button>
-
-      <Button size="sm" variant="ghost">
-        Schedule
-      </Button>
-
-      <Button size="sm" variant="ghost" intent="danger">
-        Delete
-      </Button>
+      <Button size="sm" variant="ghost">Schedule</Button>
+      <Button size="sm" variant="ghost" intent="danger">Delete</Button>
     </>
   )
-
-  /* =========================
-     RENDER
-  ========================= */
 
   return (
     <>
@@ -248,7 +208,7 @@ export function DataTableCore({
         <div className="data-table">
 
           <DataTableHeader
-            variant={headerVariant}
+            variant={tableTitle ? "titled" : headerVariant}
             searchValue={search}
             onSearchChange={setSearch}
             showDetails={showDetails}
@@ -256,10 +216,12 @@ export function DataTableCore({
             showFilters={showFilters}
             onToggleFilters={() => setShowFilters(v => !v)}
             detailsContent={detailsContent}
+            title={tableTitle}
+            headerActions={headerActions}
           />
 
           {/* FILTER PANEL */}
-          {showFilters && (
+          {showFilters && !tableTitle && (
             <div className="data-table_filter">
               {filters.map((filter, index) => (
                 <div key={index} className="data-table__filter-row">
@@ -269,7 +231,7 @@ export function DataTableCore({
                     value={filter.column}
                     onChange={(v) => {
                       const copy = [...filters]
-                      copy[index].column = v
+                      copy[index].column = v ?? ""
                       setFilters(copy)
                     }}
                     options={columns.map(c => ({ value: c.key, label: c.label ?? c.key }))}
@@ -280,7 +242,7 @@ export function DataTableCore({
                     value={filter.operator}
                     onChange={(v) => {
                       const copy = [...filters]
-                      copy[index].operator = v as FilterOperator
+                      copy[index].operator = (v ?? "equals") as FilterOperator
                       setFilters(copy)
                     }}
                     options={[
@@ -334,10 +296,14 @@ export function DataTableCore({
                   Customize columns
                 </Button>
                 <div style={{ display: "flex", gap: "var(--space-2)" }}>
-                  <Button size="sm" variant="ghost" onClick={() => {
-                    setAppliedFilters([])
-                    setFilters([{ column: columns[0]?.key ?? "", operator: "equals", value: "" }])
-                  }}>
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    onClick={() => {
+                      setAppliedFilters([])
+                      setFilters([{ column: columns[0]?.key ?? "", operator: "equals", value: "" }])
+                    }}
+                  >
                     Cancel filters
                   </Button>
                   <Button size="sm" variant="secondary" onClick={() => setAppliedFilters([...filters])}>
@@ -440,8 +406,6 @@ export function DataTableCore({
             </Button>
           }
         >
-
-          {/* INFO */}
           <div className="start-inspection-dialog__info">
             <Icon name="info" />
             <span>
@@ -450,12 +414,10 @@ export function DataTableCore({
             </span>
           </div>
 
-          {/* EXISTING */}
           <div className="start-inspection-dialog__block">
             <span className="start-inspection-dialog__title">
               Select existing task group:
             </span>
-
             <div className="start-inspection-dialog__option-row">
               <RadioButton checked={inspectionMode === "existing"} />
               <div className="start-inspection-dialog__task">
@@ -501,15 +463,12 @@ export function DataTableCore({
             </div>
           </div>
 
-          {/* OR */}
           <div className="start-inspection-dialog__divider">OR</div>
 
-          {/* NEW */}
           <div className="start-inspection-dialog__block">
             <span className="start-inspection-dialog__title">
               Create a new inspection from the selected compartments:
             </span>
-
             <div
               className="start-inspection-dialog__option-row"
               onClick={() => setInspectionMode("new")}
@@ -533,7 +492,6 @@ export function DataTableCore({
               </div>
             </div>
           </div>
-
         </Dialog>
       )}
 

@@ -32,7 +32,7 @@ export const sidebarConfig: SidebarSection[] = [
         title: "Operations",
         items: [
           { label: "Staff performance", path: "staff-performance", icon: "profile" },
-          { label: "Storage utilization", path: "storage-utilization", icon: "barChart" },
+          { label: "Space optimization", path: "space-optimization", icon: "barChart" },
           { label: "Replenishment", path: "replenishment", icon: "refresh" },
         ],
       },
@@ -57,22 +57,30 @@ export const sidebarConfig: SidebarSection[] = [
     items: [
       { label: "Overview", path: "", icon: "barChart" },
       { label: "Picking", path: "picking", icon: "forklift" },
+
+    ],
+  },
+
+      /*
       { label: "Order batching", path: "order-batching", icon: "barChart" },
       { label: "Picking strategies", path: "picking-strategies", icon: "settings" },
       { label: "Printing", path: "printing", icon: "print" },
-    ],
-  },
+       */
+
   {
     basePath: "inventory",
     items: [
-      { label: "Overview", path: "", icon: "barChart" },
       { label: "Inspection", path: "inspection", icon: "checkCircle" },
     ],
   },
+      /*
+      { label: "Overview", path: "", icon: "barChart" },
+      */
 
   {
     basePath: "control-center",
     groups: [
+      /*
       {
         title: "Monitoring",
         items: [
@@ -88,8 +96,9 @@ export const sidebarConfig: SidebarSection[] = [
           { label: "Maintenance", path: "maintenance", icon: "settings" },
         ],
       },
+      */
       {
-        title: "Logging",
+        title: " ",
         items: [
           { label: "Integration logs", path: "integration-logs", icon: "history" },
           { label: "System logs", path: "system-logs", icon: "history" },
@@ -113,6 +122,7 @@ export const sidebarConfig: SidebarSection[] = [
           { label: "Inventory rules", path: "inventory-rules", icon: "settings" },
         ],
       },
+      /* 
       {
         title: "Workflow configuration",
         items: [
@@ -121,6 +131,7 @@ export const sidebarConfig: SidebarSection[] = [
           { label: "Inventory", path: "inventory", icon: "barChart" },
         ],
       },
+      */
     ],
   },
 

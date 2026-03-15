@@ -4,7 +4,8 @@ import { Button } from "@/components/ui/button/Button";
 export type HeaderVariant =
   | "statusSplit"
   | "warehouseSelect"
-  | "reorder";
+  | "reorder"
+  | "titled";
 
 type Props = {
   variant?: HeaderVariant;
@@ -15,6 +16,8 @@ type Props = {
   showFilters: boolean;
   onToggleFilters: () => void;
   detailsContent?: React.ReactNode;
+  title?: string;
+  headerActions?: React.ReactNode;
 };
 
 export function DataTableHeader({
@@ -26,40 +29,53 @@ export function DataTableHeader({
   showFilters,
   onToggleFilters,
   detailsContent,
+  title,
+  headerActions,
 }: Props) {
 
   return (
     <>
       <div className="data-table__header">
         <div className="data-table__header-main">
+
           <div className="data-table__header-left">
-            <input
-              type="search"
-              placeholder="Search in this data table..."
-              className="text-field__input"
-              value={searchValue}
-              onChange={(e) => onSearchChange(e.target.value)}
-            />
+            {variant === "titled" && title ? (
+              <strong style={{ fontSize: "var(--font-h3)" }}>{title}</strong>
+            ) : (
+              <input
+                type="search"
+                placeholder="Search in this data table..."
+                className="text-field__input"
+                value={searchValue}
+                onChange={(e) => onSearchChange(e.target.value)}
+              />
+            )}
           </div>
 
           <div className="data-table__header-right">
-            <div className="data-table__toggle">
-              <Toggle
-                checked={showDetails}
-                onCheckedChange={onToggleDetails}
-                title="Show details"
-              />
-            </div>
-
-            <Button
-              variant="ghost"
-              size="sm"
-              trailingIcon="chevronDownStroke"
-              onClick={onToggleFilters}
-            >
-              Filters
-            </Button>
+            {variant === "titled" && headerActions ? (
+              headerActions
+            ) : (
+              <>
+                <div className="data-table__toggle">
+                  <Toggle
+                    checked={showDetails}
+                    onCheckedChange={onToggleDetails}
+                    title="Show details"
+                  />
+                </div>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  trailingIcon="chevronDownStroke"
+                  onClick={onToggleFilters}
+                >
+                  Filters
+                </Button>
+              </>
+            )}
           </div>
+
         </div>
       </div>
 

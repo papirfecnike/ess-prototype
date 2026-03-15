@@ -18,53 +18,53 @@ export default function InsightsSProductivity() {
       {/* TOP WIDGETS */}
       <PageSection>
         <div className="layout-grid-4">
-          <Card className="layout-card-fill">
-            <div className="card-header">
-              <Icon name="database" />
-              <h3>Bin presentation / hour</h3>
-            </div>
+          <Card
+            variant="metric"
+            title={
+              <>
+                <Icon name="database" />
+                Bin presentation / hour
+              </>
+            }
+            value="156"
+            trend="+12% from last hour"
+          />
 
-            <div className="layout-stack">
-              <strong style={{ fontSize: 28, color: "#07930A" }}>156</strong>
-              <span>+12% from last hour</span>
-            </div>
-          </Card>
+          <Card
+            variant="metric"
+            title={
+              <>
+                <Icon name="database" />
+                Orders completed
+              </>
+            }
+            value="89"
+            trend="On track for daily goal"
+          />
 
-          <Card className="layout-card-fill">
-            <div className="card-header">
-              <Icon name="archive" />
-              <h3>Orders completed</h3>
-            </div>
+          <Card
+            variant="metric"
+            title={
+              <>
+                <Icon name="database" />
+                Average pick time
+              </>
+            }
+            value="32.1 s"
+            trend="+12.3s fall"
+          />
 
-            <div className="layout-stack">
-              <strong style={{ fontSize: 28, color: "#07930A" }}>89</strong>
-              <span>On track for daily goal</span>
-            </div>
-          </Card>
-
-          <Card className="layout-card-fill">
-            <div className="card-header">
-              <Icon name="inbox" />
-              <h3>Average pick time</h3>
-            </div>
-
-            <div className="layout-stack">
-              <strong style={{ fontSize: 28, color: "#CA1520" }}>32.1 s</strong>
-              <span>+12.3s fall</span>
-            </div>
-          </Card>
-
-          <Card className="layout-card-fill">
-            <div className="card-header">
-              <Icon name="alertTriangle" />
-              <h3>Efficiency score</h3>
-            </div>
-
-            <div className="layout-stack">
-              <strong style={{ fontSize: 28, color: "#07930A" }}>94%</strong>
-              <span>Excellent performance</span>
-            </div>
-          </Card>
+          <Card
+            variant="metric"
+            title={
+              <>
+                <Icon name="database" />
+                Efficiency score
+              </>
+            }
+            value="94%"
+            trend="Excellent performance"
+          />
         </div>
       </PageSection>
 

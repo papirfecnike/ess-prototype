@@ -19,8 +19,9 @@ type Props = {
   headerVariant?: HeaderVariant;
 
   detailsContent?: ReactNode;
-
-  batchActions?: React.ReactNode;
+  batchActions?: ReactNode;
+  tableTitle?: string;
+  headerActions?: ReactNode;
 };
 
 export function SelectableDataTable({
@@ -32,6 +33,8 @@ export function SelectableDataTable({
   headerVariant,
   detailsContent,
   batchActions,
+  tableTitle,
+  headerActions,
 }: Props) {
   return (
     <DataTableCore
@@ -43,6 +46,8 @@ export function SelectableDataTable({
       headerVariant={headerVariant}
       detailsContent={detailsContent}
       batchActions={batchActions}
+      tableTitle={tableTitle}
+      headerActions={headerActions}
       selectable
     />
   );

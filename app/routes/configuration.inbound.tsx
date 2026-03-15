@@ -1,18 +1,12 @@
 import type { LoaderFunction } from "react-router";
-import { useState, useMemo } from "react";
+import { useState } from "react";
 
 import { PageLayout } from "@/components/layout/PageLayout";
 import { PageSection } from "@/components/layout/PageSection";
 
-import { ReorderDataTable } from "@/components/data/ReorderDataTable";
-import type {
-  DataTableColumn,
-  DataTableRow,
-} from "@/components/data/DataTableCore";
-
+import { Card } from "@/components/ui/card/Card";
 import { Icon } from "@/components/ui/icon/Icon";
 import { Button } from "@/components/ui/button/Button";
-import { Toggle } from "@/components/ui/toggle/Toggle";
 
 export const loader: LoaderFunction = async () => null;
 
@@ -20,173 +14,177 @@ export const loader: LoaderFunction = async () => null;
    TYPES
    ========================= */
 
-type PrioritizationRow = DataTableRow & {
+type Step = {
   id: number;
-  priority: number;
-  rulename: string;
-  condition: string;
-  action: string;
-  active: string; // DataTableRow miatt string
+  title: string;
+  mode: "manual" | "automated";
+  duration: string;
+  role: string;
+  active: boolean;
+};
+
+type Workflow = {
+  id: number;
+  name: string;
+  description: string;
+  totalTime: string;
+  steps: Step[];
 };
 
 /* =========================
    COMPONENT
    ========================= */
 
-export default function ConfigurationPrioritization() {
-  /* =========================
-     STATE
-     ========================= */
+export default function ConfigurationInbound() {
 
-  const [baseRows, setBaseRows] = useState<
-    Omit<PrioritizationRow, "priority" | "id">[]
-  >([
+  const [workflows] = useState<Workflow[]>([
     {
-      rulename: "Express Orders",
-      condition: "Order Type = Express",
-      action: "Move to front of queue",
-      active: "true",
+      id: 1,
+      name: "Standard Receiving",
+      description: "Default workflow for regular inbound shipments",
+      totalTime: "41 min",
+      steps: [
+        { id: 1, title: "Check-in at Dock", mode: "manual", duration: "5 min", role: "Operator", active: true },
+        { id: 2, title: "Scan Pallet Labels", mode: "manual", duration: "10 min", role: "Operator", active: true },
+        { id: 3, title: "Quality Inspection", mode: "manual", duration: "15 min", role: "Supervisor", active: true },
+        { id: 4, title: "System Validation", mode: "automated", duration: "2 min", role: "System", active: true },
+        { id: 5, title: "Assign Putaway Location", mode: "automated", duration: "1 min", role: "System", active: true },
+        { id: 6, title: "Putaway to Bin", mode: "manual", duration: "8 min", role: "Operator", active: true },
+      ],
     },
+
     {
-      rulename: "Large Volume Orders",
-      condition: "Item Count > 50",
-      action: "Assign to dedicated picker",
-      active: "true",
-    },
-    {
-      rulename: "VIP Customers",
-      condition: "Customer Tier = VIP",
-      action: "Priority picking",
-      active: "true",
-    },
-    {
-      rulename: "Time-Sensitive",
-      condition: "Ship By Date < 24h",
-      action: "Expedite processing",
-      active: "true",
-    },
-    {
-      rulename: "Hazmat Items",
-      condition: "Contains Hazmat = Yes",
-      action: "Route to certified handlers",
-      active: "true",
+      id: 2,
+      name: "Express Receiving",
+      description: "Fast-track workflow for urgent inbound shipments",
+      totalTime: "13 min",
+      steps: [
+        { id: 1, title: "Priority Check-in", mode: "manual", duration: "3 min", role: "Supervisor", active: true },
+        { id: 2, title: "Quick Scan", mode: "manual", duration: "5 min", role: "Operator", active: true },
+        { id: 3, title: "Direct Putaway", mode: "automated", duration: "5 min", role: "System", active: true },
+      ],
     },
   ]);
 
-  /* =========================
-     ROWS WITH PRIORITY
-     ========================= */
-
-    const rows: PrioritizationRow[] = useMemo(
-      () =>
-        baseRows.map((row, index) => ({
-          ...row,
-          id: index + 1,
-          priority: index + 1,
-        })) as PrioritizationRow[],
-      [baseRows]
-    );
-
-  /* =========================
-     REORDER
-     ========================= */
-
-  function moveRow(index: number, direction: "up" | "down") {
-    setBaseRows((prev) => {
-      const next = [...prev];
-
-      const target =
-        direction === "up" ? index - 1 : index + 1;
-
-      if (target < 0 || target >= next.length) {
-        return prev;
-      }
-
-      [next[index], next[target]] = [
-        next[target],
-        next[index],
-      ];
-
-      return next;
-    });
-  }
-
-  /* =========================
-     ACTIVE COUNT
-     ========================= */
-
-  const activeCount = rows.filter(
-    (r) => r.active === "true"
-  ).length;
-
-  /* =========================
-     COLUMNS
-     ========================= */
-
-  const columns: DataTableColumn[] = [
-  {
-    key: "rulename",
-    label: "Rule name",
-    renderCell: (value) => (
-      <strong>{String(value)}</strong>
-    ),
-  },
-  {
-    key: "condition",
-    label: "Condition",
-  },
-  {
-    key: "action",
-    label: "Action",
-  },
-  {
-    key: "actions",
-    label: "",
-    align: "right",
-    renderCell: (_value, row) => (
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "flex-end",
-          alignItems: "center",
-          gap: 12,
-          width: "100%",
-        }}
-      >
-        <Toggle
-          checked={row.active === "true"}
-          onCheckedChange={() => {}}
-          title=""
-        />
-
-        <button
-          type="button"
-          className="btn--ghost"
-          aria-label="Edit"
-        >
-          <Icon name="edit" size="sm" />
-        </button>
-      </div>
-    ),
-  },
-];
-
-  /* =========================
-     RENDER
-     ========================= */
-
   return (
     <PageLayout
-      title="Prioritization"
-      subtitle="Define and adjust processing order for inbound tasks"
+      title="Inbound workflows"
+      subtitle="Configure inbound processing steps"
     >
       <PageSection>
-        <ReorderDataTable
-          rowIdKey="id"
-          columns={columns}
-          rows={rows}
-          onMoveRow={moveRow}
-        />
+
+        {workflows.map((workflow) => (
+
+          <Card key={workflow.id}>
+
+            {/* HEADER */}
+
+            <div className="workflow-header">
+
+              <div>
+                <div className="workflow-title">
+                  {workflow.name}
+                </div>
+
+                <div className="workflow-description">
+                  {workflow.description}
+                </div>
+              </div>
+
+              <div className="workflow-header-right">
+
+                <div className="workflow-time">
+                  <Icon name="clock" size="sm" />
+                  <strong>{workflow.totalTime}</strong>
+                </div>
+
+                <Button
+                  variant="secondary"
+                  size="sm"
+                  leadingIcon="edit"
+                >
+                  Edit
+                </Button>
+
+              </div>
+
+            </div>
+
+            {/* STEPS */}
+
+            <div className="workflow-steps">
+
+              {workflow.steps.map((step, index) => (
+
+                <div
+                  key={step.id}
+                  className="workflow-row"
+                >
+
+                  {/* LEFT TIMELINE */}
+
+                  <div className="workflow-left">
+
+                    <div className="workflow-number">
+                      {index + 1}
+                    </div>
+
+                    {index < workflow.steps.length - 1 && (
+                      <div className="workflow-line" />
+                    )}
+
+                  </div>
+
+                  {/* STEP CARD */}
+
+                  <div className="workflow-step">
+
+                    <div className="workflow-step-main">
+
+                      <div className="workflow-step-title">
+
+                        {step.title}
+
+                        <span
+                          className={`workflow-badge workflow-badge--${step.mode}`}
+                        >
+                          {step.mode}
+                        </span>
+
+                      </div>
+
+                      <div className="workflow-meta">
+
+                        <span>
+                          <Icon name="clock" size="xs" /> {step.duration}
+                        </span>
+
+                        <span>
+                          <Icon name="user" size="xs" /> {step.role}
+                        </span>
+
+                      </div>
+
+                    </div>
+
+                    {step.active && (
+                      <div className="workflow-status">
+                        Active
+                      </div>
+                    )}
+
+                  </div>
+
+                </div>
+
+              ))}
+
+            </div>
+
+          </Card>
+
+        ))}
+
       </PageSection>
     </PageLayout>
   );

@@ -90,3 +90,47 @@
   min-height: 0;
 }
 
+
+
+.ui-card--metric {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.ui-card__metric-header {
+  display: flex;
+  align-items: center;
+  font-size: var(--font-default);
+  color: var(--color-text-muted);
+}
+
+.ui-card__metric-title {
+  display: flex;
+  align-items: center;
+}
+
+.ui-card__metric-value {
+  font-size: 28px;
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text);
+  display: flex;
+  flex-wrap: row;
+  align-items: baseline;
+}
+
+.ui-card__metric-sub {
+  font-size: 14px;
+  color: var(--color-text-muted);
+}
+
+.ui-card__metric-trend {
+  font-size: 13px;
+  color: var(--color-success);
+}
+
+.ui-card__metric-footer {
+  font-size: var(--font-size-s);
+  color: var(--color-text-muted);
+}

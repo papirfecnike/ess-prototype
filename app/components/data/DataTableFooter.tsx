@@ -45,14 +45,6 @@ export function DataTableFooter({
     <div className="data-table__footer">
       {/* LEFT */}
       <div className="data-table__footer-left">
-        <button
-          type="button"
-          className="btn--ghost"
-          onClick={onExport}
-          disabled={!onExport}
-        >
-          Export
-        </button>
       </div>
 
       {/* RIGHT */}
@@ -135,6 +127,7 @@ export function DataTableFooter({
 
         <div className="data-table__footer-page-select">
           <Select
+            variant="multi"
             size="sm"
             value={[String(page)]}
             onChange={(v) =>
@@ -143,7 +136,7 @@ export function DataTableFooter({
             options={pageOptions}
             label=""
           />
-        </div>
+</div>
       </div>
     </div>
   );

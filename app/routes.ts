@@ -12,7 +12,7 @@ export default [
     route("productivity", "routes/insights.productivity.tsx"),
     route("port-performance", "routes/insights.port-performance.tsx"),
     route("staff-performance", "routes/insights.staff-performance.tsx"),
-    route("storage-utilization", "routes/insights.storage-utilization.tsx"),
+    route("space-optimization", "routes/insights.space-optimization.tsx"),
     route("replenishment", "routes/insights.replenishment.tsx"),
     route("system-health", "routes/insights.system-health.tsx"),
   ]),

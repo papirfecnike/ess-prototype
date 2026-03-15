@@ -461,6 +461,22 @@ aside.sidebar {
 }
 
 /* =========================
+   PROFILE
+   ========================= */
+.settings-section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.settings-card-stack-content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 100%;
+}
+
+/* =========================
    CARD CONTENT – GENERIC
    ========================= */
 .card-content__wrapper {
@@ -513,4 +529,125 @@ aside.sidebar {
   gap: 16px;
   width: 100%;
   min-width: 0;
+}
+
+.workflow-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+}
+
+.workflow-title {
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.workflow-description {
+  color: var(--color-text-muted);
+  font-size: 14px;
+}
+
+.workflow-header-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.workflow-time {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #356ae6;
+}
+
+.workflow-steps {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.workflow-row {
+  display: flex;
+  gap: 16px;
+}
+
+.workflow-left {
+  width: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.workflow-number {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(
+    135deg,
+    #5a6ff0,
+    #9b5de5
+  );
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+}
+
+.workflow-line {
+  width: 2px;
+  flex: 1;
+  background: #e1e1e1;
+  margin-top: 6px;
+}
+
+.workflow-step {
+  flex: 1;
+  background: #f7f8fb;
+  border-radius: 10px;
+  padding: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.workflow-step-title {
+  font-weight: 600;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.workflow-meta {
+  margin-top: 4px;
+  font-size: 14px;
+  color: var(--color-text-muted);
+  display: flex;
+  gap: 16px;
+}
+
+.workflow-badge {
+  font-size: 12px;
+  padding: 3px 8px;
+  border-radius: 999px;
+}
+
+.workflow-badge--manual {
+  background: #e7efff;
+  color: #356ae6;
+}
+
+.workflow-badge--automated {
+  background: #f2e7ff;
+  color: #7a3fe4;
+}
+
+.workflow-status {
+  background: #e6f7ea;
+  color: #1f7a3a;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
 }

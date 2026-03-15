@@ -27,7 +27,7 @@ export const searchIndex: SearchItem[] = [
   {
     label: "Insights",
     description: "Storage utilization",
-    route: "/insights/storage-utilization",
+    route: "/insights/space-optimization",
     keywords: ["Total", "capacity", "storage", "utilization", "Dead", "stock", "Available", "space", "Zones", "capacity", "location", "breakdown", "Staff", "ranking", "User", "details", "trend" ],
   },
   {
