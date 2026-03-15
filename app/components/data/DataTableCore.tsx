@@ -1,67 +1,78 @@
-import "./data-table.css";
-import { useState, useEffect, useRef, Fragment, useMemo } from "react";
-import { DataTableHeader } from "./DataTableHeader";
-import { DataTableFooter } from "./DataTableFooter";
-import { Icon } from "../ui/icon/Icon";
-import { Checkbox } from "../ui/checkbox/Checkbox";
-import { CustomizeColumnsModal } from "@/components/data/CustomizeColumnsModal";
-import type { ColumnConfig } from "./CustomizeColumnsModal";
-import type { HeaderVariant } from "./DataTableHeader";
+import "./data-table.css"
+
+import { useState, useEffect, Fragment, useMemo } from "react"
+
+import { DataTableHeader } from "./DataTableHeader"
+import { DataTableFooter } from "./DataTableFooter"
+
+import { Icon } from "../ui/icon/Icon"
+import { Checkbox } from "../ui/checkbox/Checkbox"
+
+import { CustomizeColumnsModal } from "@/components/data/CustomizeColumnsModal"
+import type { ColumnConfig } from "./CustomizeColumnsModal"
+import type { HeaderVariant } from "./DataTableHeader"
+
+import { TextField } from "@/components/ui/input/TextField"
+import { Button } from "@/components/ui/button/Button"
+import { Select } from "@/components/ui/select/Select"
+import { Chip } from "@/components/ui/chip/Chip"
+import { Tag } from "@/components/ui/tag/Tag"
+import { Dialog } from "@/components/ui/dialog/Dialog"
+import { RadioButton } from "@/components/ui/radiobutton/RadioButton"
 
 /* =========================
    TYPES
-   ========================= */
+========================= */
 
 export type DataTableColumn = {
-  key: string;
-  label?: string;
-  sortable?: boolean;
-  align?: "left" | "center" | "right";
-  width?: number | string;
-  hidden?: boolean;
-  renderCell?: (value: unknown, row: DataTableRow) => React.ReactNode;
-};
+  key: string
+  label?: string
+  sortable?: boolean
+  align?: "left" | "center" | "right"
+  width?: number | string
+  hidden?: boolean
+  renderCell?: (value: unknown, row: DataTableRow) => React.ReactNode
+}
 
-export type DataTableRow = Record<string, string | number>;
+export type DataTableRow = Record<string, string | number>
 
-type SortState = {
-  key: string;
-  direction: "asc" | "desc";
-} | null;
+type FilterOperator = "equals" | "contains" | "gt" | "lt"
+
+type Filter = {
+  column: string
+  operator: FilterOperator
+  value: string
+}
+
+type InspectionRow = {
+  bin: string
+  compartment: string
+  sku: string
+  product: string
+}
 
 type Props = {
-  columns: DataTableColumn[];
-  rows: DataTableRow[];
-  rowIdKey: string;
+  columns: DataTableColumn[]
+  rows: DataTableRow[]
+  rowIdKey: string
 
-  selectable?: boolean;
-  expandable?: boolean;
+  selectable?: boolean
+  expandable?: boolean
 
-  selectedRows?: string[];
-  onSelectionChange?: (ids: string[]) => void;
+  selectedRows?: string[]
+  onSelectionChange?: (ids: string[]) => void
 
-  expandedRows?: string[];
-  onExpandChange?: (ids: string[]) => void;
+  renderExpandedRow?: (row: DataTableRow) => React.ReactNode
 
-  renderExpandedRow?: (row: DataTableRow) => React.ReactNode;
+  headerVariant?: HeaderVariant
 
-  headerVariant?: HeaderVariant;
-};
-
-/* =========================
-   STATUS MAP
-   ========================= */
-
-const STATUS_ID_TO_ROW_STATUS: Record<string, string> = {
-  inprogress: "In progress",
-  prepared: "Prepared",
-  waiting: "Waiting",
-  completed: "Completed",
-};
+  detailsContent?: React.ReactNode
+  batchActions?: React.ReactNode
+}
 
 /* =========================
    COMPONENT
-   ========================= */
+========================= */
 
 export function DataTableCore({
   columns,
@@ -71,121 +82,171 @@ export function DataTableCore({
   expandable = false,
   selectedRows = [],
   onSelectionChange,
-  renderExpandedRow,
   headerVariant = "statusSplit",
+  detailsContent,
+  batchActions
 }: Props) {
-  const [search, setSearch] = useState("");
-  const [showDetails, setShowDetails] = useState(false);
-  const [showFilters, setShowFilters] = useState(false);
 
-  const [selectedStatusIds, setSelectedStatusIds] = useState<string[]>([]);
+  /* =========================
+     STATE
+  ========================= */
 
-  const [sort, setSort] = useState<SortState>(null);
-  const [expandedRows, setExpandedRows] = useState<string[]>([]);
+  const [search, setSearch] = useState("")
+  const [showDetails, setShowDetails] = useState(false)
+  const [showFilters, setShowFilters] = useState(false)
+  const [showInspectionDialog, setShowInspectionDialog] = useState(false)
+  const [inspectionMode, setInspectionMode] = useState<"existing" | "new" | null>(null)
+  const [existingOpen, setExistingOpen] = useState(true)
 
-  const [page, setPage] = useState(1);
-  const pageSize = 10;
+  const [filters, setFilters] = useState<Filter[]>([
+    {
+      column: columns[0]?.key ?? "",
+      operator: "equals",
+      value: ""
+    }
+  ])
 
-  const [showCustomizeColumns, setShowCustomizeColumns] =
-    useState(false);
+  const [appliedFilters, setAppliedFilters] = useState<Filter[]>([])
+
+  const [page, setPage] = useState(1)
+  const pageSize = 10
+
+  const [showCustomizeColumns, setShowCustomizeColumns] = useState(false)
+
+  /* =========================
+     SELECTED ROW DATA
+  ========================= */
+
+  const selectedRowData = useMemo<InspectionRow[]>(() => {
+    const idSet = new Set(selectedRows)
+    return rows
+      .filter(r => idSet.has(String(r[rowIdKey])))
+      .map(r => ({
+        bin: String(r.bin ?? ""),
+        compartment: String(r.compartment ?? ""),
+        sku: String(r.sku ?? ""),
+        product: String(r.product ?? "")
+      }))
+  }, [rows, selectedRows, rowIdKey])
+
+  const inspectionBins = useMemo(() => {
+    return Array.from(new Set(selectedRowData.map(r => r.bin)))
+  }, [selectedRowData])
 
   /* =========================
      COLUMN CONFIG
-     ========================= */
+  ========================= */
 
   const [columnConfig, setColumnConfig] = useState<ColumnConfig[]>(() =>
-    columns.map((c) => ({
+    columns.map(c => ({
       key: c.key,
       label: c.label ?? c.key,
       visible: !c.hidden,
-      locked: false,
+      locked: false
     }))
-  );
+  )
 
   useEffect(() => {
     setColumnConfig(
-      columns.map((c) => ({
+      columns.map(c => ({
         key: c.key,
         label: c.label ?? c.key,
         visible: !c.hidden,
-        locked: false,
+        locked: false
       }))
-    );
-  }, [columns]);
+    )
+  }, [columns])
 
   const visibleColumns = useMemo(
     () =>
-      columns.filter((col) =>
-        columnConfig.find(
-          (cfg) => cfg.key === col.key && cfg.visible
-        )
+      columns.filter(col =>
+        columnConfig.find(cfg => cfg.key === col.key && cfg.visible)
       ),
     [columns, columnConfig]
-  );
+  )
 
   /* =========================
-     FILTER + SORT (UPDATED)
-     ========================= */
+     FILTER ENGINE
+  ========================= */
+
+  function applyFilters(rows: DataTableRow[]) {
+    return rows.filter(row =>
+      appliedFilters.every(filter => {
+        const value = row[filter.column]
+        if (filter.operator === "equals") return String(value) === filter.value
+        if (filter.operator === "contains") return String(value).toLowerCase().includes(filter.value.toLowerCase())
+        if (filter.operator === "gt") return Number(value) > Number(filter.value)
+        if (filter.operator === "lt") return Number(value) < Number(filter.value)
+        return true
+      })
+    )
+  }
+
+  /* =========================
+     SEARCH + FILTER
+  ========================= */
 
   const filteredRows = useMemo(() => {
-    let result = rows;
-
-    if (selectedStatusIds.length > 0) {
-      const allowedStatuses = selectedStatusIds.map(
-        (id) => STATUS_ID_TO_ROW_STATUS[id]
-      );
-
-      result = result.filter(
-        (row) =>
-          typeof row.status === "string" &&
-          allowedStatuses.includes(row.status)
-      );
-    }
-
+    let result = rows
     if (search.trim()) {
-      const q = search.toLowerCase();
-      result = result.filter((row) =>
-        visibleColumns.some((col) => {
-          const value = row[col.key];
-          return (
-            value !== undefined &&
-            String(value).toLowerCase().includes(q)
-          );
+      const q = search.toLowerCase()
+      result = result.filter(row =>
+        visibleColumns.some(col => {
+          const value = row[col.key]
+          return value !== undefined && String(value).toLowerCase().includes(q)
         })
-      );
+      )
     }
+    result = applyFilters(result)
+    return result
+  }, [rows, search, appliedFilters, visibleColumns])
 
-    if (sort) {
-      result = [...result].sort((a, b) => {
-        const av = a[sort.key];
-        const bv = b[sort.key];
-        if (av === bv) return 0;
-        if (sort.direction === "asc") return av > bv ? 1 : -1;
-        return av < bv ? 1 : -1;
-      });
-    }
-
-    return result;
-  }, [rows, selectedStatusIds, search, sort, visibleColumns]);
+  /* =========================
+     PAGINATION
+  ========================= */
 
   const pagedRows = filteredRows.slice(
     (page - 1) * pageSize,
     page * pageSize
-  );
+  )
 
-  const colSpan =
-    visibleColumns.length +
-    (selectable ? 1 : 0) +
-    (expandable ? 1 : 0);
+  /* =========================
+     DEFAULT BATCH ACTIONS
+  ========================= */
+
+  const defaultBatchActions = (
+    <>
+      <Button
+        size="sm"
+        variant="secondary"
+        onClick={() => {
+          setInspectionMode(null)
+          setExistingOpen(true)
+          setShowInspectionDialog(true)
+        }}
+      >
+        Inspection
+      </Button>
+
+      <Button size="sm" variant="ghost">
+        Schedule
+      </Button>
+
+      <Button size="sm" variant="ghost" intent="danger">
+        Delete
+      </Button>
+    </>
+  )
 
   /* =========================
      RENDER
-     ========================= */
+  ========================= */
 
   return (
     <>
       <div className="data-table-card">
         <div className="data-table">
+
           <DataTableHeader
             variant={headerVariant}
             searchValue={search}
@@ -193,131 +254,300 @@ export function DataTableCore({
             showDetails={showDetails}
             onToggleDetails={setShowDetails}
             showFilters={showFilters}
-            onToggleFilters={() => setShowFilters((v) => !v)}
-            onCustomizeColumns={() => setShowCustomizeColumns(true)}
-            selectedStatusIds={selectedStatusIds}
-            onStatusChange={setSelectedStatusIds}
+            onToggleFilters={() => setShowFilters(v => !v)}
+            detailsContent={detailsContent}
           />
 
+          {/* FILTER PANEL */}
+          {showFilters && (
+            <div className="data-table_filter">
+              {filters.map((filter, index) => (
+                <div key={index} className="data-table__filter-row">
+                  <Select
+                    label="Column"
+                    variant="single"
+                    value={filter.column}
+                    onChange={(v) => {
+                      const copy = [...filters]
+                      copy[index].column = v
+                      setFilters(copy)
+                    }}
+                    options={columns.map(c => ({ value: c.key, label: c.label ?? c.key }))}
+                  />
+                  <Select
+                    label="Operator"
+                    variant="single"
+                    value={filter.operator}
+                    onChange={(v) => {
+                      const copy = [...filters]
+                      copy[index].operator = v as FilterOperator
+                      setFilters(copy)
+                    }}
+                    options={[
+                      { value: "equals", label: "Equals" },
+                      { value: "contains", label: "Contains" },
+                      { value: "gt", label: ">" },
+                      { value: "lt", label: "<" }
+                    ]}
+                  />
+                  <TextField
+                    label="Value"
+                    value={filter.value}
+                    onChange={(e) => {
+                      const copy = [...filters]
+                      copy[index].value = e.target.value
+                      setFilters(copy)
+                    }}
+                  />
+                  <Button
+                    variant="icon"
+                    intent="danger"
+                    size="sm"
+                    onClick={() => {
+                      const newFilters = filters.filter((_, i) => i !== index)
+                      if (newFilters.length === 0) {
+                        newFilters.push({ column: columns[0]?.key ?? "", operator: "equals", value: "" })
+                      }
+                      setFilters(newFilters)
+                    }}
+                  >
+                    <Icon name="delete" size="sm" />
+                  </Button>
+                </div>
+              ))}
+
+              <div className="data-table__filter-add">
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  leadingIcon="add"
+                  onClick={() =>
+                    setFilters([...filters, { column: columns[0]?.key ?? "", operator: "equals", value: "" }])
+                  }
+                >
+                  Add filter
+                </Button>
+              </div>
+
+              <div className="data-table__filter-actions">
+                <Button size="sm" variant="ghost" onClick={() => setShowCustomizeColumns(true)}>
+                  Customize columns
+                </Button>
+                <div style={{ display: "flex", gap: "var(--space-2)" }}>
+                  <Button size="sm" variant="ghost" onClick={() => {
+                    setAppliedFilters([])
+                    setFilters([{ column: columns[0]?.key ?? "", operator: "equals", value: "" }])
+                  }}>
+                    Cancel filters
+                  </Button>
+                  <Button size="sm" variant="secondary" onClick={() => setAppliedFilters([...filters])}>
+                    Apply filters
+                  </Button>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* BATCH ACTIONS */}
+          {selectedRows.length > 0 && (
+            <div className="data-table_container">
+              <div className="data-table__selection-count">
+                {selectedRows.length} items selected
+              </div>
+              <div className="data-table_container-actions">
+                {batchActions ? batchActions : defaultBatchActions}
+              </div>
+            </div>
+          )}
+
+          {/* TABLE */}
           <div className="data-table__header-row">
             <table>
               <thead>
                 <tr>
                   {selectable && <th style={{ width: 40 }} />}
-                  {expandable && <th style={{ width: 40 }} />}
-                  {visibleColumns.map((c) => (
+                  {visibleColumns.map(c => (
                     <th key={c.key}>{c.label}</th>
                   ))}
                 </tr>
               </thead>
-
               <tbody>
-                {pagedRows.map((row) => {
-                  const id = String(row[rowIdKey]);
-                  const isExpanded = expandedRows.includes(id);
-                  const isSelected = selectedRows.includes(id);
-
+                {pagedRows.map(row => {
+                  const id = String(row[rowIdKey])
+                  const isSelected = selectedRows.includes(id)
                   return (
                     <Fragment key={id}>
-                      <tr className={isExpanded ? "data-table__row--expanded" : undefined}>
+                      <tr>
                         {selectable && (
                           <td>
                             <Checkbox
-                              state={
-                                isSelected
-                                  ? "checked"
-                                  : "unchecked"
-                              }
+                              state={isSelected ? "checked" : "unchecked"}
                               onClick={(e) => {
-                                e.stopPropagation();
-                                if (!onSelectionChange) return;
-
+                                e.stopPropagation()
+                                if (!onSelectionChange) return
                                 onSelectionChange(
                                   isSelected
-                                    ? selectedRows.filter(
-                                        (x) => x !== id
-                                      )
+                                    ? selectedRows.filter(x => x !== id)
                                     : [...selectedRows, id]
-                                );
+                                )
                               }}
                             />
                           </td>
                         )}
-
-                        {expandable && (
-                          <td>
-                            <button
-                              type="button"
-                              className="btn--ghost"
-                              onClick={() =>
-                                setExpandedRows((prev) =>
-                                  prev.includes(id)
-                                    ? prev.filter(
-                                        (x) => x !== id
-                                      )
-                                    : [...prev, id]
-                                )
-                              }
-                            >
-                              <Icon
-                                name="chevronDownStroke"
-                                size="sm"
-                              />
-                            </button>
-                          </td>
-                        )}
-
-                        {visibleColumns.map((col) => (
+                        {visibleColumns.map(col => (
                           <td key={col.key}>
-                            {col.renderCell
-                              ? col.renderCell(
-                                  row[col.key],
-                                  row
-                                )
-                              : row[col.key]}
+                            {col.renderCell ? col.renderCell(row[col.key], row) : row[col.key]}
                           </td>
                         ))}
                       </tr>
-
-                      {expandable && isExpanded && renderExpandedRow && (
-                        <tr className="data-table__expanded-row">
-                          <td colSpan={colSpan}>
-                            <div className="data-table__expanded-inner">
-                              {renderExpandedRow(row)}
-                            </div>
-                          </td>
-                        </tr>
-                      )}
                     </Fragment>
-                  );
+                  )
                 })}
               </tbody>
             </table>
           </div>
 
           <DataTableFooter
-            pagination={{
-              page,
-              pageSize,
-              total: filteredRows.length,
-            }}
+            pagination={{ page, pageSize, total: filteredRows.length }}
             disabled={filteredRows.length <= pageSize}
             onPageChange={setPage}
             onExport={() => {}}
           />
+
         </div>
       </div>
 
+      {/* START INSPECTION DIALOG */}
+      {showInspectionDialog && (
+        <Dialog
+          isOpen
+          title="Start inspection"
+          footerLeft={
+            <Button variant="ghost" onClick={() => setShowInspectionDialog(false)}>
+              Cancel
+            </Button>
+          }
+          footerRight={
+            <Button
+              variant="primary"
+              disabled={!inspectionMode}
+              onClick={() => {
+                setShowInspectionDialog(false)
+                setInspectionMode(null)
+              }}
+            >
+              Start
+            </Button>
+          }
+        >
+
+          {/* INFO */}
+          <div className="start-inspection-dialog__info">
+            <Icon name="info" />
+            <span>
+              You have selected compartments that are connected to an existing task group.
+              All the connected tasks will be delivered to the port if you proceed.
+            </span>
+          </div>
+
+          {/* EXISTING */}
+          <div className="start-inspection-dialog__block">
+            <span className="start-inspection-dialog__title">
+              Select existing task group:
+            </span>
+
+            <div className="start-inspection-dialog__option-row">
+              <RadioButton checked={inspectionMode === "existing"} />
+              <div className="start-inspection-dialog__task">
+                <div
+                  className="start-inspection-dialog__task-header"
+                  onClick={() => {
+                    setInspectionMode("existing")
+                    setExistingOpen(o => !o)
+                  }}
+                >
+                  <Tag label="INV-0000004" variant="outlined" />
+                  <span className="start-inspection-dialog__task-count">
+                    ({selectedRowData.length} compartments)
+                  </span>
+                  <Icon name={existingOpen ? "chevronUpStroke" : "chevronDownStroke"} />
+                </div>
+
+                {existingOpen && (
+                  <div className="start-inspection-dialog__table-wrapper">
+                    <table className="start-inspection-dialog__table">
+                      <thead>
+                        <tr>
+                          <th>Bin</th>
+                          <th>Comp.</th>
+                          <th>SKU</th>
+                          <th>Item</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {selectedRowData.map((row, i) => (
+                          <tr key={i}>
+                            <td>{row.bin}</td>
+                            <td>{row.compartment}</td>
+                            <td>{row.sku}</td>
+                            <td>{row.product}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+
+          {/* OR */}
+          <div className="start-inspection-dialog__divider">OR</div>
+
+          {/* NEW */}
+          <div className="start-inspection-dialog__block">
+            <span className="start-inspection-dialog__title">
+              Create a new inspection from the selected compartments:
+            </span>
+
+            <div
+              className="start-inspection-dialog__option-row"
+              onClick={() => setInspectionMode("new")}
+            >
+              <RadioButton checked={inspectionMode === "new"} />
+              <div className="start-inspection-dialog__container">
+                <div className="start-inspection-dialog__new">
+                  <span>Compartments</span>
+                  <span className="start-inspection-dialog__count">
+                    {selectedRowData.length} compartments
+                  </span>
+                </div>
+                <div className="start-inspection-dialog__row">
+                  <span>Bins to be delivered</span>
+                  <div className="start-inspection-dialog__chips">
+                    {inspectionBins.map(bin => (
+                      <Chip key={bin}>{bin}</Chip>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </Dialog>
+      )}
+
+      {/* CUSTOMIZE COLUMNS */}
       {showCustomizeColumns && (
         <CustomizeColumnsModal
           columns={columnConfig}
           onClose={() => setShowCustomizeColumns(false)}
           onSave={(cols) => {
-            setColumnConfig(cols);
-            setShowCustomizeColumns(false);
+            setColumnConfig(cols)
+            setShowCustomizeColumns(false)
           }}
         />
       )}
     </>
-  );
+  )
 }

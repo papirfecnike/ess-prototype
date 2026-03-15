@@ -1,21 +1,21 @@
 import type { LoaderFunction } from "react-router";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 import { PageLayout } from "@/components/layout/PageLayout";
 import { PageSection } from "@/components/layout/PageSection";
 
 import { ExpandableDataTable } from "@/components/data/ExpandableDataTable";
 import type { DataTableColumn } from "@/components/data/DataTableCore";
+
 import { Tag } from "@/components/ui/tag/Tag";
+import { Chip } from "@/components/ui/chip/Chip";
 import { Icon } from "@/components/ui/icon/Icon";
 
-export const loader: LoaderFunction = async () => {
-  return null;
-};
+export const loader: LoaderFunction = async () => null;
 
 /* =========================
-   STATUS → TAG MAPPING
-   ========================= */
+   STATUS → TAG
+========================= */
 
 function renderStatusTag(status: string) {
   switch (status) {
@@ -37,24 +37,26 @@ function renderStatusTag(status: string) {
 }
 
 export default function OutboundOverview() {
+
+  const [activeStatuses, setActiveStatuses] = useState<string[]>([]);
+
   /* =========================
      COLUMNS
-     ========================= */
+  ========================= */
 
   const columns: DataTableColumn[] = [
-    { key: "picklist", label: "Picklist", sortable: true },
-    { key: "order", label: "Order #", sortable: true },
+    { key: "id", label: "Picklist ID", sortable: true },
+    { key: "order", label: "Order ID", sortable: true },
     { key: "created", label: "Created", sortable: true },
     { key: "pickdate", label: "Pick date", sortable: true },
     { key: "deliverydate", label: "Delivery date", align: "center" },
     { key: "priority", label: "Priority", align: "center" },
-    { key: "noitems", label: "# of items", align: "center" },
+    { key: "noitems", label: "No. of items", align: "center" },
     {
       key: "status",
       label: "Status",
       align: "center",
-      renderCell: (value) =>
-        renderStatusTag(String(value)),
+      renderCell: (value) => renderStatusTag(String(value)),
     },
     {
       key: "actions",
@@ -64,7 +66,7 @@ export default function OutboundOverview() {
         <button
           type="button"
           className="btn--ghost"
-          aria-label="View history"
+          aria-label="Actions"
           onClick={() => {
             console.log("open actions");
           }}
@@ -76,125 +78,181 @@ export default function OutboundOverview() {
   ];
 
   /* =========================
-     ROWS
-     ========================= */
+     DATA (same as picking)
+  ========================= */
 
   const rows = [
     {
-      picklist: 9305204750,
-      order: "2784741143",
-      created: "08-Jan-2026 15:29:17",
-      pickdate: "09-Jan-2026",
-      deliverydate: "14-Jan-2026 21:00:00",
+      id: 9305204750,
+      order: 2784741143,
+      created: "08-Jan-2026 14:48:45",
+      pickdate: "08-Jan-2026",
+      deliverydate: "11-Jan-2026 21:00:00",
+      priority: "50",
+      noitems: "8",
+      status: "In progress",
+    },
+    {
+      id: 9305204751,
+      order: 2784741144,
+      created: "08-Jan-2026 14:42:12",
+      pickdate: "08-Jan-2026",
+      deliverydate: "11-Jan-2026 21:00:00",
       priority: "50",
       noitems: "4",
       status: "In progress",
     },
     {
-      picklist: 9305204751,
-      order: "2784741144",
-      created: "08-Jan-2026 15:29:17",
-      pickdate: "09-Jan-2026",
-      deliverydate: "14-Jan-2026 21:00:00",
+      id: 9305204752,
+      order: 2784741145,
+      created: "08-Jan-2026 14:39:37",
+      pickdate: "08-Jan-2026",
+      deliverydate: "11-Jan-2026 21:00:00",
       priority: "50",
-      noitems: "2",
+      noitems: "4",
       status: "In progress",
     },
     {
-      picklist: 9305204752,
-      order: "2784741145",
-      created: "08-Jan-2026 15:29:17",
-      pickdate: "09-Jan-2026",
-      deliverydate: "14-Jan-2026 21:00:00",
+      id: 9305204753,
+      order: 2784741146,
+      created: "08-Jan-2026 14:34:29",
+      pickdate: "08-Jan-2026",
+      deliverydate: "11-Jan-2026 21:00:00",
       priority: "50",
-      noitems: "3",
-      status: "In progress",
-    },
-    {
-      picklist: 9305204753,
-      order: "2784741146",
-      created: "08-Jan-2026 15:29:17",
-      pickdate: "09-Jan-2026",
-      deliverydate: "14-Jan-2026 21:00:00",
-      priority: "50",
-      noitems: "3",
-      status: "In progress",
-    },
-    {
-      picklist: 9305204754,
-      order: "2784741147",
-      created: "08-Jan-2026 15:29:17",
-      pickdate: "09-Jan-2026",
-      deliverydate: "14-Jan-2026 21:00:00",
-      priority: "50",
-      noitems: "2",
+      noitems: "4",
       status: "Prepared",
     },
     {
-      picklist: 9305204755,
-      order: "2784741148",
-      created: "08-Jan-2026 15:29:17",
-      pickdate: "09-Jan-2026",
-      deliverydate: "14-Jan-2026 21:00:00",
+      id: 9305204754,
+      order: 2784741147,
+      created: "08-Jan-2026 14:34:29",
+      pickdate: "08-Jan-2026",
+      deliverydate: "11-Jan-2026 21:00:00",
       priority: "50",
-      noitems: "1",
+      noitems: "4",
+      status: "Prepared",
+    },
+    {
+      id: 9305204755,
+      order: 2784741148,
+      created: "08-Jan-2026 14:34:29",
+      pickdate: "08-Jan-2026",
+      deliverydate: "11-Jan-2026 21:00:00",
+      priority: "50",
+      noitems: "4",
       status: "Waiting",
     },
     {
-      picklist: 9305204756,
-      order: "2784741149",
-      created: "08-Jan-2026 15:29:17",
-      pickdate: "09-Jan-2026",
-      deliverydate: "14-Jan-2026 21:00:00",
+      id: 9305204756,
+      order: 2784741149,
+      created: "08-Jan-2026 14:34:29",
+      pickdate: "08-Jan-2026",
+      deliverydate: "11-Jan-2026 21:00:00",
       priority: "50",
-      noitems: "5",
+      noitems: "4",
       status: "Prepared",
     },
     {
-      picklist: 9305204757,
-      order: "2784741150",
-      created: "08-Jan-2026 15:29:17",
-      pickdate: "09-Jan-2026",
-      deliverydate: "14-Jan-2026 21:00:00",
-      priority: "50",
-      noitems: "2",
+      id: 930520457,
+      order: 2784741150,
+      created: "08-Jan-2026 14:34:29",
+      pickdate: "08-Jan-2026",
+      deliverydate: "11-Jan-2026 21:00:00",
+      priority: "1",
+      noitems: "4",
       status: "Completed",
     },
     {
-      picklist: 9305204758,
-      order: "2784741151",
-      created: "08-Jan-2026 15:29:17",
-      pickdate: "09-Jan-2026",
-      deliverydate: "14-Jan-2026 21:00:00",
-      priority: "50",
-      noitems: "3",
+      id: 930520458,
+      order: 2784741151,
+      created: "08-Jan-2026 14:34:29",
+      pickdate: "08-Jan-2026",
+      deliverydate: "11-Jan-2026 21:00:00",
+      priority: "1",
+      noitems: "4",
       status: "Completed",
     },
     {
-      picklist: 9305204759,
-      order: "2784741152",
-      created: "08-Jan-2026 15:29:17",
-      pickdate: "09-Jan-2026",
-      deliverydate: "14-Jan-2026 21:00:00",
-      priority: "50",
-      noitems: "6",
+      id: 930520459,
+      order: 2784741152,
+      created: "08-Jan-2026 14:34:29",
+      pickdate: "08-Jan-2026",
+      deliverydate: "11-Jan-2026 21:00:00",
+      priority: "1",
+      noitems: "4",
       status: "Completed",
     },
     {
-      picklist: 9305204760,
-      order: "2784741153",
-      created: "08-Jan-2026 15:29:17",
-      pickdate: "09-Jan-2026",
-      deliverydate: "14-Jan-2026 21:00:00",
-      priority: "01",
-      noitems: "7",
+      id: 930520460,
+      order: 2784741153,
+      created: "08-Jan-2026 14:34:29",
+      pickdate: "08-Jan-2026",
+      deliverydate: "11-Jan-2026 21:00:00",
+      priority: "1",
+      noitems: "4",
       status: "Completed",
     },
   ];
 
   /* =========================
+     CHIP FILTER
+  ========================= */
+
+  function toggleStatus(status: string) {
+    setActiveStatuses((prev) =>
+      prev.includes(status)
+        ? prev.filter((s) => s !== status)
+        : [...prev, status]
+    );
+  }
+
+  const filteredRows = useMemo(() => {
+    if (activeStatuses.length === 0) return rows;
+
+    return rows.filter((row) =>
+      activeStatuses.includes(row.status)
+    );
+  }, [rows, activeStatuses]);
+
+  /* =========================
+     STATUS STATS
+  ========================= */
+
+  const statusStats = useMemo(() => {
+    const map: Record<string, number> = {};
+
+    rows.forEach((row) => {
+      map[row.status] = (map[row.status] ?? 0) + 1;
+    });
+
+    return Object.entries(map);
+  }, [rows]);
+
+  /* =========================
+     DETAILS CONTENT
+  ========================= */
+
+  const detailsContent = (
+    <>
+      <div className="data-table__text">STATUS</div>
+
+      <div className="data-table__chips">
+        {statusStats.map(([status, count]) => (
+          <Chip
+            key={status}
+            isActive={activeStatuses.includes(status)}
+            onClick={() => toggleStatus(status)}
+          >
+            {status} ({count})
+          </Chip>
+        ))}
+      </div>
+    </>
+  );
+
+  /* =========================
      RENDER
-     ========================= */
+  ========================= */
 
   return (
     <PageLayout
@@ -203,10 +261,12 @@ export default function OutboundOverview() {
     >
       <PageSection>
         <ExpandableDataTable
-          rowIdKey="picklist"
+          rowIdKey="id"
           columns={columns}
-          rows={rows}
-          renderExpandedRow={(row) => (
+          rows={filteredRows}
+          headerVariant="statusSplit"
+          detailsContent={detailsContent}
+          renderExpandedRow={() => (
             <table>
               <thead>
                 <tr>

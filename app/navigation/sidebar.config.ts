@@ -48,8 +48,8 @@ export const sidebarConfig: SidebarSection[] = [
   {
     basePath: "inbound",
     items: [
-      { label: "Overview", path: "", icon: "barChart" },
       { label: "Putaway", path: "putaway", icon: "forklift" },
+      { label: "Overview", path: "", icon: "barChart" },
     ],
   },
   {

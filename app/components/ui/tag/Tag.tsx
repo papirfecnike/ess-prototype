@@ -2,13 +2,19 @@ import "./tag.css";
 
 type TagVariant =
   | "default"
+  | "outlined"
   | "success"
   | "warning"
   | "danger"
   | "inbound"
   | "outbound"
   | "inventory"
-  | "research";
+  | "research"
+  | "mismatch"
+  | "expired"
+  | "missing"
+  | "location"
+  | "damaged";
 
 type Props = {
   label: string;

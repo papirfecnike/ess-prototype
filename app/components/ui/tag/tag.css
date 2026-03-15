@@ -52,6 +52,37 @@
 }
 
 .tag--research {
-  background: #F7DC6F;
-  color: #623D00;
+  background: #623D00;
+  color: #fff;
+}
+
+.tag--mismatch {
+  background: #661b45;
+  color: #fff;
+}
+
+.tag--expired {
+  background: #66431b;
+  color: #fff;
+}
+
+.tag--missing {
+  background: #66581b;
+  color: #fff;
+}
+
+.tag--location {
+  background: #415873;
+  color: #fff;
+}
+
+.tag--damaged {
+  background: #5c4173;
+  color: #fff;
+}
+
+.tag--outlined {
+  background: transparent;
+  color: var(--color-default);
+  border: 1.5px solid var(--color-default);
 }

@@ -1,10 +1,12 @@
+import type { ReactNode } from "react";
+
 import {
   DataTableCore,
   type DataTableColumn,
   type DataTableRow,
 } from "./DataTableCore";
+
 import type { HeaderVariant } from "./DataTableHeader";
-import type { ColumnConfig } from "./CustomizeColumnsModal";
 
 type Props = {
   columns: DataTableColumn[];
@@ -14,16 +16,33 @@ type Props = {
   selectedRows?: string[];
   onSelectionChange?: (ids: string[]) => void;
 
-  columnConfig?: ColumnConfig[];
-  onColumnConfigChange?: (cols: ColumnConfig[]) => void;
-
   headerVariant?: HeaderVariant;
+
+  detailsContent?: ReactNode;
+
+  batchActions?: React.ReactNode;
 };
 
-export function SelectableDataTable(props: Props) {
+export function SelectableDataTable({
+  columns,
+  rows,
+  rowIdKey,
+  selectedRows,
+  onSelectionChange,
+  headerVariant,
+  detailsContent,
+  batchActions,
+}: Props) {
   return (
     <DataTableCore
-      {...props}
+      columns={columns}
+      rows={rows}
+      rowIdKey={rowIdKey}
+      selectedRows={selectedRows}
+      onSelectionChange={onSelectionChange}
+      headerVariant={headerVariant}
+      detailsContent={detailsContent}
+      batchActions={batchActions}
       selectable
     />
   );

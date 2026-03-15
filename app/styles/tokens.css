@@ -45,6 +45,9 @@
   --color-table-hover: #ECF0F2;
   --color-white-border: #E0E8EA;
   --color-white-column-header: #F5F6F7;
+  --color-inner-border: #d5e0e2;
+  --color-inner-column-header: #e8eeef;
+  --color-inner-row: #ffffff;
 
 /* CARD, DIALOG */
   --color-dialog-overlay: rgba(0,0,0,0.35);
@@ -52,6 +55,7 @@
   --color-dialog-divider: #d3dade;
   --color-dialog-footer: #E0E8EA;
   --color-dialog-header-dark: #2D4E58;
+  --color-dialog-container: #F6FBFC;
 
  /* CALLOUT */ 
   --callout-default: #ecf9fc; 
@@ -123,10 +127,10 @@
   --color-checkbox-select: #137897;
 
 /* CHIP */
-  --color-chip-bg: #ecf1f2;
+  --color-chip-bg: #FFFFFF;
   --color-chip-active: #137897;
   --color-chip-active-text: #FFFFFF;
-  --color-chip-border: #E0E8EA;
+  --color-chip-border: #137897;
   --color-chip-text: #137897;
   --color-chip-icon: #137897;
   --color-chip-icon-reverse: #FFFFFF;
@@ -134,6 +138,9 @@
 /* LIST */
   --color-list-bg: #e9ecef;
   --color-list-selected: #f5f6f7;
+
+  /* TAB */
+  --color-tab-underline: #137897;
 
 /* =========================
    TYPOGRAPHY

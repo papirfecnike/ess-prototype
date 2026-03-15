@@ -15,6 +15,7 @@ export function Chip({
   onClick,
   onRemove,
 }: Props) {
+
   function handleRemove(e: MouseEvent) {
     e.stopPropagation();
     onRemove?.();

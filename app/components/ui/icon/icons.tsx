@@ -216,6 +216,13 @@ assessment: (
     <path d="M6 7h12M9 7V5h6v2M10 11v6M14 11v6M5 7l1 14h12l1-14" />
   ),
 
+  add: (
+  <path
+    d="M19 13H13V19H11V13H5V11H11V5H13V11H19V13Z"
+    fill="currentColor"
+  />
+),
+
   firstPage: (
     <>
       <path d="M11 12l5-5M11 12l5 5" />

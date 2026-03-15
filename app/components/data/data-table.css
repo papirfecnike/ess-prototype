@@ -7,6 +7,7 @@
   box-shadow: var(--shadow-m);
   overflow: visible;
   margin: 0;
+  position: relative;
 }
 
 /* =========================================================
@@ -30,7 +31,6 @@
   gap: var(--space-3);
   padding: var(--space-3);
   background: var(--color-white);
-  border-bottom: 1px solid var(--color-white-border);
 }
 
 /* TOP ROW */
@@ -81,22 +81,6 @@
   align-items: center;
 }
 
-/* EXPANDABLE DETAILS */
-.data-table__header-details {
-  background: var(--color-white-column-header);
-  border-radius: var(--radius-s);
-  padding: var(--space-4);
-  margin-top: var(--space-3);
-  border: none;
-  display: flex;
-  align-items: center;
-  gap: var(--space-3);
-  flex-wrap: wrap;
-}
-
-.data-table__header-details {
-  animation: expand 150ms ease-out;
-}
 @keyframes expand {
   from {
     opacity: 0;
@@ -108,9 +92,9 @@
   }
 }
 
-/* =========================
+/* =========================================================
    COLUMN HEADER ROW
-   ========================= */
+   ========================================================= */
 .data-table__header-row {
   margin: 8px;
   border-radius: var(--radius-xs);
@@ -176,6 +160,7 @@
   background: var(--color-table-hover) !important;
 }
 
+
 /* LAST ROW */
 .data-table tbody tr:last-child td {
   border-bottom: none;
@@ -199,26 +184,13 @@
   font-size: var(--font-size-s);
 }
 
-/* =========================
-   FILTER BUTTON
-   ========================= */
+/* =========================================================
+   FILTERING
+   ========================================================= */
 .data-table__filter-button {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-}
-
-/* =========================
-   FILTER PANEL
-   ========================= */
-.data-table__filter-panel {
-  margin-top: var(--space-3);
-  padding-top: var(--space-3);
-  border-top: 1px dashed var(--color-border);
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-4);
-  animation: expand 150ms ease-out;
 }
 
 /* ACTIONS */
@@ -259,9 +231,9 @@
   fill: currentColor;
 }
 
-/* =========================
+/* =========================================================
    DETAILS BAR
-   ========================= */
+   ========================================================= */
 .data-table__details-bar {
   padding: var(--space-3);
   background: var(--color-table-hover);
@@ -269,18 +241,18 @@
   font-size: var(--font-size-s);
 }
 
-/* =========================
+/* =========================================================
    FILTER PLACEHOLDER
-   ========================= */
+   ========================================================= */
 .data-table__filter-placeholder {
   padding: var(--space-4);
   color: var(--color-text);
   font-size: var(--font-size-s);
 }
 
-/* =========================
+/* =========================================================
    EMPTY STATE
-   ========================= */
+   ========================================================= */
 .data-table__empty td {
   padding: var(--space-6) 0;
   border-bottom: none;
@@ -311,9 +283,9 @@
   max-width: 320px;
 }
 
-/* =========================
+/* =========================================================
    DATA TABLE FOOTER
-   ========================= */
+   ========================================================= */
 .data-table__footer {
   display: flex;
   align-items: center;
@@ -341,9 +313,9 @@
   color: var(--color-text);
 }
 
-/* =========================
+/* =========================================================
    FOOTER – PAGINATION
-   ========================= */
+   ========================================================= */
 .data-table__footer {
   display: flex;
   align-items: center;
@@ -375,7 +347,7 @@
 }
 
 /* =========================================================
-   EXPANDED STATE – ALWAYS VISIBLE BACKGROUND
+   EXPANDED STATE
    ========================================================= */
 .data-table__row--expanded td {
   background: var(--color-table-hover) !important;
@@ -408,32 +380,25 @@
   width: 100%;
   border-collapse: collapse;
   background: var(--color-white);
-  border-radius: 8px;
+  border-radius: var(--radius-s);
   overflow: hidden;
 }
 
 .data-table__expanded-inner thead th {
-  background: var(--color-white);
-  font-weight: 600;
-  padding: 12px 16px;
-  border-bottom: 1px solid var(--color-white-border);
+  background: var(--color-main);
+  font-weight: var(--font-weight-bold);
+  padding: var(--padding-s);
+  border-bottom: 1px solid var(--color-inner-border);
 }
 
 .data-table__expanded-inner tbody td {
   background: var(--color-white) !important;
-  padding: 12px 16px;
+  padding: var(--padding-s);
   border-bottom: 1px solid var(--color-white-border);
 }
 
 .data-table__expanded-inner tbody tr:last-child td {
   border-bottom: none;
-}
-
-
-.data-table__filter-panel {
-  background: var(--color-white-column-header);
-  border-radius: var(--radius-s);
-  padding: var(--space-4);
 }
 
 .data-table__filter-selects {
@@ -473,10 +438,9 @@
   min-width: 50px;
 }
 
-/* =========================
+/* ============================================================
    EXPANDED INSPECTION TABLE
-========================= */
-
+   ========================================================= */
 .inspection-expanded {
   width: 100%;
 }
@@ -487,11 +451,314 @@
 }
 
 .inspection-expanded__table td {
-  padding: 10px 12px;
+  padding: var(--padding-m);
   border-bottom: 1px solid var(--color-table-border);
 }
 
 .inspection-expanded__table td:nth-child(1),
 .inspection-expanded__table td:nth-child(2) {
   width: 40px;
+}
+
+/* =========================================================
+   FILTER BUILDER PANEL
+   ========================================================= */
+
+.data-table_container {
+  padding: var(--padding-m);
+  margin: var(--margin-s);
+  background: var(--color-dialog-container);
+  border: none;
+  border-radius: var(--radius-s);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--space-4);
+  animation: expand 150ms ease-out;
+}
+
+.data-table_filter {
+  padding: var(--padding-m);
+  margin: var(--margin-s);
+  background: var(--color-dialog-container);
+  border: none;
+  border-radius: var(--radius-s);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  animation: expand 150ms ease-out;
+  width: calc(100% - 2 * var(--margin-s));
+}
+
+.data-table_container--inline {
+  margin: 0;
+}
+
+.data-table__filter-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 2fr 36px;
+  gap: var(--space-3);
+  align-items: end;
+  width: 100%;
+}
+
+.data-table__filter-row button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.data-table__filter-row .select {
+  width: auto;
+  flex: 0 0 auto;
+}
+
+.data-table__filter-input {
+  width: auto;
+  height: var(--input-height);
+}
+
+.data-table__filter-buttons {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.data-table__filter-add {
+  display: flex;
+  margin-top: var(--space-2);
+}
+
+.data-table__filter-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-3);
+  margin-top: var(--space-3);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--color-white-border);
+}
+
+.data-table__filter-apply {
+  align-items: right;
+}
+
+.data-table__filter-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding-top: var(--space-3);
+}
+
+/* ============================================================
+   BATCH HANDLING IN THE TABLE
+   ========================================================= */
+.data-table__selection-count {
+  font-weight: var(--font-weight-medium);
+}
+
+.data-table_container-actions {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.data-table_container-divider {
+  width: 1px;
+  height: var(--height-xxxs);
+  background: var(--border-subtle);
+}
+
+.schedule-dialog__fields {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin-top: var(--margin-m);
+}
+
+.schedule-dialog__row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: var(--margin-m);
+}
+
+.schedule-dialog__chips {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+/* ============================================================
+   START INSPECTION DIALOG
+   ========================================================= */
+
+.start-inspection-dialog {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+/* INFO BOX */
+.start-inspection-dialog__info {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  padding: var(--padding-m);
+  border: 1px solid var(--color-white-border);
+  border-radius: var(--radius-s);
+  background: var(--color-white);
+  font-size: var(--font-size-s);
+  color: var(--color-text);
+}
+
+.start-inspection-dialog__info svg {
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* BLOCK */
+.start-inspection-dialog__block {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+/* TITLES */
+.start-inspection-dialog__title {
+  font-weight: var(--font-weight-bold);
+}
+
+/* OPTION ROW */
+.start-inspection-dialog__option-row {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  cursor: pointer;
+}
+
+.start-inspection-dialog__option-row input[type="radio"] {
+  margin-top: 3px;
+  flex-shrink: 0;
+}
+
+/* TASK CARD */
+.start-inspection-dialog__task {
+  flex: 1;
+  border-radius: var(--radius-s);
+  background: var(--color-dialog-container);
+  padding: var(--padding-xs);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.start-inspection-dialog__task-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  cursor: pointer;
+}
+
+.start-inspection-dialog__task-count {
+  margin-left: auto;
+  font-weight: var(--font-weight-bold);
+}
+
+/* TABLE WRAPPER */
+.start-inspection-dialog__table-wrapper {
+  max-height: 240px;
+  border-radius: var(--radius-s);
+  overflow: hidden;
+  margin-top: var(--margin-s);
+}
+
+.start-inspection-dialog__table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.start-inspection-dialog__table thead th {
+  background-color: var(--color-inner-column-header);
+  color: var(--color-text);
+  text-align: left;
+  padding: var(--padding-m);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-xs);
+  border-bottom: 1px solid var(--color-inner-border);
+}
+
+.start-inspection-dialog__table thead th:first-child {
+  border-top-left-radius: var(--radius-s);
+}
+
+.start-inspection-dialog__table thead th:last-child {
+  border-top-right-radius: var(--radius-s);
+}
+
+.start-inspection-dialog__table tbody tr {
+  background-color: var(--color-inner-row);
+}
+
+.start-inspection-dialog__table tbody td {
+  padding: var(--padding-m);
+  white-space: nowrap;
+  border-bottom: 1px solid var(--color-inner-border);
+}
+
+.start-inspection-dialog__table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* DIVIDER */
+.start-inspection-dialog__divider {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--text-muted);
+  font-weight: var(--font-weight-bold);
+}
+
+.start-inspection-dialog__divider::before,
+.start-inspection-dialog__divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--color-dialog-divider);
+}
+
+/* CONTAINER (new inspection) */
+.start-inspection-dialog__container {
+  flex: 1;
+  background: var(--color-dialog-container);
+  border-radius: var(--radius-s);
+  padding: var(--padding-m);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+/* NEW INSPECTION ROW */
+.start-inspection-dialog__new {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.start-inspection-dialog__count {
+  margin-left: auto;
+  font-weight: var(--font-weight-bold);
+}
+
+/* BINS ROW */
+.start-inspection-dialog__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.start-inspection-dialog__chips {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
 }

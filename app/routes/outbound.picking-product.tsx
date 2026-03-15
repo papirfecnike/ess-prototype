@@ -8,8 +8,10 @@ import { TextField } from "../components/ui/input/TextField";
 import { Toggle } from "../components/ui/toggle/Toggle";
 import { InputStepper } from "../components/ui/input-stepper/InputStepper";
 import { Tag } from "../components/ui/tag/Tag";
+import { Dialog } from "@/components/ui/dialog/Dialog";
 import { ProgressBar } from "../components/ui/progress-bar/ProgressBar";
 import { icons } from "../components/ui/icon/icons";
+
 
 /* product images */
 import img01 from "@/assets/product/img01.png";

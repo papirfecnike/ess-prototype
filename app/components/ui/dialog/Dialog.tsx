@@ -3,7 +3,7 @@ import { Card } from "../card/Card";
 import { icons } from "../icon/icons";
 import "./dialog.css";
 
-type DialogIntent = "default" | "success" | "warning";
+type DialogIntent = "default" | "success" | "warning" | "error";
 
 type Props = {
   isOpen: boolean;
@@ -19,7 +19,9 @@ function getIntentIcon(intent: DialogIntent) {
     case "success":
       return icons.checkCircle;
     case "warning":
-      return icons.refresh;
+      return icons.warning;
+    case "error":
+      return icons.error;
     default:
       return icons.history;
   }
@@ -41,13 +43,13 @@ export function Dialog({
 
       <div className="ui-dialog__container">
         <Card className={`ui-dialog__card ui-dialog__card--${intent}`}>
+
           <div className="ui-dialog__header">
             <div className="ui-dialog__header-icon">
               <svg viewBox="0 0 24 24" width="20" height="20">
                 {getIntentIcon(intent)}
               </svg>
             </div>
-
             {title && (
               <div className="ui-dialog__header-title">
                 {title}
@@ -55,20 +57,23 @@ export function Dialog({
             )}
           </div>
 
-          <div className="ui-dialog__content">
-            {children}
+          <div className="ui-dialog__body">
+            <div className="ui-dialog__content">
+              {children}
+            </div>
+
+            {(footerLeft || footerRight) && (
+              <div className="ui-dialog__footer">
+                <div className="ui-dialog__footer-left">
+                  {footerLeft}
+                </div>
+                <div className="ui-dialog__footer-right">
+                  {footerRight}
+                </div>
+              </div>
+            )}
           </div>
 
-          {(footerLeft || footerRight) && (
-            <div className="ui-dialog__footer">
-              <div className="ui-dialog__footer-left">
-                {footerLeft}
-              </div>
-              <div className="ui-dialog__footer-right">
-                {footerRight}
-              </div>
-            </div>
-          )}
         </Card>
       </div>
     </div>

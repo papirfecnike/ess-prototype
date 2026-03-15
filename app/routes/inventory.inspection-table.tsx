@@ -1,11 +1,8 @@
 import type { LoaderFunction } from "react-router";
 import { useState } from "react";
-
 import { PageLayout } from "@/components/layout/PageLayout";
 import { PageSection } from "@/components/layout/PageSection";
-
 import { TabBar } from "@/components/ui/tab/TabBar";
-
 import CompartmentsTab from "./inventory.tab.compartments";
 import InspectionsTab from "./inventory.tab.inspections";
 
@@ -26,9 +23,9 @@ export default function InventoryInspection() {
           activeTab={tab}
           onChange={setTab}
           tabs={[
-            { id: "compartments", label: <>Compartments <span className="tab-count">7</span></> },
-            { id: "bins", label: <>Bins <span className="tab-count">12</span></> },
-            { id: "inspections", label: <>Inspections <span className="tab-count">6</span></> },
+            { id: "compartments", label: <>Compartments <span className="tab-count">4</span></> },
+            { id: "bins", label: <>Bins <span className="tab-count">0</span></> },
+            { id: "inspections", label: <>Inspections <span className="tab-count">7</span></> },
           ]}
         />
       </PageSection>

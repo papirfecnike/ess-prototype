@@ -80,6 +80,7 @@ export default function InboundPutawayProductPage() {
      ========================= */
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isExitDialogOpen, setIsExitDialogOpen] = useState(false);
 
   /* =========================
      ACTIVE PRODUCT (DYNAMIC)
@@ -142,6 +143,15 @@ export default function InboundPutawayProductPage() {
 
     finalizeConfirm();
   }
+
+  function handleExitConfirm() {
+      sessionStorage.setItem(
+        "putaway:interrupted",
+        JSON.stringify({ sku: activeItem.sku })
+      );
+
+      window.location.assign("/inbound/putaway-table");
+    }
 
   /* =========================
      DRAWER STATE
@@ -423,7 +433,12 @@ export default function InboundPutawayProductPage() {
         {/* FOOTER */}
         <footer className="product-page__footer">
           <div className="product-page__footer-left">
-            <Button variant="ghost">Back</Button>
+            <Button
+              variant="ghost"
+              onClick={() => setIsExitDialogOpen(true)}
+            >
+              Back
+            </Button>
           </div>
 
           <div className="product-page__footer-center">
@@ -468,6 +483,35 @@ export default function InboundPutawayProductPage() {
         }
       >
         Are you sure you can put away different quantity than expected?
+      </Dialog>
+
+
+      {/* =========================
+          EXIT CONFIRM DIALOG
+          ========================= */}
+
+      <Dialog
+        isOpen={isExitDialogOpen}
+        intent="warning"
+        title="Exit task"
+        footerLeft={
+          <Button
+            variant="ghost"
+            onClick={() => setIsExitDialogOpen(false)}
+          >
+            Cancel
+          </Button>
+        }
+        footerRight={
+          <Button
+            variant="primary"
+            onClick={handleExitConfirm}
+          >
+            Confirm
+          </Button>
+        } 
+      >
+        Are you sure you want to cancel the current task and return to the dashboard?
       </Dialog>
     </ProductPageLayout>
   );
