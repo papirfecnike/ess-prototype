@@ -26,27 +26,29 @@ export function Icon({
   ...rest
 }: Props) {
   const px = SIZE_MAP[size];
+  const icon = icons[name];
+
+  if (!icon) return null;
 
   return (
     <svg
       width={px}
       height={px}
       viewBox="0 0 24 24"
-      preserveAspectRatio="xMidYMid meet"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
       className={[
         "icon",
         color !== "inherit" ? `icon--${color}` : "",
         className ?? "",
-      ].join(" ")}
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden
+      ]
+        .filter(Boolean)
+        .join(" ")}
+      aria-hidden="true"
+      focusable="false"
       {...rest}
     >
-      {icons[name]}
+      {icon}
     </svg>
   );
 }

@@ -136,7 +136,7 @@ export function DataTableFooter({
             options={pageOptions}
             label=""
           />
-</div>
+        </div>
       </div>
     </div>
   );

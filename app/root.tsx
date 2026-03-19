@@ -30,7 +30,7 @@ export function links() {
 export default function App() {
   const location = useLocation();
 
-  // ✅ DASHBOARD DETECTION
+  // DASHBOARD DETECTION
   const isDashboard = location.pathname === "/dashboard";
 
   return (
@@ -44,12 +44,12 @@ export default function App() {
           <ClientHeader />
 
           {isDashboard ? (
-            // ✅ DASHBOARD: NO SIDEBAR, NO GRID
+            // DASHBOARD: NO SIDEBAR, NO GRID
             <main className="dashboard-shell">
               <Outlet />
             </main>
           ) : (
-            // ✅ NORMAL APP LAYOUT
+            // NORMAL APP LAYOUT
             <div className="app-layout">
               <Sidebar />
               <main className="app-main">

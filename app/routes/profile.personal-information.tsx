@@ -75,7 +75,6 @@ export default function ProfilePersonalInformation() {
                       notifyChange();
                     }}
                   />
-                  <br/>
                   <TextField
                     label="Last name"
                     value={lastName}

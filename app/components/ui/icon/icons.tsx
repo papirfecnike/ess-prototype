@@ -1,417 +1,112 @@
 import type { ReactNode } from "react";
 
-export const icons: Record<string, ReactNode> = {
-  search: <path d="M21 21l-4.3-4.3a7 7 0 10-1.4 1.4L21 21z" />,
-
-  filter: <path d="M3 5h18M6 12h12M10 19h4" />,
-
-  chevronDown: <path d="M6 9l6 6 6-6" />,
-
+export const icons = {
+  search: (
+    <path d="M21 21l-4.3-4.3a7 7 0 10-1.4 1.4L21 21z" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" />
+  ),
+  filter: (
+    <path d="M3 5h18M6 12h12M10 19h4" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+  ),
+  chevronDown: (
+    <path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+  ),
   chevronDownStroke: (
-    <path
-      d="M6 9l6 6 6-6"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.25"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
+    <path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round" />
   ),
-
   chevronLeftStroke: (
-    <path
-      d="M14 6l-6 6 6 6"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.25"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
+    <path d="M14 6l-6 6 6 6" fill="none" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round" />
   ),
-
   chevronRightStroke: (
-    <path
-      d="M10 6l6 6-6 6"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.25"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
+    <path d="M10 6l6 6-6 6" fill="none" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round" />
   ),
-
-  /* =========================
-     CHECKBOX ICONS
-     ========================= */
 
   checkStroke: (
-    <path
-      d="M5 13l4 4L19 7"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
+    <path d="M5 13l4 4L19 7" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
   ),
-
   minusStroke: (
-    <path
-      d="M6 12h12"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-    />
+    <path d="M6 12h12" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
   ),
-
-  /* =========================
-     ACTION / MENU ICONS
-     ========================= */
 
   moreVert: (
-    <path
-      d="M12 5.5a1.5 1.5 0 110-3 1.5 1.5 0 010 3zm0 8a1.5 1.5 0 110-3 1.5 1.5 0 010 3zm0 8a1.5 1.5 0 110-3 1.5 1.5 0 010 3z"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-    />
+    <path d="M12 5.5a1.5 1.5 0 110-3 1.5 1.5 0 010 3zm0 8a1.5 1.5 0 110-3 1.5 1.5 0 010 3zm0 8a1.5 1.5 0 110-3 1.5 1.5 0 010 3z" fill="currentColor" />
   ),
-
-  /* =========================
-     DRAWER / SYSTEM ICONS
-     ========================= */
 
   settings: (
     <>
-      <path
-        d="M12 8.5a3.5 3.5 0 100 7 3.5 3.5 0 000-7z"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.5"
-      />
-      <path
-        d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06A1.65 1.65 0 0015 19.4a1.65 1.65 0 00-1 .6 1.65 1.65 0 00-.33 1.82V22a2 2 0 11-4 0v-.08a1.65 1.65 0 00-.33-1.82 1.65 1.65 0 00-1-.6 1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06A1.65 1.65 0 004.6 15a1.65 1.65 0 00-.6-1 1.65 1.65 0 00-1.82-.33H2a2 2 0 110-4h.08a1.65 1.65 0 001.82-.33 1.65 1.65 0 00.6-1 1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06A1.65 1.65 0 009 4.6c.38 0 .74-.14 1-.6a1.65 1.65 0 00.33-1.82V2a2 2 0 114 0v.08a1.65 1.65 0 00.33 1.82c.26.46.62.6 1 .6a1.65 1.65 0 001.82-.33l.06-.06a2 2 0 112.83 2.83l-.06.06A1.65 1.65 0 0019.4 9c0 .38.14.74.6 1a1.65 1.65 0 001.82.33H22a2 2 0 110 4h-.08a1.65 1.65 0 00-1.82.33 1.65 1.65 0 00-.6 1z"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.25"
-      />
+      <circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" strokeWidth="1.5" />
+      <path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06A1.65 1.65 0 004.6 15a1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06A1.65 1.65 0 009 4.6a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
     </>
   ),
 
-  externalLink: (
-  <>
-    <path
-      d="M14 3h7v7"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-    <path
-      d="M21 3l-9 9"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-    <path
-      d="M19 14v5a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h5"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-  </>
-),
+  barChart: (
+    <path d="M5 9v10M10 5v14M15 12v7M20 3v16" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" />
+  ),
 
-assessment: (
-  <>
-    {/* outer frame */}
-    <rect
-      x="4"
-      y="4"
-      width="16"
-      height="16"
-      rx="1"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-    />
-
-    {/* bars */}
-    <path
-      d="M8 12v5M12 7v10M16 10v7"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.75"
-      strokeLinecap="round"
-    />
-  </>
-),
-
-   arrowDownward: (
-      <path d="M20 12l-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8 8-8z" />
-    ),
-
-    arrowUpward: (
-      <path d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z" />
-    ),
-
-  print: (
+  rocket: (
     <>
-      <path
-        d="M6 9V3h12v6"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-      />
-      <rect
-        x="6"
-        y="14"
-        width="12"
-        height="7"
-        rx="1"
-        ry="1"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.5"
-      />
-      <path
-        d="M6 13h12"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-      />
-      <circle cx="17" cy="11" r="1" fill="currentColor" />
+      <path d="M12 2c3 2 6 6 6 10l-6 2-6-2c0-4 3-8 6-10z" fill="none" stroke="currentColor" strokeWidth="1.5" />
+      <circle cx="12" cy="9" r="1.5" fill="currentColor" />
     </>
   ),
 
-  /* =========================
-     OTHER ICONS
-     ========================= */
-
-  close: <path d="M6 6l12 12M6 18L18 6" />,
-
-  closeStroke: (
-    <path
-      d="M6 6l12 12M6 18L18 6"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.75"
-      strokeLinecap="round"
-    />
-  ),
-
-  history: (
-    <path d="M13 3a9 9 0 00-9 9H1l4 4 4-4H6a7 7 0 117 7 7.01 7.01 0 01-6.93-6H4.02A9 9 0 1013 3zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z" />
-  ),
-
-  delete: (
-    <path d="M6 7h12M9 7V5h6v2M10 11v6M14 11v6M5 7l1 14h12l1-14" />
-  ),
-
-  add: (
-  <path
-    d="M19 13H13V19H11V13H5V11H11V5H13V11H19V13Z"
-    fill="currentColor"
-  />
-),
-
-  firstPage: (
+  profile: (
     <>
-      <path d="M11 12l5-5M11 12l5 5" />
-      <path d="M6 6v12" />
-    </>
-  ),
-
-  lastPage: (
-    <>
-      <path d="M13 12l-5-5M13 12l-5 5" />
-      <path d="M18 6v12" />
-    </>
-  ),
-
-  widthNormal: (
-    <g transform="translate(12 12) scale(0.75) translate(-12 -12)">
-      <path
-        d="M5 6h14"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-      />
-      <path
-        d="M5 18h14"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-      />
-      <path
-        d="M9 6v12M15 6v12"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-      />
-    </g>
-  ),
-
-  qrScanner: (
-    <>
-      <path
-        d="M4 8V6a2 2 0 012-2h2M16 4h2a2 2 0 012 2v2M20 16v2a2 2 0 01-2 2h-2M8 20H6a2 2 0 01-2-2v-2"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-      />
-      <path
-        d="M6 12h12"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.25"
-        strokeLinecap="round"
-      />
+      <circle cx="12" cy="8" r="3.5" fill="none" stroke="currentColor" strokeWidth="1.5" />
+      <path d="M5 20a7 7 0 0114 0" fill="none" stroke="currentColor" strokeWidth="1.5" />
     </>
   ),
 
   forklift: (
     <>
-      <path
-        d="M6 4v16"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-      />
-      <path
-        d="M6 14h8l3 4h3"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M17 18h4M17 16h4"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-      />
-      <circle cx="9" cy="19" r="1.5" fill="currentColor" />
-      <circle cx="15" cy="19" r="1.5" fill="currentColor" />
+      <path d="M6 4v12" stroke="currentColor" strokeWidth="1.5" />
+      <path d="M6 14h7l3 4h4" stroke="currentColor" strokeWidth="1.5" />
     </>
   ),
 
-  /* =========================
-     VERSION HISTORY ICONS
-     ========================= */
-
-  save: (
-    <>
-      <path d="M5 3h12l4 4v14a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2z" />
-      <path d="M7 3v6h10V3" />
-      <path d="M12 13v6" />
-      <path d="M9 16h6" />
-    </>
-  ),
-
-  refresh: (
-    <path
-      d="M4 4v6h6M20 20v-6h-6M6.5 17.5a7 7 0 0011-1.5M17.5 6.5a7 7 0 00-11 1.5"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.75"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
+  history: (
+    <path d="M3 12a9 9 0 109-9" fill="none" stroke="currentColor" strokeWidth="1.5" />
   ),
 
   warning: (
-  <>
-    <path
-      d="M12 2l10 18H2L12 2z"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinejoin="round"
-    />
-    <path
-      d="M12 8v5"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-    />
-    <circle cx="12" cy="16" r="1" fill="currentColor" />
-  </>
-),
-
-barChart: (
-  <>
-    <path
-      d="M5 9v10M10 5v14M15 12v7M20 3v16"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.75"
-      strokeLinecap="round"
-    />
-  </>
-),
-
-  rocket: (
-    <>
-      <path
-        d="M12 2c3 2 6 6 6 10l-6 2-6-2c0-4 3-8 6-10z"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.5"
-      />
-      <path d="M12 14v6" stroke="currentColor" strokeWidth="1.5" />
-      <circle cx="12" cy="9" r="1.5" fill="currentColor" />
-    </>
+    <path d="M12 2l10 18H2L12 2z" fill="none" stroke="currentColor" strokeWidth="1.5" />
   ),
 
   checkCircle: (
     <>
       <circle cx="12" cy="12" r="10" fill="currentColor" />
-      <path
-        d="M8 12.5l2.5 2.5L16 9.5"
-        fill="none"
-        stroke="#ffffff"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
+      <path d="M8 12.5l2.5 2.5L16 9.5" stroke="#fff" strokeWidth="2" fill="none" />
     </>
   ),
 
-  profile: (
-  <>
-    <circle
-      cx="12"
-      cy="8"
-      r="3.5"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-    />
-    <path
-      d="M5 20a7 7 0 0114 0"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-    />
-  </>
-),
-};
+  security: (
+    <path d="M12 1l9 4v6c0 5.25-3.66 10.74-9 12-5.34-1.26-9-6.75-9-12V5l9-4z" fill="none" stroke="currentColor" strokeWidth="1.5" />
+  ),
+
+  flag: (
+    <path d="M4 4v16M4 4h10l-2 4 2 4H4" fill="none" stroke="currentColor" strokeWidth="1.5" />
+  ),
+
+  inventory: (
+    <>
+      <rect x="3" y="4" width="18" height="6" fill="none" stroke="currentColor" strokeWidth="1.5" />
+      <rect x="3" y="14" width="18" height="6" fill="none" stroke="currentColor" strokeWidth="1.5" />
+    </>
+  ),
+
+  rule: (
+    <>
+      <path d="M4 6h16M4 12h10M4 18h7" stroke="currentColor" strokeWidth="1.5" />
+      <circle cx="18" cy="12" r="2" fill="currentColor" />
+    </>
+  ),
+
+  timeline: (
+    <>
+      <circle cx="6" cy="12" r="1.5" fill="currentColor" />
+      <circle cx="12" cy="12" r="1.5" fill="currentColor" />
+      <circle cx="18" cy="12" r="1.5" fill="currentColor" />
+    </>
+  ),
+} as const;
 
 export type IconName = keyof typeof icons;

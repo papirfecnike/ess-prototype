@@ -4,15 +4,15 @@
    ========================= */
 
 /* BACKGROUND */
-  --color-header: #e6ecee;
+  --color-header: #e2e8ea;
   --color-main: #f8f9fa;
   --color-footer: #E0E8EA;
   --color-drawer: #D4DADF;
-  --color-product: #F5F6F7;
+  --color-product: #f2f7f8;
 
 /* SIDEBAR */
-  --color-sidebar: #D8E0E2;
-  --color-sidebar-hover: #bbc7ca;
+  --color-sidebar: #d5dddf;
+  --color-sidebar-hover: #f2f7f8;
   --color-sidebar-border: #c9d3d4;
   --color-sidebar-sublist: #9fb1b7;
   --color-sidebar-section: #60838D;
@@ -87,7 +87,7 @@
 
   --color-secondary: transparent;
   --color-secondary-border: #137897;
-  --color-secondary-hover: #cad9dd;
+  --color-secondary-hover: #e1ecef;
   --color-disabled: #c4cdd3;
 
   --color-danger-hover: #e5afb2;
@@ -100,7 +100,7 @@
   --color-success-active: #046005;
 
   --button-context: #137897;
-  --button-context-bg: rgb(201, 217, 223);
+  --button-context-bg: #dee6e8;
   --button-context-hover: #2D4E58;
 
   --button-icon: #14282F;
@@ -136,8 +136,8 @@
   --color-chip-icon-reverse: #FFFFFF;
 
 /* LIST */
-  --color-list-bg: #e9ecef;
-  --color-list-selected: #f5f6f7;
+  --color-list-bg: #f2f7f8;
+  --color-list-selected: #f2f7f8;
 
   /* TAB */
   --color-tab-underline: #137897;
@@ -148,7 +148,7 @@
   --font-sans: Roboto, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
 
-  --font-h1: 2.25rem; /* 36px  */
+  --font-h1: 2rem; /* 32px  */
   --font-h2: 1rem; /* 16px  */
   --font-h3: 1.25rem; /* 20px  */
   --font-h4: 1.5rem; /* 24px  */

@@ -115,11 +115,11 @@ export const sidebarConfig: SidebarSection[] = [
       {
         title: "",
         items: [
-          { label: "Prioritization", path: "prioritization", icon: "profile" },
-          { label: "Strategies", path: "strategies", icon: "settings" },
-          { label: "Bins", path: "bins", icon: "settings" },
+          { label: "Prioritization", path: "prioritization", icon: "flag" },
+          { label: "Strategies", path: "strategies", icon: "timeline" },
+          { label: "Bins", path: "bins", icon: "inventory2" },
           { label: "System settings", path: "system-settings", icon: "settings" },
-          { label: "Inventory rules", path: "inventory-rules", icon: "settings" },
+          { label: "Inventory rules", path: "inventory-rules", icon: "rule" },
         ],
       },
       /* 
@@ -140,7 +140,7 @@ export const sidebarConfig: SidebarSection[] = [
     items: [
       { label: "Personal information", path: "", icon: "profile" },
       { label: "System preferences", path: "system-preferences", icon: "settings" },
-      { label: "Security", path: "security", icon: "lock" },
+      { label: "Security", path: "security", icon: "security" },
     ],
   },
 ];
