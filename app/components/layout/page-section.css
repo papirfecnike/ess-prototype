@@ -1,8 +1,10 @@
 .page-section {
   width: 100%;
+  min-width: 0;
 }
 
 .page-section__content {
   display: flex;
   flex-direction: column;
+  min-width: 0;
 }

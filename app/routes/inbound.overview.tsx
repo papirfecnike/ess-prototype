@@ -41,7 +41,6 @@ const ROWS = [
 export default function InboundPutaway() {
 
   const [activeStatuses, setActiveStatuses] = useState<string[]>([]);
-  const [selectedRows, setSelectedRows] = useState<string[]>([]);
   const [openMenuRowId, setOpenMenuRowId] = useState<string | null>(null);
   const [hiddenRowIds, setHiddenRowIds] = useState<string[]>([]);
   const [rowActionNotification, setRowActionNotification] = useState<{
@@ -117,7 +116,6 @@ export default function InboundPutaway() {
     if (!row) return;
 
     setHiddenRowIds(ids => Array.from(new Set([...ids, openMenuRowId])));
-    setSelectedRows(rows => rows.filter(id => id !== openMenuRowId));
     setOpenMenuRowId(null);
 
     if (actionId === "complete") {
@@ -167,8 +165,7 @@ export default function InboundPutaway() {
           rowIdKey="id"
           columns={columns}
           rows={filteredRows}
-          selectedRows={selectedRows}
-          onSelectionChange={setSelectedRows}
+          selectable={false}
           detailsContent={detailsContent}
         />
 

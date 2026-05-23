@@ -9,10 +9,10 @@ import type { DataTableColumn } from "@/components/data/DataTableCore";
 
 import { DropdownMenu } from "@/components/ui/menu/DropdownMenu";
 import { Tag } from "@/components/ui/tag/Tag";
-import { TextField } from "@/components/ui/input/TextField";
 import { Notification } from "@/components/ui/notification/Notification";
 import { Icon } from "@/components/ui/icon/Icon";
 import { Button } from "@/components/ui/button/Button";
+import { ScanInput } from "@/components/ui/scan-input/ScanInput";
 import "@/styles/product-page.css";
 import "@/styles/inbound-putaway-list.css";
 
@@ -100,7 +100,7 @@ export default function InboundPutaway() {
       key: "actions",
       label: "Actions",
       filterable: false,
-      width: 190,
+      width: 135,
       renderCell: (_value, row) => (
         <Button
           size="sm"
@@ -223,15 +223,14 @@ export default function InboundPutaway() {
     <PageLayout>
       <PageSection>
         <div className="putaway-list">
-          <TextField
+          <ScanInput
             value={scanValue}
             onChange={(e) => setScanValue(e.target.value)}
-            label="Look for items to put away..."
-            autoFocus
+            placeholder="Look for items to put away..."
+            onSubmit={handleConfirm}
+            showButton={false}
             error={hasNoResult ? "No result." : undefined}
-            onKeyDown={(event) => {
-              if (event.key === "Enter" && canConfirm) handleConfirm();
-            }}
+            isDisabled={!canConfirm}
           />
         </div>
 
@@ -283,7 +282,7 @@ export default function InboundPutaway() {
         />
       )}
 
-      <footer className="product-page__footer">
+      <footer className="product-page__footer putaway-list__footer">
         <div className="product-page__footer-left">
           <Button
             variant="ghost"

@@ -79,10 +79,14 @@ export function DataTableHeader({
                 <div className="data-table__active-filters-popover">
                   <div className="data-table__active-filters-title">
                     <strong>Active filters</strong>
-                    <div className="data-table__active-filters-icons">
-                      <Icon name="flag" size="sm" />
-                      <Icon name="settings" size="sm" />
-                    </div>
+                    <button
+                      type="button"
+                      className="data-table__active-filters-close"
+                      aria-label="Close active filters"
+                      onClick={() => setShowActiveFilters(false)}
+                    >
+                      <Icon name="closeStroke" size="sm" />
+                    </button>
                   </div>
 
                   <button type="button" className="data-table__filter-preset">
@@ -99,7 +103,15 @@ export function DataTableHeader({
                         </span>
                       ))
                     ) : (
-                      <strong>No active filters</strong>
+                      <div className="data-table__active-filters-empty">
+                        <span className="data-table__active-filters-empty-illustration">
+                          <Icon name="filter" size="md" />
+                        </span>
+                        <div>
+                          <strong>No active filters</strong>
+                          <span>Use column filters to narrow this table.</span>
+                        </div>
+                      </div>
                     )}
                   </div>
 

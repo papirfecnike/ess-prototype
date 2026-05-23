@@ -5,16 +5,8 @@
   margin-bottom: 24px;
 }
 
-.putaway-list .text-field__input {
-  height: var(--input-height);
-  border-color: var(--color-input-border);
-  border-radius: var(--radius-s);
-  font-size: var(--font-default);
-}
-
-.putaway-list .text-field__error {
-  padding-left: var(--padding-l);
-  font-size: var(--font-default);
+.putaway-list .scan-input {
+  width: 100%;
 }
 
 .putaway-list + .data-table-card .data-table__header-row {
@@ -62,4 +54,10 @@
 
 .putaway-list + .data-table-card .data-table__cell--actions .btn svg {
   margin-right: 0;
+}
+
+.putaway-list__footer {
+  left: var(--sidebar-current-width);
+  right: 0;
+  width: auto;
 }

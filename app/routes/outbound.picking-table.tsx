@@ -1,5 +1,5 @@
 import type { LoaderFunction } from "react-router";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router";
 
 import { PageLayout } from "@/components/layout/PageLayout";
@@ -14,6 +14,8 @@ import { Chip } from "@/components/ui/chip/Chip";
 import { Notification } from "@/components/ui/notification/Notification";
 import { ScanInput } from "@/components/ui/scan-input/ScanInput";
 import { Dialog } from "@/components/ui/dialog/Dialog";
+import "@/styles/product-page.css";
+import "@/styles/inbound-putaway-list.css";
 
 export const loader: LoaderFunction = async () => null;
 
@@ -63,8 +65,20 @@ export default function OutboundPickingTable() {
   const [activeStatuses, setActiveStatuses] = useState<string[]>([]);
   const [rows] = useState<Row[]>(INITIAL_ROWS);
 
+  useEffect(() => {
+    const completedPicklistId = sessionStorage.getItem("picking:completedPicklistId");
+    if (!completedPicklistId) return;
+    setShowNotification(true);
+    sessionStorage.removeItem("picking:completedPicklistId");
+  }, []);
+
   function handleScanSubmit() {
-    if (!scanValue.trim()) return;
+    const row = exactPicklistMatch ?? filteredRows.find(item => String(item.id) === selectedRows[0]);
+    if (!row) return;
+    if (row.status !== "Prepared") {
+      setDialogStatus(row.status);
+      return;
+    }
     navigate("/outbound/picking-product");
   }
 
@@ -108,6 +122,15 @@ export default function OutboundPickingTable() {
     return searchFilteredRows.filter(row => activeStatuses.includes(row.status));
   }, [searchFilteredRows, activeStatuses]);
 
+  const exactPicklistMatch = useMemo(() => {
+    const q = scanValue.trim();
+    if (!q) return null;
+    return rows.find(row => String(row.id) === q || String(row.order) === q) ?? null;
+  }, [scanValue, rows]);
+
+  const hasNoResult = scanValue.trim().length > 0 && searchFilteredRows.length === 0;
+  const canConfirm = Boolean(exactPicklistMatch || selectedRows.length > 0);
+
   const statusStats = useMemo(() => {
     const map: Record<string, number> = {};
     rows.forEach(row => { map[row.status] = (map[row.status] ?? 0) + 1; });
@@ -142,18 +165,20 @@ export default function OutboundPickingTable() {
   );
 
   return (
-    <PageLayout
-      title={
-        <ScanInput
-          value={scanValue}
-          onChange={(e) => setScanValue(e.target.value)}
-          onSubmit={handleScanSubmit}
-          buttonLabel="Confirm"
-          isDisabled={!scanValue.trim()}
-        />
-      }
-    >
+    <PageLayout>
       <PageSection>
+        <div className="putaway-list">
+          <ScanInput
+            value={scanValue}
+            onChange={(e) => setScanValue(e.target.value)}
+            onSubmit={handleScanSubmit}
+            placeholder="Look for picklists to pick..."
+            showButton={false}
+            isDisabled={!canConfirm}
+            error={hasNoResult ? "No result." : undefined}
+          />
+        </div>
+
         <SelectableDataTable
           rowIdKey="id"
           columns={columns}
@@ -189,6 +214,30 @@ export default function OutboundPickingTable() {
           onClose={() => setShowNotification(false)}
         />
       )}
+
+      <footer className="product-page__footer">
+        <div className="product-page__footer-left">
+          <Button
+            variant="ghost"
+            intent="danger"
+            leadingIcon="chevronLeftStroke"
+            onClick={() => navigate("/outbound/picking")}
+          >
+            Exit
+          </Button>
+        </div>
+        <div className="product-page__footer-center" />
+        <div className="product-page__footer-right">
+          <Button
+            variant="secondary"
+            leadingIcon="checkStroke"
+            disabled={!canConfirm}
+            onClick={handleScanSubmit}
+          >
+            Confirm
+          </Button>
+        </div>
+      </footer>
     </PageLayout>
   );
 }

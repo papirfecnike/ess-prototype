@@ -8,7 +8,7 @@ import { Button } from "../components/ui/button/Button";
 import { TextField } from "../components/ui/input/TextField";
 import { InputStepper } from "../components/ui/input-stepper/InputStepper";
 import { Dialog } from "../components/ui/dialog/Dialog";
-import { icons } from "../components/ui/icon/icons";
+import { Icon } from "../components/ui/icon/Icon";
 
 import img05 from "@/assets/product/img05.png";
 import img06 from "@/assets/product/img06.png";
@@ -126,11 +126,7 @@ export default function InventoryInspectionProductPage() {
                   value={scanValue}
                   onChange={(e) => setScanValue(e.target.value)}
                   autoFocus
-                  leadingIcon={
-                    <svg viewBox="0 0 24 24" width="20" height="20">
-                      {icons.qrScanner}
-                    </svg>
-                  }
+                  leadingIcon={<Icon name="qrScanner" size="md" />}
                 />
               </div>
             </Card>
@@ -169,13 +165,13 @@ export default function InventoryInspectionProductPage() {
           <div className="product-drawer__rail">
             <div className="product-drawer__rail-main">
               <button type="button" className="product-drawer__icon" onClick={() => openDrawer("settings")}>
-                <svg viewBox="0 0 24 24" width="20" height="20">{icons.settings}</svg>
+                <Icon name="settings" size="md" />
               </button>
               <button type="button" className="product-drawer__icon" onClick={() => openDrawer("print")}>
-                <svg viewBox="0 0 24 24" width="20" height="20">{icons.print}</svg>
+                <Icon name="print" size="md" />
               </button>
               <button type="button" className="product-drawer__icon" onClick={() => openDrawer("history")}>
-                <svg viewBox="0 0 24 24" width="20" height="20">{icons.history}</svg>
+                <Icon name="history" size="md" />
               </button>
             </div>
             <div className="product-drawer__panel-close">
@@ -184,7 +180,7 @@ export default function InventoryInspectionProductPage() {
                 className={["product-drawer__close", isDrawerOpen ? "is-open" : ""].join(" ")}
                 onClick={closeDrawer}
               >
-                <svg viewBox="0 0 24 24" width="20" height="20">{icons.chevronRightStroke}</svg>
+                <Icon name="chevronRightStroke" size="md" />
               </button>
             </div>
           </div>

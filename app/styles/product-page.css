@@ -107,6 +107,10 @@
   gap: 4px;
 }
 
+.location-card__text .tag {
+  align-self: flex-start;
+}
+
 .location-card__label {
   font-size: 14px;
   font-weight: 800;

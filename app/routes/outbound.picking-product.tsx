@@ -8,7 +8,7 @@ import { Toggle } from "../components/ui/toggle/Toggle";
 import { InputStepper } from "../components/ui/input-stepper/InputStepper";
 import { Tag } from "../components/ui/tag/Tag";
 import { ProgressBar } from "../components/ui/progress-bar/ProgressBar";
-import { icons } from "../components/ui/icon/icons";
+import { Icon } from "../components/ui/icon/Icon";
 
 
 /* product images */
@@ -289,9 +289,7 @@ function handleConfirm() {
                 onClick={() => openDrawer("settings")}
                 aria-label="Settings"
               >
-                <svg viewBox="0 0 24 24" width="20" height="20">
-                  {icons.settings}
-                </svg>
+                <Icon name="settings" size="md" />
               </button>
 
               <button
@@ -300,9 +298,7 @@ function handleConfirm() {
                 onClick={() => openDrawer("print")}
                 aria-label="Print"
               >
-                <svg viewBox="0 0 24 24" width="20" height="20">
-                  {icons.print}
-                </svg>
+                <Icon name="print" size="md" />
               </button>
 
               <button
@@ -311,9 +307,7 @@ function handleConfirm() {
                 onClick={() => openDrawer("history")}
                 aria-label="History"
               >
-                <svg viewBox="0 0 24 24" width="20" height="20">
-                  {icons.history}
-                </svg>
+                <Icon name="history" size="md" />
               </button>
             </div>
 
@@ -327,16 +321,7 @@ function handleConfirm() {
                 onClick={closeDrawer}
                 aria-label="Close drawer"
               >
-                <svg
-                  viewBox="0 0 24 24"
-                  width="20"
-                  height="20"
-                  aria-hidden="true"
-                >
-                  {isDrawerOpen
-                    ? icons.chevronRightStroke
-                    : icons.chevronLeftStroke}
-                </svg>
+                <Icon name={isDrawerOpen ? "chevronRightStroke" : "chevronLeftStroke"} size="md" />
               </button>
             </div>
           </div>

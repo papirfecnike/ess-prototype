@@ -31,7 +31,7 @@ export default function App() {
   const location = useLocation();
 
   // DASHBOARD DETECTION
-  const isDashboard = location.pathname === "/dashboard";
+  const isDashboard = location.pathname.replace(/\/$/, "") === "/dashboard";
 
   return (
     <html lang="en">

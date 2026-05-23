@@ -402,7 +402,7 @@ export function DataTableCore({
   const totalConfiguredWidth = useMemo(() => {
     return visibleColumns.reduce((total, column) => {
       return total + (typeof column.width === "number" ? column.width : 120)
-    }, selectable ? 40 : 0)
+    }, selectable ? 48 : 0)
   }, [selectable, visibleColumns])
 
   const getColumnWidth = (column: DataTableColumn) => {
@@ -470,14 +470,14 @@ export function DataTableCore({
           <div className="data-table__header-row">
             <table style={{ minWidth: totalConfiguredWidth }}>
               <colgroup>
-                {selectable && <col style={{ width: `${(40 / totalConfiguredWidth) * 100}%` }} />}
+                {selectable && <col style={{ width: `${(48 / totalConfiguredWidth) * 100}%` }} />}
                 {visibleColumns.map(col => (
                   <col key={col.key} style={{ width: getColumnWidth(col) }} />
                 ))}
               </colgroup>
               <thead>
                 <tr>
-                  {selectable && <th className="data-table__checkbox-cell" style={{ width: 40 }} />}
+                  {selectable && <th className="data-table__checkbox-cell" style={{ width: 48 }} />}
                   {visibleColumns.map(c => (
                     <th
                       key={c.key}

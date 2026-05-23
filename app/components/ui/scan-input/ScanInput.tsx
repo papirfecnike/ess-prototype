@@ -13,6 +13,8 @@ type Props = {
   buttonLeadingIcon?: IconName;
   isLoading?: boolean;
   isDisabled?: boolean;
+  error?: string;
+  showButton?: boolean;
 };
 
 export function ScanInput({
@@ -24,6 +26,8 @@ export function ScanInput({
   buttonLeadingIcon = "checkStroke",
   isLoading = false,
   isDisabled = false,
+  error,
+  showButton = true,
 }: Props) {
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && !isDisabled) {
@@ -40,18 +44,21 @@ export function ScanInput({
             onChange={onChange}
             label={placeholder}
             autoFocus
+            error={error}
             onKeyDown={handleKeyDown}
           />
         </div>
 
-        <Button
-          onClick={onSubmit}
-          leadingIcon={buttonLeadingIcon}
-          isLoading={isLoading}
-          disabled={isDisabled}
-        >
-          {buttonLabel}
-        </Button>
+        {showButton && (
+          <Button
+            onClick={onSubmit}
+            leadingIcon={buttonLeadingIcon}
+            isLoading={isLoading}
+            disabled={isDisabled}
+          >
+            {buttonLabel}
+          </Button>
+        )}
       </div>
   );
 }

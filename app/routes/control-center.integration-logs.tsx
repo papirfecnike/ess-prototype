@@ -4,11 +4,12 @@ import { useState } from "react";
 import { PageLayout } from "@/components/layout/PageLayout";
 import { PageSection } from "@/components/layout/PageSection";
 
-import { SelectableDataTable } from "@/components/data/SelectableDataTable";
-import type { DataTableColumn } from "@/components/data/DataTableCore";
+import { DataTableCore } from "@/components/data/DataTableCore";
+import type { DataTableColumn, DataTableRow } from "@/components/data/DataTableCore";
+import { Button } from "@/components/ui/button/Button";
 import { Icon } from "@/components/ui/icon/Icon";
 import { Select } from "@/components/ui/select/Select";
-import { Toggle } from "@/components/ui/toggle/Toggle";
+import "@/styles/integration-logs.css";
 
 
 export const loader: LoaderFunction = async () => {
@@ -20,29 +21,35 @@ export default function ControlIntLogs() {
      STATE
      ========================= */
 
-  const [selectedRows, setSelectedRows] = useState<string[]>([]);
   const [eventType, setEventType] = useState<string | null>("all");
-  const [showDetails, setShowDetails] = useState(false);
+  const [selectedEvent, setSelectedEvent] = useState<DataTableRow | null>(null);
 
   /* =========================
      COLUMNS
      ========================= */
 
   const columns: DataTableColumn[] = [
-    { key: "eventId", label: "Event ID", sortable: true, filterable: true, width: 300 },
-    { key: "eventType", label: "Event type", sortable: true, filterable: true, width: 390 },
+    { key: "eventId", label: "Event ID", sortable: true, filterable: true, width: 320 },
+    { key: "eventType", label: "Event type", sortable: true, filterable: true, width: 400 },
     { key: "source", label: "Source", sortable: true, filterable: true, width: 340 },
-    { key: "subject", label: "Subject", sortable: true, filterable: true, width: 360 },
+    { key: "subject", label: "Subject", sortable: true, filterable: true, width: 370 },
     { key: "correlationId", label: "Correlation ID", sortable: true, filterable: true, width: 320 },
-    { key: "time", label: "Created", sortable: true, filterable: true, width: 190 },
     {
       key: "more",
       label: "",
       align: "right",
       filterable: false,
       width: 48,
-      renderCell: () => (
-        <button type="button" className="btn--ghost" aria-label="More">
+      renderCell: (_value, row) => (
+        <button
+          type="button"
+          className="btn--ghost"
+          aria-label="More"
+          onClick={(event) => {
+            event.stopPropagation();
+            setSelectedEvent(row);
+          }}
+        >
           <Icon name="moreVert" size="sm" />
         </button>
       ),
@@ -53,7 +60,7 @@ export default function ControlIntLogs() {
      ROWS
      ========================= */
 
-  const rows = [
+  const rows: DataTableRow[] = [
     "pick-task-deviation-handled",
     "create-picklist",
     "picklist-created",
@@ -69,6 +76,7 @@ export default function ControlIntLogs() {
     "pick-tasks-added",
     "pick-tasks-added",
   ].map((event, index) => ({
+    id: `event-${index}`,
     eventId: [
       "019c75e7-3e67-7562-9335-2dca13acf7b0",
       "019c75e6-25b2-75b2-b6ca-68d8869c1ff5",
@@ -84,6 +92,11 @@ export default function ControlIntLogs() {
     more: "",
   }));
 
+  const visibleRows = rows.filter(row => {
+    if (eventType === "all") return true;
+    return String(row.eventType).includes(String(eventType));
+  });
+
   /* =========================
      RENDER
      ========================= */
@@ -94,14 +107,12 @@ export default function ControlIntLogs() {
       subtitle="Monitor incoming and outgoing messages between systems"
     >
       <PageSection>
-        <SelectableDataTable
-          rowIdKey="eventId"
+        <DataTableCore
+          rowIdKey="id"
           columns={columns}
-          rows={rows}
-          selectedRows={selectedRows}
-          onSelectionChange={setSelectedRows}
+          rows={visibleRows}
           showCustomize={false}
-          activeFiltersLabel="Filters"
+          onRowClick={setSelectedEvent}
           headerLeftActions={
             <Select
               label="Event type"
@@ -114,17 +125,55 @@ export default function ControlIntLogs() {
               ]}
             />
           }
-          headerActions={
-            <div className="integration-logs__header-actions">
-              <Toggle
-                title="Show details"
-                checked={showDetails}
-                onCheckedChange={setShowDetails}
-              />
-            </div>
-          }
         />
       </PageSection>
+
+      {selectedEvent && (
+        <aside className="event-log-drawer" aria-label="Event details">
+          <div className="event-log-drawer__header">
+            <div>
+              <h2>Event details</h2>
+              <span>{selectedEvent.time}</span>
+            </div>
+            <Button variant="icon" size="sm" onClick={() => setSelectedEvent(null)}>
+              <Icon name="closeStroke" size="sm" />
+            </Button>
+          </div>
+
+          <div className="event-log-drawer__content">
+            <div className="event-log-drawer__section">
+              <span className="event-log-drawer__label">Event ID</span>
+              <strong>{selectedEvent.eventId}</strong>
+            </div>
+            <div className="event-log-drawer__section">
+              <span className="event-log-drawer__label">Event type</span>
+              <strong>{selectedEvent.eventType}</strong>
+            </div>
+            <div className="event-log-drawer__section">
+              <span className="event-log-drawer__label">Source</span>
+              <span>{selectedEvent.source}</span>
+            </div>
+            <div className="event-log-drawer__section">
+              <span className="event-log-drawer__label">Subject</span>
+              <span>{selectedEvent.subject}</span>
+            </div>
+            <div className="event-log-drawer__section">
+              <span className="event-log-drawer__label">Correlation ID</span>
+              <span>{selectedEvent.correlationId}</span>
+            </div>
+            <div className="event-log-drawer__section event-log-drawer__section--payload">
+              <span className="event-log-drawer__label">Payload preview</span>
+              <code>
+                {JSON.stringify({
+                  eventId: selectedEvent.eventId,
+                  subject: selectedEvent.subject,
+                  status: "summary",
+                }, null, 2)}
+              </code>
+            </div>
+          </div>
+        </aside>
+      )}
     </PageLayout>
   );
 }

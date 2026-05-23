@@ -28,6 +28,7 @@ type Props = {
   showCustomize?: boolean;
   activeFiltersLabel?: string;
   showHeader?: boolean;
+  selectable?: boolean;
 };
 
 export function SelectableDataTable({
@@ -47,6 +48,7 @@ export function SelectableDataTable({
   showCustomize,
   activeFiltersLabel,
   showHeader,
+  selectable = true,
 }: Props) {
   return (
     <DataTableCore
@@ -66,7 +68,7 @@ export function SelectableDataTable({
       showCustomize={showCustomize}
       activeFiltersLabel={activeFiltersLabel}
       showHeader={showHeader}
-      selectable
+      selectable={selectable}
     />
   );
 }

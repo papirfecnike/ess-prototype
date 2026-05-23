@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { Card } from "../card/Card";
-import { icons } from "../icon/icons";
+import { Icon } from "../icon/Icon";
+import type { IconName } from "../icon/icons";
 import "./dialog.css";
 
 type DialogIntent = "default" | "success" | "warning" | "error" | "inspection" | "schedule";
@@ -14,20 +15,20 @@ type Props = {
   footerRight?: ReactNode;
 };
 
-function getIntentIcon(intent: DialogIntent) {
+function getIntentIcon(intent: DialogIntent): IconName {
   switch (intent) {
     case "success":
-      return icons.checkCircle;
+      return "checkCircle";
     case "warning":
-      return icons.warning;
+      return "warning";
     case "error":
-      return icons.error;
+      return "error";
     case "inspection":
-      return icons.search;
+      return "search";
     case "schedule":
-      return icons.clock;
+      return "clock";
     default:
-      return icons.history;
+      return "history";
   }
 }
 
@@ -50,9 +51,7 @@ export function Dialog({
 
           <div className="ui-dialog__header">
             <div className="ui-dialog__header-icon">
-              <svg viewBox="0 0 24 24" width="20" height="20">
-                {getIntentIcon(intent)}
-              </svg>
+              <Icon name={getIntentIcon(intent)} size="md" />
             </div>
             {title && (
               <div className="ui-dialog__header-title">
