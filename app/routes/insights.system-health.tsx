@@ -195,7 +195,7 @@ export default function InsightsSysHealth() {
 <Card className="card--full-height">
   <div className="card-header">
     <Icon name="activity" />
-    <h3>Storage by location</h3>
+    <h3>Storage by compartment</h3>
   </div>
 
   <div className="card-content">

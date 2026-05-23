@@ -42,9 +42,14 @@
 
 .select__value {
   flex: 1;
-  margin-top: 14px;
+  margin-top: 0;
   color: var(--color-text);
   text-align: left;
+  line-height: 1;
+}
+
+.select--has-label .select__value {
+  margin-top: 14px;
 }
 
 /* CHEVRON */
@@ -81,6 +86,10 @@
   max-height: 240px;
   display: flex;
   flex-direction: column;
+}
+
+.select__dropdown--up {
+  transform: translateY(-100%);
 }
 
 .select__list-wrapper {

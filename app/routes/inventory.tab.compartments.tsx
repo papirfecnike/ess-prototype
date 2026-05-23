@@ -18,7 +18,7 @@ function renderReasonTag(reason: string) {
     case "Count mismatch": return <Tag label={reason} variant="mismatch" />;
     case "Expired": return <Tag label={reason} variant="expired" />;
     case "Missing": return <Tag label={reason} variant="missing" />;
-    case "Wrong location": return <Tag label={reason} variant="location" />;
+    case "Wrong compartment": return <Tag label={reason} variant="location" />;
     case "Damaged": return <Tag label={reason} variant="damaged" />;
     default: return reason;
   }
@@ -29,6 +29,7 @@ export default function CompartmentsTab() {
   const navigate = useNavigate();
 
   const [selectedRows, setSelectedRows] = useState<string[]>([]);
+  const [scheduledRows, setScheduledRows] = useState<string[]>([]);
   const [activeReasons, setActiveReasons] = useState<string[]>([]);
 
   const [showInspectionDialog, setShowInspectionDialog] = useState(false);
@@ -41,24 +42,32 @@ export default function CompartmentsTab() {
   const [showSuccessNotification, setShowSuccessNotification] = useState(false);
 
   const columns: DataTableColumn[] = [
-    { key: "product", label: "Product" },
-    { key: "compartment", label: "Compartment ID" },
-    { key: "bin", label: "Bin ID" },
-    { key: "sku", label: "SKU" },
-    { key: "stock", label: "Stock quantity" },
-    { key: "reason", label: "Reason codes", renderCell: (v) => renderReasonTag(String(v)) },
-    { key: "tasks", label: "Existing tasks" },
+    { key: "product", label: "Product", width: 380, minWidth: 250, wrap: true },
+    { key: "compartment", label: "Compartment ID", width: 150 },
+    { key: "bin", label: "Bin ID", width: 140 },
+    { key: "sku", label: "SKU", width: 90 },
+    { key: "stock", label: "Stock quantity", width: 95 },
+    { key: "reason", label: "Reason codes", width: 150, renderCell: (v) => renderReasonTag(String(v)) },
+    {
+      key: "tasks",
+      label: "Existing tasks",
+      width: 130,
+      renderCell: (value, row) =>
+        scheduledRows.includes(String(row.id))
+          ? <Tag label="Scheduled" variant="default" />
+          : String(value),
+    },
   ];
 
   const rows = [
-    { id: 1, product: "Bisgaard Winter Boots - Pixie - Khaki", compartment: "COMP 1", bin: "HU-00246095", sku: "WD750", stock: 17, reason: "Wrong location", tasks: "INV-0000004" },
+    { id: 1, product: "Bisgaard Winter Boots - Pixie - Khaki", compartment: "COMP 1", bin: "HU-00246095", sku: "WD750", stock: 17, reason: "Wrong compartment", tasks: "INV-0000004" },
     { id: 2, product: "Name It Jumpsuit - NkfRoka - Burgundy", compartment: "COMP 2", bin: "HU-00246111", sku: "WF773", stock: 41, reason: "Count mismatch", tasks: "INV-0000004" },
-    { id: 3, product: "Minymo Cardigan - Knitted - Woodrose", compartment: "COMP 1", bin: "HU-00292341", sku: "BW975", stock: 32, reason: "Wrong location", tasks: "INV-0000004" },
-    { id: 4, product: "Minymo Cardigan w. Teddy - Parisian Night", compartment: "COMP 1", bin: "HU-01997721", sku: "WC551", stock: 45, reason: "Wrong location", tasks: "INV-0000004" },
+    { id: 3, product: "Minymo Cardigan - Knitted - Woodrose", compartment: "COMP 1", bin: "HU-00292341", sku: "BW975", stock: 32, reason: "Wrong compartment", tasks: "INV-0000004" },
+    { id: 4, product: "Minymo Cardigan w. Teddy - Parisian Night", compartment: "COMP 1", bin: "HU-01997721", sku: "WC551", stock: 45, reason: "Wrong compartment", tasks: "INV-0000004" },
     { id: 5, product: "adidas Performance Shoes - Advantage 2.0", compartment: "COMP 1", bin: "HU-01990082", sku: "WF685", stock: 45, reason: "Damaged", tasks: "INV-0000004" },
     { id: 6, product: "adidas Performance Shoes - Advantage 2.0 - Ftwwht/Cwhite/Legink", compartment: "COMP 2", bin: "HU-01990987", sku: "WF681", stock: 27, reason: "Damaged", tasks: "INV-0000004" },
     { id: 7, product: "adidas Performance Shoes - Run 70s 2.0 EL C - Navy/White", compartment: "COMP 1", bin: "HU-01990989", sku: "BM841", stock: 32, reason: "Damaged", tasks: "INV-0000005" },
-    { id: 8, product: "Name It Blouse - Rib - Noos - NmfKab - Lavender Gray", compartment: "COMP 1", bin: "HU-01917882", sku: "WH768", stock: 11, reason: "Wrong location", tasks: "INV-0000005" },
+    { id: 8, product: "Name It Blouse - Rib - Noos - NmfKab - Lavender Gray", compartment: "COMP 1", bin: "HU-01917882", sku: "WH768", stock: 11, reason: "Wrong compartment", tasks: "INV-0000005" },
   ];
 
   const selectedRowData = useMemo(() => {
@@ -140,6 +149,9 @@ export default function CompartmentsTab() {
         rows={filteredRows}
         selectedRows={selectedRows}
         onSelectionChange={setSelectedRows}
+        onScheduleSelected={(ids) =>
+          setScheduledRows(prev => Array.from(new Set([...prev, ...ids])))
+        }
         detailsContent={detailsContent}
         batchActions={batchActions}
       />
@@ -194,7 +206,7 @@ export default function CompartmentsTab() {
               { value: "count_mismatch", label: "Count mismatch" },
               { value: "expired", label: "Expired" },
               { value: "missing", label: "Missing" },
-              { value: "wrong_location", label: "Wrong location" },
+              { value: "wrong_location", label: "Wrong compartment" },
               { value: "damaged", label: "Damaged" },
             ]}
           />

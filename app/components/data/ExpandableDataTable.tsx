@@ -21,6 +21,8 @@ type Props = {
   headerVariant?: HeaderVariant;
 
   detailsContent?: ReactNode;
+  onRowClick?: (row: DataTableRow) => void;
+  showHeader?: boolean;
 };
 
 export function ExpandableDataTable({
@@ -32,6 +34,8 @@ export function ExpandableDataTable({
   renderExpandedRow,
   headerVariant,
   detailsContent,
+  onRowClick,
+  showHeader,
 }: Props) {
   return (
     <DataTableCore
@@ -43,6 +47,8 @@ export function ExpandableDataTable({
       renderExpandedRow={renderExpandedRow}
       headerVariant={headerVariant}
       detailsContent={detailsContent}
+      onRowClick={onRowClick}
+      showHeader={showHeader}
       expandable
     />
   );

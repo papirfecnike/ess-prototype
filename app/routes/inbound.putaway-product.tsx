@@ -38,7 +38,6 @@ export default function InboundPutawayProductPage() {
   const [scanValue, setScanValue] = useState("");
   const [quantity, setQuantity] = useState(1);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const [markForInspection, setMarkForInspection] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isExitDialogOpen, setIsExitDialogOpen] = useState(false);
 
@@ -109,21 +108,14 @@ export default function InboundPutawayProductPage() {
             </Card>
 
             <Card>
-              <h3>Location</h3>
+              <h3>Compartment</h3>
               <div>
                 <div className="location-card">
                   <div className="location-card__visual" />
                   <div className="location-card__content">
                     <div className="location-card__text">
-                      <span className="location-card__label">Location ID</span>
+                      <span className="location-card__label">Compartment ID</span>
                       <span className="location-card__value">AS-112025-01-01</span>
-                    </div>
-                    <div className="location-card__toggle">
-                      <Toggle
-                        checked={markForInspection}
-                        onCheckedChange={() => {}}
-                        title="Mark for inspection"
-                      />
                     </div>
                   </div>
                 </div>
@@ -278,7 +270,7 @@ export default function InboundPutawayProductPage() {
                         <span className="drawer-section-item-value">104 units</span>
                       </div>
                       <div className="drawer-section-item">
-                        <span className="drawer-section-item-label">Locations</span>
+                        <span className="drawer-section-item-label">Compartments</span>
                         <span className="drawer-section-item-value">3 bins</span>
                       </div>
                       <div className="drawer-section-item">
@@ -299,7 +291,7 @@ export default function InboundPutawayProductPage() {
                       <Button variant="ghost" size="sm">Print product label</Button>
                     </div>
                     <div className="drawer-section-item">
-                      <Button variant="ghost" size="sm">Print location label</Button>
+                      <Button variant="ghost" size="sm">Print compartment label</Button>
                     </div>
                   </div>
                 )}

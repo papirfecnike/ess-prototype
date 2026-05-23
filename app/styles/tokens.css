@@ -153,8 +153,8 @@
   --font-h3: 1.25rem; /* 20px  */
   --font-h4: 1.5rem; /* 24px  */
   --font-section-title: 1.25rem; /* 20px  */
-  --font-default: 0.875rem; /* 14px  */
-  --font-input: 0.75rem; /* 12px  */
+  --font-default: 1rem; /* 16px  */
+  --font-input: 0.875rem; /* 14px  */
   --font-button-default: 1.25rem; /* 20px  */
   --font-navigation: 1rem; /* 16px  */
   --font-big: 6rem; /* 96px  */

@@ -59,9 +59,9 @@ export default function ClientHeader() {
         <span className="app-header__separator">|</span>
         <NavLink to="/inbound">Inbound</NavLink>
         <NavLink to="/outbound">Outbound</NavLink>
-        <NavLink to="/inventory">Inventory</NavLink>
+        <NavLink to="/inventory/inspection-table">Inventory</NavLink>
         <span className="app-header__separator">|</span>
-        <NavLink to="/control-center/warehouse-layout">Control center</NavLink>
+        <NavLink to="/control-center/integration-logs">Control center</NavLink>
         <NavLink to="/configuration">Configuration</NavLink>
       </nav>
 

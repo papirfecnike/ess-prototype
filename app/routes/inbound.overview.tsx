@@ -1,20 +1,23 @@
 import type { LoaderFunction } from "react-router";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useRef } from "react";
 
 import { PageLayout } from "@/components/layout/PageLayout";
 import { PageSection } from "@/components/layout/PageSection";
 
-import { ExpandableDataTable } from "@/components/data/ExpandableDataTable";
+import { SelectableDataTable } from "@/components/data/SelectableDataTable";
 import type { DataTableColumn } from "@/components/data/DataTableCore";
 import { Tag } from "@/components/ui/tag/Tag";
 import { Chip } from "@/components/ui/chip/Chip";
 import { Icon } from "@/components/ui/icon/Icon";
+import { DropdownMenu } from "@/components/ui/menu/DropdownMenu";
+import { Notification } from "@/components/ui/notification/Notification";
 
 export const loader: LoaderFunction = async () => null;
 
 function renderStatusTag(status: string) {
   switch (status) {
     case "In progress": return <Tag label={status} variant="warning" />;
+    case "Created": return <Tag label={status} variant="default" />;
     case "Prepared": return <Tag label={status} variant="default" />;
     case "Waiting": return <Tag label={status} variant="danger" />;
     case "Completed": return <Tag label={status} variant="success" />;
@@ -23,43 +26,78 @@ function renderStatusTag(status: string) {
 }
 
 const ROWS = [
-  { id: 432170, product: "Bisgaard Winter Boots - Pixie - Khaki", sku: "WD750", progress: "2/3", status: "In progress", operator: "c.newman", workstation: "Port 01", date: "08-Jan-2026", events: "x" },
-  { id: 432171, product: "Name It Jumpsuit - NkfRoka - Burgundy", sku: "WF773", progress: "5/11", status: "In progress", operator: "s.taylor", workstation: "Port 04", date: "08-Jan-2026", events: "x" },
-  { id: 432174, product: "adidas Performance Shoes - Advantage 2.0", sku: "WF685", progress: "0/3", status: "Prepared", operator: "s.pittmann", workstation: "Port 02", date: "n/a", events: "x" },
-  { id: 432175, product: "adidas Performance Shoes - VL Court 3.0 K", sku: "BS970", progress: "0/3", status: "Waiting", operator: "d.haugen", workstation: "Port 03", date: "n/a", events: "x" },
-  { id: 432177, product: "Name It Blouse - Rib - Lavender Gray", sku: "WH768", progress: "11/11", status: "Completed", operator: "a.kovach", workstation: "Port 09", date: "08-Nov-2025", events: "x" },
+  { id: "3243435343589343", asnLineKey: "3243435343589343", itemKey: "WD750", item: "Bisgaard Winter Boots - Pixie - Khaki", processedQty: "2/4", quantity: 156, unit: "pcs", status: "In progress", received: "2026-05-12T09:00:00", completed: "2026-05-13T17:00:00", more: "" },
+  { id: "8935485439112037", asnLineKey: "8935485439112037", itemKey: "WF773", item: "Name It Jumpsuit - NkfRoka - Burgundy", processedQty: "6/9", quantity: 132, unit: "pcs", status: "In progress", received: "2026-05-12T09:00:00", completed: "2026-05-13T17:00:00", more: "" },
+  { id: "2390922102145343", asnLineKey: "2390922102145343", itemKey: "BW975", item: "Minymo Cardigan - Knitted - Woodrose", processedQty: "2/3", quantity: 99, unit: "pcs", status: "In progress", received: "2026-05-12T09:00:00", completed: "2026-05-13T17:00:00", more: "" },
+  { id: "9027340034389584", asnLineKey: "9027340034389584", itemKey: "WC551", item: "Minymo Cardigan w. Teddy - Parisian Night", processedQty: "4/5", quantity: 78, unit: "pcs", status: "In progress", received: "2026-05-12T09:00:00", completed: "2026-05-13T17:00:00", more: "" },
+  { id: "9842914301435320", asnLineKey: "9842914301435320", itemKey: "AR759", item: "adidas Originals Shoes - Gazelle W - Half blue/Ftwwht/Cblack", processedQty: "0/3", quantity: 287, unit: "pcs", status: "Created", received: "2026-05-12T09:00:00", completed: "2026-05-13T17:00:00", more: "" },
+  { id: "9432983201238544", asnLineKey: "9432983201238544", itemKey: "WF681", item: "adidas Performance Shoes - Advantage 2.0 - Ftwwht/Cwhite/Legink", processedQty: "0/4", quantity: 13, unit: "pcs", status: "Created", received: "2026-05-12T09:00:00", completed: "2026-05-13T17:00:00", more: "" },
+  { id: "4536344213018892", asnLineKey: "4536344213018892", itemKey: "II811", item: "Name It T-shirt - 2-Pack - NkfVotia - Pink Drink/Double Cream", processedQty: "0/2", quantity: 238, unit: "pcs", status: "Created", received: "2026-05-12T09:00:00", completed: "2026-05-13T17:00:00", more: "" },
+  { id: "9123002132189012", asnLineKey: "9123002132189012", itemKey: "WH768", item: "Name It Blouse - Rib - Noos - NmfKab - Lavender Gray", processedQty: "8/8", quantity: 129, unit: "pcs", status: "Completed", received: "2026-05-12T09:00:00", completed: "2026-05-13T17:00:00", more: "" },
+  { id: "4983012135534132", asnLineKey: "4983012135534132", itemKey: "WC240", item: "Wheat Boxers - 2-Pack - Louis - Blue Multi Stripe", processedQty: "4/4", quantity: 225, unit: "pcs", status: "Completed", received: "2026-05-12T09:00:00", completed: "2026-05-13T17:00:00", more: "" },
+  { id: "4322130442532411", asnLineKey: "4322130442532411", itemKey: "WI810", item: "Molo Collegegenser - Maxi - Multi Kronblader", processedQty: "6/6", quantity: 215, unit: "pcs", status: "Completed", received: "2026-05-12T09:00:00", completed: "2026-05-13T17:00:00", more: "" },
 ];
 
 export default function InboundPutaway() {
 
   const [activeStatuses, setActiveStatuses] = useState<string[]>([]);
+  const [selectedRows, setSelectedRows] = useState<string[]>([]);
+  const [openMenuRowId, setOpenMenuRowId] = useState<string | null>(null);
+  const [hiddenRowIds, setHiddenRowIds] = useState<string[]>([]);
+  const [rowActionNotification, setRowActionNotification] = useState<{
+    intent: "success" | "warning" | "danger";
+    title: string;
+    message: string;
+  } | null>(null);
+  const menuAnchorRef = useRef<HTMLElement | null>(null);
 
   const columns: DataTableColumn[] = [
-    { key: "id", label: "PO", sortable: true },
-    { key: "product", label: "Product", sortable: true },
-    { key: "sku", label: "SKU", sortable: true },
-    { key: "progress", label: "Progress", sortable: true },
-    { key: "status", label: "Status", align: "center", renderCell: (value) => renderStatusTag(String(value)) },
-    { key: "operator", label: "Assigned operator", align: "center" },
-    { key: "workstation", label: "Workstation", align: "center" },
-    { key: "date", label: "Date", align: "center" },
+    { key: "asnLineKey", label: "ASN line key", sortable: true, filterable: true, width: 190 },
+    { key: "itemKey", label: "Item key", sortable: true, filterable: true, width: 130 },
+    { key: "item", label: "Item", sortable: true, filterable: true, width: 320 },
+    { key: "processedQty", label: "Processed qty", filterable: false, width: 120, align: "right" },
+    { key: "quantity", label: "Quantity", sortable: true, filterable: false, width: 100, align: "right" },
+    { key: "unit", label: "Unit", filterable: false, width: 80, align: "center" },
+    { key: "status", label: "Status", filterable: true, filterType: "multiSelect", width: 130, renderCell: (value) => renderStatusTag(String(value)) },
+    { key: "received", label: "Received", sortable: true, filterable: true, filterType: "date", width: 160 },
+    { key: "completed", label: "Completed", sortable: true, filterable: true, filterType: "date", width: 160 },
     {
-      key: "events",
-      label: "Events",
-      align: "center",
-      renderCell: () => (
-        <button type="button" className="btn--ghost" aria-label="View history" onClick={() => console.log("open history")}>
-          <Icon name="history" size="sm" />
+      key: "more",
+      label: "",
+      align: "right",
+      filterable: false,
+      width: 48,
+      renderCell: (_value, row) => {
+        const currentRowId = String(row.id);
+        const isMenuOpen = openMenuRowId === currentRowId;
+        return (
+        <button
+          type="button"
+          className="btn--ghost"
+          aria-label="More"
+          ref={(el) => { if (isMenuOpen) menuAnchorRef.current = el; }}
+          onClick={(e) => {
+            e.stopPropagation();
+            setOpenMenuRowId(isMenuOpen ? null : currentRowId);
+          }}
+        >
+          <Icon name={isMenuOpen ? "closeStroke" : "moreVert"} size="sm" />
         </button>
-      ),
+        );
+      },
     },
   ];
 
+  const visibleRows = useMemo(
+    () => ROWS.filter(row => !hiddenRowIds.includes(String(row.id))),
+    [hiddenRowIds]
+  );
+
   const statusStats = useMemo(() => {
     const map: Record<string, number> = {};
-    ROWS.forEach(row => { map[row.status] = (map[row.status] ?? 0) + 1; });
+    visibleRows.forEach(row => { map[row.status] = (map[row.status] ?? 0) + 1; });
     return Object.entries(map);
-  }, []);
+  }, [visibleRows]);
 
   function toggleStatus(status: string) {
     setActiveStatuses(prev =>
@@ -68,9 +106,46 @@ export default function InboundPutaway() {
   }
 
   const filteredRows = useMemo(() => {
-    if (!activeStatuses.length) return ROWS;
-    return ROWS.filter(row => activeStatuses.includes(row.status));
-  }, [activeStatuses]);
+    if (!activeStatuses.length) return visibleRows;
+    return visibleRows.filter(row => activeStatuses.includes(row.status));
+  }, [activeStatuses, visibleRows]);
+
+  function handleRowAction(actionId: string) {
+    if (!openMenuRowId) return;
+
+    const row = visibleRows.find(item => String(item.id) === openMenuRowId);
+    if (!row) return;
+
+    setHiddenRowIds(ids => Array.from(new Set([...ids, openMenuRowId])));
+    setSelectedRows(rows => rows.filter(id => id !== openMenuRowId));
+    setOpenMenuRowId(null);
+
+    if (actionId === "complete") {
+      setRowActionNotification({
+        intent: "success",
+        title: "Inbound line completed",
+        message: `${row.itemKey} has been completed.`,
+      });
+      return;
+    }
+
+    if (actionId === "cancel") {
+      setRowActionNotification({
+        intent: "warning",
+        title: "Inbound line canceled",
+        message: `${row.itemKey} has been canceled.`,
+      });
+      return;
+    }
+
+    if (actionId === "delete") {
+      setRowActionNotification({
+        intent: "danger",
+        title: "Inbound line deleted",
+        message: `${row.itemKey} has been deleted.`,
+      });
+    }
+  }
 
   const detailsContent = (
     <>
@@ -88,42 +163,36 @@ export default function InboundPutaway() {
   return (
     <PageLayout title="Putaway" subtitle="Handling and placement of inbound goods">
       <PageSection>
-        <ExpandableDataTable
+        <SelectableDataTable
           rowIdKey="id"
           columns={columns}
           rows={filteredRows}
+          selectedRows={selectedRows}
+          onSelectionChange={setSelectedRows}
           detailsContent={detailsContent}
-          renderExpandedRow={(row) => (
-            <table>
-              <thead>
-                <tr>
-                  <th>Production ID</th>
-                  <th>Location type</th>
-                  <th>Location ID</th>
-                  <th>Location capacity</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>WD750-01</td>
-                  <td>1/4 bin</td>
-                  <td>AS-326437-04-01</td>
-                  <td>12/80</td>
-                  <td>In progress</td>
-                </tr>
-                <tr>
-                  <td>WD750-01</td>
-                  <td>1/4 bin</td>
-                  <td>AS-322439-04-04</td>
-                  <td>30/80</td>
-                  <td>Prepared</td>
-                </tr>
-              </tbody>
-            </table>
-          )}
+        />
+
+        <DropdownMenu
+          open={openMenuRowId !== null}
+          anchorRef={menuAnchorRef}
+          items={[
+            { id: "complete", label: "Complete" },
+            { id: "cancel", label: "Cancel" },
+            { id: "delete", label: "Delete", intent: "danger" },
+          ]}
+          onClose={() => setOpenMenuRowId(null)}
+          onSelect={handleRowAction}
         />
       </PageSection>
+
+      {rowActionNotification && (
+        <Notification
+          intent={rowActionNotification.intent}
+          title={rowActionNotification.title}
+          message={rowActionNotification.message}
+          onClose={() => setRowActionNotification(null)}
+        />
+      )}
     </PageLayout>
   );
 }

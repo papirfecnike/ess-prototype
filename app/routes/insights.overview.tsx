@@ -66,9 +66,9 @@ export default function InsightsOverview() {
                     fontSize: "var(--font-default)",
                     fontWeight: "var(--font-weight-medium)",
                   }}>
-                    Avg. location fill rate
+                    Avg. compartment fill rate
                     <span
-                      title="Average percentage of storage capacity currently used across warehouse locations."
+                      title="Average percentage of storage capacity currently used across warehouse compartments."
                       style={{ display: "inline-flex" }}
                     >
                       <Icon name="info" size="xs" />
@@ -104,7 +104,7 @@ export default function InsightsOverview() {
                   }}>
                     Potential by compressing
                     <span
-                      title="Estimated number of additional storage locations that could be freed by consolidating inventory."
+                      title="Estimated number of additional storage compartments that could be freed by consolidating inventory."
                       style={{ display: "inline-flex" }}
                     >
                       <Icon name="info" size="xs" />
@@ -126,7 +126,7 @@ export default function InsightsOverview() {
                     fontSize: "var(--font-default)",
                   }}>
                     <Icon name="barcode" size="sm" />
-                    All locations
+                    All compartments
                   </div>
                 </div>
               </Callout>

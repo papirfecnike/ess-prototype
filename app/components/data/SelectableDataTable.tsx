@@ -22,6 +22,12 @@ type Props = {
   batchActions?: ReactNode;
   tableTitle?: string;
   headerActions?: ReactNode;
+  headerLeftActions?: ReactNode;
+  onRowClick?: (row: DataTableRow) => void;
+  onScheduleSelected?: (ids: string[]) => void;
+  showCustomize?: boolean;
+  activeFiltersLabel?: string;
+  showHeader?: boolean;
 };
 
 export function SelectableDataTable({
@@ -35,6 +41,12 @@ export function SelectableDataTable({
   batchActions,
   tableTitle,
   headerActions,
+  headerLeftActions,
+  onRowClick,
+  onScheduleSelected,
+  showCustomize,
+  activeFiltersLabel,
+  showHeader,
 }: Props) {
   return (
     <DataTableCore
@@ -48,6 +60,12 @@ export function SelectableDataTable({
       batchActions={batchActions}
       tableTitle={tableTitle}
       headerActions={headerActions}
+      headerLeftActions={headerLeftActions}
+      onRowClick={onRowClick}
+      onScheduleSelected={onScheduleSelected}
+      showCustomize={showCustomize}
+      activeFiltersLabel={activeFiltersLabel}
+      showHeader={showHeader}
       selectable
     />
   );

@@ -21,7 +21,7 @@ function renderReasonTag(reason: string) {
     case "Count mismatch": return <Tag label={reason} variant="mismatch" />;
     case "Expired": return <Tag label={reason} variant="expired" />;
     case "Missing": return <Tag label={reason} variant="missing" />;
-    case "Wrong location": return <Tag label={reason} variant="location" />;
+    case "Wrong compartment": return <Tag label={reason} variant="location" />;
     case "Damaged": return <Tag label={reason} variant="damaged" />;
     default: return reason;
   }
@@ -45,7 +45,7 @@ export default function InspectionsTab() {
     { id: 1, inspection: "INV-2026.007", status: "Scheduled", bins: "2 bins", reason: "-", prepared: "9/10", origin: "Manual", created: "18-Feb-2026" },
     { id: 2, inspection: "INV-2026.006", status: "In progress", bins: "2 bins", reason: "Count mismatch", prepared: "3/12", origin: "Deviation", created: "16-Feb-2026" },
     { id: 3, inspection: "INV-2026.006", status: "Completed", bins: "1 bin", reason: "-", prepared: "10/14", origin: "Inventory count", created: "13-Feb-2026" },
-    { id: 4, inspection: "INV-2026.005", status: "In progress", bins: "3 bins", reason: "Wrong location", prepared: "3/12", origin: "Deviation", created: "12-Feb-2026" },
+    { id: 4, inspection: "INV-2026.005", status: "In progress", bins: "3 bins", reason: "Wrong compartment", prepared: "3/12", origin: "Deviation", created: "12-Feb-2026" },
     { id: 5, inspection: "INV-2026.004", status: "Paused", bins: "1 bin", reason: "Expired", prepared: "10/17", origin: "Inventory count", created: "13-Feb-2026" },
     { id: 6, inspection: "INV-2026.003", status: "In progress", bins: "2 bins", reason: "Damaged", prepared: "4/19", origin: "Manual", created: "11-Feb-2026" },
     { id: 7, inspection: "INV-2026.002", status: "In progress", bins: "4 bins", reason: "-", prepared: "1/9", origin: "Manual", created: "10-Feb-2026" },

@@ -6,38 +6,14 @@ import { PageSection } from "@/components/layout/PageSection";
 
 import { SelectableDataTable } from "@/components/data/SelectableDataTable";
 import type { DataTableColumn } from "@/components/data/DataTableCore";
-import { Tag } from "@/components/ui/tag/Tag";
 import { Icon } from "@/components/ui/icon/Icon";
-
-import { ScanInput } from "@/components/inputs/ScanInput";
+import { Select } from "@/components/ui/select/Select";
+import { Toggle } from "@/components/ui/toggle/Toggle";
 
 
 export const loader: LoaderFunction = async () => {
   return null;
 };
-
-/* =========================
-   STATUS → TAG MAPPING
-   ========================= */
-
-function renderStatusTag(status: string) {
-  switch (status) {
-    case "In progress":
-      return <Tag label={status} variant="warning" />;
-
-    case "Prepared":
-      return <Tag label={status} variant="default" />;
-
-    case "Waiting":
-      return <Tag label={status} variant="danger" />;
-
-    case "Completed":
-      return <Tag label={status} variant="success" />;
-
-    default:
-      return <Tag label={status} />;
-  }
-}
 
 export default function ControlIntLogs() {
   /* =========================
@@ -45,29 +21,32 @@ export default function ControlIntLogs() {
      ========================= */
 
   const [selectedRows, setSelectedRows] = useState<string[]>([]);
+  const [eventType, setEventType] = useState<string | null>("all");
+  const [showDetails, setShowDetails] = useState(false);
 
   /* =========================
      COLUMNS
      ========================= */
 
   const columns: DataTableColumn[] = [
-    { key: "eventid", label: "Event ID", sortable: true },
-    { key: "time", label: "Time", sortable: true },
-    { key: "date", label: "Date", sortable: true },
-    { key: "orderid", label: "Order ID", sortable: true },
-    { key: "eventtype", label: "Event type", align: "center" },
-    { key: "endpoint", label: "Endpoint", align: "center" },
-  
+    { key: "eventId", label: "Event ID", sortable: true, filterable: true, width: 300 },
+    { key: "eventType", label: "Event type", sortable: true, filterable: true, width: 390 },
+    { key: "source", label: "Source", sortable: true, filterable: true, width: 340 },
+    { key: "subject", label: "Subject", sortable: true, filterable: true, width: 360 },
+    { key: "correlationId", label: "Correlation ID", sortable: true, filterable: true, width: 320 },
+    { key: "time", label: "Created", sortable: true, filterable: true, width: 190 },
     {
-      key: "status",
-      label: "Status",
-      align: "center",
-      renderCell: (value) =>
-        renderStatusTag(String(value)),
+      key: "more",
+      label: "",
+      align: "right",
+      filterable: false,
+      width: 48,
+      renderCell: () => (
+        <button type="button" className="btn--ghost" aria-label="More">
+          <Icon name="moreVert" size="sm" />
+        </button>
+      ),
     },
-
-    { key: "description", label: "Description", align: "center" },
-
   ];
 
   /* =========================
@@ -75,127 +54,35 @@ export default function ControlIntLogs() {
      ========================= */
 
   const rows = [
-    {
-      eventid: 432170,
-      time: "14:31:45",
-      date: "08-Nov-2025",
-      orderid: "PO-12349",
-      eventtype: "Outgoing message",
-      endpoint: "Send to AutoStore",
-      status: "In progress",
-      description: "New order successfully created in WMS",
-    },
-    {
-      eventid: 432171,
-      time: "14:29:57",
-      date: "08-Nov-2025",
-      orderid: "PO-12351",
-      eventtype: "Incoming message",
-      endpoint: "PortCreate the product",
-      status: "In progress",
-      description: "-",
-    },
-    {
-      eventid: 432172,
-      time: "14:24:11",
-      date: "08-Nov-2025",
-      orderid: "PO-12354",
-      eventtype: "Transformation",
-      endpoint: "n/a",
-      status: "In progress",
-      description: "-",
-    },
-    {
-      eventid: 432173,
-      time: "14:21:02",
-      date: "08-Nov-2025",
-      orderid: "PO-12351",
-      eventtype: "Create picklist",
-      endpoint: "Pick list",
-      status: "In progress",
-      description: "-",
-    },
-    {
-      eventid: 432174,
-      time: "14:18:45",
-      date: "08-Nov-2025",
-      orderid: "PO-12349",
-      eventtype: "Incoming message",
-      endpoint: "Update inventory",
-      status: "Prepared",
-      description: "-",
-    },
-    {
-      eventid: 432175,
-      time: "14:14:32",
-      date: "08-Nov-2025",
-      orderid: "PO-12349",
-      eventtype: "Incoming message",
-      endpoint: "Receive order",
-      status: "Waiting",
-      description: "-",
-    },
-    {
-      eventid: 432176,
-      time: "14:02:51",
-      date: "08-Nov-2025",
-      orderid: "PO-12349",
-      eventtype: "Create picklist",
-      endpoint: "Transfer list",
-      status: "Prepared",
-      description: "-",
-    },
-    {
-      eventid: 432177,
-      time: "14:01:03",
-      date: "08-Nov-2025",
-      orderid: "PO-12351",
-      eventtype: "Create picklist",
-      endpoint: "Pick list",
-      status: "Completed",
-      description: "-",
-    },
-    {
-      eventid: 432178,
-      time: "13:58:45",
-      date: "08-Nov-2025",
-      orderid: "PO-12349",
-      eventtype: "Transformation",
-      endpoint: "n/a",
-      status: "Completed",
-      description: "-",
-    },
-    {
-      eventid: 432179,
-      time: "13:55:45",
-      date: "08-Nov-2025",
-      orderid: "PO-12349",
-      eventtype: "Outgoing message",
-      endpoint: "Send to AutoStore",
-      status: "Completed",
-      description: "-",
-    },
-    {
-      eventid: 432180,
-      time: "13:51:42",
-      date: "08-Nov-2025",
-      orderid: "PO-12349",
-      eventtype: "Outgoing message",
-      endpoint: "Send to AutoStore",
-      status: "Completed",
-      description: "-",
-    },
-    {
-      eventid: 432181,
-      time: "14:47:09",
-      date: "08-Nov-2025",
-      orderid: "PO-12349",
-      eventtype: "Outgoing message",
-      endpoint: "Send to AutoStore",
-      status: "Completed",
-      description: "-",
-    },
-  ];
+    "pick-task-deviation-handled",
+    "create-picklist",
+    "picklist-created",
+    "pick-tasks-selected",
+    "create-pick-task-group",
+    "pick-task-group-created",
+    "picklist-planned",
+    "pick-task-group-started",
+    "pick-tasks-selected",
+    "pick-tasks-ready",
+    "confirm-pick",
+    "pick-tasks-added",
+    "pick-tasks-added",
+    "pick-tasks-added",
+  ].map((event, index) => ({
+    eventId: [
+      "019c75e7-3e67-7562-9335-2dca13acf7b0",
+      "019c75e6-25b2-75b2-b6ca-68d8869c1ff5",
+      "019c75e6-28b5-70c1-8122-01372275b939",
+      "019c75e7-3e9d-71a6-8292-62e832bfd649",
+      "019c75e6-2e63-77ff-bd0f-2a4d8c10b23a",
+    ][index % 5],
+    eventType: `net.elementlogic.picking.${event}-v1`,
+    source: index % 3 === 1 ? "camunda-message-bus-converter" : "http://elementlogic.net/source/PickingService",
+    subject: `picking.TODO.0.${event}-v1`,
+    correlationId: index % 4 === 0 ? "019c75e7-3e67-7562-9335-2dca13acf7b0" : "f2c626ff-dbf1-4c1e-8122-01372275b939",
+    time: "2026-05-11T09:22:47",
+    more: "",
+  }));
 
   /* =========================
      RENDER
@@ -208,11 +95,34 @@ export default function ControlIntLogs() {
     >
       <PageSection>
         <SelectableDataTable
-          rowIdKey="eventid"
+          rowIdKey="eventId"
           columns={columns}
           rows={rows}
           selectedRows={selectedRows}
           onSelectionChange={setSelectedRows}
+          showCustomize={false}
+          activeFiltersLabel="Filters"
+          headerLeftActions={
+            <Select
+              label="Event type"
+              value={eventType}
+              onChange={setEventType}
+              options={[
+                { value: "all", label: "All" },
+                { value: "pick-task", label: "Pick task" },
+                { value: "picklist", label: "Picklist" },
+              ]}
+            />
+          }
+          headerActions={
+            <div className="integration-logs__header-actions">
+              <Toggle
+                title="Show details"
+                checked={showDetails}
+                onCheckedChange={setShowDetails}
+              />
+            </div>
+          }
         />
       </PageSection>
     </PageLayout>

@@ -1,0 +1,127 @@
+.picking-launch {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  width: min(470px, 100%);
+  margin-top: var(--space-6);
+  margin-left: var(--space-5);
+}
+
+.picking-product-drawer {
+  bottom: 0 !important;
+}
+
+.picking-launch .btn {
+  width: 100%;
+  height: var(--height-m);
+  justify-content: center;
+  border-radius: var(--radius-xs);
+}
+
+.picking-launch .btn:hover {
+  background: var(--color-secondary-hover);
+}
+
+.picking-suspended__icon {
+  position: relative;
+}
+
+.picking-suspended__indicator {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 10px;
+  height: 10px;
+  border-radius: var(--radius-full);
+  background: var(--color-danger);
+  box-shadow: 0 0 0 2px var(--color-drawer);
+}
+
+.picking-suspended__task {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-2);
+  width: 100%;
+  margin-bottom: var(--space-2);
+  padding: var(--padding-l) 0;
+  border: none;
+  border-bottom: 1px solid var(--color-separator);
+  border-radius: 0;
+  background: var(--color-white);
+  color: var(--color-text);
+  text-align: left;
+  cursor: pointer;
+}
+
+.picking-suspended__task:hover {
+  background: transparent;
+  color: var(--color-default);
+}
+
+.picking-suspended__task-title {
+  color: var(--color-default);
+  font-size: var(--font-h2);
+  font-weight: var(--font-weight-bold);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.picking-suspended__drawer-title {
+  border-bottom: none;
+}
+
+.picking-suspended__drawer-title .drawer-section-item-title,
+.picking-suspended__subtitle {
+  text-transform: none;
+}
+
+.picking-suspended__subtitle {
+  color: var(--color-text-description);
+  font-size: var(--font-default);
+}
+
+.picking-suspended__task-top,
+.picking-suspended__task-bottom {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.picking-suspended__task-top {
+  justify-content: space-between;
+}
+
+.picking-suspended__task-bottom {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+}
+
+.picking-suspended__timestamp,
+.picking-suspended__assignee,
+.picking-suspended__status {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.picking-suspended__group {
+  padding: var(--padding-xs) var(--padding-s);
+  border: 1px solid var(--color-text-description);
+  border-radius: var(--radius-xs);
+  background: var(--color-dialog-container);
+  color: var(--color-text-description);
+  font-weight: var(--font-weight-bold);
+}
+
+.picking-resume-dialog__content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.picking-resume-dialog__lead {
+  font-weight: var(--font-weight-bold);
+}

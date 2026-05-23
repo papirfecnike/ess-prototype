@@ -71,7 +71,9 @@
 }
 
 /* intent borders */
-.ui-dialog__card--default .ui-dialog__header {
+.ui-dialog__card--default .ui-dialog__header,
+.ui-dialog__card--inspection .ui-dialog__header,
+.ui-dialog__card--schedule .ui-dialog__header {
   border-bottom: 3px solid var(--color-default) !important;
 }
 
@@ -88,7 +90,9 @@
 }
 
 /* icon colors */
-.ui-dialog__card--default .ui-dialog__header-icon svg {
+.ui-dialog__card--default .ui-dialog__header-icon svg,
+.ui-dialog__card--inspection .ui-dialog__header-icon svg,
+.ui-dialog__card--schedule .ui-dialog__header-icon svg {
   color: var(--color-default);
 }
 

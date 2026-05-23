@@ -202,9 +202,9 @@ export default function InsightsReplenishment() {
               <thead>
                 <tr>
                   <th>Production ID</th>
-                  <th>Location type</th>
-                  <th>Location ID</th>
-                  <th>Location capacity</th>
+                  <th>Compartment type</th>
+                  <th>Compartment ID</th>
+                  <th>Compartment capacity</th>
                   <th>Status</th>
                 </tr>
               </thead>

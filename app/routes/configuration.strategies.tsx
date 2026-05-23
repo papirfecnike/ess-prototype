@@ -107,7 +107,7 @@ export default function ConfigurationStrategies() {
       enabledKey: "vipHandling",
       description: (
         <>
-          Pick multiple orders simultaneously by location.
+          Pick multiple orders simultaneously by compartment.
           <ul>
             <li>Max. 8 orders per batch</li>
             <li>Route optimization</li>

@@ -1,7 +1,9 @@
+import type { IconName } from "@/components/ui/icon/icons";
+
 export type SidebarItem = {
   label: string;
   path: string;
-  icon: string;
+  icon: IconName;
   children?: SidebarItem[];
 };
 
@@ -49,14 +51,14 @@ export const sidebarConfig: SidebarSection[] = [
     basePath: "inbound",
     items: [
       { label: "Putaway", path: "putaway", icon: "forklift" },
-      { label: "Overview", path: "", icon: "barChart" },
+      { label: "Inbound lines", path: "", icon: "barChart" },
     ],
   },
   {
     basePath: "outbound",
     items: [
-      { label: "Overview", path: "", icon: "barChart" },
       { label: "Picking", path: "picking", icon: "forklift" },
+      { label: "Picklists", path: "", icon: "barChart" },
 
     ],
   },

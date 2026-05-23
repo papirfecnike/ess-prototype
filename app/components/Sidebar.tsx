@@ -27,12 +27,18 @@ function SidebarItemNode({
 }: SidebarItemNodeProps) {
   const hasChildren = !!item.children?.length;
   const [open, setOpen] = useState(false);
+  const location = useLocation();
 
   const to = item.path
     ? `/${basePath}/${item.path}`
     : `/${basePath}`;
 
   const isChild = level > 0;
+  const isRelatedActive = item.path
+    ? location.pathname === to ||
+      location.pathname.startsWith(`${to}/`) ||
+      location.pathname.startsWith(`${to}-`)
+    : location.pathname === to;
 
   return (
     <li
@@ -76,7 +82,7 @@ function SidebarItemNode({
             to={to}
             end={item.path === ""}
             className={({ isActive }) =>
-              `sidebar-link ${isActive ? "is-active" : ""}`
+              `sidebar-link ${isActive || isRelatedActive ? "is-active" : ""}`
             }
           >
             {!isChild && (

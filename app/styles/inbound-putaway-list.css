@@ -1,0 +1,65 @@
+.putaway-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-bottom: 24px;
+}
+
+.putaway-list .text-field__input {
+  height: var(--input-height);
+  border-color: var(--color-input-border);
+  border-radius: var(--radius-s);
+  font-size: var(--font-default);
+}
+
+.putaway-list .text-field__error {
+  padding-left: var(--padding-l);
+  font-size: var(--font-default);
+}
+
+.putaway-list + .data-table-card .data-table__header-row {
+  margin-top: 8px;
+  border-radius: var(--radius-s);
+  max-height: calc(100vh - 340px);
+  overflow-y: auto;
+}
+
+.putaway-list + .data-table-card thead {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+.putaway-list + .data-table-card .data-table__cell--remainingQuantity .data-table__column-header span {
+  white-space: normal;
+  line-height: 1.15;
+}
+
+.putaway-list + .data-table-card .data-table__cell--status {
+  overflow: visible;
+}
+
+.putaway-list + .data-table-card .tag {
+  max-width: 100%;
+}
+
+.putaway-list + .data-table-card .btn {
+  white-space: nowrap;
+}
+
+.putaway-list + .data-table-card .data-table__cell--actions {
+  padding-inline: var(--space-2);
+  overflow: visible;
+}
+
+.putaway-list + .data-table-card .data-table__cell--actions .btn {
+  width: auto;
+  min-width: 0;
+  justify-content: center;
+  gap: var(--space-1);
+  padding-inline: var(--space-2);
+}
+
+.putaway-list + .data-table-card .data-table__cell--actions .btn svg {
+  margin-right: 0;
+}

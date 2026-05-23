@@ -1,14 +1,12 @@
-import { useState, useMemo } from "react";
+import { useEffect, useState, useMemo } from "react";
 
 import { ProductPageLayout } from "../components/layout/ProductPageLayout";
 
 import { Card } from "../components/ui/card/Card";
 import { Button } from "../components/ui/button/Button";
-import { TextField } from "../components/ui/input/TextField";
 import { Toggle } from "../components/ui/toggle/Toggle";
 import { InputStepper } from "../components/ui/input-stepper/InputStepper";
 import { Tag } from "../components/ui/tag/Tag";
-import { Dialog } from "@/components/ui/dialog/Dialog";
 import { ProgressBar } from "../components/ui/progress-bar/ProgressBar";
 import { icons } from "../components/ui/icon/icons";
 
@@ -40,11 +38,9 @@ export function FooterProgress({ value }: Props) {
 }
 
 export default function OutboundPickingProductPage() {
-  const [scanValue, setScanValue] = useState("");
   const [quantity, setQuantity] = useState(12);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const [markForInspection, setMarkForInspection] = useState(false);
-  const [hasScanError, setHasScanError] = useState(false);
+  const [binStatus, setBinStatus] = useState<"fetching" | "ready">("fetching");
 
   /* =========================
      PICKLIST STATE
@@ -87,14 +83,14 @@ export default function OutboundPickingProductPage() {
      CONFIRM LOGIC
      ========================= */
 
-const FINAL_EXPECTED_SKU = "BV122";
-
 const isLastItem =
   activePickIndex === picklistItems.length - 1;
 
-const isProductVerified = isLastItem
-  ? scanValue.trim().toUpperCase() === FINAL_EXPECTED_SKU
-  : scanValue.trim().toUpperCase() === activeItem.sku;
+useEffect(() => {
+  setBinStatus("fetching");
+  const timer = window.setTimeout(() => setBinStatus("ready"), 1400);
+  return () => window.clearTimeout(timer);
+}, [activePickIndex]);
 
 function finalizeConfirm() {
   sessionStorage.setItem(
@@ -106,29 +102,18 @@ function finalizeConfirm() {
 }
 
 function handleConfirm() {
-  if (!isProductVerified) {
-    setHasScanError(true);
-    return;
-  }
-
-  setHasScanError(false);
-
   if (isLastItem) {
     finalizeConfirm();
     return;
   }
 
   setActivePickIndex((prev) => prev + 1);
-  setScanValue("");
 }
 
 
   /* =========================
      DIALOG STATE
      ========================= */
-
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
-
 
   /* =========================
      DRAWER STATE
@@ -169,7 +154,7 @@ function handleConfirm() {
             </Card>
 
             <Card>
-              <h3>Location</h3>
+              <h3>Compartment</h3>
               <div>
                 <div className="location-card">
                   <div className="location-card__visual" />
@@ -177,43 +162,18 @@ function handleConfirm() {
                   <div className="location-card__content">
                     <div className="location-card__text">
                       <span className="location-card__label">
-                        Location ID
+                        Compartment ID
                       </span>
                       <span className="location-card__value">
                         AS-112025-01-01
                       </span>
-                    </div>
-
-                    <div className="location-card__toggle">
-                      <Toggle
-                        checked={markForInspection}
-                        onCheckedChange={() => {}}
-                        title="Mark for inspection"
+                      <Tag
+                        label={binStatus === "fetching" ? "Fetching bin" : "Ready"}
+                        variant={binStatus === "fetching" ? "warning" : "success"}
                       />
                     </div>
                   </div>
                 </div>
-              </div>
-            </Card>
-
-            <Card>
-              <h3>Scan product</h3>
-              <div>
-              <TextField
-                label="Product verification"
-                value={scanValue}
-                onChange={(e) => {
-                  setScanValue(e.target.value);
-                  setHasScanError(false);
-                }}
-                error={hasScanError ? "Invalid SKU" : undefined}
-                autoFocus
-                leadingIcon={
-                  <svg viewBox="0 0 24 24" width="20" height="20">
-                    {icons.qrScanner}
-                  </svg>
-                }
-              />
               </div>
             </Card>
           </div>
@@ -435,7 +395,7 @@ function handleConfirm() {
 
                     <div className="drawer-section-item">
                       <Button variant="ghost">
-                        Print location label
+                        Print compartment label
                       </Button>
                     </div>
                   </div>
@@ -464,7 +424,7 @@ function handleConfirm() {
         {/* FOOTER */}
         <footer className="product-page__footer">
           <div className="product-page__footer-left">
-            <Button variant="ghost">Back</Button>
+            <Button variant="ghost" intent="danger" leadingIcon="chevronLeftStroke">Exit</Button>
           </div>
 
           <div className="product-page__footer-center">
@@ -474,7 +434,6 @@ function handleConfirm() {
           <div className="product-page__footer-right">
             <Button
               variant="primary"
-              disabled={!isProductVerified}
               onClick={handleConfirm}
             >
               Confirm

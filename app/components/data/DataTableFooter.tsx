@@ -125,18 +125,20 @@ export function DataTableFooter({
           />
         </button>
 
-        <div className="data-table__footer-page-select">
-          <Select
-            variant="multi"
-            size="sm"
-            value={[String(page)]}
-            onChange={(v) =>
-              onPageChange?.(Number(v[0]))
-            }
-            options={pageOptions}
-            label=""
-          />
-        </div>
+        {totalPages > 1 && (
+          <div className="data-table__footer-page-select">
+            <Select
+              variant="single"
+              size="sm"
+              value={String(page)}
+              onChange={(v) => {
+                if (!v) return;
+                onPageChange?.(Number(v));
+              }}
+              options={pageOptions}
+            />
+          </div>
+        )}
       </div>
     </div>
   );

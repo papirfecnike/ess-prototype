@@ -1,5 +1,6 @@
 import type { ButtonHTMLAttributes, ReactNode } from "react";
 import { Icon } from "../icon/Icon";
+import type { IconName } from "../icon/icons";
 
 type Variant = "primary" | "secondary" | "ghost" | "context" | "icon";
 type Intent = "default" | "danger" | "warning" | "success";
@@ -10,8 +11,8 @@ type Props = {
   variant?: Variant;
   intent?: Intent;
   size?: Size;
-  leadingIcon?: string;
-  trailingIcon?: string;
+  leadingIcon?: IconName;
+  trailingIcon?: IconName;
   isLoading?: boolean;
 } & ButtonHTMLAttributes<HTMLButtonElement>;
 

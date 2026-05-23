@@ -33,6 +33,7 @@ type MultiSelectProps = BaseProps & {
 };
 
 type Props = SingleSelectProps | MultiSelectProps;
+type DropdownPlacement = "down" | "up";
 
 export function Select({
   label,
@@ -47,6 +48,7 @@ export function Select({
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState("");
   const [dropdownPos, setDropdownPos] = useState({ top: 0, left: 0, width: 0 });
+  const [dropdownPlacement, setDropdownPlacement] = useState<DropdownPlacement>("down");
 
   const containerRef = useRef<HTMLDivElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -67,12 +69,39 @@ export function Select({
 
   useEffect(() => {
     if (!open || !containerRef.current) return;
-    const rect = containerRef.current.getBoundingClientRect();
-    setDropdownPos({
-      top: rect.bottom + window.scrollY,
-      left: rect.left + window.scrollX,
-      width: rect.width,
-    });
+
+    function updateDropdownPosition() {
+      if (!containerRef.current) return;
+
+      const rect = containerRef.current.getBoundingClientRect();
+      const estimatedDropdownHeight = 288;
+      const gap = 4;
+      const spaceBelow = window.innerHeight - rect.bottom;
+      const spaceAbove = rect.top;
+      const placement: DropdownPlacement =
+        spaceBelow < estimatedDropdownHeight && spaceAbove > spaceBelow
+          ? "up"
+          : "down";
+
+      setDropdownPlacement(placement);
+      setDropdownPos({
+        top:
+          placement === "up"
+            ? rect.top + window.scrollY - gap
+            : rect.bottom + window.scrollY + gap,
+        left: rect.left + window.scrollX,
+        width: rect.width,
+      });
+    }
+
+    updateDropdownPosition();
+    window.addEventListener("resize", updateDropdownPosition);
+    window.addEventListener("scroll", updateDropdownPosition, true);
+
+    return () => {
+      window.removeEventListener("resize", updateDropdownPosition);
+      window.removeEventListener("scroll", updateDropdownPosition, true);
+    };
   }, [open]);
 
   const selectedValues: string[] = isMulti
@@ -121,6 +150,7 @@ export function Select({
   });
 
   const firstSelected = options.find(o => o.value === selectedValues[0]);
+  const hasLabel = Boolean(label);
 
   return (
     <>
@@ -130,6 +160,7 @@ export function Select({
           "select",
           size === "sm" ? "select--sm" : "",
           variant === "single" ? "select--single" : "",
+          hasLabel ? "select--has-label" : "",
         ].join(" ")}
       >
         <button
@@ -181,7 +212,10 @@ export function Select({
         createPortal(
           <div
             ref={dropdownRef}
-            className="select__dropdown"
+            className={[
+              "select__dropdown",
+              dropdownPlacement === "up" ? "select__dropdown--up" : "",
+            ].join(" ")}
             style={{
               position: "absolute",
               top: dropdownPos.top,

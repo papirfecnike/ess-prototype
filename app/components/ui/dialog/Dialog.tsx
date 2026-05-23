@@ -3,7 +3,7 @@ import { Card } from "../card/Card";
 import { icons } from "../icon/icons";
 import "./dialog.css";
 
-type DialogIntent = "default" | "success" | "warning" | "error";
+type DialogIntent = "default" | "success" | "warning" | "error" | "inspection" | "schedule";
 
 type Props = {
   isOpen: boolean;
@@ -22,6 +22,10 @@ function getIntentIcon(intent: DialogIntent) {
       return icons.warning;
     case "error":
       return icons.error;
+    case "inspection":
+      return icons.search;
+    case "schedule":
+      return icons.clock;
     default:
       return icons.history;
   }

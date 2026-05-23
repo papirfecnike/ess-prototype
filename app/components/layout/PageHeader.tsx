@@ -17,6 +17,10 @@ export function PageHeader({
 }: Props) {
   const isPlainTitle = typeof title === "string";
 
+  if (!title && !subtitle && !headerContent && !headerActions) {
+    return null;
+  }
+
   return (
     <header className="page-header">
       <div className="page-content">

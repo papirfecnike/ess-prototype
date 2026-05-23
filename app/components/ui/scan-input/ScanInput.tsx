@@ -1,6 +1,7 @@
 import type { ChangeEvent, KeyboardEvent } from "react";
 import { TextField } from "../input/TextField";
 import { Button } from "../button/Button";
+import type { IconName } from "../icon/icons";
 import "./scan-input.css";
 
 type Props = {
@@ -9,7 +10,7 @@ type Props = {
   onSubmit: () => void;
   placeholder?: string;
   buttonLabel?: string;
-  buttonLeadingIcon?: string;
+  buttonLeadingIcon?: IconName;
   isLoading?: boolean;
   isDisabled?: boolean;
 };

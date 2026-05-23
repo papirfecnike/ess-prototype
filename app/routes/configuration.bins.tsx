@@ -86,7 +86,7 @@ export default function ConfigurationBins() {
   const columns: DataTableColumn[] = [
     {
       key: "location",
-      label: "Location",
+      label: "Compartment",
       sortable: true,
     },
     {

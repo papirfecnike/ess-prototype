@@ -351,7 +351,7 @@ aside.sidebar {
   border-radius: var(--radius-s);
   text-decoration: none;
   color: var(--color-text);
-  font-size: 14px;
+  font-size: var(--font-default);
   font-weight: 600;
 }
 
@@ -366,9 +366,10 @@ aside.sidebar {
 }
 
 .sidebar a.is-active {
-  background: var(--color-sidebar);
+  background: var(--color-sidebar-hover);
   color: var(--color-default);
   font-weight: 600;
+  border-radius: var(--radius-s);
 }
 
 .sidebar-toggle {
@@ -411,7 +412,7 @@ aside.sidebar {
   padding: 12px;
   border-radius: var(--radius-s);
 
-  font-size: 14px;
+  font-size: var(--font-default);
   font-weight: 600;
   color: var(--color-text);
 

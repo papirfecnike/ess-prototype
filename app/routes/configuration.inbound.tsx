@@ -48,7 +48,7 @@ export default function ConfigurationInbound() {
         { id: 2, title: "Scan Pallet Labels", mode: "manual", duration: "10 min", role: "Operator", active: true },
         { id: 3, title: "Quality Inspection", mode: "manual", duration: "15 min", role: "Supervisor", active: true },
         { id: 4, title: "System Validation", mode: "automated", duration: "2 min", role: "System", active: true },
-        { id: 5, title: "Assign Putaway Location", mode: "automated", duration: "1 min", role: "System", active: true },
+        { id: 5, title: "Assign Putaway Compartment", mode: "automated", duration: "1 min", role: "System", active: true },
         { id: 6, title: "Putaway to Bin", mode: "manual", duration: "8 min", role: "Operator", active: true },
       ],
     },

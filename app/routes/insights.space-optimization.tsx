@@ -48,11 +48,11 @@ const rows: Row[] = [
     { key: "name", label: "Product name" },
     { key: "quantity", label: "Quantity" },
     { key: "fillRate", label: "Avg. fill rate" },
-    { key: "locations", label: "Distinct locations" },
-    { key: "saved", label: "Locations saved" },
+    { key: "locations", label: "Distinct compartments" },
+    { key: "saved", label: "Compartments saved" },
   ];
 
-  const tableTitle = target === "compress" ? "Locations to compress" : "Deadstock removal";
+  const tableTitle = target === "compress" ? "Compartments to compress" : "Deadstock removal";
 
   const categories = ["1/1", "1/2", "1/4A (horizontal)", "1/4B (vertical)", "1/8", "1/16"];
 
@@ -64,7 +64,7 @@ const rows: Row[] = [
   return (
     <PageLayout
       title="Space optimization"
-      subtitle="Optimize storage by identifying underused locations and suggesting compression and removal."
+      subtitle="Optimize storage by identifying underused compartments and suggesting compression and removal."
     >
 
       <PageSection>
@@ -83,7 +83,7 @@ const rows: Row[] = [
       footer={
         <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
           <Icon name="barcode" size="sm" />
-          All locations
+          All compartments
         </div>
       }
     />
@@ -101,7 +101,7 @@ const rows: Row[] = [
       footer={
         <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
           <Icon name="barcode" size="sm" />
-          All locations
+          All compartments
         </div>
       }
     />
@@ -110,7 +110,7 @@ const rows: Row[] = [
       variant="metric"
       title={
         <>
-          Avg. location fill rate
+          Avg. compartment fill rate
           <Icon name="info" size="xs" />
         </>
       }
@@ -122,7 +122,7 @@ const rows: Row[] = [
       variant="metric"
       title={
         <>
-          Used locations
+          Used compartments
           <Icon name="info" size="xs" />
         </>
       }
@@ -148,7 +148,7 @@ const rows: Row[] = [
                 value={target}
                 onChange={setTarget}
                 options={[
-                  { value: "compress", label: "Locations to compress" },
+                  { value: "compress", label: "Compartments to compress" },
                   { value: "remove", label: "Deadstock removal" },
                 ]}
               />
@@ -181,7 +181,7 @@ const rows: Row[] = [
                     fontWeight: "var(--font-weight-bold)",
                   }}
                 >
-                  Potential for saving locations/bins
+                  Potential for saving compartments/bins
                 </div>
                 <Icon name="info" size="xs" />
               </div>
@@ -202,7 +202,7 @@ const rows: Row[] = [
               xAxis={[{
                 scaleType: "band",
                 data: categories,
-                label: "Location type",
+                label: "Compartment type",
               }]}
               yAxis={[{ label: "Potential amount of saving" }]}
               series={[
@@ -244,7 +244,7 @@ const rows: Row[] = [
             fontWeight: "var(--font-weight-bold)",
           }}
         >
-          Location utilization trend
+          Compartment utilization trend
         </div>
         <Icon name="info" size="xs" />
       </div>
@@ -265,11 +265,11 @@ const rows: Row[] = [
 
         <div style={{ width: 240 }}>
           <Select
-            label="All locations"
+            label="All compartments"
             value={locationFilter}
             onChange={setLocationFilter}
             options={[
-              { value: "all", label: "All locations" },
+              { value: "all", label: "All compartments" },
               { value: "zoneA", label: "Zone A" },
             ]}
           />

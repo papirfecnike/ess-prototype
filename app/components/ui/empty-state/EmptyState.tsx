@@ -1,11 +1,12 @@
 import { Button } from "../button/Button";
 import { Icon } from "../icon/Icon";
+import type { IconName } from "../icon/icons";
 import "./empty-state.css";
 
 type Props = {
   title?: string;
   description?: string;
-  iconName?: string;
+  iconName?: IconName;
   actionLabel?: string;
   onAction?: () => void;
 };

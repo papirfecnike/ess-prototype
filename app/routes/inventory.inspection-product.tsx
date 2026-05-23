@@ -6,7 +6,6 @@ import { ProductPageLayout } from "../components/layout/ProductPageLayout";
 import { Card } from "../components/ui/card/Card";
 import { Button } from "../components/ui/button/Button";
 import { TextField } from "../components/ui/input/TextField";
-import { Toggle } from "../components/ui/toggle/Toggle";
 import { InputStepper } from "../components/ui/input-stepper/InputStepper";
 import { Dialog } from "../components/ui/dialog/Dialog";
 import { icons } from "../components/ui/icon/icons";
@@ -35,7 +34,6 @@ export default function InventoryInspectionProductPage() {
   const [scanValue, setScanValue] = useState("");
   const [quantity, setQuantity] = useState(1);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const [markForInspection, setMarkForInspection] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -106,21 +104,14 @@ export default function InventoryInspectionProductPage() {
             </Card>
 
             <Card>
-              <h3>Location</h3>
+              <h3>Compartment</h3>
               <div>
                 <div className="location-card">
                   <div className="location-card__visual" />
                   <div className="location-card__content">
                     <div className="location-card__text">
-                      <span className="location-card__label">Location ID</span>
+                      <span className="location-card__label">Compartment ID</span>
                       <span className="location-card__value">{activeItem.locationId}</span>
-                    </div>
-                    <div className="location-card__toggle">
-                      <Toggle
-                        checked={markForInspection}
-                        onCheckedChange={setMarkForInspection}
-                        title="Mark for inspection"
-                      />
                     </div>
                   </div>
                 </div>
