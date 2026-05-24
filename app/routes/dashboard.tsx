@@ -11,6 +11,13 @@ import warehouseMap from "@/assets/warehousemap.png";
 
 export default function Dashboard() {
   const navigate = useNavigate();
+  const suspendedOutboundGroups = new Set(["Retail", "Single", "Multi"]);
+  const renderTaskLabel = (label: string, hasSuspendedTask = false) => (
+    <span className="dashboard-task-button">
+      <span>{label}</span>
+      {hasSuspendedTask && <span className="dashboard-task-button__indicator" aria-label="Suspended task" />}
+    </span>
+  );
   return (
     <main className="dashboard-title">
       <PageHeader title="Warehouse operations dashboard" />
@@ -43,21 +50,21 @@ export default function Dashboard() {
                 <div className="dashboard-stack">
                   <Button
                     variant="context"
-                    onClick={() => navigate("/outbound/picking-table")}
+                    onClick={() => navigate("/outbound/picking?task=Retail&suspended=true")}
                   >
-                    Retail
+                    {renderTaskLabel("Retail", suspendedOutboundGroups.has("Retail"))}
                   </Button>
                   <Button
                     variant="context"
-                    onClick={() => navigate("/outbound/picking-table")}
+                    onClick={() => navigate("/outbound/picking?task=Single&suspended=true")}
                   >
-                    Single
+                    {renderTaskLabel("Single", suspendedOutboundGroups.has("Single"))}
                   </Button>
                   <Button
                     variant="context"
-                    onClick={() => navigate("/outbound/picking-table")}
+                    onClick={() => navigate("/outbound/picking?task=Multi&suspended=true")}
                   >
-                    Multi
+                    {renderTaskLabel("Multi", suspendedOutboundGroups.has("Multi"))}
                   </Button>
                 </div>
               </Card>
@@ -65,12 +72,6 @@ export default function Dashboard() {
               <Card variant="darkHeader">
                 <h3>Operations</h3>
                 <div className="dashboard-stack">
-                  <Button
-                    variant="context"
-                    onClick={() => navigate("/inventory/inspection-table")}
-                  >
-                    Compression
-                  </Button>
                   <Button
                     variant="context"
                     onClick={() => navigate("/inventory/inspection-table")}

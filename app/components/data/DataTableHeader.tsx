@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { TextField } from "@/components/ui/input/TextField";
 import { Button } from "@/components/ui/button/Button";
 import { Icon } from "../ui/icon/Icon";
+import { Select } from "@/components/ui/select/Select";
 
 export type HeaderVariant =
   | "statusSplit"
@@ -20,6 +21,7 @@ type Props = {
   activeFilters?: string[];
   activeFiltersLabel?: string;
   onClearActiveFilters?: () => void;
+  enableActiveFilters?: boolean;
 };
 
 export function DataTableHeader({
@@ -31,8 +33,10 @@ export function DataTableHeader({
   activeFilters = [],
   activeFiltersLabel = "Active filters",
   onClearActiveFilters,
+  enableActiveFilters = true,
 }: Props) {
   const [showActiveFilters, setShowActiveFilters] = useState(false);
+  const [filterPreset, setFilterPreset] = useState<string | null>(null);
   const activeFiltersRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -64,6 +68,7 @@ export function DataTableHeader({
         {(headerActions || onCustomizeColumns) && (
           <div className="data-table__header-right">
             {headerActions}
+            {enableActiveFilters && (
             <div className="data-table__active-filters" ref={activeFiltersRef}>
               <Button
                 variant="ghost"
@@ -89,11 +94,20 @@ export function DataTableHeader({
                     </button>
                   </div>
 
-                  <button type="button" className="data-table__filter-preset">
-                    <Icon name="inventory" size="sm" />
-                    <span>Select filter preset</span>
-                    <Icon name="chevronDownStroke" size="sm" />
-                  </button>
+                  <div className="data-table__filter-preset-select">
+                    <Select
+                      label="Select filter preset"
+                      value={filterPreset}
+                      searchable={false}
+                      onChange={setFilterPreset}
+                      options={[
+                        { value: "recent", label: "Recently used" },
+                        { value: "exceptions", label: "Exceptions only" },
+                        { value: "open", label: "Open items" },
+                        { value: "completed", label: "Completed items" },
+                      ]}
+                    />
+                  </div>
 
                   <div className="data-table__active-filter-list">
                     {activeFilters.length > 0 ? (
@@ -129,6 +143,7 @@ export function DataTableHeader({
                 </div>
               )}
             </div>
+            )}
             {onCustomizeColumns && (
               <Button
                 variant="ghost"

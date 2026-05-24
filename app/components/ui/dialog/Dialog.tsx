@@ -10,6 +10,7 @@ type Props = {
   isOpen: boolean;
   intent?: DialogIntent;
   title?: string;
+  icon?: IconName;
   children: ReactNode;
   footerLeft?: ReactNode;
   footerRight?: ReactNode;
@@ -36,6 +37,7 @@ export function Dialog({
   isOpen,
   intent = "default",
   title,
+  icon,
   children,
   footerLeft,
   footerRight,
@@ -51,7 +53,7 @@ export function Dialog({
 
           <div className="ui-dialog__header">
             <div className="ui-dialog__header-icon">
-              <Icon name={getIntentIcon(intent)} size="md" />
+              <Icon name={icon ?? getIntentIcon(intent)} size="md" />
             </div>
             {title && (
               <div className="ui-dialog__header-title">

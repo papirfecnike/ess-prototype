@@ -1,267 +1,236 @@
 import type { LoaderFunction } from "react-router";
-import { useState, useMemo } from "react";
+import { useMemo, useState } from "react";
 
 import { PageLayout } from "@/components/layout/PageLayout";
 import { PageSection } from "@/components/layout/PageSection";
-
 import { Button } from "@/components/ui/button/Button";
-import { Chip } from "@/components/ui/chip/Chip";
 import { Card } from "@/components/ui/card/Card";
-import { Tag } from "@/components/ui/tag/Tag";
-import { Toggle } from "@/components/ui/toggle/Toggle";
+import { Dialog } from "@/components/ui/dialog/Dialog";
 import { Icon } from "@/components/ui/icon/Icon";
+import { Notification } from "@/components/ui/notification/Notification";
+import { Select } from "@/components/ui/select/Select";
+import { Tag } from "@/components/ui/tag/Tag";
+import { TextField } from "@/components/ui/input/TextField";
+import { Toggle } from "@/components/ui/toggle/Toggle";
+import "@/styles/configuration-strategies.css";
 
-export const loader: LoaderFunction = async () => {
-  return null;
-};
+export const loader: LoaderFunction = async () => null;
 
-type StrategyType = "Picking" | "Putaway" | "Replenishment";
+type StrategyType = "Picking" | "Putaway" | "Inventory" | "Replenishment";
 
 type Strategy = {
   id: string;
   title: string;
   type: StrategyType;
-  icon: Parameters<typeof Icon>[0]["name"];
-  description: React.ReactNode;
-  enabledKey: string;
+  description: string;
+  enabled: boolean;
+};
+
+const INITIAL_STRATEGIES: Strategy[] = [
+  { id: "wavePicking", title: "Wave picking", type: "Picking", description: "Batch orders into waves based on zone, priority and target completion time.", enabled: true },
+  { id: "zonePutaway", title: "Zone-based putaway", type: "Putaway", description: "Assign compartments based on product category, velocity and available capacity.", enabled: false },
+  { id: "autoReplenishment", title: "Auto replenishment", type: "Replenishment", description: "Trigger replenishment when compartment levels drop below the configured threshold.", enabled: true },
+  { id: "batchPicking", title: "Batch picking", type: "Picking", description: "Pick multiple orders together by route and product similarity.", enabled: true },
+  { id: "abcSlotting", title: "ABC slotting", type: "Inventory", description: "Organize products by velocity so fast movers stay close to active ports.", enabled: true },
+];
+
+const EMPTY_DRAFT = {
+  title: "",
+  type: "Picking" as StrategyType,
+  description: "",
+};
+
+const processOptions = [
+  { value: "Picking", label: "Picking" },
+  { value: "Putaway", label: "Putaway" },
+  { value: "Inventory", label: "Inventory" },
+  { value: "Replenishment", label: "Replenishment" },
+];
+
+const strategyTagColors: Record<StrategyType, string> = {
+  Picking: "var(--color-success)",
+  Putaway: "var(--color-default)",
+  Inventory: "var(--color-greyblue)",
+  Replenishment: "#7C3AED",
 };
 
 export default function ConfigurationStrategies() {
-  /* =========================
-     STATE
-     ========================= */
-
-  const [activeFilter, setActiveFilter] =
-    useState<"All" | StrategyType>("All");
-
-  const [enabledStrategies, setEnabledStrategies] = useState<
-    Record<string, boolean>
-  >({
-    expressPicking: true,
-    bulkPutaway: false,
-    autoReplenishment: true,
-    vipHandling: true,
-  });
-
-  /* =========================
-     STRATEGY DATA
-     ========================= */
-
-  const strategies: Strategy[] = [
-    {
-      id: "wavePicking",
-      title: "Wave picking",
-      type: "Picking",
-      icon: "forklift",
-      enabledKey: "expressPicking",
-      description: (
-        <>
-          Batch orders into waves based on zone and priority.
-          <ul>
-            <li>Group by zone</li>
-            <li>Prioritize by ship date</li>
-            <li>Max 50 orders per wave</li>
-          </ul>
-        </>
-      ),
-    },
-    {
-      id: "zonePutaway",
-      title: "Zone-based putaway",
-      type: "Putaway",
-      icon: "barChart",
-      enabledKey: "bulkPutaway",
-      description: (
-        <>
-          Assign bins based on product category and velocity.
-          <ul>
-            <li>Fast movers near ports</li>
-            <li>Group by category</li>
-            <li>Balance bin utilization</li>
-          </ul>
-        </>
-      ),
-    },
-    {
-      id: "autoReplenishment",
-      title: "Auto replenishment",
-      type: "Replenishment",
-      icon: "refresh",
-      enabledKey: "autoReplenishment",
-      description: (
-        <>
-          Trigger replenishment when bin levels drop below threshold.
-          <ul>
-            <li>Min. level: 20%</li>
-            <li>Replenish during off-peak</li>
-            <li>Fast movers first</li>
-          </ul>
-        </>
-      ),
-    },
-    {
-      id: "batchPicking",
-      title: "Batch picking",
-      type: "Picking",
-      icon: "profile",
-      enabledKey: "vipHandling",
-      description: (
-        <>
-          Pick multiple orders simultaneously by compartment.
-          <ul>
-            <li>Max. 8 orders per batch</li>
-            <li>Route optimization</li>
-            <li>Similar item grouping</li>
-          </ul>
-        </>
-      ),
-    },
-    {
-      id: "abcSlotting",
-      title: "ABC slotting",
-      type: "Putaway",
-      icon: "profile",
-      enabledKey: "vipHandling",
-      description: (
-        <>
-          Organize inventory by velocity.
-          <ul>
-            <li>A items: golden zone</li>
-            <li>B items: secondary zone</li>
-            <li>C items: deep storage</li>
-          </ul>
-        </>
-      ),
-    },
-  ];
-
-  /* =========================
-     FILTERED STRATEGIES
-     ========================= */
+  const [activeFilters, setActiveFilters] = useState<StrategyType[]>([]);
+  const [strategies, setStrategies] = useState<Strategy[]>(INITIAL_STRATEGIES);
+  const [dialogMode, setDialogMode] = useState<"add" | "edit" | null>(null);
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [draft, setDraft] = useState(EMPTY_DRAFT);
+  const [notification, setNotification] = useState<{ title: string; message: string } | null>(null);
 
   const visibleStrategies = useMemo(
-    () =>
-      activeFilter === "All"
-        ? strategies
-        : strategies.filter((s) => s.type === activeFilter),
-    [activeFilter, strategies]
+    () => activeFilters.length === 0 ? strategies : strategies.filter(strategy => activeFilters.includes(strategy.type)),
+    [activeFilters, strategies]
   );
 
-  /* =========================
-     RENDER
-     ========================= */
+  const canConfirm = Boolean(draft.title.trim() && draft.type && draft.description.trim());
+
+  function openAddDialog() {
+    setDraft(EMPTY_DRAFT);
+    setEditingId(null);
+    setDialogMode("add");
+  }
+
+  function openEditDialog(strategy: Strategy) {
+    setDraft({
+      title: strategy.title,
+      type: strategy.type,
+      description: strategy.description,
+    });
+    setEditingId(strategy.id);
+    setDialogMode("edit");
+  }
+
+  function saveStrategy() {
+    if (!canConfirm) return;
+
+    if (dialogMode === "edit" && editingId) {
+      setStrategies(current => current.map(strategy =>
+        strategy.id === editingId
+          ? { ...strategy, title: draft.title.trim(), type: draft.type, description: draft.description.trim() }
+          : strategy
+      ));
+      setNotification({ title: "Strategy updated", message: `${draft.title.trim()} has been updated.` });
+    } else {
+      setStrategies(current => [
+        ...current,
+        {
+          id: `${Date.now()}`,
+          title: draft.title.trim(),
+          type: draft.type,
+          description: draft.description.trim(),
+          enabled: true,
+        },
+      ]);
+      setNotification({ title: "Strategy added", message: `${draft.title.trim()} has been added.` });
+    }
+
+    setDialogMode(null);
+  }
+
+  function toggleFilter(filter: "All" | StrategyType) {
+    if (filter === "All") {
+      setActiveFilters([]);
+      return;
+    }
+    setActiveFilters(current =>
+      current.includes(filter)
+        ? current.filter(value => value !== filter)
+        : [...current, filter]
+    );
+  }
 
   return (
-    <PageLayout
-      title="Strategies"
-      subtitle="Define and manage warehouse processing strategies"
-    >
+    <PageLayout title="Strategies" subtitle="Define and manage warehouse processing strategies">
       <PageSection>
-        {/* FILTER BAR */}
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            marginBottom: 16,
-          }}
-        >
-          <div style={{ display: "flex", gap: 8 }}>
-            {(["All", "Picking", "Putaway", "Replenishment"] as const).map(
-              (f) => (
-                <Chip
-                  key={f}
-                  isActive={activeFilter === f}
-                  onClick={() => setActiveFilter(f)}
-                >
-                  {f}
-                </Chip>
-              )
-            )}
+        <div className="strategies-toolbar">
+          <div className="strategies-filters">
+            {(["All", "Picking", "Putaway", "Inventory", "Replenishment"] as const).map(filter => (
+              <button
+                key={filter}
+                type="button"
+                className={[
+                  "strategies-filter-chip",
+                  filter === "All"
+                    ? activeFilters.length === 0 ? "is-active" : ""
+                    : activeFilters.includes(filter) ? "is-active" : "",
+                ].join(" ")}
+                onClick={() => toggleFilter(filter)}
+              >
+                {filter}
+              </button>
+            ))}
           </div>
 
-          <Button variant="secondary" size="sm">
+          <Button variant="secondary" size="sm" leadingIcon="add" onClick={openAddDialog}>
             Add strategy
           </Button>
         </div>
 
-        {/* STRATEGY CARDS */}
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(2, 1fr)",
-            gap: 16,
-          }}
-        >
-          {visibleStrategies.map((s) => (
-            <Card key={s.id}>
-              {/* HEADER */}
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  marginBottom: 12,
-                }}
-              >
-                <div
-                  style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    gap: 8,
-                    whiteSpace: "nowrap",
-                  }}
+        <div className="strategies-grid">
+          {visibleStrategies.map(strategy => (
+            <Card key={strategy.id} className="strategy-card">
+              <div className="strategy-card__header">
+                <div>
+                  <Icon name={strategy.type === "Picking" ? "upload" : strategy.type === "Putaway" ? "download" : strategy.type === "Inventory" ? "inventory2" : "refresh"} size="md" />
+                  <h3>{strategy.title}</h3>
+                </div>
+                <button
+                  type="button"
+                  className="strategy-card__edit"
+                  aria-label={`Edit ${strategy.title}`}
+                  onClick={() => openEditDialog(strategy)}
                 >
-                  <Icon name={s.icon} size="sm" />
-                  <h3>{s.title}</h3>
-                  <Tag
-                    label={s.type}
-                    color={
-                      s.type === "Picking"
-                        ? "#818E0B"
-                        : s.type === "Putaway"
-                        ? "#641397"
-                        : "#25C9E6"
+                  <Icon name="edit" size="sm" />
+                </button>
+              </div>
+
+              <div className="strategy-card__body">
+                <div className="strategy-card__type">
+                  <Tag label={strategy.type} color={strategyTagColors[strategy.type]} />
+                </div>
+                <p>{strategy.description}</p>
+                <div className="strategy-card__meta">
+                  <span>{strategy.enabled ? "Enabled" : "Disabled"}</span>
+                  <Toggle
+                    title=""
+                    checked={strategy.enabled}
+                    onCheckedChange={(enabled) =>
+                      setStrategies(current => current.map(item => item.id === strategy.id ? { ...item, enabled } : item))
                     }
                   />
                 </div>
-
-                <Toggle
-                  checked={enabledStrategies[s.enabledKey]}
-                  onCheckedChange={(v) =>
-                    setEnabledStrategies((prev) => ({
-                      ...prev,
-                      [s.enabledKey]: v,
-                    }))
-                  }
-                  title=""
-                />
               </div>
-
-              {/* CONTENT */}
-              <div>{s.description}</div>
-
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "flex-end",
-                marginTop: 12,
-              }}
-            >
-            <Button
-              variant="secondary"
-              size="sm"
-              style={{
-                display: "inline-flex",
-                alignSelf: "flex-end",
-              }}
-            >
-              Edit
-            </Button>
-            </div>
-
             </Card>
           ))}
         </div>
       </PageSection>
+
+      <Dialog
+        isOpen={dialogMode !== null}
+        intent="default"
+        icon={dialogMode === "add" ? "add" : "edit"}
+        title={dialogMode === "edit" ? "Edit strategy" : "Add strategy"}
+        footerLeft={<Button variant="ghost" onClick={() => setDialogMode(null)}>Cancel</Button>}
+        footerRight={<Button variant="primary" disabled={!canConfirm} onClick={saveStrategy}>Confirm</Button>}
+      >
+        <div className="strategy-dialog">
+          <div className="strategy-dialog__label">Strategy</div>
+          <section className="strategy-dialog__panel">
+            <TextField label="Title" value={draft.title} onChange={(event) => setDraft({ ...draft, title: event.target.value })} />
+            <Select
+              label="Related process"
+              value={draft.type}
+              searchable={false}
+              onChange={(value) => setDraft({ ...draft, type: (value ?? "Picking") as StrategyType })}
+              options={processOptions}
+            />
+          </section>
+
+          <div className="strategy-dialog__label">Description</div>
+          <section className="strategy-dialog__panel">
+            <textarea
+              className="strategy-dialog__textarea"
+              value={draft.description}
+              placeholder="Add a description"
+              onChange={(event) => setDraft({ ...draft, description: event.target.value })}
+            />
+          </section>
+        </div>
+      </Dialog>
+
+      {notification && (
+        <Notification
+          intent="success"
+          title={notification.title}
+          message={notification.message}
+          onClose={() => setNotification(null)}
+        />
+      )}
     </PageLayout>
   );
 }

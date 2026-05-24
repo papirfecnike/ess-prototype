@@ -32,13 +32,13 @@ export default function InspectionsTab() {
   const [activeReasons, setActiveReasons] = useState<string[]>([]);
 
   const columns: DataTableColumn[] = [
-    { key: "inspection", label: "Inspection ID" },
-    { key: "status", label: "Status", renderCell: (v) => renderStatus(String(v)) },
-    { key: "bins", label: "Connected bins" },
-    { key: "reason", label: "Reason codes", renderCell: (v) => renderReasonTag(String(v)) },
-    { key: "prepared", label: "Prepared" },
-    { key: "origin", label: "Origin" },
-    { key: "created", label: "Created" },
+    { key: "inspection", label: "Inspection ID", width: 150 },
+    { key: "status", label: "Status", width: 120, renderCell: (v) => renderStatus(String(v)) },
+    { key: "bins", label: "Connected bins", width: 130 },
+    { key: "reason", label: "Reason codes", width: 230, renderCell: (v) => renderReasonTag(String(v)) },
+    { key: "prepared", label: "Prepared", width: 100 },
+    { key: "origin", label: "Origin", width: 130 },
+    { key: "created", label: "Created", width: 130 },
   ];
 
   const rows: DataTableRow[] = [

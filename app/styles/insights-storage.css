@@ -1,0 +1,222 @@
+.insights-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.insights-toolbar__selectors {
+  display: grid;
+  grid-template-columns: minmax(220px, 1fr) minmax(220px, 1fr);
+  gap: var(--space-3);
+  min-width: min(696px, 100%);
+  padding: var(--padding-m);
+  border-radius: var(--radius-m);
+  border: 1px solid var(--color-white-border);
+  background: var(--color-white);
+  box-shadow: var(--shadow-m);
+}
+
+.insights-card-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-4);
+}
+
+.insights-card-grid--top {
+  margin-top: var(--space-4);
+}
+
+.insights-card-grid--3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.insights-kpi {
+  background: var(--color-white);
+}
+
+.insights-kpi > *:first-child,
+.insights-overview-card > *:first-child {
+  border-bottom: none;
+}
+
+.insights-kpi,
+.insights-kpi > *:first-child,
+.insights-overview-card,
+.insights-overview-card > *:first-child {
+  border-radius: var(--radius-m);
+}
+
+.insights-kpi.is-danger {
+  border-color: var(--color-danger);
+  background: color-mix(in srgb, var(--color-danger) 4%, var(--color-white));
+}
+
+.insights-metric {
+  min-height: 164px;
+}
+
+.insights-metric .ui-card__metric-header {
+  min-height: 56px;
+  border-bottom: 1px solid var(--color-dialog-footer);
+}
+
+.insights-metric .ui-card__metric-title {
+  gap: var(--space-2);
+}
+
+.insights-metric .ui-card__metric-value {
+  color: var(--color-success);
+}
+
+.insights-metric.is-danger {
+  border-color: var(--color-danger);
+  background: color-mix(in srgb, var(--color-danger) 4%, var(--color-white));
+}
+
+.insights-metric.is-danger .ui-card__metric-value,
+.insights-metric.is-danger .ui-card__metric-trend {
+  color: var(--color-danger);
+}
+
+.insights-metric--neutral .ui-card__metric-value {
+  color: var(--color-text);
+}
+
+.insights-kpi__title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-size: var(--font-h3);
+}
+
+.insights-kpi__value {
+  font-size: 32px;
+  font-weight: var(--font-weight-bold);
+  color: var(--color-success);
+}
+
+.insights-kpi.is-danger .insights-kpi__value,
+.insights-kpi.is-danger .insights-kpi__trend {
+  color: var(--color-danger);
+}
+
+.insights-kpi__trend {
+  color: var(--color-success);
+}
+
+.insights-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--padding-l);
+  border-bottom: 1px solid var(--color-dialog-footer);
+}
+
+.insights-panel-header .btn {
+  white-space: nowrap;
+}
+
+.insights-panel-actions {
+  display: grid;
+  grid-template-columns: minmax(220px, 1fr) minmax(200px, 1fr) auto;
+  align-items: center;
+  gap: var(--space-3);
+  min-width: min(640px, 100%);
+}
+
+.insights-autostore-icon {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  display: block;
+}
+
+.insights-chart-card {
+  min-height: calc(100vh - 340px);
+}
+
+.insights-chart-area {
+  height: calc(100vh - 440px);
+  min-height: 420px;
+  padding: var(--padding-l);
+}
+
+.insights-panel-title {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.insights-panel-title h3 {
+  margin: 0;
+  font-size: var(--font-h2);
+}
+
+.insights-panel-title span {
+  color: var(--color-text-description);
+}
+
+.insights-overview-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: var(--padding-l);
+}
+
+.insights-overview-card__mini-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-4);
+}
+
+.insights-overview-card__metric {
+  padding: var(--padding-m);
+  border: 1px solid var(--color-success);
+  border-radius: var(--radius-s);
+  background: color-mix(in srgb, var(--color-success) 5%, var(--color-white));
+}
+
+.insights-overview-card__metric.is-danger {
+  border-color: var(--color-danger);
+  background: color-mix(in srgb, var(--color-danger) 4%, var(--color-white));
+}
+
+.insights-overview-card__metric strong {
+  display: block;
+  margin-top: var(--space-2);
+  font-size: 32px;
+  color: var(--color-success);
+}
+
+.insights-overview-card__metric.is-danger strong,
+.insights-overview-card__metric.is-danger span {
+  color: var(--color-danger);
+}
+
+.insights-export-dialog {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.bins-capacity-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-4);
+}
+
+.bins-capacity-grid .ui-card,
+.bins-capacity-trend-card {
+  min-height: 590px;
+}
+
+.bins-capacity-trend-area {
+  height: 640px;
+  padding: var(--padding-l);
+}
+
+.bins-capacity-grid--wide {
+  grid-template-columns: 1fr;
+}

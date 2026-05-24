@@ -1,5 +1,12 @@
-import { Navigate } from "react-router";
+import { useEffect } from "react";
+import { useNavigate } from "react-router";
 
 export default function RootRedirect() {
-  return <Navigate to="/dashboard" replace />;
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    navigate("/dashboard", { replace: true });
+  }, [navigate]);
+
+  return null;
 }

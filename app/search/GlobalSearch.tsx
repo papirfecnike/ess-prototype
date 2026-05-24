@@ -34,7 +34,7 @@ export function GlobalSearch({ isOpen, onClose }: Props) {
     return searchIndex.filter((item) => {
       if (item.label.toLowerCase().includes(q)) return true;
       if (item.description?.toLowerCase().includes(q)) return true;
-      if (item.keywords?.some((k) => k.includes(q))) return true;
+      if (item.keywords?.some((k) => k.toLowerCase().includes(q))) return true;
       return false;
     });
   }, [query]);
@@ -50,7 +50,7 @@ export function GlobalSearch({ isOpen, onClose }: Props) {
         <Card className="spotlight-card">
           {/* HEADER */}
           <div className="spotlight-header">
-            <strong>Search across ESS</strong>
+            <strong>Search across ELWS</strong>
 
             <button
             type="button"

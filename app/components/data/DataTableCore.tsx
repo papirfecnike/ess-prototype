@@ -19,6 +19,15 @@ import { RadioButton } from "@/components/ui/radiobutton/RadioButton"
 import { TextField } from "@/components/ui/input/TextField"
 import { Select } from "@/components/ui/select/Select"
 import { Notification } from "@/components/ui/notification/Notification"
+import {
+  filterRows,
+  getColumnFilterOptions,
+  getColumnFilterType,
+  hasFilterValue,
+  sortRows,
+  type ColumnFilterValue,
+  type SortDirection,
+} from "./dataTableUtils"
 
 /* =========================
    TYPES
@@ -29,7 +38,8 @@ export type DataTableColumn = {
   label?: string
   sortable?: boolean
   filterable?: boolean
-  filterType?: "text" | "multiSelect" | "date"
+  filterType?: "text" | "multiSelect" | "date" | "radio" | "time"
+  filterOptions?: Array<string | { value: string; label: string }>
   align?: "left" | "center" | "right"
   width?: number | string
   minWidth?: number
@@ -38,9 +48,7 @@ export type DataTableColumn = {
   renderCell?: (value: unknown, row: DataTableRow) => React.ReactNode
 }
 
-export type DataTableRow = Record<string, string | number>
-type ColumnFilterValue = string | string[]
-type SortDirection = "asc" | "desc"
+export type DataTableRow = Record<string, string | number | boolean>
 
 type InspectionRow = {
   bin: string
@@ -76,6 +84,7 @@ type Props = {
   onScheduleSelected?: (ids: string[]) => void
   showCustomize?: boolean
   activeFiltersLabel?: string
+  showActiveFilters?: boolean
   showHeader?: boolean
 }
 
@@ -104,6 +113,7 @@ export function DataTableCore({
   onScheduleSelected,
   showCustomize = true,
   activeFiltersLabel,
+  showActiveFilters = true,
   showHeader = true,
 }: Props) {
 
@@ -244,87 +254,19 @@ export function DataTableCore({
     )
   }, [availableRows, visibleColumns])
 
-  const getColumnFilterType = (column: DataTableColumn) => {
-    if (column.filterType) return column.filterType
-    return "text"
-  }
-
-  const getColumnFilterOptions = (columnKey: string) => {
-    return Array.from(
-      new Set(
-        availableRows
-          .map(row => row[columnKey])
-          .filter((value): value is string | number => value !== undefined && value !== "")
-          .map(value => String(value))
-      )
-    )
-  }
-
-  const normalizeDateValue = (value: string | number) => {
-    const parsed = new Date(String(value))
-    if (Number.isNaN(parsed.getTime())) return String(value).slice(0, 10)
-    return parsed.toISOString().slice(0, 10)
-  }
-
   const filteredRows = useMemo(() => {
-    let result = availableRows
-
-    if (search.trim()) {
-      const q = search.toLowerCase()
-      result = result.filter(row =>
-        visibleColumns.some(col => {
-          const value = row[col.key]
-          return value !== undefined && String(value).toLowerCase().includes(q)
-        })
-      )
-    }
-
-    const activeColumnFilters = Object.entries(columnFilters).filter(
-      ([columnKey, value]) =>
-        filterableColumnKeys.has(columnKey) &&
-        (Array.isArray(value) ? value.length > 0 : value.trim())
-    )
-
-    if (activeColumnFilters.length > 0) {
-      result = result.filter(row =>
-        activeColumnFilters.every(([columnKey, value]) => {
-          const column = columns.find(c => c.key === columnKey)
-          if (!column) return true
-
-          const cellValue = row[columnKey]
-          if (cellValue === undefined) return false
-
-          if (Array.isArray(value)) {
-            return value.length === 0 || value.includes(String(cellValue))
-          }
-
-          if (getColumnFilterType(column) === "date") {
-            return normalizeDateValue(cellValue) === value
-          }
-
-          return String(cellValue).toLowerCase().includes(value.trim().toLowerCase())
-        })
-      )
-    }
-
-    return result
+    return filterRows({
+      rows: availableRows,
+      search,
+      visibleColumns,
+      columnFilters,
+      filterableColumnKeys,
+      columns,
+    })
   }, [availableRows, columnFilters, columns, filterableColumnKeys, search, visibleColumns])
 
   const sortedRows = useMemo(() => {
-    if (!sortState) return filteredRows
-
-    return [...filteredRows].sort((a, b) => {
-      const aValue = a[sortState.columnKey]
-      const bValue = b[sortState.columnKey]
-
-      if (typeof aValue === "number" && typeof bValue === "number") {
-        return sortState.direction === "asc" ? aValue - bValue : bValue - aValue
-      }
-
-      return sortState.direction === "asc"
-        ? String(aValue ?? "").localeCompare(String(bValue ?? ""), undefined, { numeric: true, sensitivity: "base" })
-        : String(bValue ?? "").localeCompare(String(aValue ?? ""), undefined, { numeric: true, sensitivity: "base" })
-    })
+    return sortRows(filteredRows, sortState)
   }, [filteredRows, sortState])
 
   const pagedRows = sortedRows.slice(
@@ -417,8 +359,7 @@ export function DataTableCore({
   })
 
   const hasColumnFilterValue = (columnKey: string) => {
-    const value = columnFilters[columnKey]
-    return Array.isArray(value) ? value.length > 0 : Boolean(value?.trim())
+    return hasFilterValue(columnFilters[columnKey])
   }
 
   const activeFilterLabels = useMemo(() => {
@@ -433,14 +374,17 @@ export function DataTableCore({
       const label = column?.label ?? columnKey
 
       if (Array.isArray(value) && value.length > 0) {
-        labels.push(`${label}: ${value.join(", ")}`)
+        const options = column ? getColumnFilterOptions(column, availableRows) : []
+        const valueLabels = value.map(item => options.find(option => option.value === item)?.label ?? item)
+        labels.push(`${label}: ${valueLabels.join(", ")}`)
       } else if (!Array.isArray(value) && value.trim()) {
-        labels.push(`${label}: ${value}`)
+        const option = column ? getColumnFilterOptions(column, availableRows).find(item => item.value === value) : undefined
+        labels.push(`${label}: ${option?.label ?? value}`)
       }
     })
 
     return labels
-  }, [columnFilters, columns, search])
+  }, [availableRows, columnFilters, columns, search])
 
   const clearActiveFilters = () => {
     setSearch("")
@@ -463,6 +407,7 @@ export function DataTableCore({
               activeFilters={activeFilterLabels}
               activeFiltersLabel={activeFiltersLabel}
               onClearActiveFilters={clearActiveFilters}
+              enableActiveFilters={showActiveFilters}
             />
           )}
 
@@ -525,10 +470,14 @@ export function DataTableCore({
                 {pagedRows.map(row => {
                   const id = String(row[rowIdKey])
                   const isSelected = selectedRows.includes(id)
+                  const isDisabled = row.disabled === true || row.isDisabled === true
                   return (
                     <Fragment key={id}>
                       <tr
-                        className={onRowClick ? "data-table__row--clickable" : ""}
+                        className={[
+                          onRowClick ? "data-table__row--clickable" : "",
+                          isDisabled ? "data-table__row--disabled" : "",
+                        ].join(" ")}
                         onClick={() => onRowClick?.(row)}
                       >
                         {selectable && (
@@ -660,29 +609,64 @@ export function DataTableCore({
             width: filterPopupPosition.width,
           }}
         >
+          <div className="data-table__filter-popover-header">
+            <strong>{activeFilterColumnConfig.label ?? activeFilterColumnConfig.key}</strong>
+            <button
+              type="button"
+              className="data-table__filter-popover-close"
+              aria-label="Close filter"
+              onClick={() => setActiveFilterColumn(null)}
+            >
+              <Icon name="closeStroke" size="sm" />
+            </button>
+          </div>
           {getColumnFilterType(activeFilterColumnConfig) === "multiSelect" ? (
             <div className="data-table__filter-options">
-              {getColumnFilterOptions(activeFilterColumn).map(option => {
+              {getColumnFilterOptions(activeFilterColumnConfig, availableRows).map(option => {
                 const current = columnFilters[activeFilterColumn]
                 const selected = Array.isArray(current) ? current : []
-                const isChecked = selected.includes(option)
+                const isChecked = selected.includes(option.value)
 
                 return (
                   <button
-                    key={option}
+                    key={option.value}
                     type="button"
                     className="data-table__filter-option"
                     onClick={() =>
                       setColumnFilters(filters => ({
                         ...filters,
                         [activeFilterColumn]: isChecked
-                          ? selected.filter(value => value !== option)
-                          : [...selected, option],
+                          ? selected.filter(value => value !== option.value)
+                          : [...selected, option.value],
                       }))
                     }
                   >
                     <Checkbox state={isChecked ? "checked" : "unchecked"} />
-                    <span>{option}</span>
+                    <span>{option.label}</span>
+                  </button>
+                )
+              })}
+            </div>
+          ) : getColumnFilterType(activeFilterColumnConfig) === "radio" ? (
+            <div className="data-table__filter-options">
+              {getColumnFilterOptions(activeFilterColumnConfig, availableRows).map(option => {
+                const current = typeof columnFilters[activeFilterColumn] === "string" ? columnFilters[activeFilterColumn] : ""
+                const isChecked = current === option.value
+
+                return (
+                  <button
+                    key={option.value || "all"}
+                    type="button"
+                    className="data-table__filter-option"
+                    onClick={() =>
+                      setColumnFilters(filters => ({
+                        ...filters,
+                        [activeFilterColumn]: option.value,
+                      }))
+                    }
+                  >
+                    <RadioButton checked={isChecked} />
+                    <span>{option.label}</span>
                   </button>
                 )
               })}
@@ -690,6 +674,19 @@ export function DataTableCore({
           ) : getColumnFilterType(activeFilterColumnConfig) === "date" ? (
             <TextField
               type="date"
+              label={activeFilterColumnConfig.label ?? activeFilterColumnConfig.key}
+              value={typeof columnFilters[activeFilterColumn] === "string" ? columnFilters[activeFilterColumn] : ""}
+              autoFocus
+              onChange={(event) =>
+                setColumnFilters(filters => ({
+                  ...filters,
+                  [activeFilterColumn]: event.target.value,
+                }))
+              }
+            />
+          ) : getColumnFilterType(activeFilterColumnConfig) === "time" ? (
+            <TextField
+              type="time"
               label={activeFilterColumnConfig.label ?? activeFilterColumnConfig.key}
               value={typeof columnFilters[activeFilterColumn] === "string" ? columnFilters[activeFilterColumn] : ""}
               autoFocus

@@ -100,7 +100,7 @@ export default function InboundPutaway() {
       key: "actions",
       label: "Actions",
       filterable: false,
-      width: 135,
+      width: 118,
       renderCell: (_value, row) => (
         <Button
           size="sm"
@@ -115,11 +115,11 @@ export default function InboundPutaway() {
         </Button>
       ),
     },
-    { key: "asnLineKey", label: "ASN line key", sortable: false, filterable: false, width: 210 },
-    { key: "itemKey", label: "Item key", sortable: false, filterable: false, width: 140 },
-    { key: "item", label: "Item name", sortable: false, filterable: false, width: 420, minWidth: 250, wrap: true },
-    { key: "remainingQuantity", label: "Remaining quantity", sortable: false, filterable: false, width: 150, align: "right" },
-    { key: "status", label: "Status", filterable: false, width: 150, renderCell: (value) => renderStatusTag(String(value)) },
+    { key: "asnLineKey", label: "ASN line key", sortable: false, filterable: false, width: 190 },
+    { key: "itemKey", label: "Item key", sortable: false, filterable: false, width: 110 },
+    { key: "item", label: "Item name", sortable: false, filterable: false, width: 270, minWidth: 250, wrap: true },
+    { key: "remainingQuantity", label: "Remaining quantity", sortable: false, filterable: false, width: 122, align: "right", wrap: true },
+    { key: "status", label: "Status", filterable: false, width: 118, renderCell: (value) => renderStatusTag(String(value)) },
     {
       key: "more",
       label: "",
@@ -294,16 +294,7 @@ export default function InboundPutaway() {
           </Button>
         </div>
         <div className="product-page__footer-center" />
-        <div className="product-page__footer-right">
-          <Button
-            variant="secondary"
-            leadingIcon="checkStroke"
-            disabled={!canConfirm}
-            onClick={handleConfirm}
-          >
-            Confirm
-          </Button>
-        </div>
+        <div className="product-page__footer-right" />
       </footer>
     </PageLayout>
   );

@@ -77,6 +77,15 @@
   background: var(--color-primary-hover);
 }
 
+.btn--primary.btn--danger {
+  background: var(--color-danger);
+  color: var(--color-white);
+}
+
+.btn--primary.btn--danger:hover {
+  background: var(--color-danger);
+}
+
 /* ---------- SECONDARY (OUTLINED) ---------- */
 
 .btn--secondary {

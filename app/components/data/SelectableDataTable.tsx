@@ -27,6 +27,7 @@ type Props = {
   onScheduleSelected?: (ids: string[]) => void;
   showCustomize?: boolean;
   activeFiltersLabel?: string;
+  showActiveFilters?: boolean;
   showHeader?: boolean;
   selectable?: boolean;
 };
@@ -47,6 +48,7 @@ export function SelectableDataTable({
   onScheduleSelected,
   showCustomize,
   activeFiltersLabel,
+  showActiveFilters,
   showHeader,
   selectable = true,
 }: Props) {
@@ -67,6 +69,7 @@ export function SelectableDataTable({
       onScheduleSelected={onScheduleSelected}
       showCustomize={showCustomize}
       activeFiltersLabel={activeFiltersLabel}
+      showActiveFilters={showActiveFilters}
       showHeader={showHeader}
       selectable={selectable}
     />

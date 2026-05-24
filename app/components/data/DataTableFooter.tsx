@@ -131,6 +131,7 @@ export function DataTableFooter({
               variant="single"
               size="sm"
               value={String(page)}
+              searchable={false}
               onChange={(v) => {
                 if (!v) return;
                 onPageChange?.(Number(v));

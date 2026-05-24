@@ -25,6 +25,8 @@ export function InputStepper({
     if (max !== undefined && next > max) return;
     onChange(next);
   };
+  const isDecrementDisabled = value <= min;
+  const isIncrementDisabled = max !== undefined && value >= max;
 
   return (
     <div className="input-stepper">
@@ -33,6 +35,7 @@ export function InputStepper({
           variant="secondary"
           aria-label="Decrease quantity"
           onClick={decrement}
+          disabled={isDecrementDisabled}
         >
           −
         </Button>
@@ -50,6 +53,7 @@ export function InputStepper({
           variant="secondary"
           aria-label="Increase quantity"
           onClick={increment}
+          disabled={isIncrementDisabled}
         >
           +
         </Button>

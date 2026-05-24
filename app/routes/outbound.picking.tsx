@@ -1,4 +1,5 @@
 import type { LoaderFunction } from "react-router";
+import { useSearchParams } from "react-router";
 import { useState } from "react";
 
 import { PageLayout } from "@/components/layout/PageLayout";
@@ -43,7 +44,14 @@ const suspendedTasks = [
 ];
 
 export default function OutboundPicking() {
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [searchParams] = useSearchParams();
+  const initialTask = searchParams.get("task");
+  const taskHasSuspendedItems = suspendedTasks.some(task => {
+    const normalizedGroup = task.group.toLowerCase();
+    const normalizedTask = String(initialTask ?? "").toLowerCase();
+    return normalizedGroup.startsWith(normalizedTask) || normalizedGroup.startsWith(`${normalizedTask}s`);
+  });
+  const [isDrawerOpen, setIsDrawerOpen] = useState(searchParams.get("suspended") === "true" && taskHasSuspendedItems);
   const [resumeTaskId, setResumeTaskId] = useState<string | null>(null);
 
   function startPicking() {

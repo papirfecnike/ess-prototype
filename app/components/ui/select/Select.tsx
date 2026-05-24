@@ -18,6 +18,7 @@ type BaseProps = {
   size?: SelectSize;
   options: SelectOption[];
   variant?: SelectVariant;
+  searchable?: boolean;
 };
 
 type SingleSelectProps = BaseProps & {
@@ -40,6 +41,7 @@ export function Select({
   options,
   size = "md",
   variant = "single",
+  searchable = true,
   value,
   onChange,
 }: Props) {
@@ -137,9 +139,9 @@ export function Select({
     }
   }
 
-  const visibleOptions = options.filter(o =>
-    o.label.toLowerCase().includes(search.toLowerCase())
-  );
+  const visibleOptions = searchable
+    ? options.filter(o => o.label.toLowerCase().includes(search.toLowerCase()))
+    : options;
 
   const listItems = visibleOptions.map(option => {
     const isAll = option.value === "all";
@@ -224,13 +226,15 @@ export function Select({
               zIndex: 9999,
             }}
           >
-            <input
-              type="search"
-              className="select__search"
-              placeholder="Search…"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-            />
+            {searchable && (
+              <input
+                type="search"
+                className="select__search"
+                placeholder="Search…"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
+            )}
 
             <div className="select__list-wrapper">
               {isMulti ? (

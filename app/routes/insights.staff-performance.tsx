@@ -261,6 +261,8 @@ export default function InsightsStaffPerformance() {
                 rows={rows}
                 selectedRows={selectedRows}
                 onSelectionChange={setSelectedRows}
+                showCustomize={false}
+                showActiveFilters={false}
               />
             </div>
           </Card>

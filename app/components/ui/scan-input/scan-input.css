@@ -5,8 +5,8 @@
   padding: var(--padding-l);
   border-radius: var(--radius-m);
   background-color: var(--color-input-bg);
+  border: 1px solid var(--color-white-border);
   box-shadow: var(--shadow-m);
-
 }
 
 .scan-input-card {

@@ -5,132 +5,97 @@ import { PageLayout } from "@/components/layout/PageLayout";
 import { PageSection } from "@/components/layout/PageSection";
 import { Card } from "@/components/ui/card/Card";
 import { Button } from "@/components/ui/button/Button";
-import { Callout } from "@/components/ui/callout/Callout";
 import { Icon } from "@/components/ui/icon/Icon";
+import { BarChart } from "@mui/x-charts";
+import "@/styles/insights-storage.css";
 
 export const loader: LoaderFunction = async () => null;
+const autoStoreLogo = "https://companieslogo.com/img/orig/AUTO.OL-e481afbe.png?t=1720244490";
 
 export default function InsightsOverview() {
-
   const navigate = useNavigate();
 
   return (
     <PageLayout
-      title="Overview"
-      subtitle="Real-time warehouse analytics and performance insights"
+      title="Storage utilization"
+      subtitle="Monitor storage capacity, distribution, and optimization opportunities"
     >
       <PageSection>
-        <div style={{ width: "33%", minWidth: 320, maxWidth: 520 }}>
-          <Card>
-
-            {/* HEADER */}
-            <div style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              padding: "var(--space-5)",
-              borderBottom: "1px solid var(--color-table-border)",
-            }}>
-              <div style={{ display: "flex", alignItems: "center", gap: "var(--space-3)" }}>
-                <Icon name="info" size="md" />
-                <div style={{ fontSize: "var(--font-h3)", fontWeight: "var(--font-weight-bold)" }}>
-                  Space optimization
-                </div>
+        <div className="insights-card-grid insights-card-grid--3">
+          <Card className="insights-overview-card">
+            <div className="insights-panel-header">
+              <div className="insights-kpi__title">
+                <img className="insights-autostore-icon" src={autoStoreLogo} alt="" />
+                <strong>AutoStore productivity</strong>
               </div>
-
-              <Button
-                variant="ghost"
-                trailingIcon="chevronRightStroke"
-                size="sm"
-                onClick={() => navigate("/insights/space-optimization")}
-              >
+              <Button variant="ghost" size="sm" trailingIcon="chevronRightStroke" onClick={() => navigate("/insights/productivity")}>
                 View more
               </Button>
             </div>
-
-            {/* BODY */}
-            <div style={{
-              padding: "var(--space-5)",
-              display: "flex",
-              flexDirection: "column",
-              gap: "var(--space-4)",
-            }}>
-
-              {/* FILL RATE */}
-              <Callout intent="success">
-                <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-2)" }}>
-                  <div style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "var(--space-2)",
-                    fontSize: "var(--font-default)",
-                    fontWeight: "var(--font-weight-medium)",
-                  }}>
-                    Avg. compartment fill rate
-                    <span
-                      title="Average percentage of storage capacity currently used across warehouse compartments."
-                      style={{ display: "inline-flex" }}
-                    >
-                      <Icon name="info" size="xs" />
-                    </span>
-                  </div>
-
-                  <div style={{ fontSize: 36, fontWeight: "var(--font-weight-bold)", color: "var(--color-success)" }}>
-                    51.11<span style={{ fontSize: 20 }}>%</span>
-                  </div>
-
-                  <div style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "var(--space-2)",
-                    color: "var(--color-success)",
-                    fontSize: "var(--font-default)",
-                  }}>
-                    <Icon name="arrowUpward" size="sm" />
-                    5% vs. yesterday
-                  </div>
+            <div className="insights-overview-card__body">
+              <div className="insights-overview-card__metric">
+                <span>All activities</span>
+                <strong>8978</strong>
+                <span>↑ 27%</span>
+              </div>
+              <div className="insights-overview-card__mini-grid">
+                <div className="insights-overview-card__metric">
+                  <span>Picks</span>
+                  <strong>3918</strong>
+                  <span>↑ 35%</span>
                 </div>
-              </Callout>
-
-              {/* POTENTIAL */}
-              <Callout intent="default">
-                <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-2)" }}>
-                  <div style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "var(--space-2)",
-                    fontSize: "var(--font-default)",
-                    fontWeight: "var(--font-weight-medium)",
-                  }}>
-                    Potential by compressing
-                    <span
-                      title="Estimated number of additional storage compartments that could be freed by consolidating inventory."
-                      style={{ display: "inline-flex" }}
-                    >
-                      <Icon name="info" size="xs" />
-                    </span>
-                  </div>
-
-                  <div style={{ fontSize: 36, fontWeight: "var(--font-weight-bold)" }}>
-                    52 000
-                    <span style={{ fontSize: 16, color: "var(--color-text-muted)", marginLeft: 6 }}>
-                      /53 000
-                    </span>
-                  </div>
-
-                  <div style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "var(--space-2)",
-                    color: "var(--color-text-muted)",
-                    fontSize: "var(--font-default)",
-                  }}>
-                    <Icon name="barcode" size="sm" />
-                    All compartments
-                  </div>
+                <div className="insights-overview-card__metric is-danger">
+                  <span>Putaway</span>
+                  <strong>163</strong>
+                  <span>↓ 48%</span>
                 </div>
-              </Callout>
+              </div>
+            </div>
+          </Card>
 
+          <Card className="insights-overview-card">
+            <div className="insights-panel-header">
+              <div className="insights-kpi__title">
+                <Icon name="barcode" size="md" />
+                <strong>Bins and compartments</strong>
+              </div>
+              <Button variant="ghost" size="sm" trailingIcon="chevronRightStroke" onClick={() => navigate("/insights/bins-compartments")}>
+                View more
+              </Button>
+            </div>
+            <div style={{ height: 320, padding: "var(--padding-l)" }}>
+              <BarChart
+                xAxis={[{ scaleType: "band", data: ["Bins", "Compartments"] }]}
+                yAxis={[{ min: 0, max: 100 }]}
+                series={[
+                  { label: "Used", stack: "capacity", data: [58, 82], color: "#87cdb8" },
+                  { label: "Free", stack: "capacity", data: [42, 18], color: "#b781d8" },
+                ]}
+              />
+            </div>
+          </Card>
+
+          <Card className="insights-overview-card">
+            <div className="insights-panel-header">
+              <div className="insights-kpi__title">
+                <Icon name="compress" size="md" />
+                <strong>Space optimization</strong>
+              </div>
+              <Button variant="ghost" size="sm" trailingIcon="chevronRightStroke" onClick={() => navigate("/insights/space-optimization")}>
+                View more
+              </Button>
+            </div>
+            <div className="insights-overview-card__body">
+              <div className="insights-overview-card__metric">
+                <span>Avg. location fill rate</span>
+                <strong>58.54%</strong>
+                <span>↑ 5% vs. yesterday</span>
+              </div>
+              <div className="insights-overview-card__metric">
+                <span>Potential by compressing</span>
+                <strong>9 876</strong>
+                <span>All locations</span>
+              </div>
             </div>
           </Card>
         </div>

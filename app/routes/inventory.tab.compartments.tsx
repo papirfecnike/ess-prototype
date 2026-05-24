@@ -42,16 +42,16 @@ export default function CompartmentsTab() {
   const [showSuccessNotification, setShowSuccessNotification] = useState(false);
 
   const columns: DataTableColumn[] = [
-    { key: "product", label: "Product", width: 380, minWidth: 250, wrap: true },
-    { key: "compartment", label: "Compartment ID", width: 150 },
+    { key: "product", label: "Product", width: 300, minWidth: 240, wrap: true },
+    { key: "compartment", label: "Comp. ID", width: 130 },
     { key: "bin", label: "Bin ID", width: 140 },
     { key: "sku", label: "SKU", width: 90 },
     { key: "stock", label: "Stock quantity", width: 95 },
-    { key: "reason", label: "Reason codes", width: 150, renderCell: (v) => renderReasonTag(String(v)) },
+    { key: "reason", label: "Reason codes", width: 190, renderCell: (v) => renderReasonTag(String(v)) },
     {
       key: "tasks",
       label: "Existing tasks",
-      width: 130,
+      width: 110,
       renderCell: (value, row) =>
         scheduledRows.includes(String(row.id))
           ? <Tag label="Scheduled" variant="default" />

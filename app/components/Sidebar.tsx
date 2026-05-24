@@ -56,7 +56,11 @@ function SidebarItemNode({
           >
             {!isChild && (
               <span className="sidebar-icon">
-                <Icon name={item.icon} size="sm" />
+                {item.logoUrl ? (
+                  <img className="sidebar-icon__logo" src={item.logoUrl} alt="" />
+                ) : (
+                  <Icon name={item.icon} size="sm" />
+                )}
               </span>
             )}
 
@@ -87,7 +91,11 @@ function SidebarItemNode({
           >
             {!isChild && (
               <span className="sidebar-icon">
-                <Icon name={item.icon} size="sm" />
+                {item.logoUrl ? (
+                  <img className="sidebar-icon__logo" src={item.logoUrl} alt="" />
+                ) : (
+                  <Icon name={item.icon} size="sm" />
+                )}
               </span>
             )}
 

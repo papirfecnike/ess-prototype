@@ -21,6 +21,13 @@
   border-bottom: 1px solid var(--color-dialog-footer);
 }
 
+.ui-card > .card-header h3,
+.ui-card > *:first-child h3,
+.settings-card-title {
+  font-size: var(--font-h3);
+  font-weight: var(--font-weight-bold);
+}
+
 .ui-card > *:first-child {
   padding: var(--padding-l);
   background: var(--color-white);
@@ -59,9 +66,8 @@
 
 .ui-card--scanInput {
   border-radius: var(--radius-m);
-  border: 1px solid var(--color-dialog-footer);
+  border: 1px solid var(--color-white-border);
   overflow: hidden;
-  border: none;
   padding: 0;
 }
 
@@ -109,6 +115,10 @@
 .ui-card__metric-title {
   display: flex;
   align-items: center;
+  gap: var(--space-2);
+  font-size: var(--font-h3);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text);
 }
 
 .ui-card__metric-value {

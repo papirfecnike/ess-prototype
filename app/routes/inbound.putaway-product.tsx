@@ -103,7 +103,7 @@ export default function InboundPutawayProductPage() {
             <Card>
               <h3>Quantity</h3>
               <div>
-                <InputStepper value={quantity} onChange={setQuantity} min={1} />
+                <InputStepper value={quantity} onChange={setQuantity} min={0} />
               </div>
             </Card>
 
@@ -111,7 +111,9 @@ export default function InboundPutawayProductPage() {
               <h3>Compartment</h3>
               <div>
                 <div className="location-card">
-                  <div className="location-card__visual" />
+                  <div className="location-card__visual">
+                    <Icon name="download" size="lg" />
+                  </div>
                   <div className="location-card__content">
                     <div className="location-card__text">
                       <span className="location-card__label">Compartment ID</span>
@@ -177,19 +179,19 @@ export default function InboundPutawayProductPage() {
           <div className="product-drawer__rail">
             <div className="product-drawer__rail-main">
 
-              <button type="button" className="product-drawer__icon" onClick={() => openDrawer("settings")}>
+              <button type="button" className={["product-drawer__icon", drawerView === "settings" ? "is-active" : ""].join(" ")} onClick={() => openDrawer("settings")}>
                 <Icon name="settings" size="md" />
               </button>
 
-              <button type="button" className="product-drawer__icon" onClick={() => openDrawer("stock")}>
+              <button type="button" className={["product-drawer__icon", drawerView === "stock" ? "is-active" : ""].join(" ")} onClick={() => openDrawer("stock")}>
                 <Icon name="inventory" size="md" />
               </button>
 
-              <button type="button" className="product-drawer__icon" onClick={() => openDrawer("print")}>
+              <button type="button" className={["product-drawer__icon", drawerView === "print" ? "is-active" : ""].join(" ")} onClick={() => openDrawer("print")}>
                 <Icon name="print" size="md" />
               </button>
 
-              <button type="button" className="product-drawer__icon" onClick={() => openDrawer("history")}>
+              <button type="button" className={["product-drawer__icon", drawerView === "history" ? "is-active" : ""].join(" ")} onClick={() => openDrawer("history")}>
                 <Icon name="history" size="md" />
               </button>
 
@@ -274,10 +276,10 @@ export default function InboundPutawayProductPage() {
                       <div className="drawer-section-item-title">Print</div>
                     </div>
                     <div className="drawer-section-item">
-                      <Button variant="ghost" size="sm">Print product label</Button>
+                      <Button variant="ghost" size="sm" className="drawer-print-button">Print product label</Button>
                     </div>
                     <div className="drawer-section-item">
-                      <Button variant="ghost" size="sm">Print compartment label</Button>
+                      <Button variant="ghost" size="sm" className="drawer-print-button">Print compartment label</Button>
                     </div>
                   </div>
                 )}
@@ -288,10 +290,10 @@ export default function InboundPutawayProductPage() {
                     <div className="drawer-section-item">
                       <div className="drawer-section-item-title">History</div>
                     </div>
-                    <div className="drawer-section-item">
-                      <p>Picked by a.kovach · 10:42</p>
-                      <p>Scanned SKU · 10:41</p>
-                      <p>Putaway started · 10:39</p>
+                    <div className="drawer-section-item drawer-history-list">
+                      <div className="drawer-history-row"><strong>Received by a.kovach</strong><span>10:42</span></div>
+                      <div className="drawer-history-row"><strong>Scanned SKU</strong><span>10:41</span></div>
+                      <div className="drawer-history-row"><strong>Putaway started</strong><span>10:39</span></div>
                     </div>
                   </div>
                 )}
@@ -304,7 +306,7 @@ export default function InboundPutawayProductPage() {
         {/* FOOTER */}
         <footer className="product-page__footer">
           <div className="product-page__footer-left">
-            <Button variant="ghost" onClick={() => setIsExitDialogOpen(true)}>Back</Button>
+            <Button variant="ghost" intent="danger" leadingIcon="chevronLeftStroke" onClick={() => window.location.assign("/inbound/putaway")}>Exit</Button>
           </div>
           <div className="product-page__footer-center" />
           <div className="product-page__footer-right">

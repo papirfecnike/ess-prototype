@@ -54,7 +54,7 @@ export default function InboundPutaway() {
     { key: "asnLineKey", label: "ASN line key", sortable: true, filterable: true, width: 190 },
     { key: "itemKey", label: "Item key", sortable: true, filterable: true, width: 130 },
     { key: "item", label: "Item", sortable: true, filterable: true, width: 320 },
-    { key: "processedQty", label: "Processed qty", filterable: false, width: 120, align: "right" },
+    { key: "processedQty", label: "Processed quantity", filterable: false, width: 95, align: "right" },
     { key: "quantity", label: "Quantity", sortable: true, filterable: false, width: 100, align: "right" },
     { key: "unit", label: "Unit", filterable: false, width: 80, align: "center" },
     { key: "status", label: "Status", filterable: true, filterType: "multiSelect", width: 130, renderCell: (value) => renderStatusTag(String(value)) },

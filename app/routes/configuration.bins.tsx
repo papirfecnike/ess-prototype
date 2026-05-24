@@ -6,15 +6,13 @@ import { PageSection } from "@/components/layout/PageSection";
 import { Card } from "@/components/ui/card/Card";
 import { Tag } from "@/components/ui/tag/Tag";
 import { ProgressBar } from "@/components/ui/progress-bar/ProgressBar";
-
-import {
-  ReorderDataTable,
-} from "@/components/data/ReorderDataTable";
+import { DataTableCore } from "@/components/data/DataTableCore";
 
 import type {
   DataTableColumn,
   DataTableRow,
 } from "@/components/data/DataTableCore";
+import "@/styles/configuration-bins.css";
 
 export const loader: LoaderFunction = async () => {
   return null;
@@ -25,6 +23,7 @@ export const loader: LoaderFunction = async () => {
    ========================= */
 
 type BinRow = DataTableRow & {
+  id: string;
   location: string;
   zone: string;
   type: string;
@@ -46,6 +45,7 @@ export default function ConfigurationBins() {
 
   const rows: BinRow[] = [
     {
+      id: "bin-a01-01",
       location: "BIN-A01-01",
       zone: "A",
       type: "Standard",
@@ -54,6 +54,7 @@ export default function ConfigurationBins() {
       status: "Occupied",
     },
     {
+      id: "bin-a01-02",
       location: "BIN-A01-02",
       zone: "A",
       type: "Oversized",
@@ -62,6 +63,7 @@ export default function ConfigurationBins() {
       status: "Available",
     },
     {
+      id: "bin-b03-07",
       location: "BIN-B03-07",
       zone: "B",
       type: "Hazmat",
@@ -70,6 +72,7 @@ export default function ConfigurationBins() {
       status: "Maintenance",
     },
     {
+      id: "bin-c02-11",
       location: "BIN-C02-11",
       zone: "C",
       type: "Temperature-controlled",
@@ -78,6 +81,10 @@ export default function ConfigurationBins() {
       status: "Reserved",
     },
   ];
+
+  const availableCount = rows.filter(row => row.status === "Available").length;
+  const occupiedCount = rows.filter(row => row.status === "Occupied").length;
+  const avgFill = Math.round(rows.reduce((sum, row) => sum + row.fillLevel, 0) / rows.length);
 
   /* =========================
      COLUMNS
@@ -88,16 +95,19 @@ export default function ConfigurationBins() {
       key: "location",
       label: "Compartment",
       sortable: true,
+      width: 220,
     },
     {
       key: "zone",
       label: "Zone",
-      align: "center",
+      align: "left",
+      width: 120,
     },
     {
       key: "type",
       label: "Type",
-      align: "center",
+      align: "left",
+      width: 230,
       renderCell: (value) => {
         const label = String(value);
 
@@ -119,27 +129,21 @@ export default function ConfigurationBins() {
     {
       key: "capacity",
       label: "Capacity",
-      align: "right",
+      align: "left",
+      width: 150,
     },
     {
       key: "fillLevel",
       label: "Fill level",
-      align: "center",
+      align: "left",
+      width: 240,
       renderCell: (value) => {
         const percentage = Number(value);
 
         return (
-          <div style={{ minWidth: 140 }}>
+          <div className="bins-fill">
             <ProgressBar value={percentage} />
-            <div
-              style={{
-                fontSize: 12,
-                marginTop: 4,
-                textAlign: "right",
-              }}
-            >
-              {percentage}%
-            </div>
+            <span>{percentage}%</span>
           </div>
         );
       },
@@ -147,7 +151,8 @@ export default function ConfigurationBins() {
     {
       key: "status",
       label: "Status",
-      align: "center",
+      align: "left",
+      width: 160,
       renderCell: (value) => {
         const label = String(value);
 
@@ -181,53 +186,53 @@ export default function ConfigurationBins() {
         {/* =========================
             KPI CARDS
             ========================= */}
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(4, 1fr)",
-            gap: 16,
-            marginBottom: 24,
-          }}
-        >
-          <Card>
-            <h3>Total bins</h3>
-            <div style={{ fontSize: 32, fontWeight: 700, marginTop: 8 }}>
-              8
+        <div className="bins-live-grid">
+          <Card className="bins-live-card">
+            <div className="bins-live-card__header">
+              <h3>Total bins</h3>
+              <Tag label="Live" variant="success" />
             </div>
+            <strong>{rows.length}</strong>
+            <span>4 zones monitored</span>
           </Card>
 
-          <Card>
-            <h3>Available</h3>
-            <div style={{ fontSize: 32, fontWeight: 700,marginTop: 8 }}>
-              1
+          <Card className="bins-live-card">
+            <div className="bins-live-card__header">
+              <h3>Available</h3>
+              <Tag label="+2 today" variant="default" />
             </div>
+            <strong>{availableCount}</strong>
+            <span>Ready for allocation</span>
           </Card>
 
-          <Card>
-            <h3>Occupied</h3>
-            <div style={{ fontSize: 32, fontWeight: 700,marginTop: 8 }}>
-              5
+          <Card className="bins-live-card">
+            <div className="bins-live-card__header">
+              <h3>Occupied</h3>
+              <Tag label="Stable" variant="outlined" />
             </div>
+            <strong>{occupiedCount}</strong>
+            <span>Currently storing stock</span>
           </Card>
 
-          <Card>
-            <h3>Avg. fill rate</h3>
-            <div style={{ fontSize: 32, fontWeight: 700, marginTop: 8 }}>
-              39%
+          <Card className="bins-live-card">
+            <div className="bins-live-card__header">
+              <h3>Avg. fill rate</h3>
+              <Tag label="Optimal" variant="success" />
             </div>
+            <strong>{avgFill}%</strong>
+            <span>Average live utilization across active compartments</span>
           </Card>
         </div>
 
         {/* =========================
             TABLE
             ========================= */}
-        <ReorderDataTable
-          enableReorder={false}
+        <DataTableCore
           rowIdKey="id"
           columns={columns}
           rows={rows}
-          onMoveRow={() => {
-          }}
+          showCustomize={false}
+          showActiveFilters={false}
         />
       </PageSection>
     </PageLayout>

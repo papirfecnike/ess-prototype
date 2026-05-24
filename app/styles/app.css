@@ -68,7 +68,8 @@ header a:hover {
   border-bottom: 3px solid var(--color-dialog-footer);
 }
 
-header a.active {
+header a.active,
+header a.is-active {
   text-decoration: none;
   background: var(--color-dialog-footer);
   border-bottom: 3px solid var(--color-default);
@@ -133,6 +134,64 @@ header a.active {
   gap: 12px;
 }
 
+.app-header__port {
+  white-space: nowrap;
+}
+
+.port-dialog {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.port-dialog__list {
+  max-height: 288px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: 0;
+  border-radius: var(--radius-s);
+  background: var(--color-white);
+  overflow-y: auto;
+  border: 1px solid var(--color-white-border);
+  overflow-y: auto;
+}
+
+.port-dialog__row {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: var(--height-l);
+  border: none;
+  background: transparent;
+  color: var(--color-default);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  padding: var(--padding-s) var(--padding-m);
+}
+
+.port-dialog__row + .port-dialog__row {
+  border-top: none;
+}
+
+.port-dialog__row:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  left: var(--padding-m);
+  right: var(--padding-m);
+  bottom: 0;
+  height: 1px;
+  background: var(--color-white-border);
+}
+
+.port-dialog__row:disabled {
+  color: var(--color-disabled);
+  cursor: not-allowed;
+}
+
 .app-layout {
   display: grid;
   grid-template-columns: var(--sidebar-current-width) 1fr;
@@ -153,6 +212,13 @@ header a.active {
   display: inline-flex;
   align-items: center;
   line-height: 0;
+}
+
+.sidebar-icon__logo {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+  display: block;
 }
 
 

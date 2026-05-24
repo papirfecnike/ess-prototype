@@ -1,0 +1,93 @@
+.user-management-dialog {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.user-management-dialog .toggle {
+  padding: 0;
+}
+
+.user-management-dialog .toggle__title {
+  font-size: var(--font-default);
+  font-weight: var(--font-weight-medium);
+}
+
+.user-edit-dialog {
+  min-width: 560px;
+}
+
+.user-edit-dialog .tab-bar {
+  margin-bottom: 16px;
+}
+
+.user-edit-dialog__grid {
+  display: grid;
+  grid-template-columns: 86px 1fr;
+  gap: var(--space-4);
+  align-items: start;
+}
+
+.user-edit-dialog__stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.user-edit-dialog__panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--padding-l);
+  border-radius: var(--radius-s);
+  background: var(--color-dialog-container);
+}
+
+.user-edit-dialog__checks button,
+.user-edit-dialog__roles button {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: var(--height-s);
+  border: none;
+  background: transparent;
+  color: var(--color-text);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.user-edit-dialog__roles {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-4);
+}
+
+.user-edit-dialog__roles > div {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.user-edit-dialog__password-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-3);
+}
+
+.user-edit-dialog__security-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+}
+
+.user-edit-dialog__security-row div {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.user-edit-dialog__security-row span {
+  color: var(--color-text);
+  line-height: 1.4;
+}

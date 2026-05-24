@@ -10,6 +10,7 @@ export default [
   route("insights", "routes/insights.tsx", [
     index("routes/insights.overview.tsx"),
     route("productivity", "routes/insights.productivity.tsx"),
+    route("bins-compartments", "routes/insights.bins-compartments.tsx"),
     route("port-performance", "routes/insights.port-performance.tsx"),
     route("staff-performance", "routes/insights.staff-performance.tsx"),
     route("space-optimization", "routes/insights.space-optimization.tsx"),
@@ -54,6 +55,7 @@ export default [
 
   route("configuration", "routes/configuration.tsx", [
     route("prioritization", "routes/configuration.prioritization.tsx"),
+    route("user-management", "routes/configuration.user-management.tsx"),
     route("strategies", "routes/configuration.strategies.tsx"),
     route("bins", "routes/configuration.bins.tsx"),
     route("system-settings", "routes/configuration.system-settings.tsx"),

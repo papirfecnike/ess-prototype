@@ -148,7 +148,7 @@ function handleConfirm() {
                 <InputStepper
                   value={quantity}
                   onChange={setQuantity}
-                  min={1}
+                  min={0}
                 />
               </div>
             </Card>
@@ -157,7 +157,9 @@ function handleConfirm() {
               <h3>Compartment</h3>
               <div>
                 <div className="location-card">
-                  <div className="location-card__visual" />
+                  <div className="location-card__visual">
+                    <Icon name="upload" size="lg" />
+                  </div>
 
                   <div className="location-card__content">
                     <div className="location-card__text">
@@ -256,12 +258,12 @@ function handleConfirm() {
                         <div className="picklist-item__name">
                           {item.name}
                         </div>
+                      </div>
 
-                        <div className="picklist-item__meta">
-                          <span className="picklist-item__qty">
-                            {item.quantity}
-                          </span>
-                        </div>
+                      <div className="picklist-item__quantity">
+                        <span className="picklist-item__qty">
+                          {item.quantity}
+                        </span>
                       </div>
                     </div>
                   );
@@ -285,7 +287,7 @@ function handleConfirm() {
             <div className="product-drawer__rail-main">
               <button
                 type="button"
-                className="product-drawer__icon"
+                className={["product-drawer__icon", drawerView === "settings" ? "is-active" : ""].join(" ")}
                 onClick={() => openDrawer("settings")}
                 aria-label="Settings"
               >
@@ -294,7 +296,7 @@ function handleConfirm() {
 
               <button
                 type="button"
-                className="product-drawer__icon"
+                className={["product-drawer__icon", drawerView === "print" ? "is-active" : ""].join(" ")}
                 onClick={() => openDrawer("print")}
                 aria-label="Print"
               >
@@ -303,7 +305,7 @@ function handleConfirm() {
 
               <button
                 type="button"
-                className="product-drawer__icon"
+                className={["product-drawer__icon", drawerView === "history" ? "is-active" : ""].join(" ")}
                 onClick={() => openDrawer("history")}
                 aria-label="History"
               >
@@ -373,13 +375,13 @@ function handleConfirm() {
                     </div>
 
                     <div className="drawer-section-item">
-                      <Button variant="ghost">
+                      <Button variant="ghost" className="drawer-print-button">
                         Print product label
                       </Button>
                     </div>
 
                     <div className="drawer-section-item">
-                      <Button variant="ghost">
+                      <Button variant="ghost" className="drawer-print-button">
                         Print compartment label
                       </Button>
                     </div>
@@ -394,11 +396,11 @@ function handleConfirm() {
                       </div>
                     </div>
 
-                    <div className="drawer-section-item">
-                      <li>Picked by a.kovach · 10:42</li>
-                      <li>Scanned SKU · 10:41</li>
-                      <li>Putaway started · 10:39</li>
-                    </div>
+                    <ul className="drawer-history-list">
+                      <li className="drawer-history-row"><strong>Picked by a.kovach</strong><span>10:42</span></li>
+                      <li className="drawer-history-row"><strong>Scanned SKU</strong><span>10:41</span></li>
+                      <li className="drawer-history-row"><strong>Picking started</strong><span>10:39</span></li>
+                    </ul>
                   </div>
                 )}
               </div>
@@ -409,7 +411,7 @@ function handleConfirm() {
         {/* FOOTER */}
         <footer className="product-page__footer">
           <div className="product-page__footer-left">
-            <Button variant="ghost" intent="danger" leadingIcon="chevronLeftStroke">Exit</Button>
+            <Button variant="ghost" intent="danger" leadingIcon="chevronLeftStroke" onClick={() => window.location.assign("/outbound/picking")}>Exit</Button>
           </div>
 
           <div className="product-page__footer-center">

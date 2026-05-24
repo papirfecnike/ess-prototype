@@ -3,7 +3,7 @@ import type { LoaderFunction } from "react-router";
 import { PageLayout } from "@/components/layout/PageLayout";
 import { PageSection } from "@/components/layout/PageSection";
 
-import { ReorderDataTable } from "@/components/data/ReorderDataTable";
+import { DataTableCore } from "@/components/data/DataTableCore";
 import type {
   DataTableColumn,
   DataTableRow,
@@ -113,6 +113,7 @@ const columns: DataTableColumn[] = [
   {
     key: "name",
     label: "Rule name",
+    width: 260,
     renderCell: (value) => (
       <div
         style={{
@@ -129,25 +130,30 @@ const columns: DataTableColumn[] = [
   {
     key: "type",
     label: "Type",
+    width: 150,
     renderCell: (value) => renderType(String(value)),
   },
   {
     key: "condition",
     label: "Condition",
+    width: 290,
   },
   {
     key: "action",
     label: "Action",
+    width: 240,
   },
   {
     key: "threshold",
     label: "Threshold",
-    align: "center",
+    width: 88,
+    align: "left",
   },
   {
     key: "active",
-    label: "Status",
-    align: "center",
+    label: "Actions",
+    width: 86,
+    align: "left",
     renderCell: (value) => (
       <Toggle
         checked={value === "true"}
@@ -169,10 +175,12 @@ export default function ConfigurationInventoryRules() {
       subtitle="Configure automation rules for stock handling and replenishment"
     >
       <PageSection>
-        <ReorderDataTable
+        <DataTableCore
           rowIdKey="id"
           columns={columns}
           rows={rows}
+          showCustomize={false}
+          showActiveFilters={false}
         />
       </PageSection>
     </PageLayout>

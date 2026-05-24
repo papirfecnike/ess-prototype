@@ -4,6 +4,7 @@ export type SidebarItem = {
   label: string;
   path: string;
   icon: IconName;
+  logoUrl?: string;
   children?: SidebarItem[];
 };
 
@@ -23,25 +24,17 @@ export const sidebarConfig: SidebarSection[] = [
     basePath: "insights",
     groups: [
       {
-        title: "Analytics",
+        title: "Productivity",
         items: [
           { label: "Overview", path: "", icon: "barChart" },
-          { label: "Productivity", path: "productivity", icon: "rocket" },
-          { label: "Port performance", path: "port-performance", icon: "barChart" },
+          { label: "AutoStore productivity", path: "productivity", icon: "rocket", logoUrl: "https://companieslogo.com/img/orig/AUTO.OL-e481afbe.png?t=1720244490" },
         ],
       },
       {
-        title: "Operations",
+        title: "Storage utilization",
         items: [
-          { label: "Staff performance", path: "staff-performance", icon: "profile" },
-          { label: "Space optimization", path: "space-optimization", icon: "barChart" },
-          { label: "Replenishment", path: "replenishment", icon: "refresh" },
-        ],
-      },
-      {
-        title: "System monitoring",
-        items: [
-          { label: "System health", path: "system-health", icon: "warning" },
+          { label: "Space optimization", path: "space-optimization", icon: "compress" },
+          { label: "Bins and compartments", path: "bins-compartments", icon: "barcode" },
         ],
       },
     ],
@@ -102,9 +95,7 @@ export const sidebarConfig: SidebarSection[] = [
       {
         title: " ",
         items: [
-          { label: "Integration logs", path: "integration-logs", icon: "history" },
-          { label: "System logs", path: "system-logs", icon: "history" },
-          { label: "Material handling logs", path: "material-handling-logs", icon: "forklift" },
+          { label: "Integration logs", path: "integration-logs", icon: "database" },
         ],
       },
     ],
@@ -115,12 +106,18 @@ export const sidebarConfig: SidebarSection[] = [
     basePath: "configuration",
     groups: [
       {
-        title: "",
+        title: "Administration",
         items: [
-          { label: "Prioritization", path: "prioritization", icon: "flag" },
-          { label: "Strategies", path: "strategies", icon: "timeline" },
-          { label: "Bins", path: "bins", icon: "inventory2" },
+          { label: "User management", path: "user-management", icon: "profile" },
           { label: "System settings", path: "system-settings", icon: "settings" },
+        ],
+      },
+      {
+        title: "Workflows",
+        items: [
+          { label: "Priorities", path: "prioritization", icon: "rule" },
+          { label: "Strategies", path: "strategies", icon: "timeline" },
+          { label: "Bins", path: "bins", icon: "barcode" },
           { label: "Inventory rules", path: "inventory-rules", icon: "rule" },
         ],
       },

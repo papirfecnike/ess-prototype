@@ -162,10 +162,10 @@ export default function OutboundOverview() {
     { key: "picklistKey", label: "Picklist key", sortable: true, filterable: true, width: 140 },
     { key: "picklistLineKey", label: "Picklist line key", sortable: true, filterable: true, width: 150 },
     { key: "itemKey", label: "Item key", sortable: true, filterable: true, width: 120 },
-    { key: "itemName", label: "Item name", sortable: true, filterable: true, width: 320, minWidth: 250, wrap: true },
-    { key: "pickingQuantity", label: "Picking quantity", sortable: true, filterable: false, width: 140, align: "right" },
-    { key: "pickedQuantity", label: "Picked quantity", sortable: true, filterable: false, width: 130, align: "right" },
-    { key: "status", label: "Status", filterable: true, filterType: "multiSelect", width: 130, renderCell: (value) => renderStatusTag(String(value)) },
+    { key: "itemName", label: "Item name", sortable: true, filterable: true, width: 330, minWidth: 250, wrap: true },
+    { key: "pickingQuantity", label: "Picking quantity", sortable: true, filterable: false, width: 96, align: "right", wrap: true },
+    { key: "pickedQuantity", label: "Picked quantity", sortable: true, filterable: false, width: 94, align: "right", wrap: true },
+    { key: "status", label: "Status", filterable: true, filterType: "multiSelect", width: 120, renderCell: (value) => renderStatusTag(String(value)) },
     { key: "actions", label: "", filterable: false, width: 48, align: "right", renderCell: rowMenuButton },
   ];
 

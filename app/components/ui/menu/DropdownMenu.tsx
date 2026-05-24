@@ -1,5 +1,7 @@
 import type { SelectableListItem } from "../list/SelectableList";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { Icon } from "../icon/Icon";
+import type { IconName } from "../icon/icons";
 import "./dropdown-menu.css";
 
 type MenuItemIntent = "default" | "danger";
@@ -7,6 +9,7 @@ type MenuItemIntent = "default" | "danger";
 type MenuItem = Omit<SelectableListItem, "label"> & {
   label: string;
   intent?: MenuItemIntent;
+  icon?: IconName;
 };
 
 type Props = {
@@ -127,7 +130,10 @@ export function DropdownMenu({
               }}
             >
               {hasDivider && <span className="dropdown-menu__divider" />}
-              <span>{item.label}</span>
+              <span>
+                {item.icon && <Icon name={item.icon} size="sm" />}
+                {item.label}
+              </span>
             </button>
           );
         })}

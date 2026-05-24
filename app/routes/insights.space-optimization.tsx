@@ -8,6 +8,7 @@ import { Card } from "@/components/ui/card/Card";
 import { Icon } from "@/components/ui/icon/Icon";
 import { Button } from "@/components/ui/button/Button";
 import { Select } from "@/components/ui/select/Select";
+import { InsightsExportDialog } from "@/components/insights/InsightsExportDialog";
 
 import { SelectableDataTable } from "@/components/data/SelectableDataTable";
 import type { DataTableColumn, DataTableRow } from "@/components/data/DataTableCore";
@@ -31,6 +32,8 @@ export default function InsightsSpaceOptimization() {
   const [selectedRows, setSelectedRows] = useState<string[]>([]);
   const [target, setTarget] = useState<string | null>("compress");
   const [locationFilter, setLocationFilter] = useState<string | null>("all");
+  const [exportOpen, setExportOpen] = useState(false);
+  const [exportFormat, setExportFormat] = useState<string | null>(null);
 
 const rows: Row[] = [
   {id: 1, productId: "WD750", name: "Bisgaard Winter Boots - Pixie - Khaki", quantity: 1240, fillRate: "32%", locations: 18, saved: 9,},
@@ -75,7 +78,6 @@ const rows: Row[] = [
       title={
         <>
           Potential by compressing
-          <Icon name="info" size="xs" />
         </>
       }
       value="9 876"
@@ -93,7 +95,6 @@ const rows: Row[] = [
       title={
         <>
           Potential by reducing deadstock
-          <Icon name="info" size="xs" />
         </>
       }
       value="8 765"
@@ -111,7 +112,6 @@ const rows: Row[] = [
       title={
         <>
           Avg. compartment fill rate
-          <Icon name="info" size="xs" />
         </>
       }
       value="58.84%"
@@ -123,7 +123,6 @@ const rows: Row[] = [
       title={
         <>
           Used compartments
-          <Icon name="info" size="xs" />
         </>
       }
       value="61.11%"
@@ -140,6 +139,8 @@ const rows: Row[] = [
           rows={rows}
           selectedRows={selectedRows}
           onSelectionChange={setSelectedRows}
+          showCustomize={false}
+          showActiveFilters={false}
           tableTitle={tableTitle}
           headerActions={
             <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
@@ -152,7 +153,7 @@ const rows: Row[] = [
                   { value: "remove", label: "Deadstock removal" },
                 ]}
               />
-              <Button variant="secondary" size="sm" leadingIcon="download">
+              <Button variant="secondary" size="sm" leadingIcon="download" onClick={() => setExportOpen(true)}>
                 Export
               </Button>
             </div>
@@ -174,16 +175,13 @@ const rows: Row[] = [
             }}
           >
             <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
-              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                <div
-                  style={{
-                    fontSize: "var(--font-section-title)",
-                    fontWeight: "var(--font-weight-bold)",
-                  }}
-                >
-                  Potential for saving compartments/bins
-                </div>
-                <Icon name="info" size="xs" />
+              <div
+                style={{
+                  fontSize: "var(--font-section-title)",
+                  fontWeight: "var(--font-weight-bold)",
+                }}
+              >
+                Potential for saving compartments/bins
               </div>
 
               <span style={{ fontSize: "var(--font-size-s)", color: "var(--color-text-muted)" }}>
@@ -191,7 +189,7 @@ const rows: Row[] = [
               </span>
             </div>
 
-            <Button variant="secondary" size="sm" leadingIcon="download">
+            <Button variant="secondary" size="sm" leadingIcon="download" onClick={() => setExportOpen(true)}>
               Export
             </Button>
           </div>
@@ -237,16 +235,13 @@ const rows: Row[] = [
         borderBottom: "1px solid var(--color-table-border)",
       }}
     >
-      <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-        <div
-          style={{
-            fontSize: "var(--font-section-title)",
-            fontWeight: "var(--font-weight-bold)",
-          }}
-        >
-          Compartment utilization trend
-        </div>
-        <Icon name="info" size="xs" />
+      <div
+        style={{
+          fontSize: "var(--font-section-title)",
+          fontWeight: "var(--font-weight-bold)",
+        }}
+      >
+        Compartment utilization trend
       </div>
 
       <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
@@ -275,7 +270,7 @@ const rows: Row[] = [
           />
         </div>
 
-        <Button variant="secondary" size="sm" leadingIcon="download">
+        <Button variant="secondary" size="sm" leadingIcon="download" onClick={() => setExportOpen(true)}>
           Export
         </Button>
 
@@ -325,6 +320,7 @@ const rows: Row[] = [
   </Card>
 </PageSection>
 
+      <InsightsExportDialog isOpen={exportOpen} format={exportFormat} onFormatChange={setExportFormat} onClose={() => setExportOpen(false)} />
     </PageLayout>
   );
 }
@@ -368,7 +364,6 @@ function MetricCard({
           }}
         >
           {title}
-          <Icon name="info" size="xs" />
         </div>
 
         <div
