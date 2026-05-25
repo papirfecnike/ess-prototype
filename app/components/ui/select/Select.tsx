@@ -163,6 +163,7 @@ export function Select({
           size === "sm" ? "select--sm" : "",
           variant === "single" ? "select--single" : "",
           hasLabel ? "select--has-label" : "",
+          open ? "is-open" : "",
         ].join(" ")}
       >
         <button

@@ -7,7 +7,8 @@
     "build": "react-router build",
     "dev": "react-router dev",
     "start": "react-router-serve ./build/server/index.js",
-    "typecheck": "react-router typegen && tsc"
+    "typecheck": "react-router typegen && tsc",
+    "dev:local": "CHOKIDAR_USEPOLLING=1 CHOKIDAR_INTERVAL=800 react-router dev --host 127.0.0.1 --port 5173"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",

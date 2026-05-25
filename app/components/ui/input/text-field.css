@@ -21,6 +21,12 @@
   border-radius: var(--radius-s);
   font-size: var(--font-default);
   color: var(--color-text);
+  transition: border-color 120ms ease, box-shadow 120ms ease;
+}
+
+.text-field__input:focus {
+  border-color: var(--color-primary);
+  outline: none;
 }
 
 /* =========================
@@ -32,8 +38,9 @@
 
 .text-field__floating-label {
   position: absolute;
-  left: 12px;
-  top: 14px;
+  left: var(--padding-m);
+  top: 50%;
+  transform: translateY(-50%);
   font-size: var(--font-input);
   color: var(--color-floating-label);
   pointer-events: none;
@@ -46,6 +53,7 @@
 .text-field-wrapper.is-floating.has-value
 .text-field__floating-label {
   top: var(--margin-xs);
+  transform: none;
   font-size: 12px;
   font-weight: 600;
   color: var(--color-primary);

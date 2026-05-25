@@ -83,7 +83,15 @@
 }
 
 .btn--primary.btn--danger:hover {
-  background: var(--color-danger);
+  background: var(--color-danger-hover);
+  color: var(--color-danger);
+}
+
+.btn--secondary.btn--danger:hover,
+.btn--ghost.btn--danger:hover,
+.btn--icon.btn--danger:hover {
+  background: var(--callout-danger);
+  color: var(--color-danger);
 }
 
 /* ---------- SECONDARY (OUTLINED) ---------- */

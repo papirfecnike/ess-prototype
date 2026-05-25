@@ -30,6 +30,7 @@ export default function CompartmentsTab() {
 
   const [selectedRows, setSelectedRows] = useState<string[]>([]);
   const [scheduledRows, setScheduledRows] = useState<string[]>([]);
+  const [scheduledReasons, setScheduledReasons] = useState<Record<string, string>>({});
   const [activeReasons, setActiveReasons] = useState<string[]>([]);
 
   const [showInspectionDialog, setShowInspectionDialog] = useState(false);
@@ -40,6 +41,14 @@ export default function CompartmentsTab() {
   const [scheduleReasonCode, setScheduleReasonCode] = useState<string | null>(null);
   const [scheduleTime, setScheduleTime] = useState<string | null>(null);
   const [showSuccessNotification, setShowSuccessNotification] = useState(false);
+
+  const reasonCodeLabels: Record<string, string> = {
+    count_mismatch: "Count mismatch",
+    expired: "Expired",
+    missing: "Missing",
+    wrong_location: "Wrong compartment",
+    damaged: "Damaged",
+  };
 
   const columns: DataTableColumn[] = [
     { key: "product", label: "Product", width: 300, minWidth: 240, wrap: true },
@@ -70,10 +79,17 @@ export default function CompartmentsTab() {
     { id: 8, product: "Name It Blouse - Rib - Noos - NmfKab - Lavender Gray", compartment: "COMP 1", bin: "HU-01917882", sku: "WH768", stock: 11, reason: "Wrong compartment", tasks: "INV-0000005" },
   ];
 
+  const rowsWithScheduledReasons = useMemo(() => {
+    return rows.map(row => {
+      const scheduledReason = scheduledReasons[String(row.id)];
+      return scheduledReason ? { ...row, reason: scheduledReason } : row;
+    });
+  }, [rows, scheduledReasons]);
+
   const selectedRowData = useMemo(() => {
     const idSet = new Set(selectedRows);
-    return rows.filter(row => idSet.has(String(row.id)));
-  }, [rows, selectedRows]);
+    return rowsWithScheduledReasons.filter(row => idSet.has(String(row.id)));
+  }, [rowsWithScheduledReasons, selectedRows]);
 
   const inspectionBins = useMemo(() => {
     return Array.from(new Set(selectedRowData.map(r => r.bin)));
@@ -86,15 +102,15 @@ export default function CompartmentsTab() {
   }
 
   const filteredRows = useMemo(() => {
-    if (activeReasons.length === 0) return rows;
-    return rows.filter(row => activeReasons.includes(row.reason));
-  }, [rows, activeReasons]);
+    if (activeReasons.length === 0) return rowsWithScheduledReasons;
+    return rowsWithScheduledReasons.filter(row => activeReasons.includes(row.reason));
+  }, [rowsWithScheduledReasons, activeReasons]);
 
   const reasonStats = useMemo(() => {
     const map: Record<string, number> = {};
-    rows.forEach(row => { map[row.reason] = (map[row.reason] ?? 0) + 1; });
+    rowsWithScheduledReasons.forEach(row => { map[row.reason] = (map[row.reason] ?? 0) + 1; });
     return Object.entries(map);
-  }, [rows]);
+  }, [rowsWithScheduledReasons]);
 
   const detailsContent = (
     <>
@@ -149,9 +165,18 @@ export default function CompartmentsTab() {
         rows={filteredRows}
         selectedRows={selectedRows}
         onSelectionChange={setSelectedRows}
-        onScheduleSelected={(ids) =>
-          setScheduledRows(prev => Array.from(new Set([...prev, ...ids])))
-        }
+        onScheduleSelected={(ids, reasonCode) => {
+          setScheduledRows(prev => Array.from(new Set([...prev, ...ids])));
+          if (reasonCode) {
+            setScheduledReasons(current => {
+              const next = { ...current };
+              ids.forEach(id => {
+                next[id] = reasonCode;
+              });
+              return next;
+            });
+          }
+        }}
         detailsContent={detailsContent}
         batchActions={batchActions}
       />
@@ -171,6 +196,17 @@ export default function CompartmentsTab() {
               variant="primary"
               disabled={!scheduleTime}
               onClick={() => {
+                const reasonLabel = scheduleReasonCode ? reasonCodeLabels[scheduleReasonCode] ?? scheduleReasonCode : undefined;
+                setScheduledRows(prev => Array.from(new Set([...prev, ...selectedRows])));
+                if (reasonLabel) {
+                  setScheduledReasons(current => {
+                    const next = { ...current };
+                    selectedRows.forEach(id => {
+                      next[id] = reasonLabel;
+                    });
+                    return next;
+                  });
+                }
                 setShowScheduleDialog(false);
                 setShowSuccessNotification(true);
               }}

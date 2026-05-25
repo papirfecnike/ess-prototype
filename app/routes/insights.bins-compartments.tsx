@@ -121,7 +121,7 @@ export default function InsightsBinsCompartments() {
       }
     >
       <PageSection>
-        <div className="insights-card-grid insights-card-grid--top">
+        <div className="insights-card-grid insights-card-grid--top bins-capacity-metrics">
           <Metric title="Used capacity" value={data.used} icon="barChart" />
           <Metric title="Used bins" value={data.usedBins} icon="barcode" />
           <Metric title="Free bins" value={data.freeBins} icon="checkCircle" />

@@ -140,7 +140,10 @@ export default function OutboundPicking() {
                           <Icon name="checkCircle" size="sm" />
                           {task.progress}
                         </span>
-                        <span>{task.port}</span>
+                        <span className="picking-suspended__port">
+                          <Icon name="locationOn" size="sm" />
+                          {task.port}
+                        </span>
                       </span>
                     </button>
                   ))}

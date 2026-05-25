@@ -18,10 +18,11 @@
 }
 
 .user-edit-dialog .tab-bar {
-  margin-bottom: 16px;
+  margin-bottom: 0;
 }
 
 .user-edit-dialog__grid {
+  padding-top: 16px;
   display: grid;
   grid-template-columns: 86px 1fr;
   gap: var(--space-4);
@@ -29,6 +30,7 @@
 }
 
 .user-edit-dialog__stack {
+  padding-top: 16px;
   display: flex;
   flex-direction: column;
   gap: var(--space-4);

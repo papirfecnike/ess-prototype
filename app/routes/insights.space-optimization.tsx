@@ -14,6 +14,7 @@ import { SelectableDataTable } from "@/components/data/SelectableDataTable";
 import type { DataTableColumn, DataTableRow } from "@/components/data/DataTableCore";
 
 import { BarChart, LineChart } from "@mui/x-charts";
+import "@/styles/insights-storage.css";
 
 export const loader: LoaderFunction = async () => null;
 
@@ -51,7 +52,7 @@ const rows: Row[] = [
     { key: "name", label: "Product name" },
     { key: "quantity", label: "Quantity" },
     { key: "fillRate", label: "Avg. fill rate" },
-    { key: "locations", label: "Distinct compartments" },
+    { key: "locations", label: "Distinct compartments", width: 130, wrap: true },
     { key: "saved", label: "Compartments saved" },
   ];
 
@@ -109,6 +110,7 @@ const rows: Row[] = [
 
     <Card
       variant="metric"
+      className="space-optimization-metric--success"
       title={
         <>
           Avg. compartment fill rate
@@ -120,6 +122,7 @@ const rows: Row[] = [
 
     <Card
       variant="metric"
+      className="space-optimization-metric--success"
       title={
         <>
           Used compartments
@@ -147,6 +150,7 @@ const rows: Row[] = [
               <Select
                 label="Optimization target"
                 value={target}
+                searchable={false}
                 onChange={setTarget}
                 options={[
                   { value: "compress", label: "Compartments to compress" },

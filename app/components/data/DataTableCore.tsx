@@ -81,7 +81,7 @@ type Props = {
   headerActions?: React.ReactNode
   headerLeftActions?: React.ReactNode
   onRowClick?: (row: DataTableRow) => void
-  onScheduleSelected?: (ids: string[]) => void
+  onScheduleSelected?: (ids: string[], reasonCode?: string) => void
   showCustomize?: boolean
   activeFiltersLabel?: string
   showActiveFilters?: boolean
@@ -128,6 +128,7 @@ export function DataTableCore({
   const filterPopoverRef = useRef<HTMLDivElement>(null)
   const [inspectionMode, setInspectionMode] = useState<"existing" | "new" | null>(null)
   const [scheduleReasonCode, setScheduleReasonCode] = useState<string | null>(null)
+  const [scheduledReasonById, setScheduledReasonById] = useState<Record<string, string>>({})
   const [existingOpen, setExistingOpen] = useState(true)
   const [newOpen, setNewOpen] = useState(true)
   const [deletedIds, setDeletedIds] = useState<string[]>([])
@@ -208,6 +209,14 @@ export function DataTableCore({
     return Array.from(new Set(selectedRowData.map(r => r.bin)))
   }, [selectedRowData])
 
+  const reasonCodeLabels: Record<string, string> = {
+    count_mismatch: "Count mismatch",
+    expired: "Expired",
+    missing: "Missing",
+    wrong_location: "Wrong compartment",
+    damaged: "Damaged",
+  }
+
   const scheduleBinSummary = inspectionBins.length > 0 ? inspectionBins.join(", ") : "No bins selected"
 
   const goToInspectionProcess = () => {
@@ -222,7 +231,19 @@ export function DataTableCore({
     : [{ bin: "HU-00246095", sku: "WD750", product: "adidas Originals Shoes - Gazelle W - Half blue/Ftwwht/Cblack" }]
 
   const handleScheduleInspection = () => {
-    onScheduleSelected?.(selectedRows)
+    const reasonLabel = scheduleReasonCode ? reasonCodeLabels[scheduleReasonCode] ?? scheduleReasonCode : undefined
+
+    if (reasonLabel) {
+      setScheduledReasonById(current => {
+        const next = { ...current }
+        selectedRows.forEach(id => {
+          next[id] = reasonLabel
+        })
+        return next
+      })
+    }
+
+    onScheduleSelected?.(selectedRows, reasonLabel)
     clearSelection()
     setShowScheduleDialog(false)
     setShowScheduleSuccess(true)
@@ -236,11 +257,16 @@ export function DataTableCore({
   )
 
   const availableRows = useMemo(() => {
-    if (deletedIds.length === 0) return rows
-
     const deletedIdSet = new Set(deletedIds)
-    return rows.filter(row => !deletedIdSet.has(String(row[rowIdKey])))
-  }, [deletedIds, rows, rowIdKey])
+    const baseRows = deletedIds.length === 0
+      ? rows
+      : rows.filter(row => !deletedIdSet.has(String(row[rowIdKey])))
+
+    return baseRows.map(row => {
+      const scheduledReason = scheduledReasonById[String(row[rowIdKey])]
+      return scheduledReason ? { ...row, reason: scheduledReason } : row
+    })
+  }, [deletedIds, rowIdKey, rows, scheduledReasonById])
 
   const filterableColumnKeys = useMemo(() => {
     return new Set(

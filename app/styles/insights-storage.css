@@ -79,6 +79,11 @@
   color: var(--color-danger);
 }
 
+.insights-metric--neutral {
+  min-height: auto;
+  height: auto;
+}
+
 .insights-metric--neutral .ui-card__metric-value {
   color: var(--color-text);
 }
@@ -219,4 +224,12 @@
 
 .bins-capacity-grid--wide {
   grid-template-columns: 1fr;
+}
+
+.space-optimization-metric--success .ui-card__metric-value {
+  color: var(--color-success);
+}
+
+.bins-capacity-metrics .insights-metric--neutral {
+  min-height: 150px;
 }

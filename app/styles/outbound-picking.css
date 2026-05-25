@@ -96,15 +96,22 @@
 .picking-suspended__task-bottom {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto auto;
+  column-gap: var(--space-3);
 }
 
 .picking-suspended__timestamp,
 .picking-suspended__assignee,
-.picking-suspended__status {
+.picking-suspended__status,
+.picking-suspended__port {
   display: inline-flex;
   align-items: center;
   gap: var(--space-1);
   min-width: 0;
+}
+
+.picking-suspended__timestamp,
+.picking-suspended__port {
+  white-space: nowrap;
 }
 
 .picking-suspended__group {

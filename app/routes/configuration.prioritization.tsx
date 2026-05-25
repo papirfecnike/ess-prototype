@@ -103,7 +103,7 @@ export default function ConfigurationPriorities() {
     { key: "name", label: "Name", width: 160, filterable: false },
     { key: "type", label: "Type", width: 120, filterable: true, filterType: "radio", filterOptions: [{ value: "Regular", label: "Regular" }, { value: "Express", label: "Express" }], renderCell: value => <Tag label={String(value)} variant={String(value) === "Express" ? "warning" : "default"} /> },
     { key: "orderDeadline", label: "Order deadline", width: 120, wrap: true, filterable: true, filterType: "time" },
-    { key: "finishTime", label: "Finish time", width: 115, filterable: true, filterType: "time" },
+    { key: "finishTime", label: "Finish time", width: 100, wrap: true, filterable: true, filterType: "time" },
     { key: "activeDays", label: "Active days", width: 185, filterable: true, filterType: "multiSelect", filterOptions: dayFilterOptions },
     { key: "carrier", label: "Carrier", width: 145, filterable: true, filterType: "multiSelect", filterOptions: carrierFilterOptions },
     { key: "cutoffBehavior", label: "Cutoff behavior", width: 160, wrap: true },

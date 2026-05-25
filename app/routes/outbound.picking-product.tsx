@@ -229,7 +229,7 @@ function handleConfirm() {
 
           {/* RIGHT COLUMN – PICKLIST */}
           <div className="product-page__column">
-            <Card>
+            <Card className="picklist-card">
               <h3 className="picklist-header">
                 <span>Picklist ID</span>
                 <Tag label="9305204753" />
@@ -261,6 +261,7 @@ function handleConfirm() {
                       </div>
 
                       <div className="picklist-item__quantity">
+                        <Icon name={isActive ? "hourglass" : "schedule"} size="sm" className="picklist-item__status-icon" />
                         <span className="picklist-item__qty">
                           {item.quantity}
                         </span>
@@ -374,14 +375,14 @@ function handleConfirm() {
                       </div>
                     </div>
 
-                    <div className="drawer-section-item">
-                      <Button variant="ghost" className="drawer-print-button">
+                    <div className="drawer-section-item drawer-section-item--print-action">
+                      <Button variant="secondary" className="drawer-print-button">
                         Print product label
                       </Button>
                     </div>
 
-                    <div className="drawer-section-item">
-                      <Button variant="ghost" className="drawer-print-button">
+                    <div className="drawer-section-item drawer-section-item--print-action">
+                      <Button variant="secondary" className="drawer-print-button">
                         Print compartment label
                       </Button>
                     </div>

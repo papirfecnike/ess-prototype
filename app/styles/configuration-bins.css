@@ -21,8 +21,9 @@
 }
 
 .bins-live-card strong {
-  font-size: var(--font-h1);
-  line-height: 1;
+  font-size: 34px;
+  font-weight: var(--font-weight-bold);
+  line-height: 1.05;
 }
 
 .bins-live-card span {

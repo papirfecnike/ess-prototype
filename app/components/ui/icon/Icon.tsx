@@ -33,6 +33,7 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import LastPageIcon from "@mui/icons-material/LastPage";
 import ListAltIcon from "@mui/icons-material/ListAlt";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
 import LockIcon from "@mui/icons-material/Lock";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import RemoveIcon from "@mui/icons-material/Remove";
@@ -141,6 +142,7 @@ const MATERIAL_ICONS: Record<IconName, SvgIconComponent> = {
   warehouse: WarehouseIcon,
   orders: ReceiptLongIcon,
   listAlt: ListAltIcon,
+  locationOn: LocationOnIcon,
   compress: CompressIcon,
   straighten: StraightenIcon,
   alertTriangle: WarningAmberIcon,

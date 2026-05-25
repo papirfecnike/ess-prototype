@@ -275,11 +275,11 @@ export default function InboundPutawayProductPage() {
                     <div className="drawer-section-item">
                       <div className="drawer-section-item-title">Print</div>
                     </div>
-                    <div className="drawer-section-item">
-                      <Button variant="ghost" size="sm" className="drawer-print-button">Print product label</Button>
+                    <div className="drawer-section-item drawer-section-item--print-action">
+                      <Button variant="secondary" className="drawer-print-button">Print product label</Button>
                     </div>
-                    <div className="drawer-section-item">
-                      <Button variant="ghost" size="sm" className="drawer-print-button">Print compartment label</Button>
+                    <div className="drawer-section-item drawer-section-item--print-action">
+                      <Button variant="secondary" className="drawer-print-button">Print compartment label</Button>
                     </div>
                   </div>
                 )}
@@ -290,11 +290,11 @@ export default function InboundPutawayProductPage() {
                     <div className="drawer-section-item">
                       <div className="drawer-section-item-title">History</div>
                     </div>
-                    <div className="drawer-section-item drawer-history-list">
-                      <div className="drawer-history-row"><strong>Received by a.kovach</strong><span>10:42</span></div>
-                      <div className="drawer-history-row"><strong>Scanned SKU</strong><span>10:41</span></div>
-                      <div className="drawer-history-row"><strong>Putaway started</strong><span>10:39</span></div>
-                    </div>
+                    <ul className="drawer-history-list">
+                      <li className="drawer-history-row"><strong>Received by a.kovach</strong><span>10:42</span></li>
+                      <li className="drawer-history-row"><strong>Scanned SKU</strong><span>10:41</span></li>
+                      <li className="drawer-history-row"><strong>Putaway started</strong><span>10:39</span></li>
+                    </ul>
                   </div>
                 )}
 

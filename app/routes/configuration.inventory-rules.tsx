@@ -136,7 +136,7 @@ const columns: DataTableColumn[] = [
   {
     key: "condition",
     label: "Condition",
-    width: 290,
+    width: 230,
   },
   {
     key: "action",
@@ -146,13 +146,14 @@ const columns: DataTableColumn[] = [
   {
     key: "threshold",
     label: "Threshold",
-    width: 88,
-    align: "left",
+    width: 105,
+    align: "right",
   },
   {
     key: "active",
-    label: "Actions",
-    width: 86,
+    label: "Active rule",
+    width: 118,
+    wrap: true,
     align: "left",
     renderCell: (value) => (
       <Toggle

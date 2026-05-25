@@ -27,6 +27,7 @@ export type IconName =
   | "warehouse"
   | "orders"
   | "listAlt"
+  | "locationOn"
   | "compress"
   | "straighten"
   | "alertTriangle"

@@ -24,7 +24,7 @@ type Props = {
   headerActions?: ReactNode;
   headerLeftActions?: ReactNode;
   onRowClick?: (row: DataTableRow) => void;
-  onScheduleSelected?: (ids: string[]) => void;
+  onScheduleSelected?: (ids: string[], reasonCode?: string) => void;
   showCustomize?: boolean;
   activeFiltersLabel?: string;
   showActiveFilters?: boolean;

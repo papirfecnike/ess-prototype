@@ -723,10 +723,10 @@
    FLOATING BULK ACTIONS
    ========================================================= */
 .data-table__bulk-menu {
-  position: absolute;
+  position: fixed;
   left: 50%;
-  bottom: var(--space-3);
-  z-index: 20;
+  bottom: max(var(--space-4), env(safe-area-inset-bottom));
+  z-index: 1002;
   transform: translateX(-50%);
 
   display: inline-flex;
@@ -1110,16 +1110,26 @@ thead .data-table__cell--more {
 }
 
 .start-inspection-dialog__choice-header {
-  display: flex;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto auto;
   align-items: flex-start;
   gap: var(--space-2);
 }
 
+.start-inspection-dialog__choice-header .radio,
+.start-inspection-dialog__option-row .radio {
+  align-self: flex-start;
+  flex: 0 0 auto;
+  margin-top: 2px;
+}
+
 .start-inspection-dialog__choice-header > span {
-  margin-left: auto;
+  margin-left: 0;
+  justify-self: end;
 }
 
 .start-inspection-dialog__choice-header > button {
+  justify-self: end;
   width: var(--width-xs);
   height: var(--height-xs);
   display: inline-flex;
@@ -1141,11 +1151,12 @@ thead .data-table__cell--more {
   align-items: flex-start;
   gap: var(--space-2);
   padding: var(--padding-m);
-  border: 1px solid var(--color-white-border);
-  border-radius: var(--radius-s);
-  background: var(--color-white);
+  border: 1px solid var(--color-default);
+  border-radius: var(--radius-xs);
+  background: var(--color-dialog-container);
   font-size: var(--font-default);
   color: var(--color-text);
+  font-weight: var(--font-weight-bold);
 }
 
 .start-inspection-dialog__info svg {
@@ -1215,12 +1226,12 @@ thead .data-table__cell--more {
 }
 
 .start-inspection-dialog__table thead th {
-  background-color: var(--color-text-section);
-  color: var(--color-white);
+  background-color: var(--color-white-column-header);
+  color: var(--color-text);
   text-align: left;
   padding: var(--padding-m);
   font-weight: var(--font-weight-bold);
-  font-size: var(--font-size-xs);
+  font-size: var(--font-default);
   border-bottom: 1px solid var(--color-inner-border);
 }
 
@@ -1319,12 +1330,27 @@ thead .data-table__cell--more {
   align-items: flex-start;
   gap: var(--space-3);
   padding: var(--padding-m);
-  border: 1px solid var(--color-white-border);
+  border: 1px solid var(--color-default);
   border-radius: var(--radius-xs);
-  background: var(--color-white);
+  background: var(--color-dialog-container);
+  font-weight: var(--font-weight-bold);
 }
 
 .schedule-inspection-dialog__info svg {
   flex: 0 0 auto;
   color: var(--color-text);
+}
+
+.data-table__cell--finishTime .data-table__column-header span,
+.data-table__cell--finishTime .data-table__column-sort-label {
+  white-space: normal;
+  line-height: 1.1;
+}
+
+.data-table__cell--active .data-table__column-header span,
+.data-table__cell--active .data-table__column-sort-label,
+.data-table__cell--locations .data-table__column-header span,
+.data-table__cell--locations .data-table__column-sort-label {
+  white-space: normal;
+  line-height: 1.1;
 }

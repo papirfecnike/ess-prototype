@@ -122,12 +122,14 @@
 }
 
 .ui-card__metric-value {
-  font-size: 28px;
+  font-size: 34px;
   font-weight: var(--font-weight-bold);
   color: var(--color-text);
   display: flex;
   flex-wrap: row;
   align-items: baseline;
+  padding-top: var(--space-3);
+  padding-bottom: var(--space-1);
 }
 
 .ui-card__metric-sub {
@@ -138,9 +140,12 @@
 .ui-card__metric-trend {
   font-size: 13px;
   color: var(--color-success);
+  padding-top: var(--space-1);
 }
 
 .ui-card__metric-footer {
-  font-size: var(--font-size-s);
+  font-size: var(--font-default);
   color: var(--color-text-muted);
+  margin-top: auto;
+  padding-top: var(--space-3);
 }
