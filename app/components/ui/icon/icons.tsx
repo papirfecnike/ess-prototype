@@ -20,6 +20,7 @@ export type IconName =
   | "settings"
   | "barChart"
   | "rocket"
+  | "public"
   | "profile"
   | "forklift"
   | "history"
@@ -64,3 +65,4 @@ export type IconName =
   | "rule"
   | "preset"
   | "timeline"
+  | "manageSearch"

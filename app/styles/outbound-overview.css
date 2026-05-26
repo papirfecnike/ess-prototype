@@ -242,3 +242,13 @@
     grid-template-columns: 1fr;
   }
 }
+
+.outbound-details__scrim,
+.outbound-details__scrim:hover,
+.outbound-details__scrim:focus-visible {
+  appearance: none;
+  border: none;
+  background: transparent !important;
+  box-shadow: none !important;
+  outline: none;
+}

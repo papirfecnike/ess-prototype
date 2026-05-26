@@ -39,6 +39,7 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import RemoveIcon from "@mui/icons-material/Remove";
 import PersonIcon from "@mui/icons-material/Person";
 import PrintIcon from "@mui/icons-material/Print";
+import PublicIcon from "@mui/icons-material/Public";
 import QrCodeScannerIcon from "@mui/icons-material/QrCodeScanner";
 import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
 import RefreshIcon from "@mui/icons-material/Refresh";
@@ -53,6 +54,7 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import ShowChartIcon from "@mui/icons-material/ShowChart";
 import StraightenIcon from "@mui/icons-material/Straighten";
 import TimelineIcon from "@mui/icons-material/Timeline";
+import ManageSearchIcon from "@mui/icons-material/ManageSearch";
 import UnarchiveIcon from "@mui/icons-material/Unarchive";
 import UploadIcon from "@mui/icons-material/FileUploadOutlined";
 import ViewColumnIcon from "@mui/icons-material/ViewColumn";
@@ -135,6 +137,7 @@ const MATERIAL_ICONS: Record<IconName, SvgIconComponent> = {
   settings: SettingsIcon,
   barChart: AssessmentIcon,
   rocket: RocketLaunchIcon,
+  public: PublicIcon,
   profile: PersonIcon,
   forklift: LocalShippingIcon,
   history: HistoryIcon,
@@ -179,4 +182,5 @@ const MATERIAL_ICONS: Record<IconName, SvgIconComponent> = {
   rule: RuleIcon,
   preset: DashboardCustomizeIcon,
   timeline: TimelineIcon,
+  manageSearch: ManageSearchIcon,
 };

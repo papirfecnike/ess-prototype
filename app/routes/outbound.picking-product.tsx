@@ -376,15 +376,15 @@ function handleConfirm() {
                     </div>
 
                     <div className="drawer-section-item drawer-section-item--print-action">
-                      <Button variant="secondary" className="drawer-print-button">
+                      <button type="button" className="drawer-print-link">
                         Print product label
-                      </Button>
+                      </button>
                     </div>
 
                     <div className="drawer-section-item drawer-section-item--print-action">
-                      <Button variant="secondary" className="drawer-print-button">
+                      <button type="button" className="drawer-print-link">
                         Print compartment label
-                      </Button>
+                      </button>
                     </div>
                   </div>
                 )}

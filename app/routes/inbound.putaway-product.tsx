@@ -276,10 +276,10 @@ export default function InboundPutawayProductPage() {
                       <div className="drawer-section-item-title">Print</div>
                     </div>
                     <div className="drawer-section-item drawer-section-item--print-action">
-                      <Button variant="secondary" className="drawer-print-button">Print product label</Button>
+                      <button type="button" className="drawer-print-link">Print product label</button>
                     </div>
                     <div className="drawer-section-item drawer-section-item--print-action">
-                      <Button variant="secondary" className="drawer-print-button">Print compartment label</Button>
+                      <button type="button" className="drawer-print-link">Print compartment label</button>
                     </div>
                   </div>
                 )}

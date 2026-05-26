@@ -736,3 +736,26 @@
   border-bottom: none;
   padding: var(--space-2) 0 var(--space-4);
 }
+
+.drawer-print-link {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: 0;
+  border: none;
+  background: transparent !important;
+  color: var(--color-default);
+  font: inherit;
+  font-weight: var(--font-weight-bold);
+  text-align: left;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+}
+
+.drawer-print-link:hover,
+.drawer-print-link:focus-visible {
+  background: transparent !important;
+  color: var(--button-primary-hover);
+}

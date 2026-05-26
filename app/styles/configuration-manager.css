@@ -1,0 +1,282 @@
+.configuration-manager {
+  min-height: calc(100vh - var(--header-height) - 124px);
+}
+
+.configuration-manager.has-footer {
+  padding-bottom: 80px;
+}
+
+.configuration-manager__version-bar {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 58px;
+  padding: var(--padding-m);
+  border: 1px solid var(--color-white-border);
+  border-radius: var(--radius-m);
+  background: var(--color-white);
+  color: var(--color-text-description);
+  box-shadow: var(--shadow-m);
+}
+
+.configuration-manager__modified {
+  white-space: nowrap;
+  font-size: var(--font-default);
+}
+
+.configuration-manager__version-separator {
+  width: 1px;
+  align-self: stretch;
+  min-height: 32px;
+  background: var(--color-dialog-divider);
+}
+
+.configuration-manager__version-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  height: 36px;
+  padding: 0 var(--space-3);
+  border-radius: var(--radius-full);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-white);
+  white-space: nowrap;
+}
+
+.configuration-manager__version-pill--draft {
+  background: var(--color-warning);
+}
+
+.configuration-manager__version-pill--saved {
+  background: #8e44ad;
+}
+
+.configuration-manager__version-pill--live {
+  background: var(--color-success);
+}
+
+.configuration-manager__version-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.configuration-manager__version-detail {
+  padding: 3px 8px;
+  border-radius: var(--radius-xs);
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.configuration-manager__panel {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - var(--header-height) - 196px);
+  border: 1px solid var(--color-separator);
+  border-radius: var(--radius-s);
+  overflow: hidden;
+  background: var(--color-white);
+}
+
+.configuration-manager.has-footer .configuration-manager__panel {
+  min-height: calc(100vh - var(--header-height) - 244px);
+}
+
+.configuration-manager__panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 86px;
+  padding: var(--space-4) var(--space-6);
+  border-bottom: 1px solid var(--color-separator);
+}
+
+.configuration-manager__panel-title,
+.configuration-manager__panel-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.configuration-manager__panel-title strong {
+  font-size: var(--font-h3);
+}
+
+.configuration-manager__panel-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  color: var(--color-white);
+  background: #000;
+  border-radius: 50%;
+}
+
+.configuration-manager__panel-body {
+  display: grid;
+  grid-template-columns: 360px minmax(0, 1fr);
+  flex: 1;
+  min-height: 0;
+}
+
+.configuration-manager__groups {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-4);
+  border-right: 1px solid var(--color-separator);
+  background: var(--color-white);
+}
+
+.configuration-manager__group-item {
+  height: 48px;
+  padding: 0 var(--space-4);
+  border: 0;
+  border-left: 3px solid transparent;
+  border-radius: var(--radius-xs);
+  background: transparent;
+  color: var(--color-text);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.configuration-manager__group-item:hover,
+.configuration-manager__group-item.is-active {
+  background: var(--color-list-selected);
+}
+
+.configuration-manager__group-item.is-active {
+  color: var(--color-default);
+  border-left-color: var(--color-default);
+  font-weight: var(--font-weight-bold);
+}
+
+.configuration-manager__table-area {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+}
+
+
+.configuration-manager__footer {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: var(--sidebar-current-width);
+  z-index: 900;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 64px;
+  padding: var(--space-3) var(--space-6);
+  border-top: 1px solid var(--color-separator);
+  background: var(--color-footer);
+  box-shadow: 0 -1px 8px rgba(20, 40, 47, 0.08);
+}
+
+.configuration-manager__footer strong {
+  font-size: var(--font-default);
+  font-weight: var(--font-weight-regular);
+}
+
+.configuration-manager__footer-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.configuration-manager-dialog {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.configuration-manager-dialog__callout {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-dialog-divider);
+  border-radius: var(--radius-xs);
+  background: var(--color-white);
+}
+
+.configuration-manager-dialog__divider {
+  height: 1px;
+  background: var(--color-dialog-divider);
+}
+
+.configuration-manager-dialog__summary-row {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.configuration-manager-dialog--publish p {
+  margin: 0;
+  line-height: 1.5;
+}
+
+.configuration-manager-dialog--export {
+  padding: var(--space-3) 0;
+}
+
+@media (max-width: 1100px) {
+  .configuration-manager__panel-body {
+    grid-template-columns: 260px minmax(0, 1fr);
+  }
+
+  .configuration-manager__version-bar {
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    border-radius: var(--radius-l);
+  }
+}
+
+.configuration-manager__table-area .data-table-card {
+  height: 100%;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.configuration-manager__table-area .data-table {
+  height: 100%;
+  border: 0;
+  border-radius: 0;
+}
+
+.configuration-manager__table-area .data-table__header {
+  padding: var(--space-4) var(--space-6);
+  border-bottom: 0;
+}
+
+.configuration-manager__table-area .data-table__header-row {
+  margin: 0;
+  max-width: 100%;
+  border-radius: 0;
+}
+
+.configuration-manager__table-area .data-table__header-row th {
+  background: var(--color-white-column-header);
+  color: var(--color-text);
+}
+
+.configuration-manager__table-area .data-table tbody td {
+  height: 56px;
+}
+
+.configuration-manager__table-area .data-table__footer {
+  display: none;
+}
+
+.configuration-manager__footer {
+  font-size: var(--font-default);
+}
+
+.configuration-manager__footer strong {
+  font-size: var(--font-default);
+  font-weight: var(--font-weight-regular);
+}

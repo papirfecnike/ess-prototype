@@ -60,6 +60,7 @@ export default [
     route("bins", "routes/configuration.bins.tsx"),
     route("system-settings", "routes/configuration.system-settings.tsx"),
     route("inventory-rules", "routes/configuration.inventory-rules.tsx"),
+    route("configuration-manager", "routes/configuration.configuration-manager.tsx"),
     route("inbound", "routes/configuration.inbound.tsx"),
     route("outbound", "routes/configuration.outbound.tsx"),
     route("inventory", "routes/configuration.inventory.tsx"),

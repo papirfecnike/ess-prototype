@@ -120,3 +120,17 @@
     min-width: 0;
   }
 }
+
+.event-log-drawer {
+  top: 0;
+  height: 100vh;
+  z-index: 1200;
+  transform: translateX(100%);
+  animation: event-log-drawer-enter 160ms ease forwards;
+}
+
+@keyframes event-log-drawer-enter {
+  to {
+    transform: translateX(0);
+  }
+}

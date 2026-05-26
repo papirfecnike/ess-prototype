@@ -65,7 +65,7 @@ export const sidebarConfig: SidebarSection[] = [
   {
     basePath: "inventory",
     items: [
-      { label: "Inspection", path: "inspection", icon: "checkCircle" },
+      { label: "Inspection", path: "inspection", icon: "manageSearch" },
     ],
   },
       /*
@@ -119,6 +119,12 @@ export const sidebarConfig: SidebarSection[] = [
           { label: "Strategies", path: "strategies", icon: "timeline" },
           { label: "Bins", path: "bins", icon: "barcode" },
           { label: "Inventory rules", path: "inventory-rules", icon: "rule" },
+        ],
+      },
+      {
+        title: "Configuration",
+        items: [
+          { label: "Configuration manager", path: "configuration-manager", icon: "settings" },
         ],
       },
       /* 
